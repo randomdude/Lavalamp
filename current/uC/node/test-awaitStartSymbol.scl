@@ -1,0 +1,123 @@
+
+
+configuration for "pic16f628" is
+end configuration;
+
+
+testbench for "pic16f628" is
+begin
+    process is
+      variable pulselen           : time ;
+      variable tolerance          : time ;
+      variable breakitby          : time ;
+    begin
+        pulselen  := 10014 ic ;  -- ideal pulse len, adjusted for execution delays
+        breakitby := 150 ic;
+        tolerance := 255 ic;
+
+        RB6 <= '0';
+        RB7 <= '0';
+        
+        report "Waiting for chip to init..";
+        wait until RB7 == '1';
+        wait until RB7 == '0';
+        report ".. chip init'ed. Starting testbench.";
+
+        report "Sending below-tolerance idle sequence (pulses too small)";
+        RA0 <= '0';
+        wait for (pulselen+tolerance) - breakitby ;
+        RA0 <= '1';
+        wait for (pulselen+tolerance) - breakitby ;
+        RA0 <= '0';
+        wait for (pulselen+tolerance) - breakitby ;
+        RA0 <= '1';
+        wait for (pulselen+tolerance) - breakitby ;
+        RA0 <= '0';
+        wait for 50 ic;  -- allow chip time to report results
+        if RB7 == '1' then
+          report "FAIL: PIC wrongly triggered on an idle symbol as a start symbol";
+          assert false;
+        else
+          report "OK: PIC ignored invalid start symbol";
+        end if;
+        RB6 <= '1';
+        wait for 5 ic;
+        RB6 <= '0';
+
+        wait for 20 ic;
+        
+        report "Sending below-tolerance idle sequence (pulses too large)";
+        RA0 <= '0';
+        wait for pulselen + tolerance + breakitby ;
+        RA0 <= '1';
+        wait for pulselen + tolerance + breakitby ;
+        RA0 <= '0';
+        wait for pulselen + tolerance + breakitby ;
+        RA0 <= '1';
+        wait for pulselen + tolerance + breakitby ;
+        RA0 <= '0';
+        wait for 50 ic;  -- allow chip time to report results
+        if RB7 == '1' then
+          report "FAIL: PIC wrongly triggered on an idle symbol as a start symbol";
+          assert false;
+        else
+          report "OK: PIC ignored invalid start symbol";
+        end if;
+        RB6 <= '1';
+        wait for 5 ic;
+        RB6 <= '0';
+
+        wait for 20 ic;
+
+        report "Sending normal idle sequence";
+        RA0 <= '0';
+        wait for pulselen ;
+        RA0 <= '1';
+        wait for pulselen ;
+        RA0 <= '0';
+        wait for pulselen ;
+        RA0 <= '1';
+        wait for pulselen ;
+        RA0 <= '0';
+        wait for 50 ic;  -- allow chip time to report results
+        if RB7 == '1' then
+          report "FAIL: PIC wrongly triggered on an idle symbol as a start symbol";
+          assert false;
+        else
+          report "OK: PIC ignored invalid start symbol";
+        end if;
+        RB6 <= '1';
+        wait for 5 ic;
+        RB6 <= '0';
+
+        wait for 20 ic;
+      
+        report "Sending perfect start pulse";
+        RA0 <= '0';
+        wait for pulselen ;
+        RA0 <= '1';
+        wait for pulselen ;
+        RA0 <= '1';
+        wait for pulselen ;
+        RA0 <= '0';
+        wait for 50 ic;  -- allow chip time to report results
+        if RB7 == '0' then
+          report "FAIL: PIC failed to detect a valid start symbol!";
+          assert false;
+        else
+          report "OK: PIC detected a valid start symbol";
+        end if;
+        RB6 <= '1';
+        wait for 5 ic;
+        RB6 <= '0';
+
+        wait for 20 ic;
+
+
+        wait;
+
+    end process;
+
+
+end testbench;
+

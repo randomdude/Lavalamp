@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+    <head>
+        <title>Configure your node</title>
+    </head>
+    <body>
+        <script type="text/javascript" language="javascript" src="jquery.js" ></script>
+        <script type="text/javascript" language="javascript" src="fancygui.js"></script>
+        
+        <button id="cmdOneMoreSensor" onclick="javascript:addSensor()">Add sensor</button> <br />
+        <button id="cmdOneLessSensor" onclick="javascript:removeSensor()">Remove sensor</button> <br />
+       
+       <!--
+        <input id="sensorCount" onkeypress="javascript:validateSensorCount(event, 'sensorCount')" onblur="javascript:updateSensorCount()" /><br />
+        -->
+        
+        <div id="nodeBoxBase" style="display: none" >
+            <table border = "1">
+                <tr>
+                    <th>
+                        <button id="removeNodeBox" >Remove this sensor</button> 
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        ID:
+                    </td>
+                    <td>
+                        <input id="id" onkeypress="javascript:validateSensorCount(event, 'id')" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Type:
+                    </td>
+                    <td>
+                        <select id="type">
+                            <option value="blah">blah</option>
+                            <option value="foo">foo</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <span id="nodeBoxes">
+        </span>
+    </body>
+</html>

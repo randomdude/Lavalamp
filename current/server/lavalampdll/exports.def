@@ -1,0 +1,18 @@
+LIBRARY	lavalampdll
+EXPORTS
+	cmdSetSensorFadeSpeed
+	cmdGetGenericDigitalSensor
+	cmdSetGenericDigitalSensor
+	cmdGetSensorType
+	cmdSetP
+	cmdSetNodeId
+	cmdSetNodeKeyByte
+	cmdCountSensors
+	cmdIdentify
+	cmdPing
+	cmdReload
+	cmd_free
+	initPort
+	closePort
+	isPortOpen
+	geterrormessage

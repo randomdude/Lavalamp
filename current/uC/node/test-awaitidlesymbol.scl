@@ -1,0 +1,109 @@
+
+
+configuration for "pic16f628" is
+end configuration;
+
+
+testbench for "pic16f628" is
+begin
+    process is
+      variable pulselen           : time ;
+      variable tolerance          : time ;
+      variable bodgefactor        : time ;
+    begin
+        pulselen  := 10014 ic ;  -- ideal pulse len, adjusted for execution delays
+        tolerance := 255 ic ;    -- tolerance to use
+        bodgefactor := 10ic ;     -- amount to exceed tolerance by for fail-tests
+
+        RB6 <= '0';
+        RB7 <= '0';
+        
+        report "Waiting for chip to init..";
+        wait until RB7 == '1';
+        wait until RB7 == '0';
+        report ".. chip init'ed. Starting testbench.";
+
+
+        wait for 20 ic;
+
+        report "Sending small-but-valid pulse";
+        RA0 <= '1';
+        wait for (pulselen - tolerance) ;
+        RA0 <= '0';
+        wait for 50 ic;  -- allow chip time to report results
+        if RB7 == '0' then
+          report "FAIL: PIC failed to detect a small-but-valid idle symbol!";
+          assert false;
+        else
+          report "OK: PIC detected a short-but-valid pulse";
+        end if;
+        RB6 <= '1';
+        wait for 5 ic;
+        RB6 <= '0';
+        
+        wait for 20 ic;
+
+        report "Sending large-but-valid pulse";
+        RA0 <= '1';
+        wait for (pulselen + tolerance) ;
+        RA0 <= '0';
+        wait for 50 ic;  -- allow chip time to report results
+        if RB7 == '0' then
+          report "FAIL: PIC failed to detect a large-but-valid idle symbol!";
+          assert false;
+        else
+          report "OK: PIC detected a large-but-valid pulse";
+        end if;
+        RB6 <= '1';
+        wait for 5 ic;
+        RB6 <= '0';
+        
+        report "Sending too-small pulse";
+        RA0 <= '1';
+        wait for (pulselen - tolerance) - bodgefactor;
+        RA0 <= '0';
+        wait for 50 ic;  -- allow chip time to report results
+        if RB7 == '1' then
+          report "FAIL: PIC detected a too-small pulse as an idle symbol!";
+          assert false;
+        else
+          report "OK: PIC ignored a too-small pulse";
+        end if;
+        
+        report "Sending perfect valid pulse";
+        RA0 <= '1';
+        wait for pulselen ;
+        RA0 <= '0';
+        wait for 50 ic;  -- allow chip time to report results
+        if RB7 == '0' then
+          report "FAIL: PIC failed to detect a valid idle symbol!";
+          assert false;
+        else
+          report "OK: PIC detected a valid pulse";
+        end if;
+        RB6 <= '1';
+        wait for 5 ic;
+        RB6 <= '0';
+
+        wait for 20 ic;
+
+        report "Sending too-large pulse";
+        RA0 <= '1';
+        wait for pulselen + tolerance + bodgefactor;
+        RA0 <= '0';
+        wait for 50 ic;  -- allow chip time to report results
+        if RB7 == '1' then
+          report "FAIL: PIC detected a too-large pulse as an idle symbol!";
+          assert false;
+        else
+          report "OK: PIC ignored a too-large pulse";
+        end if;
+
+        
+        wait;
+
+    end process;
+
+
+end testbench;
+

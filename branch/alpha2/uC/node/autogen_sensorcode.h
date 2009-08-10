@@ -1,0 +1,1 @@
+	EXTERN autogen_sensors_init

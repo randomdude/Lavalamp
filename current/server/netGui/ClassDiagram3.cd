@@ -1,0 +1,761 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="netGui.graph" Collapsed="true">
+    <Position X="2.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQCAAAAAAAAAAAAAAAAAgAAAAAACAAAAA=</HashCode>
+      <FileName>sensorControls\ctlSensor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.Rule">
+    <Position X="17.5" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Delegate Name="netGui.RuleEngine.Rule.GetRuleItemFromGuidDelegate" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>RuleEngine\Rule.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="netGui.RuleEngine.Rule.AddctlRuleItemWidgetToGlobalPoolDelegate" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>RuleEngine\Rule.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="netGui.RuleEngine.Rule.GetLineChainFromGuidDelegate" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>RuleEngine\Rule.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="netGui.RuleEngine.Rule.GetPinFromNameDelegate" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>RuleEngine\Rule.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="netGui.RuleEngine.Rule.PinFromGuidDelegate" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>RuleEngine\Rule.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="netGui.RuleEngine.Rule.AddRuleItemToGlobalPoolDelegate" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>RuleEngine\Rule.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="netGui.RuleEngine.Rule.AddLineChainToGlobalPoolDelegate" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>RuleEngine\Rule.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="netGui.RuleEngine.Rule.AddPinToGlobalPoolDelegate" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>RuleEngine\Rule.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="netGui.RuleEngine.Rule.GetAllWiresDelegate" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>RuleEngine\Rule.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <AssociationLine Name="lineChains" Type="netGui.RuleEngine.lineChain" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="19" Y="2.364" />
+        <Point X="26.625" Y="2.364" />
+        <Point X="26.625" Y="4.5" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="pins" Type="netGui.RuleEngine.pin" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="19" Y="2.627" />
+        <Point X="24.996" Y="2.627" />
+        <Point X="24.996" Y="6.219" />
+        <Point X="23.5" Y="6.219" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAgCSQAAAAAAQSGAAEAAAQCAEFcAAAEAgABsAAAIQA=</HashCode>
+      <FileName>RuleEngine\ctlRule-xml.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="state" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="ruleItems" />
+      <Field Name="lineChains" />
+      <Field Name="pins" />
+      <Field Name="ctlRuleItemWidgets" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.ruleItem_and" Collapsed="true">
+    <Position X="9.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAIAAAAAAAIAAAAAIAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\Basic logic\ruleItem-and.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.ruleItem_debug" Collapsed="true">
+    <Position X="11.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAQAAAAAAAAAAAAAAAIAAAAAAAIAAAAQAAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\Basic logic\ruleItem-debug.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.ruleItem_not" Collapsed="true">
+    <Position X="13.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAIAAAAAAAIAAAAAIAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\Basic logic\ruleItem-not.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.ruleItem_or" Collapsed="true">
+    <Position X="9.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAIAAAAAAAIAAAAAIAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\Basic logic\ruleItem-or.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.ruleItem_splitter" Collapsed="true">
+    <Position X="13.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAIAAAAAAAIAAAAAIAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\Basic logic\ruleItem-splitter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.ruleItemBase">
+    <Position X="17.5" Y="4.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Delegate Name="netGui.RuleEngine.ruleItems.ruleItemBase.changeNotifyDelegate" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>RuleEngine\ruleItems\ruleItemBase.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="netGui.RuleEngine.ruleItems.ruleItemBase.evaluateDelegate" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>RuleEngine\ruleItems\ruleItemBase.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="netGui.RuleEngine.ruleItems.ruleItemBase.errorDelegate" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>RuleEngine\ruleItems\ruleItemBase.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAQQAARAIAAgAACAEAACAANgACIhgAKAgAAAMgA=</HashCode>
+      <FileName>RuleEngine\ruleItems\ruleItemBase.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="serial" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.ruleItem_Email" Collapsed="true">
+    <Position X="9.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAQAAABAAAAAAAAAAAIAAAIAAAIAAAAAAAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\ruleItemEmail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.ruleItem_python" Collapsed="true">
+    <Position X="11.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAIAACIAQAIIAACgIAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\ruleItemPython.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.sink" Collapsed="true">
+    <Position X="13.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAIAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\sink.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.ruleItem_runexe" Collapsed="true">
+    <Position X="11.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAQAAAAAAAAAAAAEAAIAAAIAAAIAAgAAIAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\windows\ruleItem-runexe.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.Starts.ruleItem_atTime" Collapsed="true">
+    <Position X="13.75" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAgBACAARAAAAgAAAACCQEICogAAIAAAIAAAAAIAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\Starts\ruleItem-atTime.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.Starts.ruleItem_startRun" Collapsed="true">
+    <Position X="9.25" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAQAAAAgAgAACAAAAAIgAAAAAAIAAAAEIAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\Starts\ruleItem-startRun.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.Starts.ruleItem_timeInterval" Collapsed="true">
+    <Position X="11.5" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUAAAAAAARAAACgAAAAAQAAAAIgAAIAAAIABAAAYAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\Starts\ruleItem-timeInterval.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.Starts.ruleItem_shutdown" Collapsed="true">
+    <Position X="13.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAACAAAAAIAAAIAAAIAAAAAIAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\windows\ruleItem-shutdown.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.windows.ruleItem_isProcessRunning" Collapsed="true">
+    <Position X="11.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAQABAAAAAAAAAAAAAIAAAIAAAIAAAAAIAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\windows\ruleItem-isProcessRunning.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.windows.ruleItem_killProcess" Collapsed="true">
+    <Position X="9.25" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAATAAAAAIEAAIAAAIAAAAAIAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\windows\ruleItem-killProcess.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.sensorControls.ctlOnOff" Collapsed="true">
+    <Position X="5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABCiQAAAAAACEAAACAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>sensorControls\ctlOnOff.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.sensorControls.ctlPWM" Collapsed="true">
+    <Position X="0.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAQACAQAAAAAACAQAAGEIAAAAAAAAAAAAACAQA=</HashCode>
+      <FileName>sensorControls\ctlPWM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.sensorControls.ctlReadout" Collapsed="true">
+    <Position X="2.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAACEQCAAAAACgAAACAAAAABAAAAAQAgAAAAA=</HashCode>
+      <FileName>sensorControls\ctlReadout.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ctlRuleItemWidget">
+    <Position X="19.5" Y="4.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="targetRuleItem" Type="netGui.RuleEngine.ruleItems.ruleItemBase" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="19.875" Y="6.805" />
+        <Point X="19.875" Y="7.441" />
+        <Point X="18.875" Y="7.441" />
+        <Point X="18.875" Y="7.066" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.057" Y="0.143" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>ABQQAAEAAgQAAABAEACBUIACAABAIAIKACAAgiAAKAA=</HashCode>
+      <FileName>RuleEngine\ctlRuleItemWidget.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="targetRuleItem" />
+      <Field Name="serial" />
+      <Field Name="myDelegates" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="netGui.RuleEngine.lineChain">
+    <Position X="25.5" Y="4.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="sourcePin" Type="netGui.RuleEngine.pinGuid" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="26.562" Y="6.192" />
+        <Point X="26.562" Y="7.727" />
+        <Point X="27.211" Y="7.727" />
+        <Point X="27.211" Y="9.147" />
+        <Point X="22.5" Y="9.147" />
+        <Point X="22.5" Y="8.509" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.4" Y="0.706" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="destPin" Type="netGui.RuleEngine.pinGuid" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="26.875" Y="6.192" />
+        <Point X="26.875" Y="7.456" />
+        <Point X="27.492" Y="7.456" />
+        <Point X="27.492" Y="10.051" />
+        <Point X="22.188" Y="10.051" />
+        <Point X="22.188" Y="8.509" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.702" Y="1.602" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="serial" Type="netGui.RuleEngine.lineChainGuid" ManuallyRouted="true">
+      <Path>
+        <Point X="26.25" Y="6.192" />
+        <Point X="26.25" Y="8" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AEAAAVCCAABAAAAgQAIAEQECERBQQAAgCAAgggAAAAA=</HashCode>
+      <FileName>RuleEngine\lineChain.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="start" />
+      <Field Name="col" />
+      <Field Name="sourcePin" />
+      <Field Name="destPin" />
+      <Field Name="serial" />
+      <Field Name="mydelegates" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="points" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="netGui.RuleEngine.pin">
+    <Position X="22" Y="5.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="linkedTo" Type="netGui.RuleEngine.pinGuid" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="22.938" Y="7.658" />
+        <Point X="22.938" Y="7.851" />
+        <Point X="23.942" Y="7.851" />
+        <Point X="23.942" Y="8.701" />
+        <Point X="23.188" Y="8.701" />
+        <Point X="23.188" Y="8.509" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.807" Y="0.227" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="parentLineChain" Type="netGui.RuleEngine.lineChainGuid" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="23.5" Y="7.156" />
+        <Point X="24.875" Y="7.156" />
+        <Point X="24.875" Y="8.884" />
+        <Point X="25.938" Y="8.884" />
+        <Point X="25.938" Y="8.509" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="parentRuleItem" Type="netGui.RuleEngine.ruleItemGuid" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="22" Y="6.687" />
+        <Point X="21.625" Y="6.687" />
+        <Point X="21.625" Y="8.884" />
+        <Point X="18.938" Y="8.884" />
+        <Point X="18.938" Y="8.509" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAIAAAIBAAWAACAABEAIAgAAAAgAAEAAA=</HashCode>
+      <FileName>RuleEngine\pinStuff.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="serial" />
+      <Field Name="linkedTo" />
+      <Field Name="parentLineChain" />
+      <Field Name="parentRuleItem" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="netGui.RuleEngine.pinGuid" Collapsed="true">
+    <Position X="22" Y="8" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>RuleEngine\pinStuff.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.delegatePack" Collapsed="true">
+    <Position X="22" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAASQAAAAAAQCCAAAAAAAAAEAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>RuleEngine\Rule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.lineChainGuid" Collapsed="true">
+    <Position X="25.25" Y="8" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>RuleEngine\pinStuff.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Windows.Forms.PictureBox" Collapsed="true">
+    <Position X="49.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="netGui.RuleEngine.ctlRuleItemWidgetGuid" Collapsed="true">
+    <Position X="19.5" Y="8" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>RuleEngine\pinStuff.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItemGuid" Collapsed="true">
+    <Position X="17.5" Y="8" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>RuleEngine\pinStuff.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.FrmAddNode" Collapsed="true">
+    <Position X="41.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAIAAAACAAABEAAAiAACACAACAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>addNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.FrmGeneralOptions" Collapsed="true">
+    <Position X="43" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAYAAQBCAAABAAAgCAAQACIAAAAAAAAAQAAAgAAAA=</HashCode>
+      <FileName>FrmGeneralOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.FrmMain" Collapsed="true">
+    <Position X="44.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BSSgEiQAReEArFBSEUaRAEASoIjpABQSgGhRYCQBQUg=</HashCode>
+      <FileName>frmMain.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.frmNodeSensors" Collapsed="true">
+    <Position X="46.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEgABCAAABAIIIKBIAECCAABAAEABAgASAEAAAA=</HashCode>
+      <FileName>frmNodeSensors.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.frmWait" Collapsed="true">
+    <Position X="43" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAACAAABAAAACAAAACAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>frmWait.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.key" Collapsed="true">
+    <Position X="46.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAcAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>key.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.Node" Collapsed="true">
+    <Position X="36" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AhAAIBAAABAACgAAAAAABARAAAAMAgQBAAAAQCACAhA=</HashCode>
+      <FileName>Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.Options" Collapsed="true">
+    <Position X="37.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAgDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Options.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.Program" Collapsed="true">
+    <Position X="39.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.sensor" Collapsed="true">
+    <Position X="39.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAACAAAAQAAABAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>sensor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.pwm_speed" Collapsed="true">
+    <Position X="43" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>sensorControls\ctlPWM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.pwm_brightness" Collapsed="true">
+    <Position X="41.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>sensorControls\ctlPWM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.ctlSensor" Collapsed="true">
+    <Position X="36" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ASAYAFQBpiWArBACQCCRIwEWQDgBAggAQChRAAAhgFE=</HashCode>
+      <FileName>sensorControls\ctlSensor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.nodeEditForms.FrmChangeId" Collapsed="true">
+    <Position X="44.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAABEAAACAANACAAAAAEAAhAAAAAQAAAA=</HashCode>
+      <FileName>nodeEditForms\FrmChangeId.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.nodeEditForms.FrmChangeKey" Collapsed="true">
+    <Position X="46.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAABEAAACAANACAAAAAEAAAAAACAQAAAA=</HashCode>
+      <FileName>nodeEditForms\FrmChangeKey.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.nodeEditForms.FrmChangeP" Collapsed="true">
+    <Position X="36" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACCAABEAAACAANACAAAAAEAAAAAAAAQAAAA=</HashCode>
+      <FileName>nodeEditForms\FrmChangeP.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.Properties.Resources" Collapsed="true">
+    <Position X="46.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BEAAAgAAQCAAACAACAEBEQEQBQAEAAAACAAAAAABAYA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.Properties.Settings" Collapsed="true">
+    <Position X="43.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAEAAAEIAAAAAABAAAAQAAAAAAACAA=</HashCode>
+      <FileName>Settings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ControlExtensions" Collapsed="true">
+    <Position X="36" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RuleEngine\crossThreads.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ctlPythonSetting" Collapsed="true">
+    <Position X="41.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAABAAIACAAAACAAAAAAAAEAAAAAAAAEA=</HashCode>
+      <FileName>RuleEngine\ctlPythonSetting.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ctlRule" Collapsed="true">
+    <Position X="44.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MJAAAIEHACRAIIIiAACCCAACABkxAghFAAJAAgCiKAM=</HashCode>
+      <FileName>RuleEngine\ctlRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.FrmAskName" Collapsed="true">
+    <Position X="43" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAACAAAAEABACACUACAAAAAAAAEAAAAAgAIAA=</HashCode>
+      <FileName>RuleEngine\FrmAskName.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.frmDebugLine" Collapsed="true">
+    <Position X="39.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAIACAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RuleEngine\frmDebugLine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.frmException" Collapsed="true">
+    <Position X="41.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAABAAAACAAIACAAAAAEAAAQAAAAAAAAA=</HashCode>
+      <FileName>RuleEngine\frmException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.frmPythonParameters" Collapsed="true">
+    <Position X="37.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEACAAAAEAAACAAIECQAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>RuleEngine\frmPythonParameters.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.pythonEngine" Collapsed="true">
+    <Position X="44.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAEAAAAAAAAAoACgAAAAAAAAABAQQIAZAAQAQAQ=</HashCode>
+      <FileName>RuleEngine\pythonEngine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.frmRuleEdit" Collapsed="true">
+    <Position X="39.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABBGEAgGACABUAAAHAIEACAIAEABAAAAAAACoAgAQ=</HashCode>
+      <FileName>RuleEngine\RuleEditor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItemInfo" Collapsed="true">
+    <Position X="36" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAACAAAAAIAAAAAAACAAAAAAA=</HashCode>
+      <FileName>RuleEngine\ruleItemInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ToolboxRule" Collapsed="true">
+    <Position X="46.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\ruleItemBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ToolboxRuleCategoryAttribute" Collapsed="true">
+    <Position X="36" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\ruleItemBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.Exceptions" Collapsed="true">
+    <Position X="37.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RuleEngine\Exceptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.triggeredDictionary" Collapsed="true">
+    <Position X="37.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAQAACACAAAAAAAIAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>RuleEngine\triggeredDictionary.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.XmlWriterWriterExtender" Collapsed="true">
+    <Position X="39.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAQAAAACAAA=</HashCode>
+      <FileName>RuleEngine\XmlWriterExtender.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.ctlCheckEmail" Collapsed="true">
+    <Position X="37.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAACAAEAABAACBAAACAIAIAAIAAAAAAAAAIEA=</HashCode>
+      <FileName>RuleEngine\ruleItems\ctlCheckEmail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.emailOptions" Collapsed="true">
+    <Position X="39.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAJAAAAAAAAAAAAEAAAAAAAAAAAAAAgEAAAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\ctlCheckEmail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.frmCheckEmailOptions" Collapsed="true">
+    <Position X="37.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEgAIAAEICAACBEAABCgAKACAAAAAEAAIJAAAAAAAAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\frmCheckEmailOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.frmRunExeOptions" Collapsed="true">
+    <Position X="41.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgEQABAACAAABAAAACAAQECAYAAAAAAADAICggAAAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\windows\frmRunExeOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.itemControls.ctlTimeInterval" Collapsed="true">
+    <Position X="37.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAACAAACDEAEAAAAACBAAQCAAAAAAIAAAAgAABAAAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\Starts\ctlTimeInterval.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.itemControls.ctlRunFile" Collapsed="true">
+    <Position X="46.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAABAADAAGAADkACBBAECAIAIAAIAAAAAIgAAIEA=</HashCode>
+      <FileName>RuleEngine\ruleItems\windows\ctlRunFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.Starts.imapChecker" Collapsed="true">
+    <Position X="44.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACgAAAAACAAAgAAUAAAQAAAAEAAAAUAAAAAw=</HashCode>
+      <FileName>RuleEngine\ruleItems\Starts\imapChecker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.Starts.shutdownStuff" Collapsed="true">
+    <Position X="44.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAIAAoAAAAAAABgAAAAAEACABAAAAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\windows\ruleItem-shutdown.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.windows.ctlIsProcRunning" Collapsed="true">
+    <Position X="39.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAACAAEAAAAACBAAACAAAAAAIAAAACAAAAAQA=</HashCode>
+      <FileName>RuleEngine\ruleItems\windows\ctlIsProcRunning.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.RuleEngine.ruleItems.windows.frmPickProcess" Collapsed="true">
+    <Position X="36" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAACAAABUAAACAAIACAAAEAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>RuleEngine\ruleItems\windows\frmPickProcess.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.sensorControls.ctlRGB" Collapsed="true">
+    <Position X="43" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>sensorControls\ctlRGB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="netGui.sensorControls.sensorFrm" Collapsed="true">
+    <Position X="41.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABACAAAAAIAAqAQAECAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>sensorControls\sensoFrm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="System.Drawing.Color" Collapsed="true">
+    <Position X="28.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier />
+  </Struct>
+  <Struct Name="System.Drawing.Point" Collapsed="true">
+    <Position X="28.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier />
+  </Struct>
+  <Enum Name="netGui.RuleEngine.ruleState" Collapsed="true">
+    <Position X="17.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RuleEngine\Rule.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="netGui.RuleEngine.pinDirection" Collapsed="true">
+    <Position X="36" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>RuleEngine\pinStuff.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="netGui.RuleEngine.ruleItemType" Collapsed="true">
+    <Position X="37.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RuleEngine\ruleItemInfo.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
