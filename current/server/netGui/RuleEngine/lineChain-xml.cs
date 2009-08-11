@@ -33,22 +33,22 @@ namespace netGui.RuleEngine
                 }
                 if (xmlName == "start" && reader.NodeType == XmlNodeType.Element)
                 {
-                    start = readPoint(ref reader);
+                    start = reader.ReadContentAsPoint();
                     inhibitNextRead = true;
                 }
                 if (xmlName == "end" && reader.NodeType == XmlNodeType.Element)
                 {
-                    end = readPoint(ref reader);
+                    end = reader.ReadContentAsPoint();
                     inhibitNextRead = true;
                 }
                 if (xmlName == "col" && reader.NodeType == XmlNodeType.Element)
                 {
-                    col = readColour(ref reader);
+                    col = reader.ReadContentAsColor();
                     inhibitNextRead = true;
                 }
                 if (xmlName == "points" && reader.NodeType == XmlNodeType.Element)
                 {
-                    points = readPointsCollection(ref reader);
+                    points = reader.ReadContentAsPointsCollection();
                 }
                 if (xmlName == "deleted" && reader.NodeType == XmlNodeType.Element)
                 {
@@ -77,17 +77,17 @@ namespace netGui.RuleEngine
 
         public void WriteXml(XmlWriter writer)
         {
-            writeGuid(writer, "id", serial.id);
-            writeGuid(writer, "destPin", destPin.id);
-            writeGuid(writer, "sourcePin", sourcePin.id);
-            writePoint(writer, "start", start);
-            writePoint(writer, "end", end);
-            writeColour(writer, "col", col);
-            writeBool(writer, "deleted", deleted);
-            writeBool(writer, "isdrawnbackwards", isdrawnbackwards);
+            writer.WriteGuid("id", serial.id);
+            writer.WriteGuid("destPin", destPin.id);
+            writer.WriteGuid("sourcePin", sourcePin.id);
+            writer.WritePoint("start", start);
+            writer.WritePoint("end", end);
+            writer.WriteColor("col", col);
+            writer.WriteBool("deleted", deleted);
+            writer.WriteBool("isdrawnbackwards", isdrawnbackwards);
             writer.WriteStartElement("points");
             foreach (Point thisPoint in points)
-                writePoint(writer, "point", thisPoint);
+                writer.WritePoint("point", thisPoint);
             writer.WriteEndElement();
         }
     }

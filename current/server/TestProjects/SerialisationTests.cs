@@ -52,7 +52,7 @@ namespace TestProjects
             foreach (Module myMod in Assembly.GetExecutingAssembly().GetModules()) 
                 foreach (Type thisType in myMod.GetTypes()) 
                     if (thisType.IsDefined(typeof (ToolboxRule), false))
-                        testSerialisationOfRuleWithNamedRuleItem(typeof (ruleItem_and));
+                        testSerialisationOfRuleWithNamedRuleItem(thisType);
         }
         
         private void testSerialisationOfRuleWithNamedRuleItem(Type targetType)

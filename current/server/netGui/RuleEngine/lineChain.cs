@@ -18,7 +18,7 @@ namespace netGui.RuleEngine
 
         public const int handleSize = 7;
         public bool isdrawnbackwards;   // was the line drawn from destination to source?
-        public lineChainGuid serial;
+        public lineChainGuid serial = new lineChainGuid();
 
         public List<Point> points;
 
@@ -28,8 +28,6 @@ namespace netGui.RuleEngine
 
         public lineChain(delegatePack newDelegates)
         {
-            serial = new lineChainGuid();
-
             points = new List<Point>();
             start = new Point(0, 0);
             end = new Point(0, 0);
@@ -38,160 +36,6 @@ namespace netGui.RuleEngine
             col = Color.FromArgb( 255 , rngGen.Next(255), rngGen.Next(255), rngGen.Next(255) );
 
             myDelegates = newDelegates;
-        }
-
-        #region XML serialisation
-
-        private List<Point> readPointsCollection(ref XmlReader reader)
-        {
-            String parentTag = reader.Name.ToLower();
-            List<Point> loadedPoints = new List<Point>();
-
-            bool inhibitNextRead = false;
-            bool keepGoing = true;
-            while (keepGoing)
-            {
-                String xmlName = reader.Name.ToLower();
-
-                if (xmlName == parentTag && (reader.NodeType == XmlNodeType.EndElement || reader.IsEmptyElement))
-                    keepGoing = false;
-
-                if (xmlName == "point" && reader.NodeType == XmlNodeType.Element)
-                {
-                    loadedPoints.Add(readPoint(ref reader));
-                    inhibitNextRead = true;
-                }
-
-                if (keepGoing && !inhibitNextRead)
-                    keepGoing = reader.Read();
-                inhibitNextRead = false;
-            }
-
-            return loadedPoints;
-        }
-
-        private Color readColour(ref XmlReader reader)
-        {
-            String parentTag = reader.Name.ToLower();
-
-            int r = 0, g = 0, b = 0;
-
-            bool keepGoing = true;
-            bool inhibitNextRead = false;
-            while (keepGoing)
-            {
-                String xmlName = reader.Name.ToLower();
-
-                if (xmlName == parentTag && reader.NodeType == XmlNodeType.EndElement)
-                {
-                    keepGoing = false;
-                    inhibitNextRead = true;
-                }
-
-                if (xmlName == "r" && reader.NodeType == XmlNodeType.Element)
-                {
-                    r = reader.ReadElementContentAsInt();
-                    inhibitNextRead = true;
-                }
-                if (xmlName == "g" && reader.NodeType == XmlNodeType.Element)
-                {
-                    g = reader.ReadElementContentAsInt();
-                    inhibitNextRead = true;
-                }
-                if (xmlName == "b" && reader.NodeType == XmlNodeType.Element)
-                {
-                    b = reader.ReadElementContentAsInt();
-                    inhibitNextRead = true;
-                }
-
-                if (keepGoing && !inhibitNextRead)
-                    keepGoing = reader.Read();
-                inhibitNextRead = false;
-            }
-
-            return Color.FromArgb(255, r,g,b);
-        }
-
-        private Point readPoint(ref XmlReader reader)
-        {
-            String parentTag = reader.Name.ToLower();
-
-            Point currentPoint = new Point();
-            bool keepGoing = true;
-            bool inhibitNextRead = false;
-            while (keepGoing)
-            {
-                String xmlName = reader.Name.ToLower();
-
-                if (xmlName == parentTag && reader.NodeType == XmlNodeType.EndElement)
-                {
-                    keepGoing = false;
-                    inhibitNextRead = true;
-                }
-
-                if (xmlName == "x" && reader.NodeType == XmlNodeType.Element)
-                {
-                    currentPoint.X = reader.ReadElementContentAsInt();
-                    inhibitNextRead = true;
-                }
-                if (xmlName == "y" && reader.NodeType == XmlNodeType.Element)
-                {
-                    currentPoint.Y = reader.ReadElementContentAsInt();
-                    inhibitNextRead = true;
-                }
-
-                if (keepGoing && !inhibitNextRead)
-                    keepGoing = reader.Read();
-                inhibitNextRead = false;
-            }
-
-            return currentPoint;
-        }
-
-        private void writeGuid(XmlWriter writer, string name, Guid newSerial)
-        {
-            writer.WriteElementString(name, newSerial.ToString());
-        }
-
-        private void writeBool(XmlWriter writer, string name, bool writeThis)
-        {
-            writer.WriteStartElement(name);
-            writer.WriteAttributeString("value", writeThis.ToString());
-            writer.WriteEndElement();
-        }
-
-        private void writeColour(XmlWriter writer, string name, Color writeThis)
-        {
-            writer.WriteStartElement(name);
-            writer.WriteElementString("R", writeThis.R.ToString());
-            writer.WriteElementString("G", writeThis.G.ToString());
-            writer.WriteElementString("B", writeThis.B.ToString());
-            writer.WriteEndElement();
-        }
-
-        public void writePoint(XmlWriter writer, String name, Point writeThis)
-        {
-            writer.WriteStartElement(name);
-            writer.WriteElementString("X", writeThis.X.ToString());
-            writer.WriteElementString("Y", writeThis.Y.ToString());
-            writer.WriteEndElement();
-        }
-
-        #endregion
-
-        public void handleStateChange()
-        {
-            // coax signal from start of wire to end, which will fire off the appropriate events at the destination end.
-            if (!deleted)
-            {
-                pin dest = myDelegates.GetPinFromGuid(destPin);
-                ruleItemBase destItem = myDelegates.GetRuleItemFromGuid(dest.parentRuleItem);
-
-                pin source = myDelegates.GetPinFromGuid(sourcePin);
-                ruleItemBase sourceItem = myDelegates.GetRuleItemFromGuid(source.parentRuleItem);
-
-                destItem.pinStates[dest.name] = sourceItem.pinStates[source.name];
-            }
         }
 
         #region rendering
@@ -251,5 +95,19 @@ namespace netGui.RuleEngine
             source.connectTo(serial, dest.serial);
         }
 
+        public void handleStateChange()
+        {
+            // coax signal from start of wire to end, which will fire off the appropriate events at the destination end.
+            if (!deleted)
+            {
+                pin dest = myDelegates.GetPinFromGuid(destPin);
+                ruleItemBase destItem = myDelegates.GetRuleItemFromGuid(dest.parentRuleItem);
+
+                pin source = myDelegates.GetPinFromGuid(sourcePin);
+                ruleItemBase sourceItem = myDelegates.GetRuleItemFromGuid(source.parentRuleItem);
+
+                destItem.pinStates[dest.name] = sourceItem.pinStates[source.name];
+            }
+        }
     }
 }

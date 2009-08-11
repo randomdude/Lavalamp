@@ -224,6 +224,7 @@
     <Compile Include="RuleEngine\Exceptions.cs" />
     <Compile Include="RuleEngine\ruleState.cs" />
     <Compile Include="RuleEngine\triggeredDictionary.cs" />
+    <Compile Include="RuleEngine\XmlReaderExtender.cs" />
     <Compile Include="RuleEngine\XmlWriterExtender.cs" />
     <Compile Include="sensorControls\ctlOnOff.cs">
       <SubType>UserControl</SubType>

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Xml;
 using netGui.RuleEngine.ruleItems;
 
 namespace netGui.RuleEngine
 {
-    public static class XmlWriterWriterExtender
+    public static class xmlWriterExtender
     {
         public static void WriteElementLineChainDictionary(this XmlWriter writer, String newElementName, Dictionary<String, lineChain> toSerialise)
         {
@@ -67,6 +68,37 @@ namespace netGui.RuleEngine
             value.WriteXml(writer);
             writer.WriteEndElement();
         }
+
+        // These dead simple structs are just serialsed here. 
+        public static void WriteColor(this XmlWriter writer, string name, Color writeThis)
+        {
+            writer.WriteStartElement(name);
+            writer.WriteElementString("R", writeThis.R.ToString());
+            writer.WriteElementString("G", writeThis.G.ToString());
+            writer.WriteElementString("B", writeThis.B.ToString());
+            writer.WriteEndElement();
+        }
+
+        public static void WritePoint(this XmlWriter writer, String name, Point writeThis)
+        {
+            writer.WriteStartElement(name);
+            writer.WriteElementString("X", writeThis.X.ToString());
+            writer.WriteElementString("Y", writeThis.Y.ToString());
+            writer.WriteEndElement();
+        }
+
+        public static void WriteBool(this XmlWriter writer, string name, bool writeThis)
+        {
+            writer.WriteStartElement(name);
+            writer.WriteAttributeString("value", writeThis.ToString());
+            writer.WriteEndElement();
+        }
+
+        public static void WriteGuid(this XmlWriter writer, string name, Guid newSerial)
+        {
+            writer.WriteElementString(name, newSerial.ToString());
+        }
+
     }
 
 }
