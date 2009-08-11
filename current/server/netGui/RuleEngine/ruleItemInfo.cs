@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace netGui.RuleEngine
 {
     public class ruleItemInfo
     {
         public ruleItemType itemType;
-        public Type RuleItemBaseType;
+        public Type ruleItemBaseType;
         public string pythonFileName;
         public string pythonCategory;
     }
