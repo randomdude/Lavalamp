@@ -6,7 +6,7 @@ namespace netGui
 {
     static class Program
     {
-        static public Options MyOptions = new Options();
+        static public options MyOptions = new options();
 
         /// <summary>
         /// The main entry point for the application.

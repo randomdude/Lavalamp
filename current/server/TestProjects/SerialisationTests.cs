@@ -62,7 +62,7 @@ namespace TestProjects
             // Make a new rule with one RuleItem, of the specified type, and one lineChain.
             ruleItemInfo myInfo = new ruleItemInfo();
             myInfo.itemType = ruleItemType.RuleItem;
-            myInfo.RuleItemBaseType = targetType;
+            myInfo.ruleItemBaseType = targetType;
             ruleControl.addRuleItem(myInfo);
 
             lineChain newChain = new lineChain();
@@ -122,7 +122,7 @@ namespace TestProjects
             ruleItemInfo myInfo = new ruleItemInfo();
             myInfo.itemType = ruleItemType.RuleItem;
 
-            myInfo.RuleItemBaseType = typeof(ruleItem_and);
+            myInfo.ruleItemBaseType = typeof(ruleItem_and);
 
             ruleControl.addRuleItem(myInfo);
 

@@ -11,7 +11,7 @@ namespace netGui
     public partial class FrmMain : Form
     {
         private transmitterDriver _mydriver = null;   
-        public Options MyOptions = new Options();
+        public options MyOptions = new options();
         public delegate void saveRuleDelegate(rule saveThis, string serialisedRule);
 
         public transmitterDriver getMyDriver()
@@ -171,7 +171,7 @@ namespace netGui
 
         private void mnuItemGeneralOpts(object sender, EventArgs e)
         {
-            Options tmpOptions = new Options(MyOptions);
+            options tmpOptions = new options(MyOptions);
             FrmGeneralOptions options = new FrmGeneralOptions(tmpOptions);
             options.ShowDialog(this);
             if (!options.cancelled)
@@ -343,7 +343,7 @@ namespace netGui
         private void deleteRuleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ListViewItem toRemove = lstRules.SelectedItems[0];
-            DialogResult sureness = MessageBox.Show("Are you sure you want to delete rule '" + toRemove.Text + "'?");
+            DialogResult sureness = MessageBox.Show("Are you sure you want to delete rule '" + toRemove.Text + "'?", "Confirm delete", MessageBoxButtons.YesNo);
 
             if (sureness == System.Windows.Forms.DialogResult.Yes)
                 lstRules.Items.Remove(toRemove);
@@ -374,8 +374,16 @@ namespace netGui
         private void saveRule(rule saveThis, string ruleSerialised)
         {
             openRules.Remove(saveThis.name);
-            ListViewItem editedItem = lstRules.Items[saveThis.name];
-            editedItem.Tag = saveThis;
+
+            // Pull our item out of the listview (todo: is there a better way to do this?)
+            foreach (ListViewItem thisItem in lstRules.Items)
+            {
+                if (thisItem.Text == saveThis.name)
+                {
+                    thisItem.Tag = saveThis;
+                    break;
+                }
+            }
         }
 
         #endregion
@@ -421,7 +429,7 @@ namespace netGui
                 return;
             }
 
-            lstRules.Clear();
+            lstRules.Items.Clear();
             foreach (FileInfo thisFile in fileList)
             {
                 try
@@ -434,7 +442,7 @@ namespace netGui
                         newEditor.loadRule(thisFileReader.ReadToEnd());
 
                         // Add our new rule name to our listView, with a .tag() set to the rule object itself.
-                        ListViewItem newItem = new ListViewItem(thisFile.Name, thisFile.Name);
+                        ListViewItem newItem = new ListViewItem(thisFile.Name);
                         newItem.Tag = newEditor.ctlRule1.targetRule;
                         lstRules.Items.Add(newItem);
                     }

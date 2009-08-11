@@ -11,17 +11,17 @@ namespace netGui
     public partial class FrmGeneralOptions : Form
     {
         public bool cancelled;
-        public Options MyOptions;
+        public options MyOptions;
 
         public FrmGeneralOptions()
         {
             InitializeComponent();
             cancelled = false;
             if ( null == MyOptions )
-                MyOptions = new Options();
+                MyOptions = new options();
         }
 
-        public FrmGeneralOptions(Options oldOptions)
+        public FrmGeneralOptions(options oldOptions)
         {
             InitializeComponent();
             cancelled = false;
@@ -32,6 +32,7 @@ namespace netGui
         private void cmdOK_Click(object sender, EventArgs e)
         {
             MyOptions.portname = cboPort.Text;
+            MyOptions.rulesPath = txtRulePath.Text;
 
             try
             {

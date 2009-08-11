@@ -39,6 +39,8 @@ namespace netGui
             this.MnuItemDisconnectFromTrans = new System.Windows.Forms.ToolStripMenuItem();
             this.rulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showRuleEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAllRulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadAllRulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lstNodes = new System.Windows.Forms.ListView();
             this.ColCaption = new System.Windows.Forms.ColumnHeader();
             this.colId = new System.Windows.Forms.ColumnHeader();
@@ -72,8 +74,8 @@ namespace netGui
             this.contextMenuStripRules = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.newRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAllRulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadAllRulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ColHdrName = new System.Windows.Forms.ColumnHeader();
+            this.ColHdrState = new System.Windows.Forms.ColumnHeader();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -105,7 +107,7 @@ namespace netGui
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -162,6 +164,20 @@ namespace netGui
             this.showRuleEditorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.showRuleEditorToolStripMenuItem.Text = "Show rule &Editor";
             this.showRuleEditorToolStripMenuItem.Click += new System.EventHandler(this.showRuleEditorToolStripMenuItem_Click);
+            // 
+            // saveAllRulesToolStripMenuItem
+            // 
+            this.saveAllRulesToolStripMenuItem.Name = "saveAllRulesToolStripMenuItem";
+            this.saveAllRulesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveAllRulesToolStripMenuItem.Text = "&Save all rules";
+            this.saveAllRulesToolStripMenuItem.Click += new System.EventHandler(this.saveAllRulesToolStripMenuItem_Click);
+            // 
+            // loadAllRulesToolStripMenuItem
+            // 
+            this.loadAllRulesToolStripMenuItem.Name = "loadAllRulesToolStripMenuItem";
+            this.loadAllRulesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadAllRulesToolStripMenuItem.Text = "&Load all rules";
+            this.loadAllRulesToolStripMenuItem.Click += new System.EventHandler(this.loadAllRulesToolStripMenuItem_Click);
             // 
             // lstNodes
             // 
@@ -402,17 +418,21 @@ namespace netGui
             this.groupBox3.Size = new System.Drawing.Size(517, 306);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Running rules";
+            this.groupBox3.Text = "Rules";
             // 
             // lstRules
             // 
+            this.lstRules.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ColHdrState,
+            this.ColHdrName});
             this.lstRules.ContextMenuStrip = this.contextMenuStripRules;
+            this.lstRules.GridLines = true;
             this.lstRules.Location = new System.Drawing.Point(6, 19);
             this.lstRules.Name = "lstRules";
             this.lstRules.Size = new System.Drawing.Size(505, 281);
             this.lstRules.TabIndex = 5;
             this.lstRules.UseCompatibleStateImageBehavior = false;
-            this.lstRules.View = System.Windows.Forms.View.List;
+            this.lstRules.View = System.Windows.Forms.View.Details;
             this.lstRules.ItemActivate += new System.EventHandler(this.lstRules_ItemActivate);
             // 
             // contextMenuStripRules
@@ -437,19 +457,15 @@ namespace netGui
             this.deleteRuleToolStripMenuItem.Text = "&Delete rule";
             this.deleteRuleToolStripMenuItem.Click += new System.EventHandler(this.deleteRuleToolStripMenuItem_Click);
             // 
-            // saveAllRulesToolStripMenuItem
+            // ColHdrName
             // 
-            this.saveAllRulesToolStripMenuItem.Name = "saveAllRulesToolStripMenuItem";
-            this.saveAllRulesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.saveAllRulesToolStripMenuItem.Text = "&Save all rules";
-            this.saveAllRulesToolStripMenuItem.Click += new System.EventHandler(this.saveAllRulesToolStripMenuItem_Click);
+            this.ColHdrName.Text = "Name";
+            this.ColHdrName.Width = 124;
             // 
-            // loadAllRulesToolStripMenuItem
+            // ColHdrState
             // 
-            this.loadAllRulesToolStripMenuItem.Name = "loadAllRulesToolStripMenuItem";
-            this.loadAllRulesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.loadAllRulesToolStripMenuItem.Text = "&Load all rules";
-            this.loadAllRulesToolStripMenuItem.Click += new System.EventHandler(this.loadAllRulesToolStripMenuItem_Click);
+            this.ColHdrState.Text = "State";
+            this.ColHdrState.Width = 44;
             // 
             // FrmMain
             // 
@@ -525,6 +541,8 @@ namespace netGui
         private System.Windows.Forms.ToolStripMenuItem deleteRuleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAllRulesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadAllRulesToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader ColHdrName;
+        private System.Windows.Forms.ColumnHeader ColHdrState;
     }
 }
 

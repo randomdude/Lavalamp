@@ -155,7 +155,7 @@ namespace netGui.RuleEngine
             ruleItemBase newRuleItem;
             if (info.itemType == ruleItemType.RuleItem)
             {
-                ConstructorInfo constr = info.RuleItemBaseType.GetConstructor(new Type[0]);
+                ConstructorInfo constr = info.ruleItemBaseType.GetConstructor(new Type[0]);
                 newRuleItem = (ruleItemBase)constr.Invoke(new object[0] { });
             }
             else if (info.itemType == ruleItemType.PythonFile)
@@ -221,7 +221,7 @@ namespace netGui.RuleEngine
 
                     ruleItemInfo myInfo = new ruleItemInfo();
                     myInfo.itemType = ruleItemType.RuleItem;
-                    myInfo.RuleItemBaseType = thisType;
+                    myInfo.ruleItemBaseType = thisType;
 
                     ruleItemBase newRuleItem = makeRuleItem(myInfo);
                     newRuleItem.serial = new ruleItemGuid(thisSerial);

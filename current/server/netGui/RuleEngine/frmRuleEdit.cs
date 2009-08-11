@@ -12,6 +12,8 @@ namespace netGui.RuleEngine
     {
         private int ctlRule1BorderX;
         private int ctlRule1BorderY;
+        private int buttonsBorderX;
+        private int buttonsBorderY;
         private bool isClosing = false;
 
         public FrmMain.saveRuleDelegate saveCallback ;
@@ -69,7 +71,7 @@ namespace netGui.RuleEngine
 
                             ruleItemInfo itemInfo = new ruleItemInfo();
                             itemInfo.itemType = ruleItemType.RuleItem;
-                            itemInfo.RuleItemBaseType = thisType;
+                            itemInfo.ruleItemBaseType = thisType;
 
                             addRuleItemObjectToToolbox((ruleItemBase) newRuleItem, itemInfo);
                         }
@@ -89,9 +91,9 @@ namespace netGui.RuleEngine
             newTreeItem.Tag = itemInfo;
 
             string catName;
-            if (itemInfo.itemType == ruleItemType.RuleItem && itemInfo.RuleItemBaseType.IsDefined(typeof(ToolboxRuleCategoryAttribute), false))
+            if (itemInfo.itemType == ruleItemType.RuleItem && itemInfo.ruleItemBaseType.IsDefined(typeof(ToolboxRuleCategoryAttribute), false))
             {
-                Object[] attrs = itemInfo.RuleItemBaseType.GetCustomAttributes(typeof(ToolboxRuleCategoryAttribute), false);
+                Object[] attrs = itemInfo.ruleItemBaseType.GetCustomAttributes(typeof(ToolboxRuleCategoryAttribute), false);
                 catName = ((ToolboxRuleCategoryAttribute) attrs[0]).name;
             }
             else
@@ -272,12 +274,29 @@ namespace netGui.RuleEngine
 
             // We also set the toolbox to end at the same point as the rule control.
             tvToolbox.Height = (ctlRule1.Top + ctlRule1.Height) - tvToolbox.Top;
+
+            // And the buttons.
+            foreach( Control thisBtn in new Control [] {btnStop, btnRun, btnCancel, btnSave, btnSaveClose } )
+                thisBtn.Top = ctlRule1.Height + ctlRule1.Top + buttonsBorderY;
+
+            // Also, move the two rightmost buttons to align nicely
+            btnRun.Left = (ctlRule1.Width + ctlRule1.Left) - btnStop.Width;
+            btnStop.Left = (ctlRule1.Width + ctlRule1.Left) - (btnRun.Width + btnStop.Width + buttonsBorderX);
+
+            // Don't let buttons foul each other, though.
+            if (btnStop.Left < (btnSave.Left + btnSave.Width + buttonsBorderX))
+            {
+                btnStop.Left = btnSave.Left + btnSave.Width + buttonsBorderX;
+                btnRun.Left = btnStop.Left + btnStop.Width + buttonsBorderX;
+            }
         }
 
         private void frmRuleEdit_ResizeBegin(object sender, EventArgs e)
         {
             ctlRule1BorderX = this.Width - (ctlRule1.Width + ctlRule1.Left);
             ctlRule1BorderY = this.Height - (ctlRule1.Height + ctlRule1.Top);
+            buttonsBorderY = btnStop.Top - (ctlRule1.Top + ctlRule1.Height);
+            buttonsBorderX = btnRun.Left - (btnStop.Left + btnStop.Width) ;
         }
     }
 }

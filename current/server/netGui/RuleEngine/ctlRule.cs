@@ -57,7 +57,7 @@ namespace netGui.RuleEngine
             ruleItemBase newRuleItem;
             if (info.itemType == ruleItemType.RuleItem)
             {
-                ConstructorInfo constr = info.RuleItemBaseType.GetConstructor(new Type[0]);
+                ConstructorInfo constr = info.ruleItemBaseType.GetConstructor(new Type[0]);
                 newRuleItem = (ruleItemBase) constr.Invoke(new object[0] { });
             }
             else if (info.itemType == ruleItemType.PythonFile)

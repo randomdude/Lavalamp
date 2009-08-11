@@ -2,13 +2,13 @@ using System;
 
 namespace netGui
 {
-    public class Options
+    public class options
     {
         public string rulesPath;
         public string portname;
         public key myKey = new key();
 
-        public Options()
+        public options()
         {
             portname = Properties.Settings.Default["portname"] as string;
             try
@@ -21,7 +21,7 @@ namespace netGui
             rulesPath = Properties.Settings.Default["rulesPath"] as string;
         }
 
-        public Options(Options newOptions) 
+        public options(options newOptions) 
         {
             portname = newOptions.portname;
             myKey = newOptions.myKey;
