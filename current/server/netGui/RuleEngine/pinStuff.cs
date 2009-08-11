@@ -144,18 +144,18 @@ namespace netGui.RuleEngine
 
     public class lineChainGuid
     {
-        public Guid id = Guid.Empty;
+        public Guid id = Guid.NewGuid();
 
-        public lineChainGuid() {}
+        public lineChainGuid() { }
 
         public lineChainGuid(string newGuid)
         {
-            this.id = new Guid(newGuid);
+            id = new Guid(newGuid);
         }
 
         public new string ToString()
         {
-            return this.id.ToString();
+            return id.ToString();
         }
     }
 

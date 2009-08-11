@@ -10,64 +10,14 @@ namespace TestProjects
     public class UnitTests
     {
         private TestContext testContextInstance;
-        private string filenameParameters = @"C:\lavalamp\current\server\netGui\RuleEngine\ruleItems\pythonScripts\test-configuration.py";
-        private const string filename = @"C:\lavalamp\current\server\netGui\RuleEngine\ruleItems\pythonScripts\test.py";
-        private const string filenameCategory = @"C:\lavalamp\current\server\netGui\RuleEngine\ruleItems\pythonScripts\test-category.py";
+        // todo: remove need for hardcoded filenames
+        private string filenameParameters = @"C:\lavalamp-svn\current\server\netGui\RuleEngine\ruleItems\pythonScripts\test-configuration.py";
+        private const string filename = @"C:\lavalamp-svn\current\server\netGui\RuleEngine\ruleItems\pythonScripts\test.py";
+        private const string filenameCategory = @"C:\lavalamp-svn\current\server\netGui\RuleEngine\ruleItems\pythonScripts\test-category.py";
 
         /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
-
-        [TestMethod]
-        public void testLoadOfPythonModule()
-        {
-            pythonEngine myEng = new pythonEngine(filename);
-
-            Assert.AreEqual("test python rule item", myEng.description);
-
-            Assert.IsTrue(myEng.category == "");
-
-            Assert.IsTrue(myEng.pinList.ContainsKey("myInputPin"));
-            Assert.IsTrue(myEng.pinList.ContainsKey("myOutputPin"));
-
-            Assert.IsTrue(myEng.pinList["myOutputPin"].direction == pinDirection.output);
-            Assert.IsTrue(myEng.pinList["myInputPin"].direction == pinDirection.input);
-        }
-
+        /// Verify load of an example python ruleItem, ensuring that the getPinInfo operates.
+        /// </summary>
         [TestMethod]
         public void testLoadOfPythonRuleItem()
         {
@@ -81,6 +31,7 @@ namespace TestProjects
 
             Assert.IsTrue(testItem.category == "");
 
+            Assert.IsTrue(pins.Count == 2 );
             Assert.IsTrue(pins.ContainsKey("myInputPin"));
             Assert.IsTrue(pins.ContainsKey("myOutputPin"));
 

@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace netGui.RuleEngine
@@ -26,8 +20,8 @@ namespace netGui.RuleEngine
         public ctlPythonSetting(String newPrompt, String defaultValue)
         {
             InitializeComponent();
-            this.textBox1.Text = defaultValue;
-            prompt = this.label1.Text = newPrompt;
+            textBox1.Text = defaultValue;
+            prompt = label1.Text = newPrompt;
         }
     }
 }

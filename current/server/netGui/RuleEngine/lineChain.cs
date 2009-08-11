@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Xml;
 using System.Xml.Schema;
-using System.Xml.Serialization;
 using netGui.RuleEngine.ruleItems;
 
 namespace netGui.RuleEngine
 {
-    public class lineChain 
+    public partial class lineChain 
     {
         public Point start;
         public Point end;
@@ -17,21 +16,20 @@ namespace netGui.RuleEngine
         public pinGuid destPin;
         public bool deleted = false;
 
-        public static int handleSize = 7;
+        public const int handleSize = 7;
         public bool isdrawnbackwards;   // was the line drawn from destination to source?
-        public lineChainGuid serial = new lineChainGuid() {id = Guid.NewGuid() };
+        public lineChainGuid serial;
 
         public List<Point> points;
 
-        public delegatePack mydelegates;
+        private delegatePack myDelegates;
 
-        public lineChain()
-        {
-            //throw new Exception("linechain must have a delegatePack and all of its merry bunch of happy delegate friends");
-        }
+        public lineChain() {}
 
         public lineChain(delegatePack newDelegates)
         {
+            serial = new lineChainGuid();
+
             points = new List<Point>();
             start = new Point(0, 0);
             end = new Point(0, 0);
@@ -39,93 +37,10 @@ namespace netGui.RuleEngine
             Random rngGen = new Random( DateTime.Now.Millisecond );
             col = Color.FromArgb( 255 , rngGen.Next(255), rngGen.Next(255), rngGen.Next(255) );
 
-            mydelegates = newDelegates;
-        }
-
-        public lineChain(lineChain initWith)
-        {
-            points = new List<Point>();
-            foreach (Point thisPnt in initWith.points)
-                points.Add(new Point(thisPnt.X, thisPnt.Y));
-            col = initWith.col;
-            start.X = initWith.start.X;
-            start.Y = initWith.start.Y;
-            end.X = initWith.end.X;
-            end.Y = initWith.end.Y;
-            sourcePin = initWith.sourcePin;
-            destPin = initWith.destPin;
-            isdrawnbackwards = initWith.isdrawnbackwards;
-            mydelegates = initWith.mydelegates;
+            myDelegates = newDelegates;
         }
 
         #region XML serialisation
-
-        public XmlSchema GetSchema()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void ReadXml(XmlReader reader)
-        {
-            bool keepGoing = true;
-            bool inhibitNextRead = false;
-
-            while (keepGoing)
-            {
-                String xmlName = reader.Name.ToLower();
-
-                if (xmlName == "linechains" && reader.NodeType == XmlNodeType.EndElement)
-                    keepGoing = false;
-
-
-                if (xmlName == "id" && reader.NodeType == XmlNodeType.Element)
-                {
-                    this.serial = new lineChainGuid(reader.ReadElementContentAsString());
-                    inhibitNextRead = true;
-                }
-                if (xmlName == "start" && reader.NodeType == XmlNodeType.Element)
-                {
-                    this.start = readPoint(ref reader);
-                    inhibitNextRead = true;
-                }
-                if (xmlName == "end" && reader.NodeType == XmlNodeType.Element)
-                {
-                    this.end = readPoint(ref reader);
-                    inhibitNextRead = true;
-                }
-                if (xmlName == "col" && reader.NodeType == XmlNodeType.Element)
-                {
-                    this.col = readColour(ref reader);
-                    inhibitNextRead = true;
-                }
-                if (xmlName == "points" && reader.NodeType == XmlNodeType.Element)
-                {
-                    this.points = readPointsCollection(ref reader);
-                }
-                if (xmlName == "deleted" && reader.NodeType == XmlNodeType.Element)
-                {
-                    this.deleted = bool.Parse(reader.GetAttribute("value"));
-                }
-                if (xmlName == "isdrawnbackwards" && reader.NodeType == XmlNodeType.Element)
-                {
-                    this.isdrawnbackwards = bool.Parse(reader.GetAttribute("value"));
-                }
-                if (xmlName == "sourcepin" && reader.NodeType == XmlNodeType.Element)
-                {
-                    this.sourcePin = new pinGuid(reader.ReadElementContentAsString());
-                    inhibitNextRead = true;
-                }
-                if (xmlName == "destpin" && reader.NodeType == XmlNodeType.Element)
-                {
-                    this.destPin = new pinGuid(reader.ReadElementContentAsString());
-                    inhibitNextRead = true;
-                }
-
-                if (keepGoing && !inhibitNextRead)
-                    keepGoing = reader.Read();
-                inhibitNextRead = false;
-            }
-        }
 
         private List<Point> readPointsCollection(ref XmlReader reader)
         {
@@ -233,25 +148,9 @@ namespace netGui.RuleEngine
             return currentPoint;
         }
 
-        public void WriteXml(XmlWriter writer)
+        private void writeGuid(XmlWriter writer, string name, Guid newSerial)
         {
-            writeGuid(writer, "id", serial.id);
-            writeGuid(writer, "destPin", destPin.id);
-            writeGuid(writer, "sourcePin", sourcePin.id);
-            writePoint(writer, "start", start);
-            writePoint(writer, "end", end);
-            writeColour(writer, "col", col);
-            writeBool(writer, "deleted", deleted);
-            writeBool(writer, "isdrawnbackwards", isdrawnbackwards);
-            writer.WriteStartElement( "points" );
-            foreach (Point thisPoint in this.points)
-                writePoint(writer, "point", thisPoint);
-            writer.WriteEndElement();
-        }
-
-        private void writeGuid(XmlWriter writer, string name, Guid serial)
-        {
-            writer.WriteElementString(name, serial.ToString());
+            writer.WriteElementString(name, newSerial.ToString());
         }
 
         private void writeBool(XmlWriter writer, string name, bool writeThis)
@@ -280,72 +179,76 @@ namespace netGui.RuleEngine
 
         #endregion
 
-
-
         public void handleStateChange()
         {
-            // coax signal from start of wire to end, which will fire off the appropriate events at the destination end
-            if (!this.deleted)
+            // coax signal from start of wire to end, which will fire off the appropriate events at the destination end.
+            if (!deleted)
             {
-                pin dest = mydelegates.GetPinFromGuid(this.destPin);
-                ruleItemBase destItem = mydelegates.GetRuleItemFromGuid(dest.parentRuleItem);
-                pin source = mydelegates.GetPinFromGuid(this.sourcePin);
-                ruleItemBase sourceItem = mydelegates.GetRuleItemFromGuid(source.parentRuleItem);
+                pin dest = myDelegates.GetPinFromGuid(destPin);
+                ruleItemBase destItem = myDelegates.GetRuleItemFromGuid(dest.parentRuleItem);
+
+                pin source = myDelegates.GetPinFromGuid(sourcePin);
+                ruleItemBase sourceItem = myDelegates.GetRuleItemFromGuid(source.parentRuleItem);
+
                 destItem.pinStates[dest.name] = sourceItem.pinStates[source.name];
             }
         }
 
         #region rendering
 
+        /// <summary>
+        /// Draw this lineChain on the Graphics object provided
+        /// </summary>
+        /// <param name="toThis">Graphics object to draw on</param>
+        public void draw(Graphics toThis)
+        {
+            Point cursor = start;
+            drawHandle(toThis, start);
+            foreach (Point nextPoint in points)
+            {
+                drawLine(toThis, cursor, nextPoint, col);
+                drawHandle(toThis, nextPoint);
+                cursor = nextPoint;
+            }
+            drawHandle(toThis, end);
+            drawLine(toThis, cursor, end, col);
+        }
 
-        public static void drawLine(Graphics toThis, Point from, Point to, Color lineCol)
+        private static void drawLine(Graphics toThis, Point from, Point to, Color lineCol)
         {
             toThis.DrawLine(new Pen(lineCol), new Point(from.X, from.Y), new Point(to.X, to.Y));
         }
 
-        public static void drawHandle(Graphics toThis, Point here)
+        private static void drawHandle(Graphics toThis, Point here)
         {
             Rectangle bounds = new Rectangle(here.X - (handleSize / 2), here.Y - (handleSize / 2), handleSize, handleSize);
             toThis.DrawRectangle(new Pen(Color.Blue), bounds);
         }
 
-        public void draw(Graphics toThis)
-        {
-            Point cursor = this.start;
-            drawHandle(toThis,this.start);
-            foreach (Point nextPoint in this.points)
-            {
-                drawLine(toThis, cursor, nextPoint, this.col);
-                drawHandle(toThis, nextPoint);
-                cursor = nextPoint;
-            }
-            drawHandle(toThis, this.end);
-            drawLine(toThis, cursor, this.end, this.col);
-        }
         #endregion
 
         public void deleteSelf()
         {
-            // tell both involved pins the bad news
-            pin source = mydelegates.GetPinFromGuid(sourcePin);
-            pin dest = mydelegates.GetPinFromGuid(destPin);
+            // Find both involved pins and disconnect them if neccesary
+            pin source = myDelegates.GetPinFromGuid(sourcePin);
+            pin dest = myDelegates.GetPinFromGuid(destPin);
             if (source.isConnected)
                 source.disconnect();
             if (dest.isConnected)
                 dest.disconnect();
 
             // remove any changeHandler delegates currently hooked up
-            mydelegates.GetRuleItemFromGuid(source.parentRuleItem).removePinChangeHandler(source.name);
-            mydelegates.GetRuleItemFromGuid(source.parentRuleItem).removePinChangeHandler(dest.name);
+            myDelegates.GetRuleItemFromGuid(source.parentRuleItem).removePinChangeHandler(source.name);
+            myDelegates.GetRuleItemFromGuid(source.parentRuleItem).removePinChangeHandler(dest.name);
 
             // goodbye cruel world
-            this.deleted = true;
+            deleted = true;
         }
 
         public void connectTo(pin source, pin dest)
         {
-            dest.connectTo(this.serial, source.serial);
-            source.connectTo(this.serial, dest.serial);
+            dest.connectTo(serial, source.serial);
+            source.connectTo(serial, dest.serial);
         }
 
     }

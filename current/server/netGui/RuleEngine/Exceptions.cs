@@ -2,15 +2,14 @@
 
 namespace netGui.RuleEngine
 {
-    class Exceptions : Exception { }
-    class PinNotFoundException : Exception
+    class pinNotFoundException : Exception
     {
-        public PinNotFoundException() : base () { }
-        public PinNotFoundException(string message) : base(message) { }        
+        public pinNotFoundException() { }
+        public pinNotFoundException(string message) : base(message) { }        
     }
     class ruleLoadException : Exception
     {
-        public ruleLoadException() : base () { }
+        public ruleLoadException() { }
         public ruleLoadException(string message) : base(message) {}
     }
 }

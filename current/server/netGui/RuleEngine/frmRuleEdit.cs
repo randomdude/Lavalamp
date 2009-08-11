@@ -213,8 +213,8 @@ namespace netGui.RuleEngine
             string utf8Xml = Encoding.ASCII.GetString(Encoding.UTF8.GetBytes(serialisedData));
             StringReader myReader = new StringReader(utf8Xml);
 
-            XmlSerializer mySer = new XmlSerializer(typeof(Rule));
-            ctlRule1.targetRule = (Rule)mySer.Deserialize(myReader);
+            XmlSerializer mySer = new XmlSerializer(typeof(rule));
+            ctlRule1.targetRule = (rule)mySer.Deserialize(myReader);
             ctlRule1.addRuleItemControlsAfterDeserialisation();
             ctlRule1.targetRule.state = ruleState.stopped;
         }

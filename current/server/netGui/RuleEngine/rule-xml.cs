@@ -1,19 +1,98 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Xml;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 using netGui.RuleEngine.ruleItems;
 
 namespace netGui.RuleEngine
 {
-    public partial class Rule
+    // XML serialisation and deserialisation routines for the rule class.
+
+    partial class rule
     {
-        public void ReadLineChainDictionary(XmlReader reader, delegatePack delegates)
+        /// <summary>
+        /// Convenience method to pass to ISerializable
+        /// </summary>
+        /// <returns>A serialised rule</returns>
+        public string serialise()
+        {
+            // Pass deserialisation on to ISerializable classes.
+            StringWriter myWriter = new StringWriter();
+            XmlSerializer mySer = new XmlSerializer(this.GetType());
+            mySer.Serialize(myWriter, this);
+            return myWriter.ToString();
+        }
+
+        #region ISerializable methods
+        public XmlSchema GetSchema()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ReadXml(XmlReader reader)
+        {
+            String parentTag = reader.Name.ToLower();
+            delegatePack myDelegates = generateDelegates();
+
+            bool inhibitNextRead = false;
+            bool keepGoing = true;
+            while (keepGoing)
+            {
+                String xmlName = reader.Name.ToLower();
+
+                if (xmlName == parentTag && reader.NodeType == XmlNodeType.EndElement)
+                    keepGoing = false;
+
+                if (xmlName == "name" && reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
+                {
+                    name = reader.ReadElementContentAsString();
+                    inhibitNextRead = true;
+                }
+                if (xmlName == "state" && reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
+                {
+                    state = (ruleState)Enum.Parse(state.GetType(), reader.ReadElementContentAsString());
+                    inhibitNextRead = true;
+                }
+                if (xmlName == "linechains" && reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
+                {
+                    readLineChainDictionary(reader, myDelegates);
+                    inhibitNextRead = true;
+                }
+                if (xmlName == "pins" && reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
+                {
+                    readPinDictionaryInToRule(reader, myDelegates);
+                    inhibitNextRead = true;
+                }
+                if (xmlName == "ruleitems" && reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
+                {
+                    readRuleItemDictionary(reader, myDelegates);
+                    inhibitNextRead = true;
+                }
+
+                if (keepGoing && !inhibitNextRead)
+                    keepGoing = reader.Read();
+                inhibitNextRead = false;
+            }
+        }
+
+        public void WriteXml(XmlWriter writer)
+        {
+            writer.WriteElementString("name", name);
+            writer.WriteElementString("state", state.ToString());
+
+            writer.WriteElementRuleItemDictionary("ruleItems", ruleItems);  // this _must_ be before the others! TODO: Is this still the case? Check if it _does_ need to be before the others.
+            writer.WriteElementLineChainDictionary("lineChains", lineChains);
+            writer.WriteElementPinDictionary("pins", pins);
+        }
+
+        #endregion
+
+        // And now a squillion helper methods which use our insipid delegatePack. :/
+
+        private void readLineChainDictionary(XmlReader reader, delegatePack delegates)
         {
             String parentTag = reader.Name.ToLower();
 
@@ -28,7 +107,7 @@ namespace netGui.RuleEngine
 
                 if (xmlName == "linechain" && reader.NodeType == XmlNodeType.Element)
                 {
-                    ReadAndAddLineChain(reader, delegates);
+                    readAndAddLineChain(reader, delegates);
                     inhibitNextRead = true;
                 }
 
@@ -38,14 +117,14 @@ namespace netGui.RuleEngine
             }
         }
 
-        private static void ReadAndAddLineChain(XmlReader reader, delegatePack delegates)
+        private void readAndAddLineChain(XmlReader reader, delegatePack delegates)
         {
             lineChain toRet = new lineChain(delegates);
             toRet.ReadXml(reader);
             delegates.AddLineChainToGlobalPool(toRet);
         }
 
-        public void ReadRuleItemDictionary(XmlReader reader, delegatePack delegates)
+        private void readRuleItemDictionary(XmlReader reader, delegatePack delegates)
         {
             String parentTag = reader.Name.ToLower();
 
@@ -70,14 +149,14 @@ namespace netGui.RuleEngine
             }
         }
 
-        private ruleItemBase MakeRuleItem(ruleItemInfo info)
+        private ruleItemBase makeRuleItem(ruleItemInfo info)
         {
             // Make new ruleItem control of this RuleItem type
             ruleItemBase newRuleItem;
             if (info.itemType == ruleItemType.RuleItem)
             {
                 ConstructorInfo constr = info.RuleItemBaseType.GetConstructor(new Type[0]);
-                newRuleItem = (ruleItemBase) constr.Invoke(new object[0] { });
+                newRuleItem = (ruleItemBase)constr.Invoke(new object[0] { });
             }
             else if (info.itemType == ruleItemType.PythonFile)
             {
@@ -125,7 +204,6 @@ namespace netGui.RuleEngine
                 if (xmlName == "type" && reader.NodeType == XmlNodeType.Element)
                 {
                     thisTypeName = reader.ReadElementContentAsString();
-                    
 
                     Assembly thisAss = Assembly.GetExecutingAssembly();
                     Type thisType;
@@ -145,7 +223,7 @@ namespace netGui.RuleEngine
                     myInfo.itemType = ruleItemType.RuleItem;
                     myInfo.RuleItemBaseType = thisType;
 
-                    ruleItemBase newRuleItem = MakeRuleItem(myInfo);
+                    ruleItemBase newRuleItem = makeRuleItem(myInfo);
                     newRuleItem.serial = new ruleItemGuid(thisSerial);
                     newRuleItem.location = location;
                     delegates.AddRuleItemToGlobalPool(newRuleItem);
@@ -158,11 +236,11 @@ namespace netGui.RuleEngine
             }
         }
 
-        public void ReadPinDictionaryInToRule( XmlReader reader, delegatePack delegates)
+        private void readPinDictionaryInToRule(XmlReader reader, delegatePack delegates)
         {
             String parentTag = reader.Name.ToLower();
 
-            pin thisPin = new pin();    
+            pin thisPin = new pin();
 
             bool keepGoing = true;
             bool inhibitNextRead;
@@ -206,7 +284,7 @@ namespace netGui.RuleEngine
                 }
                 if (xmlName == "direction" && reader.NodeType == XmlNodeType.Element)
                 {
-                    thisPin.direction = (pinDirection) Enum.Parse(typeof (pinDirection), reader.ReadElementContentAsString(), true);
+                    thisPin.direction = (pinDirection)Enum.Parse(typeof(pinDirection), reader.ReadElementContentAsString(), true);
                     inhibitNextRead = true;
                 }
                 if (xmlName == "pin" && reader.NodeType == XmlNodeType.EndElement)
@@ -220,13 +298,5 @@ namespace netGui.RuleEngine
             }
         }
 
-        public string serialise()
-        {
-            // Pass deserialisation on to ISerializable classes.
-            StringWriter myWriter = new StringWriter();
-            XmlSerializer mySer = new XmlSerializer(this.GetType());
-            mySer.Serialize(myWriter, this);
-            return myWriter.ToString();
-        }
     }
 }

@@ -12,7 +12,7 @@ namespace netGui
     {
         private transmitterDriver _mydriver = null;   
         public Options MyOptions = new Options();
-        public delegate void saveRuleDelegate(Rule saveThis, string serialisedRule);
+        public delegate void saveRuleDelegate(rule saveThis, string serialisedRule);
 
         public transmitterDriver getMyDriver()
         {
@@ -337,7 +337,7 @@ namespace netGui
 
             lstRules.Items.Add(newname.result, newname.result, 0);
 
-            lstRules.Items[newname.result].Tag = new Rule(newname.result);
+            lstRules.Items[newname.result].Tag = new rule(newname.result);
         }
 
         private void deleteRuleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -353,10 +353,10 @@ namespace netGui
         {
             if (lstRules.SelectedItems.Count == 0 ) return;
 
-            editRuleItem((Rule) lstRules.SelectedItems[0].Tag);
+            editRuleItem((rule) lstRules.SelectedItems[0].Tag);
         }
 
-        private void editRuleItem(Rule rule)
+        private void editRuleItem(rule rule)
         {
             if (openRules.Contains(rule.name))
             {
@@ -370,7 +370,8 @@ namespace netGui
             newForm.Show();
         }
 
-        private void saveRule(Rule saveThis, string ruleSerialised)
+        // todo: wtf is this / change name
+        private void saveRule(rule saveThis, string ruleSerialised)
         {
             openRules.Remove(saveThis.name);
             ListViewItem editedItem = lstRules.Items[saveThis.name];
@@ -381,29 +382,65 @@ namespace netGui
 
         private void saveAllRulesToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Check we can get to the output path, to avoid throwing a messageBox for each failed file if we can't
+            DirectoryInfo rulesDir;
+            try
+            {
+                rulesDir = new DirectoryInfo(MyOptions.rulesPath);
+                rulesDir.GetFiles();
+            }
+            catch
+            {
+                MessageBox.Show("Unable to read rule files from " + MyOptions.rulesPath);
+                return;
+            }
+
+            // Now save each rule in turn.
             foreach (ListViewItem thisItem in lstRules.Items )
             {
-                Rule thisRule = (Rule)thisItem.Tag;
-                StreamWriter outputFile = new StreamWriter(MyOptions.rulesPath + @"\" + thisItem.Text);
-                outputFile.Write(thisRule.serialise());
-                outputFile.Close();
+                try
+                {
+                    rule thisRule = (rule)thisItem.Tag;
+                    thisRule.saveToDisk(MyOptions.rulesPath + @"\" + thisItem.Text);
+                } catch {
+                    MessageBox.Show("Unable to save rule file '" + thisItem.Text + "'");
+                }
             }
         }
 
         private void loadAllRulesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DirectoryInfo rulesDir = new DirectoryInfo(MyOptions.rulesPath);
-            foreach (FileInfo thisFile in rulesDir.GetFiles())
+            DirectoryInfo rulesDir;
+            FileInfo[] fileList;
+            try
             {
-                StreamReader thisFileReader = new StreamReader(thisFile.FullName);
-                // fixme/todo: fix this bodge!
-                frmRuleEdit newEditor = new frmRuleEdit();
-                newEditor.loadRule(thisFileReader.ReadToEnd());
-                ListViewItem newItem = new ListViewItem(thisFile.Name, thisFile.Name);
-                newItem.Tag = newEditor.ctlRule1.targetRule;
-                lstRules.Clear();
-                lstRules.Items.Add(newItem);
-                thisFileReader.Close();
+                rulesDir = new DirectoryInfo(MyOptions.rulesPath);
+                fileList = rulesDir.GetFiles();
+            } catch {
+                MessageBox.Show("Unable to read rule files from " + MyOptions.rulesPath);
+                return;
+            }
+
+            lstRules.Clear();
+            foreach (FileInfo thisFile in fileList)
+            {
+                try
+                {
+                    StreamReader thisFileReader;
+                    using (thisFileReader = new StreamReader(thisFile.FullName))
+                    {
+                        // fixme/todo: fix this bodge! We shouldn't need to make a new rule editor form just to deserialise a rule!
+                        frmRuleEdit newEditor = new frmRuleEdit();
+                        newEditor.loadRule(thisFileReader.ReadToEnd());
+
+                        // Add our new rule name to our listView, with a .tag() set to the rule object itself.
+                        ListViewItem newItem = new ListViewItem(thisFile.Name, thisFile.Name);
+                        newItem.Tag = newEditor.ctlRule1.targetRule;
+                        lstRules.Items.Add(newItem);
+                    }
+                } catch {
+                    MessageBox.Show("Unable to read rule file '" + thisFile.FullName + "'" );
+                }
             }
 
         }

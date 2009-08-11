@@ -17,7 +17,7 @@ namespace netGui.RuleEngine
         public ctlRule()
         {
             InitializeComponent();
-            targetRule = new Rule();
+            targetRule = new rule();
 
             commonConstructorStuff();
         }
@@ -37,7 +37,7 @@ namespace netGui.RuleEngine
 
         private bool running = false;
 
-        public Rule targetRule;
+        public rule targetRule;
 
         private PictureBox currentlyConnecting;         // These three hold the pictureBox and (partial-)lineChain which we are currently wiring up
         public lineChain currentLine;
@@ -100,7 +100,7 @@ namespace netGui.RuleEngine
             XmlSerializer mySer = new XmlSerializer(targetRule.GetType());
             Encoding ascii = Encoding.BigEndianUnicode;
             Stream stream = new MemoryStream(ascii.GetBytes(serialised));
-            targetRule = (Rule) mySer.Deserialize(stream);
+            targetRule = (rule) mySer.Deserialize(stream);
         }
 
         #endregion
@@ -317,7 +317,7 @@ namespace netGui.RuleEngine
             this.Controls.Remove(toDelete);
 
             // remove the associated ruleItem
-            targetRule.ctlRuleItemWidgets.Remove(toDelete.serial.id.ToString());
+            targetRule.ctlRuleItems.Remove(toDelete.serial.id.ToString());
 
             // remove from our global pool
             toDelete.targetRuleItem.isDeleted = true;
@@ -510,7 +510,7 @@ namespace netGui.RuleEngine
                 running = false;
                 this.Enabled = true;
 
-                foreach (ctlRuleItemWidget anItem in targetRule.ctlRuleItemWidgets.Values )
+                foreach (ctlRuleItemWidget anItem in targetRule.ctlRuleItems.Values )
                 {
                     anItem.targetRuleItem.stop();
                     List<String> pinNames = new List<String>();
@@ -532,7 +532,7 @@ namespace netGui.RuleEngine
 
                 this.Enabled = false;
 
-                foreach (ctlRuleItemWidget anItem in targetRule.ctlRuleItemWidgets.Values)
+                foreach (ctlRuleItemWidget anItem in targetRule.ctlRuleItems.Values)
                 {
                     anItem.targetRuleItem.clearErrors();
                     anItem.targetRuleItem.start();
