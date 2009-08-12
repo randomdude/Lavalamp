@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Windows.Forms;
-using System.Collections.Generic;
 using netbridge;
 using netGui.nodeEditForms;
 using netGui.RuleEngine;
@@ -12,7 +11,6 @@ namespace netGui
     {
         private transmitterDriver _mydriver = null;   
         public options MyOptions = new options();
-        public delegate void saveRuleDelegate(rule saveThis, string serialisedRule);
 
         public transmitterDriver getMyDriver()
         {
@@ -316,8 +314,6 @@ namespace netGui
 
         #region rule stuff
 
-        private List<String> openRules = new List<String>();
-
         private void newRuleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FrmAskName newname = new FrmAskName("New rule name", "UnnamedRule");
@@ -339,11 +335,96 @@ namespace netGui
 
             newRule.onStatusUpdate += updateRuleIcon;
             newItem.SubItems.Add(newRule.name);
+            newItem.SubItems.Add(false.ToString());
             newItem.Tag = newRule;
 
             lstRules.Items.Add(newItem);
 
             updateRuleIcon(newRule);
+        }
+
+        private void deleteRuleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ListViewItem toRemove = lstRules.SelectedItems[0];
+            DialogResult sureness = MessageBox.Show("Are you sure you want to delete rule '" + toRemove.Text + "'?", "Confirm delete", MessageBoxButtons.YesNo);
+
+            if (sureness == System.Windows.Forms.DialogResult.Yes)
+                lstRules.Items.Remove(toRemove);
+        }
+
+        private void lstRules_ItemActivate(object sender, EventArgs e)
+        {
+            if (lstRules.SelectedItems.Count == 0 ) return;
+
+            editRuleItem( lstRules.SelectedItems[0] );
+        }
+
+        private void editRuleItem(ListViewItem ruleItem)
+        {
+            if (ruleItem.SubItems[2].Text == true.ToString() )
+            {
+                // todo: being open rule editor window to foregroound
+                MessageBox.Show("This rule is already open.");
+                return;
+            }
+
+            rule rule = (rule) ruleItem.Tag;
+
+            frmRuleEdit newForm = new frmRuleEdit();
+            newForm.saveCallback = new frmRuleEdit.saveRuleDelegate(onSaveRule);
+            newForm.closeCallback = new frmRuleEdit.closeRuleDelegate(onCloseRuleEditorDialog);
+            // We serialise the rule before we pass it to the rule edit form. This is to ease the transition
+            // to a client-server style rule engine / rule editor kind of situations later on
+            newForm.loadRule(rule.serialise());
+            newForm.ctlRule1.targetRule.onStatusUpdate += updateRuleIcon;
+            newForm.Show();
+
+            // Mark this rule as being open in the editor
+            ruleItem.SubItems[2].Text = true.ToString();
+        }
+
+        private void onCloseRuleEditorDialog(rule closeThis)
+        {
+            // Flag the rule as no longer open in an editor.
+            // Find the Rule in the listView
+            ListViewItem ruleItem = findRuleItem(closeThis);
+            if (ruleItem == null)
+            {
+                MessageBox.Show("Unable to mark rule as not-being-edited - can't find it in listView control");
+                return;
+            }
+
+            // mark the listView item as not being open in the editor any more
+            ruleItem.SubItems[2].Text = false.ToString();
+        }
+
+        private void onSaveRule(rule saveThis)
+        {
+            // Find the Rule in the listView
+            ListViewItem ruleItem = findRuleItem(saveThis);
+            if (ruleItem == null)
+            {
+                MessageBox.Show("Unable to save rule - can't find it in listView control");
+                return;
+            }
+
+            // mark the listView item as not being open in the editor any more
+            ruleItem.SubItems[2].Text = false.ToString();
+
+            // Stash our rule object in the listViewItem.
+            ruleItem.Tag = saveThis;
+        }
+
+        private ListViewItem findRuleItem(rule toFind)
+        {
+            // Pull item out of listView
+            // todo: Is there a better way of doing this?
+            foreach (ListViewItem thisListViewItem in lstRules.Items)
+            {
+                if (thisListViewItem.SubItems[1].Text == toFind.name)
+                    return thisListViewItem;
+            }
+            return null;
         }
 
         /// <summary>
@@ -352,17 +433,7 @@ namespace netGui
         /// <param name="toUpdate">The rule to update</param>
         private void updateRuleIcon(rule toUpdate)
         {
-            ListViewItem itemToUpdate = null;
-
-            // Pull item out of listView
-            foreach(ListViewItem thisListViewItem in lstRules.Items)
-            {
-                if (thisListViewItem.SubItems[1].Text == toUpdate.name )
-                {
-                    itemToUpdate = thisListViewItem;
-                    break;
-                }
-            }
+            ListViewItem itemToUpdate = findRuleItem(toUpdate);
 
             if (itemToUpdate == null)
             {
@@ -386,57 +457,6 @@ namespace netGui
                     throw new ArgumentOutOfRangeException("Invalid rule state");
             }
         }
-
-        private void deleteRuleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ListViewItem toRemove = lstRules.SelectedItems[0];
-            DialogResult sureness = MessageBox.Show("Are you sure you want to delete rule '" + toRemove.Text + "'?", "Confirm delete", MessageBoxButtons.YesNo);
-
-            if (sureness == System.Windows.Forms.DialogResult.Yes)
-                lstRules.Items.Remove(toRemove);
-        }
-
-        private void lstRules_ItemActivate(object sender, EventArgs e)
-        {
-            if (lstRules.SelectedItems.Count == 0 ) return;
-
-            editRuleItem((rule) lstRules.SelectedItems[0].Tag);
-        }
-
-        private void editRuleItem(rule rule)
-        {
-            if (openRules.Contains(rule.name))
-            {
-                MessageBox.Show("This rule is already open.");
-                return;
-            }
-
-            frmRuleEdit newForm = new frmRuleEdit();
-            newForm.saveCallback = new saveRuleDelegate(saveRule);
-            // We serialise the rule before we pass it to the rule edit form. This is to ease the transition
-            // to a client-server style rule engine / rule editor kind of situations later on
-            newForm.loadRule(rule.serialise());
-            newForm.ctlRule1.targetRule.onStatusUpdate += updateRuleIcon;
-            newForm.Show();
-        }
-
-        // todo: wtf is this / change name
-        private void saveRule(rule saveThis, string ruleSerialised)
-        {
-            openRules.Remove(saveThis.name);
-
-            // Pull our item out of the listview (todo: is there a better way to do this?)
-            foreach (ListViewItem thisItem in lstRules.Items)
-            {
-                if (thisItem.Text == saveThis.name)
-                {
-                    thisItem.Tag = saveThis;
-                    break;
-                }
-            }
-        }
-
-        #endregion
 
         private void saveAllRulesToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -502,6 +522,7 @@ namespace netGui
             }
 
         }
+        #endregion
 
     }
 }

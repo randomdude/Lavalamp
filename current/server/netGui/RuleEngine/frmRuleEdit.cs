@@ -16,7 +16,11 @@ namespace netGui.RuleEngine
         private int buttonsBorderY;
         private bool isClosing = false;
 
-        public FrmMain.saveRuleDelegate saveCallback ;
+        public delegate void saveRuleDelegate(rule saveThis);
+        public delegate void closeRuleDelegate(rule closeThis);
+
+        public saveRuleDelegate saveCallback;
+        public closeRuleDelegate closeCallback;
 
         public frmRuleEdit()
         {
@@ -174,7 +178,7 @@ namespace netGui.RuleEngine
             {
                 String serialised = ctlRule1.SerialiseRule();
                 Clipboard.SetText(serialised);
-                saveCallback.Invoke(ctlRule1.targetRule, serialised);
+                saveCallback.Invoke(ctlRule1.targetRule);
             }
         }
 
@@ -233,7 +237,16 @@ namespace netGui.RuleEngine
             if (response == DialogResult.No)
                 return;
 
-            stopRule();
+        }
+
+        /// <summary>
+        /// Close this dialog, after firing the events as neccesary.
+        /// </summary>
+        private void closeRule()
+        {
+            if (ctlRule1 != null)
+                closeCallback.Invoke(ctlRule1.targetRule);
+
             isClosing = true;
             Close();
         }
@@ -248,8 +261,8 @@ namespace netGui.RuleEngine
         {
             saveRule();
             MessageBox.Show("Rule saved OK");
-            isClosing = true;
-            Close();
+
+            closeRule();
         }
 
         private void frmRuleEdit_FormClosing(object sender, FormClosingEventArgs e)
@@ -269,7 +282,7 @@ namespace netGui.RuleEngine
             if (response == DialogResult.Yes)
                 saveRule();
 
-            stopRule();
+            closeRule();
         }
 
         private void frmRuleEdit_ResizeEnd(object sender, EventArgs e)

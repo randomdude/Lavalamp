@@ -72,13 +72,14 @@ namespace netGui
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lstRules = new System.Windows.Forms.ListView();
-            this.ColHdrState = new System.Windows.Forms.ColumnHeader();
-            this.ColHdrName = new System.Windows.Forms.ColumnHeader();
+            this.colHdrIsOpenInEditor = new System.Windows.Forms.ColumnHeader();
+            this.colHdrState = new System.Windows.Forms.ColumnHeader();
+            this.colHdrName = new System.Windows.Forms.ColumnHeader();
+            this.colHdrDetail = new System.Windows.Forms.ColumnHeader();
             this.contextMenuStripRules = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.newRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imgLstStates = new System.Windows.Forms.ImageList(this.components);
-            this.colHdrDetail = new System.Windows.Forms.ColumnHeader();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -426,8 +427,9 @@ namespace netGui
             // lstRules
             // 
             this.lstRules.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.ColHdrState,
-            this.ColHdrName,
+            this.colHdrState,
+            this.colHdrName,
+            this.colHdrIsOpenInEditor,
             this.colHdrDetail});
             this.lstRules.ContextMenuStrip = this.contextMenuStripRules;
             this.lstRules.GridLines = true;
@@ -441,15 +443,24 @@ namespace netGui
             this.lstRules.View = System.Windows.Forms.View.Details;
             this.lstRules.ItemActivate += new System.EventHandler(this.lstRules_ItemActivate);
             // 
-            // ColHdrState
+            // colHdrIsOpenInEditor
             // 
-            this.ColHdrState.Text = "State";
-            this.ColHdrState.Width = 133;
+            this.colHdrIsOpenInEditor.Text = "Open in editor?";
             // 
-            // ColHdrName
+            // colHdrState
             // 
-            this.ColHdrName.Text = "Name";
-            this.ColHdrName.Width = 180;
+            this.colHdrState.Text = "State";
+            this.colHdrState.Width = 133;
+            // 
+            // colHdrName
+            // 
+            this.colHdrName.Text = "Name";
+            this.colHdrName.Width = 180;
+            // 
+            // colHdrDetail
+            // 
+            this.colHdrDetail.Text = "Detail";
+            this.colHdrDetail.Width = 187;
             // 
             // contextMenuStripRules
             // 
@@ -481,16 +492,11 @@ namespace netGui
             this.imgLstStates.Images.SetKeyName(1, "Critical.bmp");
             this.imgLstStates.Images.SetKeyName(2, "Run.bmp");
             // 
-            // colHdrDetail
-            // 
-            this.colHdrDetail.Text = "Detail";
-            this.colHdrDetail.Width = 187;
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(542, 647);
+            this.ClientSize = new System.Drawing.Size(542, 587);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.menuStrip1);
@@ -560,10 +566,11 @@ namespace netGui
         private System.Windows.Forms.ToolStripMenuItem deleteRuleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAllRulesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadAllRulesToolStripMenuItem;
-        private System.Windows.Forms.ColumnHeader ColHdrName;
-        private System.Windows.Forms.ColumnHeader ColHdrState;
+        private System.Windows.Forms.ColumnHeader colHdrName;
+        private System.Windows.Forms.ColumnHeader colHdrState;
         private System.Windows.Forms.ImageList imgLstStates;
         private System.Windows.Forms.ColumnHeader colHdrDetail;
+        private System.Windows.Forms.ColumnHeader colHdrIsOpenInEditor;
     }
 }
 
