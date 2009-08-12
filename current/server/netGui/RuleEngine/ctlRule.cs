@@ -507,6 +507,8 @@ namespace netGui.RuleEngine
         {
             if (running)
             {
+                targetRule.state = ruleState.stopped;
+
                 running = false;
                 this.Enabled = true;
 
@@ -526,8 +528,11 @@ namespace netGui.RuleEngine
 
         public void start()
         {
+            // TODO: Move all this to rule class?
             if (!running)
             {
+                targetRule.state = ruleState.running;
+
                 running = true;
 
                 this.Enabled = false;

@@ -10,7 +10,7 @@ namespace netGui.RuleEngine.ruleItems
 {
     public partial class ctlCheckEmail : UserControl
     {
-        public emailOptions options;
+        public emailOptions options = new emailOptions();
 
         public ProcessWindowStyle windowStyle = ProcessWindowStyle.Normal;
 

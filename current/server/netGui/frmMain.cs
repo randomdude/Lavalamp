@@ -124,11 +124,11 @@ namespace netGui
 
         private void addNewNode(Node newNode)
         {
-            newNode.ownerWindow = this;
+            newNode.OwnerWindow = this;
             // Connect to node and fill fields
             try
             {
-                newNode.mydriver = getMyDriver();
+                newNode.Mydriver = getMyDriver();
                 newNode.fillProperties();
             }
             catch (badPortException)
@@ -332,12 +332,59 @@ namespace netGui
                 return;
             }
 
-            // Create a new rule
-            ListViewItem newItem = new ListViewItem(newname.result);
+            // Create a new rule, and add it to our listView.
+            // Add the new rule's state and name as columns, and the rule object itself as a tag.
+            rule newRule = new rule(newname.result);
+            ListViewItem newItem = new ListViewItem();
 
-            lstRules.Items.Add(newname.result, newname.result, 0);
+            newRule.onStatusUpdate += updateRuleIcon;
+            newItem.SubItems.Add(newRule.name);
+            newItem.Tag = newRule;
 
-            lstRules.Items[newname.result].Tag = new rule(newname.result);
+            lstRules.Items.Add(newItem);
+
+            updateRuleIcon(newRule);
+        }
+
+        /// <summary>
+        /// Update a rows 'status' and status icon
+        /// </summary>
+        /// <param name="toUpdate">The rule to update</param>
+        private void updateRuleIcon(rule toUpdate)
+        {
+            ListViewItem itemToUpdate = null;
+
+            // Pull item out of listView
+            foreach(ListViewItem thisListViewItem in lstRules.Items)
+            {
+                if (thisListViewItem.SubItems[1].Text == toUpdate.name )
+                {
+                    itemToUpdate = thisListViewItem;
+                    break;
+                }
+            }
+
+            if (itemToUpdate == null)
+            {
+                MessageBox.Show("Unable to update rule '" + toUpdate.name + "'");
+                return;
+            }
+
+            itemToUpdate.Text = toUpdate.state.ToString();
+            switch (toUpdate.state)
+            {
+                case ruleState.stopped:
+                    itemToUpdate.ImageKey = "Pause.bmp";
+                    break;
+                case ruleState.running:
+                    itemToUpdate.ImageKey = "Run.bmp";
+                    break;
+                case ruleState.errored:
+                    itemToUpdate.ImageKey = "Critical.bmp";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("Invalid rule state");
+            }
         }
 
         private void deleteRuleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -366,7 +413,10 @@ namespace netGui
 
             frmRuleEdit newForm = new frmRuleEdit();
             newForm.saveCallback = new saveRuleDelegate(saveRule);
+            // We serialise the rule before we pass it to the rule edit form. This is to ease the transition
+            // to a client-server style rule engine / rule editor kind of situations later on
             newForm.loadRule(rule.serialise());
+            newForm.ctlRule1.targetRule.onStatusUpdate += updateRuleIcon;
             newForm.Show();
         }
 

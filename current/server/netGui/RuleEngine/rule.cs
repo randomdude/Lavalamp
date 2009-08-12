@@ -17,7 +17,25 @@ namespace netGui.RuleEngine
     public partial class rule : IXmlSerializable 
     {
         public String name;
-        public ruleState state;
+
+        private ruleState _state;
+
+        /// <summary>
+        /// The state of our rule - running, stopped, etc. 
+        /// </summary>
+        public ruleState state
+        {
+            get { return _state; }
+            set
+            {
+                _state = value;
+
+                // If there's a delegate hander, notify it that the status has changed
+                if (onStatusUpdate != null)
+                    onStatusUpdate.Invoke(this);
+            }
+        }
+
 
         /// <summary>
         /// RuleItems are items in the rule - ie, the blocks that discretely do things. 'at start of run' etc.
@@ -39,6 +57,13 @@ namespace netGui.RuleEngine
         /// </summary>
         public Dictionary<String, pin> pins = new Dictionary<string, pin>();
 
+        /// <summary>
+        /// This delegate gets called on updates to the rule's status. Obviously.
+        /// </summary>
+        public onStatusUpdateDelegate onStatusUpdate = null;
+        public delegate void onStatusUpdateDelegate(rule updating);
+
+
         // See comments at definition of these. They're an abomination to OO.
         public delegate lineChain GetLineChainFromGuidDelegate(lineChainGuid connection);
         public delegate ruleItems.ruleItemBase GetRuleItemFromGuidDelegate(ruleItemGuid connection);
@@ -54,13 +79,13 @@ namespace netGui.RuleEngine
         public rule()
         {
             name = "New rule";
-            this.state = ruleState.stopped;
+            this._state = ruleState.stopped;
         }
 
         public rule(String newName)
         {
             this.name = newName;
-            this.state = ruleState.stopped;
+            this._state = ruleState.stopped;
         }
 
         new public String ToString()

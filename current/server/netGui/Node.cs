@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
-using System.Windows.Forms;
 using netbridge;
 
 namespace netGui
 {
     public class Node
     {
-        public transmitterDriver mydriver = null;
-        public FrmMain ownerWindow = null;
-
+        public transmitterDriver Mydriver = null;
+        private FrmMain ownerWindow = null;
+ 
         #region delegates
         public delegate frmWait makeNewFrmWaitDelegateType();
         private readonly makeNewFrmWaitDelegateType makeNewFrmWaitDelegate;
         public delegate void closeFrmWaitDelegateType(frmWait thisone);
         private readonly closeFrmWaitDelegateType closeFrmWaitDelegate;
+
+        public FrmMain OwnerWindow
+        {
+            get { return ownerWindow; }
+            set { ownerWindow = value; }
+        }
 
         private frmWait SafelyMakeNewFrmWait()
         {
@@ -42,7 +46,7 @@ namespace netGui
         public Node(transmitterDriver driver, Int16 newid)
         {
             id = newid;
-            mydriver = driver;
+            Mydriver = driver;
 
             fillProperties();
             makeNewFrmWaitDelegate = MakeNewFrmWait;
@@ -98,7 +102,7 @@ namespace netGui
 
             try
             {
-                return mydriver.doGetSensorCount(id);
+                return Mydriver.doGetSensorCount(id);
             }
             finally
             {
@@ -112,7 +116,7 @@ namespace netGui
 
             try
             {
-                mydriver.doPing(id);
+                Mydriver.doPing(id);
             }
             finally
             {
@@ -125,7 +129,7 @@ namespace netGui
 
             try
             {
-                string toReturn = mydriver.doIdentify(id);
+                string toReturn = Mydriver.doIdentify(id);
                 return toReturn;
             }
             finally
@@ -139,7 +143,7 @@ namespace netGui
 
             try
             {
-                return mydriver.doGetSensorType(id, sensorId);
+                return Mydriver.doGetSensorType(id, sensorId);
             }
             finally
             {
@@ -156,7 +160,7 @@ namespace netGui
             try
             {
                 // todo: add code to accept different types of input
-                return mydriver.doGetGenericDigitalIn(id, sensorId);
+                return Mydriver.doGetGenericDigitalIn(id, sensorId);
             }
             finally
             {
@@ -175,25 +179,25 @@ namespace netGui
                 if (toThis.GetType() == typeof(bool))
                 {
                     if ((bool)toThis)
-                        mydriver.doSetGenericOut(id, 0x01, sensorId);
+                        Mydriver.doSetGenericOut(id, 0x01, sensorId);
                     else
-                        mydriver.doSetGenericOut(id, 0x00, sensorId);
+                        Mydriver.doSetGenericOut(id, 0x00, sensorId);
                 }
                 else if (toThis.GetType() == typeof(Int16))
                 {
-                    mydriver.doSetGenericOut(id, ((Int16)toThis), sensorId);
+                    Mydriver.doSetGenericOut(id, ((Int16)toThis), sensorId);
                 }
                 else if (toThis.GetType() == typeof(pwm_brightness))
                 {
-                    mydriver.doSetGenericOut(id, ((pwm_brightness)toThis).fadeto, sensorId);
+                    Mydriver.doSetGenericOut(id, ((pwm_brightness)toThis).fadeto, sensorId);
                 }
                 else if (toThis.GetType() == typeof(pwm_speed))
                 {
-                    mydriver.doSetPWMSpeed(id, ((pwm_speed)toThis).fadespeed, sensorId);
+                    Mydriver.doSetPWMSpeed(id, ((pwm_speed)toThis).fadespeed, sensorId);
                 }
                 else
                 {
-                    mydriver.doSetGenericOut(id, (Int16)toThis, sensorId);       // best guess
+                    Mydriver.doSetGenericOut(id, (Int16)toThis, sensorId);       // best guess
                 }
             }
             finally
@@ -209,7 +213,7 @@ namespace netGui
 
             try
             {
-                mydriver.doSetNodeP(id, newP);
+                Mydriver.doSetNodeP(id, newP);
             }
             finally
             {
@@ -223,8 +227,8 @@ namespace netGui
 
             try 
             {
-                mydriver.doSetNodeKey(id, newKey.keyArray);
-                mydriver.doFlashReRead(id);
+                Mydriver.doSetNodeKey(id, newKey.keyArray);
+                Mydriver.doFlashReRead(id);
             }
             finally
             {
@@ -238,7 +242,7 @@ namespace netGui
 
             try 
             {
-                mydriver.doSetNodeId(id, newId);
+                Mydriver.doSetNodeId(id, newId);
             }
             finally
             {

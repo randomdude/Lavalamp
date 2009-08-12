@@ -140,9 +140,7 @@ namespace netGui.RuleEngine
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            btnStop.Enabled = true;
-            btnRun.Enabled = false;
-            ctlRule1.start();
+            startRule();
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -155,6 +153,13 @@ namespace netGui.RuleEngine
             btnStop.Enabled = false;
             btnRun.Enabled = true;
             ctlRule1.stop();
+        }
+
+        private void startRule()
+        {
+            btnStop.Enabled = true;
+            btnRun.Enabled = false;
+            ctlRule1.start();
         }
 
         private void saveRule()
@@ -298,5 +303,6 @@ namespace netGui.RuleEngine
             buttonsBorderY = btnStop.Top - (ctlRule1.Top + ctlRule1.Height);
             buttonsBorderX = btnRun.Left - (btnStop.Left + btnStop.Width) ;
         }
+
     }
 }
