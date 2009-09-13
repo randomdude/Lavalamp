@@ -152,14 +152,14 @@ namespace netGui.RuleEngine
             stopRule();
         }
 
-        private void stopRule()
+        public void stopRule()
         {
             btnStop.Enabled = false;
             btnRun.Enabled = true;
             ctlRule1.stop();
         }
 
-        private void startRule()
+        public void startRule()
         {
             btnStop.Enabled = true;
             btnRun.Enabled = false;

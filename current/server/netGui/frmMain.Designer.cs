@@ -72,13 +72,16 @@ namespace netGui
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lstRules = new System.Windows.Forms.ListView();
-            this.colHdrIsOpenInEditor = new System.Windows.Forms.ColumnHeader();
             this.colHdrState = new System.Windows.Forms.ColumnHeader();
             this.colHdrName = new System.Windows.Forms.ColumnHeader();
+            this.colHdrIsOpenInEditor = new System.Windows.Forms.ColumnHeader();
             this.colHdrDetail = new System.Windows.Forms.ColumnHeader();
             this.contextMenuStripRules = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.newRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+            this.runRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imgLstStates = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -443,10 +446,6 @@ namespace netGui
             this.lstRules.View = System.Windows.Forms.View.Details;
             this.lstRules.ItemActivate += new System.EventHandler(this.lstRules_ItemActivate);
             // 
-            // colHdrIsOpenInEditor
-            // 
-            this.colHdrIsOpenInEditor.Text = "Open in editor?";
-            // 
             // colHdrState
             // 
             this.colHdrState.Text = "State";
@@ -457,6 +456,10 @@ namespace netGui
             this.colHdrName.Text = "Name";
             this.colHdrName.Width = 180;
             // 
+            // colHdrIsOpenInEditor
+            // 
+            this.colHdrIsOpenInEditor.Text = "Open in editor?";
+            // 
             // colHdrDetail
             // 
             this.colHdrDetail.Text = "Detail";
@@ -466,9 +469,12 @@ namespace netGui
             // 
             this.contextMenuStripRules.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newRuleToolStripMenuItem,
-            this.deleteRuleToolStripMenuItem});
+            this.deleteRuleToolStripMenuItem,
+            this.toolStripMenuItem4,
+            this.runRuleToolStripMenuItem,
+            this.stopRuleToolStripMenuItem});
             this.contextMenuStripRules.Name = "contextMenuStrip1";
-            this.contextMenuStripRules.Size = new System.Drawing.Size(138, 48);
+            this.contextMenuStripRules.Size = new System.Drawing.Size(138, 98);
             // 
             // newRuleToolStripMenuItem
             // 
@@ -483,6 +489,29 @@ namespace netGui
             this.deleteRuleToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.deleteRuleToolStripMenuItem.Text = "&Delete rule";
             this.deleteRuleToolStripMenuItem.Click += new System.EventHandler(this.deleteRuleToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(134, 6);
+            // 
+            // runRuleToolStripMenuItem
+            // 
+            this.runRuleToolStripMenuItem.Image = global::netGui.Properties.Resources.Run;
+            this.runRuleToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Fuchsia;
+            this.runRuleToolStripMenuItem.Name = "runRuleToolStripMenuItem";
+            this.runRuleToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.runRuleToolStripMenuItem.Text = "&Run rule";
+            this.runRuleToolStripMenuItem.Click += new System.EventHandler(this.runRuleToolStripMenuItem_Click);
+            // 
+            // stopRuleToolStripMenuItem
+            // 
+            this.stopRuleToolStripMenuItem.Image = global::netGui.Properties.Resources.Pause;
+            this.stopRuleToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Fuchsia;
+            this.stopRuleToolStripMenuItem.Name = "stopRuleToolStripMenuItem";
+            this.stopRuleToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.stopRuleToolStripMenuItem.Text = "&Stop rule";
+            this.stopRuleToolStripMenuItem.Click += new System.EventHandler(this.stopRuleToolStripMenuItem_Click);
             // 
             // imgLstStates
             // 
@@ -571,6 +600,9 @@ namespace netGui
         private System.Windows.Forms.ImageList imgLstStates;
         private System.Windows.Forms.ColumnHeader colHdrDetail;
         private System.Windows.Forms.ColumnHeader colHdrIsOpenInEditor;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem runRuleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stopRuleToolStripMenuItem;
     }
 }
 

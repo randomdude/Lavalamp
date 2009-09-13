@@ -507,41 +507,21 @@ namespace netGui.RuleEngine
         {
             if (running)
             {
-                targetRule.state = ruleState.stopped;
-
                 running = false;
                 this.Enabled = true;
 
-                foreach (ctlRuleItemWidget anItem in targetRule.ctlRuleItems.Values )
-                {
-                    anItem.targetRuleItem.stop();
-                    List<String> pinNames = new List<String>();
-
-                    foreach (string thisPinName in anItem.targetRuleItem.pinStates.Keys)
-                        pinNames.Add(thisPinName);
-
-                    foreach (string thisPinName in pinNames)
-                        anItem.targetRuleItem.pinStates[thisPinName] = false;
-                }
+                targetRule.stop();
             }
         }
 
         public void start()
         {
-            // TODO: Move all this to rule class?
             if (!running)
             {
-                targetRule.state = ruleState.running;
-
                 running = true;
-
                 this.Enabled = false;
 
-                foreach (ctlRuleItemWidget anItem in targetRule.ctlRuleItems.Values)
-                {
-                    anItem.targetRuleItem.clearErrors();
-                    anItem.targetRuleItem.start();
-                }
+                targetRule.start();
             }
         }
 

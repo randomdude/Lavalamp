@@ -169,5 +169,42 @@ namespace netGui.RuleEngine
                 outputFile.Write(this.serialise());
             }
         }
+
+        /// <summary>
+        /// Start the rule running!
+        /// </summary>
+        public void start()
+        {
+            // mark this as running..
+            state = ruleState.running;
+
+            // Reset each ruleItem to non-errored
+            foreach (ruleItemBase anItem in ruleItems.Values )
+                anItem.clearErrors();
+
+            // And start each one.
+            foreach (ruleItemBase anItem in ruleItems.Values )
+                anItem.start();
+        }
+
+        public void stop()
+        {
+            // mark this as not running..
+            state = ruleState.stopped;
+
+            // Stop each ruleItem, and set all pins to false
+            foreach (ruleItemBase anItem in ruleItems.Values)
+            {
+                anItem.stop();
+
+                List<String> pinNames = new List<String>();
+
+                foreach (string thisPinName in anItem.pinStates.Keys)
+                    pinNames.Add(thisPinName);
+
+                foreach (string thisPinName in pinNames)
+                    anItem.pinStates[thisPinName] = false;
+            }
+        }
     }
 }

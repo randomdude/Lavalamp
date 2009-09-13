@@ -49,7 +49,7 @@
             this.tvToolbox.ContextMenuStrip = this.ctxMnuToolbox;
             this.tvToolbox.Location = new System.Drawing.Point(12, 28);
             this.tvToolbox.Name = "tvToolbox";
-            this.tvToolbox.Size = new System.Drawing.Size(135, 631);
+            this.tvToolbox.Size = new System.Drawing.Size(135, 318);
             this.tvToolbox.TabIndex = 5;
             this.tvToolbox.DoubleClick += new System.EventHandler(this.tvToolbox_DoubleClick);
             // 
@@ -58,12 +58,12 @@
             this.ctxMnuToolbox.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadFromnetAssemblyToolStripMenuItem});
             this.ctxMnuToolbox.Name = "ctxMnuToolbox";
-            this.ctxMnuToolbox.Size = new System.Drawing.Size(269, 26);
+            this.ctxMnuToolbox.Size = new System.Drawing.Size(280, 26);
             // 
             // loadFromnetAssemblyToolStripMenuItem
             // 
             this.loadFromnetAssemblyToolStripMenuItem.Name = "loadFromnetAssemblyToolStripMenuItem";
-            this.loadFromnetAssemblyToolStripMenuItem.Size = new System.Drawing.Size(268, 22);
+            this.loadFromnetAssemblyToolStripMenuItem.Size = new System.Drawing.Size(279, 22);
             this.loadFromnetAssemblyToolStripMenuItem.Text = "&Load from .Net assembly or Python file..";
             this.loadFromnetAssemblyToolStripMenuItem.Click += new System.EventHandler(this.loadFromnetAssemblyToolStripMenuItem_Click);
             // 
@@ -72,7 +72,7 @@
             this.btnStop.Enabled = false;
             this.btnStop.Image = ((System.Drawing.Image)(resources.GetObject("btnStop.Image")));
             this.btnStop.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnStop.Location = new System.Drawing.Point(592, 665);
+            this.btnStop.Location = new System.Drawing.Point(591, 352);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(84, 55);
             this.btnStop.TabIndex = 6;
@@ -85,7 +85,7 @@
             // 
             this.btnRun.Image = ((System.Drawing.Image)(resources.GetObject("btnRun.Image")));
             this.btnRun.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnRun.Location = new System.Drawing.Point(682, 665);
+            this.btnRun.Location = new System.Drawing.Point(681, 352);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(84, 55);
             this.btnRun.TabIndex = 7;
@@ -112,7 +112,7 @@
             // 
             this.btnSaveClose.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveClose.Image")));
             this.btnSaveClose.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnSaveClose.Location = new System.Drawing.Point(243, 665);
+            this.btnSaveClose.Location = new System.Drawing.Point(242, 352);
             this.btnSaveClose.Name = "btnSaveClose";
             this.btnSaveClose.Size = new System.Drawing.Size(84, 55);
             this.btnSaveClose.TabIndex = 9;
@@ -126,7 +126,7 @@
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Image = ((System.Drawing.Image)(resources.GetObject("btnCancel.Image")));
             this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnCancel.Location = new System.Drawing.Point(153, 665);
+            this.btnCancel.Location = new System.Drawing.Point(152, 352);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(84, 55);
             this.btnCancel.TabIndex = 10;
@@ -139,7 +139,7 @@
             // 
             this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnSave.Location = new System.Drawing.Point(333, 665);
+            this.btnSave.Location = new System.Drawing.Point(332, 352);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(84, 55);
             this.btnSave.TabIndex = 11;
@@ -153,7 +153,7 @@
             this.ctlRule1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.ctlRule1.Location = new System.Drawing.Point(153, 12);
             this.ctlRule1.Name = "ctlRule1";
-            this.ctlRule1.Size = new System.Drawing.Size(613, 647);
+            this.ctlRule1.Size = new System.Drawing.Size(613, 334);
             this.ctlRule1.TabIndex = 4;
             // 
             // frmRuleEdit
@@ -162,15 +162,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(777, 732);
+            this.ClientSize = new System.Drawing.Size(777, 420);
             this.Controls.Add(this.ctlRule1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tvToolbox);
-            this.Controls.Add(this.btnSaveClose);
-            this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnRun);
             this.Controls.Add(this.btnStop);
+            this.Controls.Add(this.btnSaveClose);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnSave);
             this.Name = "frmRuleEdit";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Rule editor";

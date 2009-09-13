@@ -176,6 +176,19 @@
     <Compile Include="RuleEngine\ruleItems\Starts\imapChecker.cs" />
     <Compile Include="RuleEngine\ruleItems\Starts\ruleItem-atTime.cs" />
     <Compile Include="RuleEngine\ruleItems\Starts\ruleItem-startRun.cs" />
+    <Compile Include="RuleEngine\ruleItems\windows\frmDesktopMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\ruleItems\windows\frmDesktopMessage.Designer.cs">
+      <DependentUpon>frmDesktopMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\ruleItems\windows\FrmDesktopMessageOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\ruleItems\windows\FrmDesktopMessageOptions.Designer.cs">
+      <DependentUpon>FrmDesktopMessageOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\ruleItems\windows\ruleItem-desktopMessage.cs" />
     <Compile Include="RuleEngine\ruleItems\windows\ctlIsProcRunning.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -461,6 +474,14 @@
       <DependentUpon>ctlIsProcRunning.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\ruleItems\windows\frmDesktopMessage.resx">
+      <DependentUpon>frmDesktopMessage.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\ruleItems\windows\FrmDesktopMessageOptions.resx">
+      <DependentUpon>FrmDesktopMessageOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="RuleEngine\ruleItems\windows\frmPickProcess.resx">
       <DependentUpon>frmPickProcess.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -474,6 +495,8 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Content Include="Resources\baiscLogic\ruleItem_not.png" />
+    <None Include="Resources\Run.bmp" />
+    <None Include="Resources\Pause.bmp" />
     <None Include="Resources\gearSmall.bmp" />
     <None Include="Resources\Keys.png" />
     <None Include="Resources\delete2.PNG" />

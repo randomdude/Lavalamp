@@ -322,7 +322,7 @@ namespace netGui
             if (newname.cancelled)
                 return;
 
-            if (lstRules.Items.ContainsKey(newname.result))
+            if ( findRuleItem( newname.result ) != null)
             {
                 MessageBox.Show("A rule with that name already exists");
                 return;
@@ -413,6 +413,19 @@ namespace netGui
 
             // Stash our rule object in the listViewItem.
             ruleItem.Tag = saveThis;
+        }
+
+
+        private ListViewItem findRuleItem(string findName)
+        {
+            // Pull item out of listView
+            // todo: Is there a better way of doing this?
+            foreach (ListViewItem thisListViewItem in lstRules.Items)
+            {
+                if (thisListViewItem.SubItems[1].Text == findName)
+                    return thisListViewItem;
+            }
+            return null;
         }
 
         private ListViewItem findRuleItem(rule toFind)
@@ -523,6 +536,47 @@ namespace netGui
 
         }
         #endregion
+
+        private void runRuleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lstRules.SelectedItems.Count == 0)
+                return;
+
+            foreach (ListViewItem thisItemToStart in lstRules.SelectedItems)
+            {
+                rule thisRuleToStart = (rule) ((ListViewItem)thisItemToStart).Tag;
+                if (thisItemToStart.SubItems[2].Text == true.ToString())
+                {
+                    MessageBox.Show("Cannot start rule '" + thisRuleToStart.name + "' - rule is open in editor.");
+                }
+                else
+                {
+                    thisRuleToStart.start();
+                    updateRuleIcon(thisRuleToStart);
+                }
+            }
+        }
+
+        private void stopRuleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lstRules.SelectedItems.Count == 0)
+                return;
+
+            foreach (ListViewItem thisItemToStart in lstRules.SelectedItems)
+            {
+                rule thisRuleToStop = (rule)((ListViewItem)thisItemToStart).Tag;
+                if (thisItemToStart.SubItems[2].Text == true.ToString())
+                { 
+                    MessageBox.Show("Cannot stop rule '" + thisRuleToStop.name + "' - rule is open in editor.");
+                }
+                else
+                {
+                    thisRuleToStop.stop();
+                    updateRuleIcon(thisRuleToStop);
+                }
+            }
+
+        }
 
     }
 }
