@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using Timer=System.Threading.Timer;
 
 namespace netGui.RuleEngine.ruleItems.Starts
@@ -13,8 +14,8 @@ namespace netGui.RuleEngine.ruleItems.Starts
         netGui.RuleEngine.ruleItems.itemControls.ctlTimeInterval timer =
             new netGui.RuleEngine.ruleItems.itemControls.ctlTimeInterval();
 
-        private int timerHigh = 100 ;
-        private int timerLow = 5000 ;
+        private int timerHigh = 100;
+        [XmlElement("timer")] public int timerLow = 5000;
 
         // This delegate type should be used to set the interval which the timer fires at.
         public delegate void setIntervalDelegate(int low, int high);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Schema;
@@ -9,17 +10,20 @@ using netGui.RuleEngine;
 
 namespace netGui.RuleEngine.ruleItems
 {
-    public class ruleItemBase : IXmlSerializable
+    [XmlRoot("config" )]
+    public class ruleItemBase 
     {
-        public ruleItemGuid serial = new ruleItemGuid() {id = Guid.NewGuid()};
-        private PictureBox errorIcon = new PictureBox();
-        public bool isErrored = false;
-        public Exception whyIsErrored;
-        public virtual Size preferredSize() { return new Size(75, 75); } 
-        public Point location = new Point(0,0);
+        [XmlIgnore] public ruleItemGuid serial = new ruleItemGuid() { id = Guid.NewGuid() };
+        [XmlIgnore] private PictureBox errorIcon = new PictureBox();
+        [XmlIgnore] public bool isErrored = false;
+        [XmlIgnore] public Exception whyIsErrored;
+        [XmlIgnore] public Point location = new Point(0, 0);
+        [XmlIgnore] public List<Control> controls = new List<Control>();
+        [XmlIgnore] public triggeredDictionary pinStates = new triggeredDictionary();
 
         // methods to be overriden by the new ruleItem
-        public virtual string ruleName()  { return  "base"; }
+        public virtual Size preferredSize() { return new Size(75, 75); }
+        public virtual string ruleName() { return "base"; }
         public virtual Dictionary<String, pin> getPinInfo() { return new Dictionary<String,pin>(); }
         public virtual void evaluate() { }
         public virtual Image background() { return null; }
@@ -27,15 +31,14 @@ namespace netGui.RuleEngine.ruleItems
         public virtual void stop() { }
         public virtual void onResize(Control parent) { }
 
-        public List<Control> controls = new List<Control>();
         public delegate void changeNotifyDelegate();
         public delegate void evaluateDelegate() ;
         public delegate void errorDelegate(Exception ex);
 
-        private Dictionary<String, changeNotifyDelegate> pinChangeHandlers =
+        [XmlIgnore] private Dictionary<String, changeNotifyDelegate> pinChangeHandlers =
             new Dictionary<String, changeNotifyDelegate>();
 
-        public bool isDeleted = false;
+        [XmlIgnore] public bool isDeleted = false;
 
         public ruleItemBase()
         {
@@ -108,8 +111,6 @@ namespace netGui.RuleEngine.ruleItems
             pinStates.pinChangeHandlers.Remove(pinName);
         }
 
-        public triggeredDictionary pinStates = new triggeredDictionary();
-
         public void errorHandler(Exception ex)
         {
             // Feel free to use a different error handler in your ruleItems (use .setErrorHandler).
@@ -151,25 +152,6 @@ namespace netGui.RuleEngine.ruleItems
         }
 
         public virtual string caption() { return null; }
-
-        #region xml serialisation stuff
-
-        public XmlSchema GetSchema()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void ReadXml(XmlReader reader)
-        {
-            // to be overridden, i guess? finish me.
-        }
-
-        public void WriteXml(XmlWriter writer)
-        {
-            // to be overridden, i guess? finish me.
-        }
-
-        #endregion
 
     }
 

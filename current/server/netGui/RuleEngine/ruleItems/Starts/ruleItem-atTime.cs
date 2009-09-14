@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using netGui.Properties;
 using Timer=System.Threading.Timer;
 
@@ -10,12 +11,12 @@ namespace netGui.RuleEngine.ruleItems.Starts
     [ToolboxRuleCategory("Start items")]
     public class ruleItem_atTime : ruleItemBase
     {
-        private Timer checkTimer;
-        long _hours;
-        long _minutes;
+        [XmlElement("timer")] public Timer checkTimer;
+        private long _hours;
+        private long _minutes;
         private bool running = false;
-        long lastHours;
-        long lastMinutes;
+        private long lastHours;
+        private long lastMinutes;
 
         private Label lblCaption;
 

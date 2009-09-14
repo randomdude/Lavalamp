@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
-using netGui.Properties;
+using System.Xml.Serialization;
 
 namespace netGui.RuleEngine.ruleItems.windows
 {
-    [RuleEngine.ToolboxRule]
+    [ToolboxRule]
     [ToolboxRuleCategory("Windows tools")]
     public class ruleItem_killProcess : ruleItemBase
     {
-        private string name;
+        [XmlElement("name")] public string name = "(not set)";
         private bool lastInput;
         private Label lblCaption;
 
@@ -57,7 +57,7 @@ namespace netGui.RuleEngine.ruleItems.windows
             lblCaption.Height = 40;
             lblCaption.Left = 0;
             lblCaption.Top = preferredSize().Height - lblCaption.Height;
-            lblCaption.Text = "Kill process";
+            lblCaption.Text = "Kill process '" + name + "'";
             lblCaption.Visible = true;
             lblCaption.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             controls.Add(lblCaption);
@@ -93,5 +93,12 @@ namespace netGui.RuleEngine.ruleItems.windows
                 lblCaption.Text = "Kill process '" + name + "'";
             }
         }
+    }
+}
+
+namespace netGui.RuleEngine
+{
+    internal class saveThisAttribute : Attribute
+    {
     }
 }

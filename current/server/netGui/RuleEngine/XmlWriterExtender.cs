@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Xml;
+using System.Xml.Serialization;
 using netGui.RuleEngine.ruleItems;
 
 namespace netGui.RuleEngine
@@ -31,12 +32,21 @@ namespace netGui.RuleEngine
                 if (toSerialise[thisKey].isDeleted)
                     continue;
                 writer.WriteStartElement("ruleItem");
+
                 writer.WriteAttributeString("serial", toSerialise[thisKey].serial.ToString() );
                 writer.WriteElementString("X", toSerialise[thisKey].location.X.ToString());
                 writer.WriteElementString("Y", toSerialise[thisKey].location.Y.ToString());
-                writer.WriteElementString("type", toSerialise[thisKey].GetType().ToString());
-                writer.WriteEndElement();
-                toSerialise[thisKey].WriteXml(writer);
+                writer.WriteStartElement("config");
+                writer.WriteAttributeString("type", toSerialise[thisKey].GetType().ToString());
+
+                XmlSerializer mySer = new XmlSerializer(toSerialise[thisKey].GetType());
+                XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+                ns.Add("", "");
+                mySer.Serialize(writer, toSerialise[thisKey], ns );
+
+                writer.WriteEndElement(); // type
+
+                writer.WriteEndElement(); // ruleItem
             }
 
             writer.WriteEndElement();

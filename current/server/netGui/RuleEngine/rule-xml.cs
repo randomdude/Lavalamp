@@ -201,10 +201,11 @@ namespace netGui.RuleEngine
                     thisSerial = reader["serial"];
                 }
 
-                if (xmlName == "type" && reader.NodeType == XmlNodeType.Element)
+                if (xmlName == "config" && reader.NodeType == XmlNodeType.Element)
                 {
-                    thisTypeName = reader.ReadElementContentAsString();
+                    thisTypeName = reader["type"];
 
+                    // Find the type of our new RuleItem
                     Assembly thisAss = Assembly.GetExecutingAssembly();
                     Type thisType;
                     try
@@ -217,18 +218,26 @@ namespace netGui.RuleEngine
                         throw new ruleLoadException("unable to create ruleItem of type " + thisTypeName);
                     }
 
+                    // Instantiate the requested type, and load the config for this particular item.
+                    XmlSerializer mySer = new XmlSerializer(thisType);
+                    reader.Read();
+                    ruleItemBase newRuleItem  = mySer.Deserialize(reader) as ruleItemBase;
+
                     // todo: support python load/saving!
+                    // will the following few lines be useful when we do?
+//                    ruleItemInfo myInfo = new ruleItemInfo();
+//                    myInfo.itemType = ruleItemType.RuleItem;
+//                    myInfo.ruleItemBaseType = thisType;
+//
+//                    ruleItemBase newRuleItem = makeRuleItem(myInfo);
 
-                    ruleItemInfo myInfo = new ruleItemInfo();
-                    myInfo.itemType = ruleItemType.RuleItem;
-                    myInfo.ruleItemBaseType = thisType;
-
-                    ruleItemBase newRuleItem = makeRuleItem(myInfo);
+                    // Propogate the stuff we've read in to it
                     newRuleItem.serial = new ruleItemGuid(thisSerial);
                     newRuleItem.location = location;
                     delegates.AddRuleItemToGlobalPool(newRuleItem);
 
                     thisSerial = null;
+
                 }
 
                 if (keepGoing && !inhibitNextRead)
