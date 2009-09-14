@@ -48,6 +48,9 @@ namespace netGui.RuleEngine.ruleItems
             errorIcon.Click += new EventHandler(errorIcon_Click);
 
             controls.Add(errorIcon);
+
+            this.pinStates.evaluate = new evaluateDelegate(evaluate);
+            pinStates.setErrorHandler(new errorDelegate(errorHandler));
         }
 
         public void errorIcon_Click(object sender, EventArgs e)

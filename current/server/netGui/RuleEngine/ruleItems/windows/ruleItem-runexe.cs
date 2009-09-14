@@ -80,9 +80,6 @@ namespace netGui.RuleEngine.ruleItems
         
         public ruleItem_runexe()
         {
-            this.pinStates.evaluate = new evaluateDelegate(evaluate);
-
-            pinStates.setErrorHandler(new errorDelegate(base.errorHandler));
             controlwidget = new ctlRunFile(new executeItNowDelegate(executeItAsTest));
             this.controls.Add(controlwidget);
         }

@@ -39,6 +39,7 @@
             this.lblMessage.TabIndex = 0;
             this.lblMessage.Text = "...";
             this.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblMessage.Click += new System.EventHandler(this.control_Click);
             // 
             // frmDesktopMessage
             // 
@@ -50,6 +51,8 @@
             this.Name = "frmDesktopMessage";
             this.ShowInTaskbar = false;
             this.Text = "frmDesktopMessage";
+            this.Shown += new System.EventHandler(this.frmDesktopMessage_Shown);
+            this.Click += new System.EventHandler(this.control_Click);
             this.ResumeLayout(false);
 
         }

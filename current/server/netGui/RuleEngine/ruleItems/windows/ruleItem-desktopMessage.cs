@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Forms;
 using netGui.RuleEngine.ruleItems.windows;
+using Timer=System.Timers.Timer;
 
 namespace netGui.RuleEngine.ruleItems 
 {
@@ -11,9 +13,22 @@ namespace netGui.RuleEngine.ruleItems
     {
         public override string ruleName() { return "Show desktop message"; }
 
-        public desktopMessageOptions myOptions = new desktopMessageOptions();
+        private desktopMessageOptions myOptions = new desktopMessageOptions();
 
         private bool lastState;
+
+        // Every ruleItem requires a parameterless constructor. It is used by the toolbox
+        // routines via reflection.
+// ReSharper disable UnusedMember.Global
+        public ruleItem_desktopMessage()
+        {
+        }
+// ReSharper restore UnusedMember.Global
+
+        public ruleItem_desktopMessage(desktopMessageOptions newOptions)
+        {
+            myOptions = newOptions;
+        }
 
         public override Dictionary<String, pin> getPinInfo()
         {
@@ -26,17 +41,15 @@ namespace netGui.RuleEngine.ruleItems
 
         public override void evaluate()
         {
-            bool newState = (bool)pinStates["input1"];
+            bool newState = (bool)pinStates["trigger"];
 
-            if (newState != lastState && newState == true)
+            if ( (newState != lastState) && (newState == true) )
                 showIt();
 
             lastState = newState;
         }
 
-        private System.Threading.Timer myTimer = null;
-
-        public override System.Windows.Forms.ContextMenuStrip addMenus(System.Windows.Forms.ContextMenuStrip toAddTo)
+        public override ContextMenuStrip addMenus(ContextMenuStrip toAddTo)
         {
             ToolStripItem optionsItem = new ToolStripMenuItem("&Options");
             optionsItem.Click += showOptionsDialog;
@@ -47,24 +60,27 @@ namespace netGui.RuleEngine.ruleItems
 
         private void showOptionsDialog(object sender, EventArgs e)
         {
-            FrmDesktopMessageOptions myOptForm = new FrmDesktopMessageOptions();
-            myOptForm.options = myOptions;
-            myOptForm.ShowDialog();
+            FrmDesktopMessageOptions myOptForm = new FrmDesktopMessageOptions(myOptions);
+            if (myOptForm.ShowDialog() == DialogResult.OK)
+                myOptions = new desktopMessageOptions(myOptForm.currentOptions);
         }
 
         public void showIt()
         {
-            frmDesktopMessage messageForm = new frmDesktopMessage(myOptions, "Test message");
-            messageForm.showIt();
+            // Mind the threading trickery.!
+            // We make a new Timer, thus creating a new thread.
+            // On this, we make a messageLoop for it, and show the new form.. 
+            System.Threading.Timer myTimer = new System.Threading.Timer(timercallback, null, 1, Timeout.Infinite  );
         }
 
-    }
+        private void timercallback(object state)
+        {
+            // make our form
+            frmDesktopMessage messageForm = new frmDesktopMessage(myOptions);
 
-    public class desktopMessageOptions
-    {
-        // These are in hundreds of milliseconds
-        public int fadeInSpeed = 5;
-        public int holdSpeed = 40;
-        public int fadeOutSpeed = 5;        
+            // Kick up a message loop and show the form.
+            Application.DoEvents();
+            Application.Run(messageForm);
+        }
     }
 }

@@ -9,7 +9,6 @@ namespace TestProjects
     [TestClass]
     public class UnitTests
     {
-        private TestContext testContextInstance;
         // todo: remove need for hardcoded filenames
         private string filenameParameters = @"C:\lavalamp-svn\current\server\netGui\RuleEngine\ruleItems\pythonScripts\test-configuration.py";
         private const string filename = @"C:\lavalamp-svn\current\server\netGui\RuleEngine\ruleItems\pythonScripts\test.py";
