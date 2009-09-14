@@ -31,10 +31,10 @@ namespace netGui.RuleEngine.ruleItems.Starts
 
             lblCaption = new Label();
             lblCaption.AutoSize = false;
-            lblCaption.Width = preferredSize.Width;
+            lblCaption.Width = preferredSize().Width;
             lblCaption.Height = 20;
             lblCaption.Left = 1;
-            lblCaption.Top = preferredSize.Height - lblCaption.Height;
+            lblCaption.Top = preferredSize().Height - lblCaption.Height;
             lblCaption.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             lblCaption.Visible = true;
             lblCaption.Text = "Shut down the system";

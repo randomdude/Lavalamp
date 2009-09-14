@@ -40,6 +40,9 @@
             this.cmbLocation = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtMessage = new System.Windows.Forms.TextBox();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.btnChangeFgd = new System.Windows.Forms.Button();
+            this.btnChangeBkgd = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackbarFadeInSpeed)).BeginInit();
             this.SuspendLayout();
             // 
@@ -155,6 +158,26 @@
             this.txtMessage.TabIndex = 10;
             this.txtMessage.TextChanged += new System.EventHandler(this.txtMessage_TextChanged);
             // 
+            // btnChangeFgd
+            // 
+            this.btnChangeFgd.Location = new System.Drawing.Point(246, 114);
+            this.btnChangeFgd.Name = "btnChangeFgd";
+            this.btnChangeFgd.Size = new System.Drawing.Size(135, 23);
+            this.btnChangeFgd.TabIndex = 11;
+            this.btnChangeFgd.Text = "Change foreground col";
+            this.btnChangeFgd.UseVisualStyleBackColor = true;
+            this.btnChangeFgd.Click += new System.EventHandler(this.btnChangeFgd_Click);
+            // 
+            // btnChangeBkgd
+            // 
+            this.btnChangeBkgd.Location = new System.Drawing.Point(246, 142);
+            this.btnChangeBkgd.Name = "btnChangeBkgd";
+            this.btnChangeBkgd.Size = new System.Drawing.Size(135, 23);
+            this.btnChangeBkgd.TabIndex = 12;
+            this.btnChangeBkgd.Text = "Change background col";
+            this.btnChangeBkgd.UseVisualStyleBackColor = true;
+            this.btnChangeBkgd.Click += new System.EventHandler(this.btnChangeBkgd_Click);
+            // 
             // FrmDesktopMessageOptions
             // 
             this.AcceptButton = this.cmdOK;
@@ -162,6 +185,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.CmdCancel;
             this.ClientSize = new System.Drawing.Size(405, 228);
+            this.Controls.Add(this.btnChangeBkgd);
+            this.Controls.Add(this.btnChangeFgd);
             this.Controls.Add(this.txtMessage);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cmbLocation);
@@ -199,5 +224,8 @@
         private System.Windows.Forms.ComboBox cmbLocation;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtMessage;
+        private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.Button btnChangeFgd;
+        private System.Windows.Forms.Button btnChangeBkgd;
     }
 }

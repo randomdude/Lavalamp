@@ -124,7 +124,7 @@ namespace netGui.RuleEngine
             }
 
             this.Location = newRuleItem.location;
-            this.Size = newRuleItem.preferredSize;
+            this.Size = newRuleItem.preferredSize();
 
             // Load up background
             Image bg = newRuleItem.background();

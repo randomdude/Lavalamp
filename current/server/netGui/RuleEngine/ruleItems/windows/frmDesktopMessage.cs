@@ -90,7 +90,6 @@ namespace netGui.RuleEngine.ruleItems.windows
             // Prepare our form, making it transparent so that we can fade in
             this.Opacity = 0;
             this.Visible = false;
-            this.TopMost = true;
 
             // Position us 
             Rectangle screenSize = Screen.PrimaryScreen.WorkingArea;
@@ -116,6 +115,9 @@ namespace netGui.RuleEngine.ruleItems.windows
             if (myOptions.location == desktopMessageLocation.BottomRight ||
                 myOptions.location == desktopMessageLocation.TopRight)
                 this.Left = screenSize.Width - this.Width;
+
+            lblMessage.ForeColor = myOptions.foreground;
+            this.BackColor = myOptions.background;
 
             this.Visible = true;
 

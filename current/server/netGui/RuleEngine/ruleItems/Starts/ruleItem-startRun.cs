@@ -19,10 +19,10 @@ namespace netGui.RuleEngine.ruleItems.Starts
         {
             lblCaption = new Label();
             lblCaption.AutoSize = false;
-            lblCaption.Width = preferredSize.Width;
+            lblCaption.Width = preferredSize().Width;
             lblCaption.Height = 20;
             lblCaption.Left = 0;
-            lblCaption.Top = preferredSize.Height - lblCaption.Height;
+            lblCaption.Top = preferredSize().Height - lblCaption.Height;
             lblCaption.Text = "At start of run";
             lblCaption.Visible = true;
             controls.Add(lblCaption);

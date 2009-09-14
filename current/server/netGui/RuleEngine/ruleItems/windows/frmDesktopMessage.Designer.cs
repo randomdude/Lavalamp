@@ -33,9 +33,11 @@
             // 
             // lblMessage
             // 
-            this.lblMessage.Location = new System.Drawing.Point(12, 51);
+            this.lblMessage.BackColor = System.Drawing.Color.Transparent;
+            this.lblMessage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblMessage.Location = new System.Drawing.Point(0, 0);
             this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(151, 59);
+            this.lblMessage.Size = new System.Drawing.Size(175, 120);
             this.lblMessage.TabIndex = 0;
             this.lblMessage.Text = "...";
             this.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -45,12 +47,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(175, 119);
+            this.ClientSize = new System.Drawing.Size(175, 120);
             this.Controls.Add(this.lblMessage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmDesktopMessage";
             this.ShowInTaskbar = false;
             this.Text = "frmDesktopMessage";
+            this.TopMost = true;
             this.Shown += new System.EventHandler(this.frmDesktopMessage_Shown);
             this.Click += new System.EventHandler(this.control_Click);
             this.ResumeLayout(false);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 using netGui.Properties;
@@ -46,11 +47,13 @@ namespace netGui.RuleEngine.ruleItems
 
         public ruleItem_debug()
         {
+            Size currentPreferredSize = preferredSize();
+
             indicator = new PictureBox();
             indicator.Image = netGui.Properties.Resources._0;
             indicator.Size = indicator.Image.Size;
-            indicator.Left = (preferredSize.Width / 2) - (indicator.Width / 2);
-            indicator.Top  = (preferredSize.Width  / 2) - (indicator.Height / 2);
+            indicator.Left = (currentPreferredSize.Width / 2) - (indicator.Width / 2);
+            indicator.Top = (currentPreferredSize.Width / 2) - (indicator.Height / 2);
             indicator.Visible = true;
 
             controls.Add(indicator);

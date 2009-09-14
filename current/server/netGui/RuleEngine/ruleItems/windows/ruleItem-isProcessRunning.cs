@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 using netGui.Properties;
 
@@ -13,10 +14,14 @@ namespace netGui.RuleEngine.ruleItems.windows
         private readonly ctlIsProcRunning control = new ctlIsProcRunning();
         private bool lastState;
 
+        public override System.Drawing.Size preferredSize()
+        {
+            return new Size ( control.Width, control.Height);
+        }
+
         public ruleItem_isProcessRunning()
         {
             this.pinStates.evaluate = new evaluateDelegate(evaluate);
-            preferredSize.Width = control.Width;
             this.controls.Add(control);
         }
 

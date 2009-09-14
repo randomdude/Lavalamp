@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using netGui.RuleEngine.ruleItems.windows;
@@ -13,6 +14,11 @@ namespace netGui.RuleEngine.ruleItems
     {
         public override string ruleName() { return "Show desktop message"; }
 
+        // TODO: allow dynamically-changing captions 
+        public override string caption() { return "Show message"; }
+
+        public override Size preferredSize() { return new Size( 150,75 ); }
+
         private desktopMessageOptions myOptions = new desktopMessageOptions();
 
         private bool lastState;
@@ -22,6 +28,7 @@ namespace netGui.RuleEngine.ruleItems
 // ReSharper disable UnusedMember.Global
         public ruleItem_desktopMessage()
         {
+            
         }
 // ReSharper restore UnusedMember.Global
 
@@ -67,7 +74,7 @@ namespace netGui.RuleEngine.ruleItems
 
         public void showIt()
         {
-            // Mind the threading trickery.!
+            // Mind the threading trickery!
             // We make a new Timer, thus creating a new thread.
             // On this, we make a messageLoop for it, and show the new form.. 
             System.Threading.Timer myTimer = new System.Threading.Timer(timercallback, null, 1, Timeout.Infinite  );

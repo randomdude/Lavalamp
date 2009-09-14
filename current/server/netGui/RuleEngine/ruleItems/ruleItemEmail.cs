@@ -34,7 +34,7 @@ namespace netGui.RuleEngine.ruleItems
         public ruleItem_Email()
         {
             widget.Location = new Point(0,0);
-            widget.Size = this.preferredSize;
+            widget.Size = this.preferredSize();
             this.controls.Add(widget);
 
             this.pinStates.evaluate = new evaluateDelegate(evaluate);

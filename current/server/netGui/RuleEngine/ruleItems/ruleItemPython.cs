@@ -90,7 +90,7 @@ namespace netGui.RuleEngine.ruleItems
             Label caption = new Label();
             caption.Text = ruleNameString;
             caption.AutoSize = false;
-            caption.Size = this.preferredSize;
+            caption.Size = this.preferredSize();
             caption.Location = new Point(0, 0);
             caption.TextAlign = ContentAlignment.BottomCenter;
             caption.Visible = true;

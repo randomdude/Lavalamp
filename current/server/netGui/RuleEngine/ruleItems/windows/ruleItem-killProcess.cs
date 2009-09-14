@@ -53,10 +53,10 @@ namespace netGui.RuleEngine.ruleItems.windows
         {
             lblCaption = new Label();
             lblCaption.AutoSize = false;
-            lblCaption.Width = preferredSize.Width;
+            lblCaption.Width = preferredSize().Width;
             lblCaption.Height = 40;
             lblCaption.Left = 0;
-            lblCaption.Top = preferredSize.Height - lblCaption.Height;
+            lblCaption.Top = preferredSize().Height - lblCaption.Height;
             lblCaption.Text = "Kill process";
             lblCaption.Visible = true;
             lblCaption.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;

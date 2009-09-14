@@ -31,6 +31,8 @@ namespace netGui.RuleEngine.ruleItems.windows
             cmbLocation.Text = currentOptions.location.ToString();
 
             txtMessage.Text = currentOptions.message;
+            txtMessage.BackColor = currentOptions.background;
+            txtMessage.ForeColor = currentOptions.foreground;
         }
 
         private void cmdPreview_Click(object sender, EventArgs e)
@@ -62,6 +64,24 @@ namespace netGui.RuleEngine.ruleItems.windows
         {
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Close();
+        }
+
+        private void btnChangeFgd_Click(object sender, EventArgs e)
+        {
+            this.colorDialog1.Color = currentOptions.foreground;
+            if (colorDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                currentOptions.foreground = this.colorDialog1.Color;
+
+            txtMessage.ForeColor = currentOptions.foreground;
+        }
+
+        private void btnChangeBkgd_Click(object sender, EventArgs e)
+        {
+            this.colorDialog1.Color = currentOptions.background;
+            if (colorDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                currentOptions.background = this.colorDialog1.Color;
+
+            txtMessage.BackColor = currentOptions.background;
         }
     }
 }

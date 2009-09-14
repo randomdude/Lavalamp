@@ -9,13 +9,13 @@ using netGui.RuleEngine;
 
 namespace netGui.RuleEngine.ruleItems
 {
-    public class ruleItemBase :IXmlSerializable
+    public class ruleItemBase : IXmlSerializable
     {
-        public ruleItemGuid serial = new ruleItemGuid() {id = Guid.NewGuid() };
-        PictureBox errorIcon = new PictureBox();
+        public ruleItemGuid serial = new ruleItemGuid() {id = Guid.NewGuid()};
+        private PictureBox errorIcon = new PictureBox();
         public bool isErrored = false;
         public Exception whyIsErrored;
-        public Size preferredSize = new Size(75, 75);
+        public virtual Size preferredSize() { return new Size(75, 75); } 
         public Point location = new Point(0,0);
 
         // methods to be overriden by the new ruleItem
@@ -39,15 +39,32 @@ namespace netGui.RuleEngine.ruleItems
 
         public ruleItemBase()
         {
+            Size currentPreferredSize = preferredSize();
+
             errorIcon.Image = netGui.Properties.Resources.error.ToBitmap();
             errorIcon.Size = errorIcon.Image.Size;
             errorIcon.Visible = false;
-            errorIcon.Left = preferredSize.Width - errorIcon.Width;
-            errorIcon.Top = preferredSize.Height - errorIcon.Height;
+            errorIcon.Left = currentPreferredSize.Width - errorIcon.Width;
+            errorIcon.Top = currentPreferredSize.Height - errorIcon.Height;
             errorIcon.Cursor = Cursors.Help;
             errorIcon.Click += new EventHandler(errorIcon_Click);
 
             controls.Add(errorIcon);
+
+            // caption label
+            String currentCaption = this.caption();
+            if (currentCaption != null)
+            {
+                Label lblCaption = new Label();
+                lblCaption.Text = currentCaption;
+                lblCaption.Visible = true;
+                lblCaption.Location = new Point(0, 0);
+                lblCaption.Width = currentPreferredSize.Width;
+                lblCaption.Height = currentPreferredSize.Height - 15;
+                lblCaption.TextAlign = ContentAlignment.BottomCenter;
+
+                controls.Add(lblCaption);
+            }
 
             this.pinStates.evaluate = new evaluateDelegate(evaluate);
             pinStates.setErrorHandler(new errorDelegate(errorHandler));
@@ -133,6 +150,8 @@ namespace netGui.RuleEngine.ruleItems
             errorIcon.Visible = false;
         }
 
+        public virtual string caption() { return null; }
+
         #region xml serialisation stuff
 
         public XmlSchema GetSchema()
@@ -151,6 +170,7 @@ namespace netGui.RuleEngine.ruleItems
         }
 
         #endregion
+
     }
 
 }
