@@ -40,6 +40,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tsStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.mnuStripHandles.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -54,7 +55,7 @@
             this.toolStripMenuItem3,
             this.showDebugInfoToolStripMenuItem});
             this.mnuStripHandles.Name = "mnuStripHandles";
-            this.mnuStripHandles.Size = new System.Drawing.Size(162, 126);
+            this.mnuStripHandles.Size = new System.Drawing.Size(162, 104);
             this.mnuStripHandles.Text = "menuStrip1";
             // 
             // mnuItemAddJunc
@@ -109,7 +110,8 @@
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsStatus});
+            this.tsStatus,
+            this.toolStripProgressBar});
             this.statusStrip.Location = new System.Drawing.Point(0, 402);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(496, 22);
@@ -120,6 +122,13 @@
             // 
             this.tsStatus.Name = "tsStatus";
             this.tsStatus.Size = new System.Drawing.Size(0, 17);
+            // 
+            // toolStripProgressBar
+            // 
+            this.toolStripProgressBar.MarqueeAnimationSpeed = 0;
+            this.toolStripProgressBar.Name = "toolStripProgressBar";
+            this.toolStripProgressBar.Size = new System.Drawing.Size(100, 16);
+            this.toolStripProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             // 
             // ctlRule
             // 
@@ -154,5 +163,6 @@
         private System.Windows.Forms.ToolStripMenuItem showDebugInfoToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel tsStatus;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
     }
 }

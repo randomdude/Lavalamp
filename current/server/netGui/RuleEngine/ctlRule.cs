@@ -509,6 +509,8 @@ namespace netGui.RuleEngine
             {
                 running = false;
                 this.Enabled = true;
+                toolStripProgressBar.MarqueeAnimationSpeed = 0;
+                toolStripProgressBar.Visible = false;
 
                 targetRule.stop();
             }
@@ -520,6 +522,8 @@ namespace netGui.RuleEngine
             {
                 running = true;
                 this.Enabled = false;
+                toolStripProgressBar.MarqueeAnimationSpeed = 100;
+                toolStripProgressBar.Visible = true;
 
                 targetRule.start();
             }

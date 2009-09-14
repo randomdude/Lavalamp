@@ -58,12 +58,12 @@
             this.ctxMnuToolbox.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadFromnetAssemblyToolStripMenuItem});
             this.ctxMnuToolbox.Name = "ctxMnuToolbox";
-            this.ctxMnuToolbox.Size = new System.Drawing.Size(280, 26);
+            this.ctxMnuToolbox.Size = new System.Drawing.Size(269, 26);
             // 
             // loadFromnetAssemblyToolStripMenuItem
             // 
             this.loadFromnetAssemblyToolStripMenuItem.Name = "loadFromnetAssemblyToolStripMenuItem";
-            this.loadFromnetAssemblyToolStripMenuItem.Size = new System.Drawing.Size(279, 22);
+            this.loadFromnetAssemblyToolStripMenuItem.Size = new System.Drawing.Size(268, 22);
             this.loadFromnetAssemblyToolStripMenuItem.Text = "&Load from .Net assembly or Python file..";
             this.loadFromnetAssemblyToolStripMenuItem.Click += new System.EventHandler(this.loadFromnetAssemblyToolStripMenuItem_Click);
             // 

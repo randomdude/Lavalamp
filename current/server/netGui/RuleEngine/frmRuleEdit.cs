@@ -237,6 +237,7 @@ namespace netGui.RuleEngine
             if (response == DialogResult.No)
                 return;
 
+            closeRule();
         }
 
         /// <summary>
@@ -260,7 +261,6 @@ namespace netGui.RuleEngine
         private void btnSaveClose_Click(object sender, EventArgs e)
         {
             saveRule();
-            MessageBox.Show("Rule saved OK");
 
             closeRule();
         }
