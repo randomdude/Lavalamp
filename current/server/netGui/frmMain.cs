@@ -1,6 +1,9 @@
 using System;
+using System.Configuration;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using netbridge;
 using netGui.nodeEditForms;
 using netGui.RuleEngine;
@@ -269,6 +272,7 @@ namespace netGui
         private void FrmMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             MyOptions.save();
+            saveAllRules();
         }
 
         private void changeIDToolStripMenuItem_Click(object sender, EventArgs e)
@@ -328,19 +332,23 @@ namespace netGui
                 return;
             }
 
+            addNewRule(new rule(newname.result));
+        }
+
+        private void addNewRule(rule toAdd)
+        {
             // Create a new rule, and add it to our listView.
             // Add the new rule's state and name as columns, and the rule object itself as a tag.
-            rule newRule = new rule(newname.result);
             ListViewItem newItem = new ListViewItem();
 
-            newRule.onStatusUpdate += updateRuleIcon;
-            newItem.SubItems.Add(newRule.name);
+            toAdd.onStatusUpdate += updateRuleIcon;
+            newItem.SubItems.Add(toAdd.name);
             newItem.SubItems.Add(false.ToString());
-            newItem.Tag = newRule;
+            newItem.Tag = toAdd;
 
             lstRules.Items.Add(newItem);
 
-            updateRuleIcon(newRule);
+            updateRuleIcon(toAdd);
         }
 
         private void deleteRuleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -576,6 +584,34 @@ namespace netGui
                 }
             }
 
+        }
+
+        public void saveAllRules()
+        {
+            StringBuilder myBuilder = new StringBuilder();
+
+            // Save all rules to the Application settings file.
+            foreach (ListViewItem thisItem in lstRules.Items)
+            {
+                rule thisRule = (rule)thisItem.Tag;
+
+                myBuilder.Append(thisRule.serialise());
+            }
+            Properties.Settings.Default["serialisedRules"] = myBuilder.ToString();
+            Properties.Settings.Default.Save();
+        }
+
+        private void FrmMain_Load(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Reload();
+
+            XmlSerializer mySer = new XmlSerializer( typeof(rule) );
+            Encoding ascii = Encoding.BigEndianUnicode;
+            Stream stream = new MemoryStream(ascii.GetBytes(Properties.Settings.Default["serialisedRules"].ToString()));
+            Clipboard.SetText((string) Properties.Settings.Default["serialisedRules"]);
+            while (stream.Position < stream.Length )
+                addNewRule((rule) mySer.Deserialize(stream));
+            
         }
 
     }

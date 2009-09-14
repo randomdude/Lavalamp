@@ -33,6 +33,12 @@ namespace netGui.RuleEngine.ruleItems.windows
             txtMessage.Text = currentOptions.message;
             txtMessage.BackColor = currentOptions.background;
             txtMessage.ForeColor = currentOptions.foreground;
+
+            if (currentOptions.holdSpeed==0)
+                trackbarFadeInSpeed.Value = 0;
+            else
+                trackbarFadeInSpeed.Value = currentOptions.holdSpeed / 10;
+            this.lblholdSpeed.Text = trackbarFadeInSpeed.Value.ToString() + "s";
         }
 
         private void cmdPreview_Click(object sender, EventArgs e)

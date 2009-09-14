@@ -11,5 +11,8 @@
     <Setting Name="rulesPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">c:\lavalamp\rules</Value>
     </Setting>
+    <Setting Name="serialisedRules" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

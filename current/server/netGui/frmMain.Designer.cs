@@ -114,7 +114,7 @@ namespace netGui
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -132,26 +132,26 @@ namespace netGui
             // generalToolStripMenuItem
             // 
             this.generalToolStripMenuItem.Name = "generalToolStripMenuItem";
-            this.generalToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.generalToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.generalToolStripMenuItem.Text = "&General";
             this.generalToolStripMenuItem.Click += new System.EventHandler(this.mnuItemGeneralOpts);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(215, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(204, 6);
             // 
             // MnuItemConnectToTrans
             // 
             this.MnuItemConnectToTrans.Name = "MnuItemConnectToTrans";
-            this.MnuItemConnectToTrans.Size = new System.Drawing.Size(218, 22);
+            this.MnuItemConnectToTrans.Size = new System.Drawing.Size(207, 22);
             this.MnuItemConnectToTrans.Text = "&Connect to transmitter";
             this.MnuItemConnectToTrans.Click += new System.EventHandler(this.MnuItemConnectToTrans_Click);
             // 
             // MnuItemDisconnectFromTrans
             // 
             this.MnuItemDisconnectFromTrans.Name = "MnuItemDisconnectFromTrans";
-            this.MnuItemDisconnectFromTrans.Size = new System.Drawing.Size(218, 22);
+            this.MnuItemDisconnectFromTrans.Size = new System.Drawing.Size(207, 22);
             this.MnuItemDisconnectFromTrans.Text = "&Disconnect from transmitter";
             this.MnuItemDisconnectFromTrans.Click += new System.EventHandler(this.MnuItemDisconnectFromTrans_Click);
             // 
@@ -168,21 +168,21 @@ namespace netGui
             // showRuleEditorToolStripMenuItem
             // 
             this.showRuleEditorToolStripMenuItem.Name = "showRuleEditorToolStripMenuItem";
-            this.showRuleEditorToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.showRuleEditorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.showRuleEditorToolStripMenuItem.Text = "Show rule &Editor";
             this.showRuleEditorToolStripMenuItem.Click += new System.EventHandler(this.showRuleEditorToolStripMenuItem_Click);
             // 
             // saveAllRulesToolStripMenuItem
             // 
             this.saveAllRulesToolStripMenuItem.Name = "saveAllRulesToolStripMenuItem";
-            this.saveAllRulesToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.saveAllRulesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveAllRulesToolStripMenuItem.Text = "&Save all rules";
             this.saveAllRulesToolStripMenuItem.Click += new System.EventHandler(this.saveAllRulesToolStripMenuItem_Click);
             // 
             // loadAllRulesToolStripMenuItem
             // 
             this.loadAllRulesToolStripMenuItem.Name = "loadAllRulesToolStripMenuItem";
-            this.loadAllRulesToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.loadAllRulesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadAllRulesToolStripMenuItem.Text = "&Load all rules";
             this.loadAllRulesToolStripMenuItem.Click += new System.EventHandler(this.loadAllRulesToolStripMenuItem_Click);
             // 
@@ -235,26 +235,26 @@ namespace netGui
             this.cmnuAddNode,
             this.viewToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(171, 126);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(160, 126);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // refreshThisNodeToolStripMenuItem
             // 
             this.refreshThisNodeToolStripMenuItem.Name = "refreshThisNodeToolStripMenuItem";
-            this.refreshThisNodeToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.refreshThisNodeToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.refreshThisNodeToolStripMenuItem.Text = "Refresh this node";
             this.refreshThisNodeToolStripMenuItem.Click += new System.EventHandler(this.refreshThisNodeToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(167, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(156, 6);
             // 
             // thisNodeToolStripMenuItem
             // 
@@ -264,46 +264,46 @@ namespace netGui
             this.changeNameToolStripMenuItem,
             this.changePadvancedToolStripMenuItem});
             this.thisNodeToolStripMenuItem.Name = "thisNodeToolStripMenuItem";
-            this.thisNodeToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.thisNodeToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.thisNodeToolStripMenuItem.Text = "This &Node";
             // 
             // changeIDToolStripMenuItem
             // 
             this.changeIDToolStripMenuItem.Name = "changeIDToolStripMenuItem";
-            this.changeIDToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.changeIDToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.changeIDToolStripMenuItem.Text = "Change &ID";
             this.changeIDToolStripMenuItem.Click += new System.EventHandler(this.changeIDToolStripMenuItem_Click);
             // 
             // changeKeyToolStripMenuItem
             // 
             this.changeKeyToolStripMenuItem.Name = "changeKeyToolStripMenuItem";
-            this.changeKeyToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.changeKeyToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.changeKeyToolStripMenuItem.Text = "Change &Key";
             this.changeKeyToolStripMenuItem.Click += new System.EventHandler(this.changeKeyToolStripMenuItem_Click);
             // 
             // changeNameToolStripMenuItem
             // 
             this.changeNameToolStripMenuItem.Name = "changeNameToolStripMenuItem";
-            this.changeNameToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.changeNameToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.changeNameToolStripMenuItem.Text = "Change &Name";
             this.changeNameToolStripMenuItem.Click += new System.EventHandler(this.changeNameToolStripMenuItem_Click);
             // 
             // changePadvancedToolStripMenuItem
             // 
             this.changePadvancedToolStripMenuItem.Name = "changePadvancedToolStripMenuItem";
-            this.changePadvancedToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.changePadvancedToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.changePadvancedToolStripMenuItem.Text = "Change P (advanced!)";
             this.changePadvancedToolStripMenuItem.Click += new System.EventHandler(this.changePadvancedToolStripMenuItem_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(167, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(156, 6);
             // 
             // cmnuAddNode
             // 
             this.cmnuAddNode.Name = "cmnuAddNode";
-            this.cmnuAddNode.Size = new System.Drawing.Size(170, 22);
+            this.cmnuAddNode.Size = new System.Drawing.Size(159, 22);
             this.cmnuAddNode.Text = "&Add node";
             this.cmnuAddNode.Click += new System.EventHandler(this.cmnuAddNode_Click);
             // 
@@ -314,7 +314,7 @@ namespace netGui
             this.smallIconsToolStripMenuItem,
             this.detailsToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.viewToolStripMenuItem.Text = "View";
             // 
             // largeIconsToolStripMenuItem
@@ -322,21 +322,21 @@ namespace netGui
             this.largeIconsToolStripMenuItem.Checked = true;
             this.largeIconsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.largeIconsToolStripMenuItem.Name = "largeIconsToolStripMenuItem";
-            this.largeIconsToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.largeIconsToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.largeIconsToolStripMenuItem.Text = "Large icons";
             this.largeIconsToolStripMenuItem.Click += new System.EventHandler(this.largeIconsToolStripMenuItem_Click);
             // 
             // smallIconsToolStripMenuItem
             // 
             this.smallIconsToolStripMenuItem.Name = "smallIconsToolStripMenuItem";
-            this.smallIconsToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.smallIconsToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.smallIconsToolStripMenuItem.Text = "Small icons";
             this.smallIconsToolStripMenuItem.Click += new System.EventHandler(this.smallIconsToolStripMenuItem_Click);
             // 
             // detailsToolStripMenuItem
             // 
             this.detailsToolStripMenuItem.Name = "detailsToolStripMenuItem";
-            this.detailsToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.detailsToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.detailsToolStripMenuItem.Text = "Details";
             this.detailsToolStripMenuItem.Click += new System.EventHandler(this.detailsToolStripMenuItem_Click);
             // 
@@ -474,33 +474,33 @@ namespace netGui
             this.runRuleToolStripMenuItem,
             this.stopRuleToolStripMenuItem});
             this.contextMenuStripRules.Name = "contextMenuStrip1";
-            this.contextMenuStripRules.Size = new System.Drawing.Size(138, 98);
+            this.contextMenuStripRules.Size = new System.Drawing.Size(127, 98);
             // 
             // newRuleToolStripMenuItem
             // 
             this.newRuleToolStripMenuItem.Name = "newRuleToolStripMenuItem";
-            this.newRuleToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.newRuleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.newRuleToolStripMenuItem.Text = "&New rule";
             this.newRuleToolStripMenuItem.Click += new System.EventHandler(this.newRuleToolStripMenuItem_Click);
             // 
             // deleteRuleToolStripMenuItem
             // 
             this.deleteRuleToolStripMenuItem.Name = "deleteRuleToolStripMenuItem";
-            this.deleteRuleToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.deleteRuleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.deleteRuleToolStripMenuItem.Text = "&Delete rule";
             this.deleteRuleToolStripMenuItem.Click += new System.EventHandler(this.deleteRuleToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(134, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(123, 6);
             // 
             // runRuleToolStripMenuItem
             // 
             this.runRuleToolStripMenuItem.Image = global::netGui.Properties.Resources.Run;
             this.runRuleToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.runRuleToolStripMenuItem.Name = "runRuleToolStripMenuItem";
-            this.runRuleToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.runRuleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.runRuleToolStripMenuItem.Text = "&Run rule";
             this.runRuleToolStripMenuItem.Click += new System.EventHandler(this.runRuleToolStripMenuItem_Click);
             // 
@@ -509,7 +509,7 @@ namespace netGui
             this.stopRuleToolStripMenuItem.Image = global::netGui.Properties.Resources.Pause;
             this.stopRuleToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.stopRuleToolStripMenuItem.Name = "stopRuleToolStripMenuItem";
-            this.stopRuleToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.stopRuleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.stopRuleToolStripMenuItem.Text = "&Stop rule";
             this.stopRuleToolStripMenuItem.Click += new System.EventHandler(this.stopRuleToolStripMenuItem_Click);
             // 
@@ -525,7 +525,7 @@ namespace netGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(542, 587);
+            this.ClientSize = new System.Drawing.Size(542, 644);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.menuStrip1);
@@ -534,6 +534,7 @@ namespace netGui
             this.MaximizeBox = false;
             this.Name = "FrmMain";
             this.Text = "Lavalamp GUI";
+            this.Load += new System.EventHandler(this.FrmMain_Load);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmMain_FormClosed);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
