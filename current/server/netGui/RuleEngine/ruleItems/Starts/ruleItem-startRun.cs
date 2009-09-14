@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Forms;
-using netGui.Properties;
 using Timer=System.Threading.Timer;
 
 namespace netGui.RuleEngine.ruleItems.Starts
@@ -27,36 +27,38 @@ namespace netGui.RuleEngine.ruleItems.Starts
             lblCaption.Visible = true;
             controls.Add(lblCaption);
 
-            this.pinStates.evaluate = new evaluateDelegate(evaluate);
+            pinStates.evaluate = new evaluateDelegate(evaluate);
             pinStates.setErrorHandler(new errorDelegate(base.errorHandler));
         }
 
         public override void start()
         {
             // We don't fire at the start of simulation, per se, because this ruleItem may be start'ed before the others (since you can't start them all at exactly
-            // the same time). Instead, we use a one-shot 200ms timer. fixme: Think of a better way to do this.
+            // the same time). Instead, we use a one-shot 200ms timer. 
+            // FIXME: Think of a better way to do this.
             cancelTimer = new Timer(setOutput, null, 200, System.Threading.Timeout.Infinite );
         }
 
         private void setOutput(object state)
         {
-            this.pinStates["StartOfSim"] = true;
+            pinStates["StartOfSim"] = true;
             cancelTimer = new Timer(cancelOutput, null, 100, System.Threading.Timeout.Infinite);
         }
 
         private void cancelOutput(object state)
         {
-            this.pinStates["StartOfSim"] = false;
+            pinStates["StartOfSim"] = false;
         }
 
         public override void stop()
         {
-            cancelTimer.Dispose();
+            if (cancelTimer != null)
+                cancelTimer.Dispose();
         }
 
         public override System.Drawing.Image background()
         {
-            return netGui.Properties.Resources.New.ToBitmap();
+            return Properties.Resources.New.ToBitmap();
         }
 
         public override Dictionary<String, pin> getPinInfo()
@@ -67,9 +69,6 @@ namespace netGui.RuleEngine.ruleItems.Starts
             return pinList;
         }
 
-        public override void evaluate()
-        {
-        
-        }
+        public override void evaluate(){}
     }
 }
