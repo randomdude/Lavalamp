@@ -30,7 +30,7 @@ namespace ruleItems_winamp
         public override Dictionary<String, pin> getPinInfo()
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
-            pinList.Add("trigger", new pin { name = "trigger", direction = pinDirection.input });
+            pinList.Add("trigger", new pin { name = "trigger", description = "input pin", direction = pinDirection.input });
             return pinList;
         }
 
@@ -68,10 +68,10 @@ namespace ruleItems_winamp
 
         public ruleItem_winamp_base()
         {
-            Dictionary<String, pin> pinInfo = getPinInfo();
-            pinStates.pinInfo = getPinInfo();
-            foreach (String pinName in pinInfo.Keys)
-                this.pinStates.Add(pinName, false);
+            //Dictionary<String, pin> pinInfo = getPinInfo();
+            //pinStates.pinInfo = getPinInfo();
+            //foreach (String pinName in pinInfo.Keys)
+            //    this.pinStates.Add(pinName, false);
 
             this.pinStates.evaluate = new evaluateDelegate(evaluate);
         }

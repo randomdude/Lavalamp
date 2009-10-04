@@ -17,13 +17,12 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netbridge", "netbridge\netbridge.vcproj", "{ADFA97F6-D7A7-489F-86AF-D7A835D18E51}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "netGui-extras", "netGui-extras", "{F901F8A0-B678-409A-935D-671EB4A9FF45}"
-	ProjectSection(SolutionItems) = preProject
-		netgui-extras\lavalamp-winamp\gen_tray.vcproj = netgui-extras\lavalamp-winamp\gen_tray.vcproj
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProjects\TestProject.csproj", "{0B3B6B27-EB33-4DB5-8E2D-3C225EF09DC8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ruleItems-winamp", "netgui-extras\ruleItems-winamp\ruleItems-winamp.csproj", "{7D9B81EE-27E0-4F0D-84AC-9C9B87B4E64D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winamp-plugin", "netgui-extras\lavalamp-winamp\gen_tray.vcproj", "{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -128,11 +127,27 @@ Global
 		{7D9B81EE-27E0-4F0D-84AC-9C9B87B4E64D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7D9B81EE-27E0-4F0D-84AC-9C9B87B4E64D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{7D9B81EE-27E0-4F0D-84AC-9C9B87B4E64D}.Release|Win32.ActiveCfg = Release|Any CPU
+		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}.clr|Any CPU.ActiveCfg = Release|Win32
+		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}.clr|Mixed Platforms.ActiveCfg = Release|Win32
+		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}.clr|Mixed Platforms.Build.0 = Release|Win32
+		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}.clr|Win32.ActiveCfg = Release|Win32
+		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}.clr|Win32.Build.0 = Release|Win32
+		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}.Debug|Win32.Build.0 = Debug|Win32
+		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}.Release|Any CPU.ActiveCfg = Release|Win32
+		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}.Release|Win32.ActiveCfg = Release|Win32
+		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7D9B81EE-27E0-4F0D-84AC-9C9B87B4E64D} = {F901F8A0-B678-409A-935D-671EB4A9FF45}
+		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E} = {F901F8A0-B678-409A-935D-671EB4A9FF45}
 	EndGlobalSection
 EndGlobal

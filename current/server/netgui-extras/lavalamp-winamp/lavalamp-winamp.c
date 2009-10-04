@@ -5,7 +5,6 @@
 #include <process.h>
 
 #include "gen.h"
-#include "resource.h"
 #include "winampcmd.h"
 
 int main() { return 0; }
