@@ -63,7 +63,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="$(SolutionDir)\output\$(ConfigurationName)\lavalampdll.lib"
-				ShowProgress="1"
+				ShowProgress="0"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"

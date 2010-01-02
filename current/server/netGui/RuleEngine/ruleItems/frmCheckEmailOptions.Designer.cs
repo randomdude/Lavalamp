@@ -83,9 +83,9 @@
             // 
             this.txtPassword.Location = new System.Drawing.Point(104, 38);
             this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(176, 20);
             this.txtPassword.TabIndex = 5;
-            this.txtPassword.Text = "user@gmail.com";
             // 
             // label2
             // 

@@ -177,7 +177,7 @@ namespace netGui.RuleEngine
             else
             {
                 String serialised = ctlRule1.SerialiseRule();
-                Clipboard.SetText(serialised);
+                //Clipboard.SetText(serialised);
                 saveCallback.Invoke(ctlRule1.targetRule);
             }
         }

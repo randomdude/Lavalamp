@@ -14,7 +14,7 @@ namespace netGui
             try
             {
                 myKey.setKey(Properties.Settings.Default["key"] as string);
-            } catch (Exception)
+            } catch (FormatException)
             {
                 myKey.setKey("00112233445566778899aabbccddeeff");                
             }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using netGui.Properties;
 
 namespace netGui.RuleEngine.ruleItems 
 {
@@ -10,10 +9,7 @@ namespace netGui.RuleEngine.ruleItems
     {
         public override string ruleName() { return "NOT function"; }
 
-        public override System.Drawing.Image background()
-        {
-            return netGui.Properties.Resources.ruleItem_not;
-        }
+        public override System.Drawing.Image background() { return netGui.Properties.Resources.ruleItem_not; }
 
         public override Dictionary<String, pin> getPinInfo()
         {
@@ -29,22 +25,11 @@ namespace netGui.RuleEngine.ruleItems
         {
             bool input1 = (bool)pinStates["input1"];
 
-            bool newState;
-
-            if (!input1)
-                newState = true;
-            else
-                newState = false;
-
             // only set the output if neccesary! constantly setting the output will result in a stack overflow.
-            if ((bool)pinStates["output1"] != newState)
-                pinStates["output1"] = newState;
+            if ((bool)pinStates["output1"] != !input1 )
+                pinStates["output1"] = !input1 ;
         }
 
-        public ruleItem_not()
-        {
-            this.pinStates.evaluate = new evaluateDelegate(evaluate);
-            pinStates.setErrorHandler(new errorDelegate(base.errorHandler));
-        }
+        public ruleItem_not() {}
     }
 }

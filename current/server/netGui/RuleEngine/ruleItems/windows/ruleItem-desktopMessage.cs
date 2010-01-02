@@ -27,10 +27,7 @@ namespace netGui.RuleEngine.ruleItems
         // Every ruleItem requires a parameterless constructor. It is used by the toolbox
         // routines via reflection.
 // ReSharper disable UnusedMember.Global
-        public ruleItem_desktopMessage()
-        {
-            
-        }
+        public ruleItem_desktopMessage() { }
 // ReSharper restore UnusedMember.Global
 
         public ruleItem_desktopMessage(desktopMessageOptions newOptions)

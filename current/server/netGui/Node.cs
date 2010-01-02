@@ -6,7 +6,7 @@ namespace netGui
 {
     public class Node
     {
-        public transmitterDriver Mydriver = null;
+        public ITransmitter Mydriver = null;
         private FrmMain ownerWindow = null;
  
         #region delegates
@@ -43,7 +43,7 @@ namespace netGui
         }
         #endregion
 
-        public Node(transmitterDriver driver, Int16 newid)
+        public Node(ITransmitter driver, Int16 newid)
         {
             id = newid;
             Mydriver = driver;

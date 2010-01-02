@@ -25,6 +25,35 @@ namespace netbridge
 	{
 		private:
 			System::Threading::Mutex ^ serialLock;
+			void throwerror(long errcode)
+			{
+				switch( errcode )
+				{
+					case 0x01:
+						throw gcnew commsTimeoutException();
+						break;
+					case 0x02:
+						throw gcnew commsCryptoException();
+						break;
+					case 0x03:
+						throw gcnew commsInternalException();
+						break;
+					case 0x04:
+						throw gcnew commsPortStateException();
+						break;
+
+					case 0x20:
+						throw gcnew sensorNotFoundException();
+						break;
+					case 0x21:
+						throw gcnew sensorWrongTypeException();
+						break;
+
+					default:
+						throw gcnew InternalErrorException();
+				}
+			}
+
 		public: 
 
 			transmitterDriver(System::String ^strPortName, array<System::Byte> ^ key)
@@ -104,35 +133,6 @@ namespace netbridge
 			}
 
 
-			void throwerror(long errcode)
-			{
-				switch( errcode )
-				{
-					case 0x01:
-						throw gcnew commsTimeoutException();
-						break;
-					case 0x02:
-						throw gcnew commsCryptoException();
-						break;
-					case 0x03:
-						throw gcnew commsInternalException();
-						break;
-					case 0x04:
-						throw gcnew commsPortStateException();
-						break;
-
-					case 0x20:
-						throw gcnew sensorNotFoundException();
-						break;
-					case 0x21:
-						throw gcnew sensorWrongTypeException();
-						break;
-
-					default:
-						throw gcnew InternalErrorException();
-				}
-			}
-
 			System::String ^ doIdentify(Int16 nodeId)
 			{
 				serialLock->WaitOne();
@@ -159,7 +159,7 @@ namespace netbridge
 				return gcnew System::String("");	// Dummy return value - code can never get to this point
 			}
 
-			long doGetSensorCount(Int16 nodeId)
+			Int16 doGetSensorCount(Int16 nodeId)
 			{
 				serialLock->WaitOne();
 				cmdResponseGeneric_t* genericResponse;
@@ -172,7 +172,7 @@ namespace netbridge
 					long sensorCount = genericResponse->response;
 					cmd_free(genericResponse);
 					serialLock->ReleaseMutex();
-					return sensorCount;
+					return (Int16)sensorCount;
 				}
 				else
 				{
@@ -221,7 +221,7 @@ namespace netbridge
 				}
 			}
 
-			bool ^ doGetGenericDigitalIn(Int16 nodeId, Int16 sensorId)
+			bool doGetGenericDigitalIn(Int16 nodeId, Int16 sensorId)
 			{
 				serialLock->WaitOne();
 				cmdResponseGeneric_t* genericResponse;	
@@ -232,7 +232,7 @@ namespace netbridge
 
 				if (genericResponse->errorcode==errcode_none)
 				{
-					bool ^ toReturn;
+					bool toReturn;
 					if (genericResponse->response == 0x00)
 						toReturn = false;
 					else
@@ -249,7 +249,7 @@ namespace netbridge
 					serialLock->ReleaseMutex();
 					throwerror(errcode);
 				}
-				return gcnew System::Boolean;	// Dummy return value - code can never get to this point
+				return false;	// Dummy return value - code can never get to this point
 			}
 
 			void doSetGenericOut(Int16 nodeId, System::Int16 toThis, Int16 sensorId)

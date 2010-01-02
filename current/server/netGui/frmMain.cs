@@ -12,10 +12,10 @@ namespace netGui
 {
     public partial class FrmMain : Form
     {
-        private transmitterDriver _mydriver = null;   
+        private ITransmitter _mydriver = null;   
         public options MyOptions = new options();
 
-        public transmitterDriver getMyDriver()
+        public ITransmitter getMyDriver()
         {
             if ( (null == _mydriver) || (!_mydriver.portOpen()) )
             {
@@ -25,7 +25,7 @@ namespace netGui
                 if ((response == DialogResult.No) || (response == DialogResult.None))
                     throw new cantOpenPortException();
 
-                _mydriver = new transmitterDriver(MyOptions.portname, MyOptions.myKey.keyArray);
+                _mydriver = new _transmitterDriver(MyOptions.portname, MyOptions.myKey.keyArray);
             } 
 
             return _mydriver;  
@@ -47,7 +47,7 @@ namespace netGui
 
 
         #region node interaction
-        public void setMyDriver(transmitterDriver toThis)
+        public void setMyDriver(ITransmitter toThis)
         {
             _mydriver = toThis;
         }
@@ -56,7 +56,7 @@ namespace netGui
         {
             try
             {
-                setMyDriver(new transmitterDriver(MyOptions.portname, MyOptions.myKey.keyArray  ));
+                setMyDriver(new _transmitterDriver(MyOptions.portname, MyOptions.myKey.keyArray  ));
             }
             catch (badPortException)
             {
@@ -608,7 +608,7 @@ namespace netGui
             XmlSerializer mySer = new XmlSerializer( typeof(rule) );
             Encoding ascii = Encoding.BigEndianUnicode;
             Stream stream = new MemoryStream(ascii.GetBytes(Properties.Settings.Default["serialisedRules"].ToString()));
-            Clipboard.SetText((string) Properties.Settings.Default["serialisedRules"]);
+            //Clipboard.SetText((string) Properties.Settings.Default["serialisedRules"]);
             while (stream.Position < stream.Length )
                 addNewRule((rule) mySer.Deserialize(stream));
             

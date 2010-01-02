@@ -52,10 +52,11 @@
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
+				WarnAsError="true"
 				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="4"
 				CompileAs="1"
-				ShowIncludes="true"
+				ShowIncludes="false"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -69,7 +70,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="Winmm.lib"
-				ShowProgress="2"
+				ShowProgress="0"
 				OutputFile="$(OutDir)/lavalampdll.dll"
 				LinkIncremental="2"
 				ModuleDefinitionFile="exports.def"
@@ -116,8 +117,8 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				CommandLine="copy $(ProjectName) $(ProjectDir)..\shared\$(InputName).dll&#x0D;&#x0A;copy $(ProjectName) $(ProjectDir)..\shared\$(InputName).lib&#x0D;&#x0A;"
-				Outputs="$(ProjectDir)..\shared\$(InputName).dll"
+				CommandLine=""
+				Outputs=""
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -149,6 +150,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="Winmm.lib"
 				OutputFile="$(OutDir)/lavalampdll.dll"
 				LinkIncremental="1"
 				ModuleDefinitionFile="exports.def"
@@ -218,6 +220,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="Winmm.lib"
+				OutputFile="$(OutDir)/lavalampdll.dll"
+				LinkIncremental="1"
+				ModuleDefinitionFile="exports.def"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 			/>

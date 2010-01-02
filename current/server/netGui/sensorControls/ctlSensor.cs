@@ -444,7 +444,7 @@ namespace netGui
         public virtual Object SendValue() 
         {
             // User should never see this
-            throw new NotImplementedException("Please impliment this for your sensror type");
+            throw new NotImplementedException("Please implement this for your sensor type");
         }
 
         public delegate void sendValueToNode(object sendThis);

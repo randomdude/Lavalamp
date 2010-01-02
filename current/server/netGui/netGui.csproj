@@ -87,6 +87,7 @@
     <Compile Include="addNode.Designer.cs">
       <DependentUpon>addNode.cs</DependentUpon>
     </Compile>
+    <Compile Include="ITransmitter.cs" />
     <Compile Include="key.cs" />
     <Compile Include="nodeEditForms\FrmChangeP.cs">
       <SubType>Form</SubType>
@@ -386,12 +387,7 @@
       <DependentUpon>sensoFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\netbridge\netbridge.vcproj">
-      <Project>{ADFA97F6-D7A7-489F-86AF-D7A835D18E51}</Project>
-      <Name>netbridge</Name>
-    </ProjectReference>
+    <Compile Include="_transmitterDriver.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -508,6 +504,12 @@
     <None Include="Resources\New.ico" />
     <None Include="Resources\error.ico" />
     <None Include="RuleEngine\ruleItems\pythonScripts\test-configuration.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\netbridge\netbridge.vcproj">
+      <Project>{ADFA97F6-D7A7-489F-86AF-D7A835D18E51}</Project>
+      <Name>netbridge</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
