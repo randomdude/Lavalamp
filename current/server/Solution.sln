@@ -24,6 +24,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ruleItems-winamp", "netgui-
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winamp-plugin", "netgui-extras\lavalamp-winamp\gen_tray.vcproj", "{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test data", "Test data", "{C88F9560-EC26-4EA9-8B14-860998BAA2C4}"
+	ProjectSection(SolutionItems) = preProject
+		testData\test-category.py = testData\test-category.py
+		testData\test-configuration.py = testData\test-configuration.py
+		testData\test.py = testData\test.py
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		clr|Any CPU = clr|Any CPU

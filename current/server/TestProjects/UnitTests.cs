@@ -11,9 +11,9 @@ namespace TestProjects
     public class UnitTests
     {
         // todo: remove need for hardcoded filenames
-        private string filenameParameters = @"C:\lavalamp\current\server\netGui\RuleEngine\ruleItems\pythonScripts\test-configuration.py";
-        private const string filename = @"C:\lavalamp\current\server\netGui\RuleEngine\ruleItems\pythonScripts\test.py";
-        private const string filenameCategory = @"C:\lavalamp\current\server\netGui\RuleEngine\ruleItems\pythonScripts\test-category.py";
+        private string filenameParameters = @"..\..\..\testData\test-configuration.py";
+        private const string filename = @"..\..\..\testData\test.py";
+        private const string filenameCategory = @"..\..\..\testData\test-category.py";
 
         /// <summary>
         /// Verify load of an example python ruleItem, ensuring that the getPinInfo operates.

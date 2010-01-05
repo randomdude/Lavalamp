@@ -438,8 +438,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\clock21.bmp" />
-    <None Include="RuleEngine\ruleItems\pythonScripts\test-category.py" />
-    <None Include="RuleEngine\ruleItems\pythonScripts\test.py" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\baiscLogic\ruleItem_splitter.png" />
@@ -503,7 +501,6 @@
     <None Include="Resources\Shortcut.ico" />
     <None Include="Resources\New.ico" />
     <None Include="Resources\error.ico" />
-    <None Include="RuleEngine\ruleItems\pythonScripts\test-configuration.py" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\netbridge\netbridge.vcproj">
