@@ -5,9 +5,6 @@
 #include <stdio.h>
 #include <windows.h>
 
-// define this to use no encryption at all.
-#define CRYPT_DUMMY
-
 void setrandomnewseq(datapkt_t* ofthis)
 {
 	if (RAND_MAX <0xFF )
@@ -76,7 +73,6 @@ generic_packet_response_t* sendPacketWithRetry(appConfig_t* myconfig, datapkt_t 
 			}
 		} else {
 			// otherwise, the transmission was OK - we should return it.
-			Sleep(500);
 			return result;
 		}
 	}
@@ -116,7 +112,8 @@ generic_packet_response_t* sendPacket(appConfig_t* myconfig, datapkt_t tosend)
 	if (myconfig->verbose>2) printf("Challenged node 0x%08lx\n", getseq(&tosend) );
 
 	if (myconfig->verbose>1) { printf("Packet to send (plain  ):\n"); dumppacket(&crypted); }
-	encipher(0x20, (unsigned long*)(&crypted), myconfig->key , myconfig->verbose);
+	if (myconfig->useEncryption)
+		encipher(0x20, (unsigned long*)(&crypted), myconfig->key , myconfig->verbose);
 	if (myconfig->verbose>2) { printf("Packet to send (crypted):\n"); dumppacket(&crypted); }
 
 	s = sendwithtimeout(myconfig, (char*)(&crypted), sizeof(crypted), &timeout);
@@ -145,7 +142,8 @@ generic_packet_response_t* sendPacket(appConfig_t* myconfig, datapkt_t tosend)
 	}
 
 	if (myconfig->verbose>2) { printf("Packet recieved (crypted):\n"); dumppacket(response); }
-	decipher(0x20, (unsigned long*)(response), myconfig->key, myconfig->verbose);
+	if (myconfig->useEncryption)
+		decipher(0x20, (unsigned long*)(response), myconfig->key, myconfig->verbose);
 	if (myconfig->verbose>1) { printf("Packet recieved (plain  ):\n"); dumppacket(response); }
 
 	// We have a challenge from the PIC here. It has supplied n+1 and given us P.
@@ -169,7 +167,8 @@ generic_packet_response_t* sendPacket(appConfig_t* myconfig, datapkt_t tosend)
 	crypted.byte7 = tosend.byte7;
 	crypted.byte8 = tosend.byte8;
 	if (myconfig->verbose>1) { printf("Packet to send (plain  ):\n"); dumppacket(&crypted); }
-	encipher(0x20, (unsigned long*)(&crypted), myconfig->key, myconfig->verbose);
+	if (myconfig->useEncryption)
+		encipher(0x20, (unsigned long*)(&crypted), myconfig->key, myconfig->verbose);
 	if (myconfig->verbose>2) { printf("Packet to send (crypted):\n"); dumppacket(&crypted); }
 
 	s = sendwithtimeout(myconfig, (char*)(&crypted), sizeof(crypted), &timeout);
@@ -201,7 +200,8 @@ generic_packet_response_t* sendPacket(appConfig_t* myconfig, datapkt_t tosend)
 	}
 
 	if (myconfig->verbose>2) { printf("Packet recieved (crypted):\n"); dumppacket(response); }
-	decipher(0x20, (unsigned long*)(response), myconfig->key, myconfig->verbose);
+	if (myconfig->useEncryption)
+		decipher(0x20, (unsigned long*)(response), myconfig->key, myconfig->verbose);
 	if (myconfig->verbose>1) { printf("Packet recieved (plain  ):\n"); dumppacket(response); }
 
 	// This should be the response to our command (and p+2).
@@ -232,7 +232,6 @@ void dumppacket(datapkt_t* mypacket)
 
 void encipher(unsigned int num_rounds, unsigned long* v, unsigned long* k, int vebosity) 
 {
-#ifndef CRYPT_DUMMY
 	unsigned long  v0,v1,i, sum, delta;
 
 	// By convention, we use most-significant-byte-first byte ordering when sending crypted data to the PIC.
@@ -253,12 +252,9 @@ void encipher(unsigned int num_rounds, unsigned long* v, unsigned long* k, int v
 	// By convention, we use most-significant-byte-first byte ordering when sending crypted data to the PIC.
 	v[1] = revLongByteOrder(v[1]);
 	v[0] = revLongByteOrder(v[0]);
-
-#endif
 }
 void decipher(unsigned int num_rounds, unsigned long* v, unsigned long* k, int vebosity) 
 {
-#ifndef CRYPT_DUMMY
 	unsigned long v0, v1, i, delta, sum;
 
 	// By convention, we use most-significant-byte-first byte ordering when sending crypted data to the PIC.
@@ -279,7 +275,6 @@ void decipher(unsigned int num_rounds, unsigned long* v, unsigned long* k, int v
 	// By convention, we use most-significant-byte-first byte ordering when sending crypted data to the PIC.
 	v[0] = revLongByteOrder(v[0]);
 	v[1] = revLongByteOrder(v[1]);
-#endif
 }
 
 long revLongByteOrder(long ofthis)

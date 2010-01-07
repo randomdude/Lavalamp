@@ -4,12 +4,14 @@ namespace netGui
 {
     public class options
     {
+        public bool useEncryption;
         public string rulesPath;
         public string portname;
         public key myKey = new key();
 
         public options()
         {
+            useEncryption = bool.Parse(Properties.Settings.Default["useEncryption"] as string);
             portname = Properties.Settings.Default["portname"] as string;
             try
             {
@@ -23,6 +25,7 @@ namespace netGui
 
         public options(options newOptions) 
         {
+            useEncryption = newOptions.useEncryption;
             portname = newOptions.portname;
             myKey = newOptions.myKey;
             rulesPath = newOptions.rulesPath;
@@ -30,6 +33,7 @@ namespace netGui
 
         public void save()
         {
+            Properties.Settings.Default["useEncryption"] = useEncryption.ToString();
             Properties.Settings.Default["rulesPath"] = rulesPath;
             Properties.Settings.Default["portname"] = portname;
             Properties.Settings.Default["key"] = myKey.ToString();

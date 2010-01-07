@@ -36,6 +36,7 @@ namespace netGui
             this.txtKey = new System.Windows.Forms.TextBox();
             this.txtRulePath = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.chkUseEncryption = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -66,7 +67,7 @@ namespace netGui
             // 
             // cmdOK
             // 
-            this.cmdOK.Location = new System.Drawing.Point(300, 112);
+            this.cmdOK.Location = new System.Drawing.Point(300, 157);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
             this.cmdOK.TabIndex = 2;
@@ -77,7 +78,7 @@ namespace netGui
             // cmdCancel
             // 
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(11, 112);
+            this.cmdCancel.Location = new System.Drawing.Point(12, 157);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
             this.cmdCancel.TabIndex = 3;
@@ -88,7 +89,7 @@ namespace netGui
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 45);
+            this.label2.Location = new System.Drawing.Point(16, 66);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(70, 13);
             this.label2.TabIndex = 4;
@@ -97,7 +98,7 @@ namespace netGui
             // txtKey
             // 
             this.txtKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtKey.Location = new System.Drawing.Point(93, 42);
+            this.txtKey.Location = new System.Drawing.Point(93, 63);
             this.txtKey.Name = "txtKey";
             this.txtKey.Size = new System.Drawing.Size(282, 20);
             this.txtKey.TabIndex = 5;
@@ -106,7 +107,7 @@ namespace netGui
             // txtRulePath
             // 
             this.txtRulePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRulePath.Location = new System.Drawing.Point(93, 68);
+            this.txtRulePath.Location = new System.Drawing.Point(93, 89);
             this.txtRulePath.Name = "txtRulePath";
             this.txtRulePath.Size = new System.Drawing.Size(282, 20);
             this.txtRulePath.TabIndex = 7;
@@ -115,11 +116,22 @@ namespace netGui
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 71);
+            this.label3.Location = new System.Drawing.Point(16, 92);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 13);
             this.label3.TabIndex = 6;
             this.label3.Text = "Rule path:";
+            // 
+            // chkUseEncryption
+            // 
+            this.chkUseEncryption.AutoSize = true;
+            this.chkUseEncryption.Location = new System.Drawing.Point(93, 40);
+            this.chkUseEncryption.Name = "chkUseEncryption";
+            this.chkUseEncryption.Size = new System.Drawing.Size(131, 17);
+            this.chkUseEncryption.TabIndex = 8;
+            this.chkUseEncryption.Text = "Use &encryption on link";
+            this.chkUseEncryption.UseVisualStyleBackColor = true;
+            this.chkUseEncryption.CheckedChanged += new System.EventHandler(this.chkUseEncryption_CheckedChanged);
             // 
             // FrmGeneralOptions
             // 
@@ -127,8 +139,9 @@ namespace netGui
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
-            this.ClientSize = new System.Drawing.Size(387, 147);
+            this.ClientSize = new System.Drawing.Size(387, 192);
             this.ControlBox = false;
+            this.Controls.Add(this.chkUseEncryption);
             this.Controls.Add(this.txtRulePath);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtKey);
@@ -159,5 +172,6 @@ namespace netGui
         private System.Windows.Forms.TextBox txtKey;
         private System.Windows.Forms.TextBox txtRulePath;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox chkUseEncryption;
     }
 }

@@ -56,7 +56,7 @@ namespace netbridge
 
 		public: 
 
-			transmitterDriver(System::String ^strPortName, array<System::Byte> ^ key)
+			transmitterDriver(System::String ^strPortName, bool useEncryption, array<System::Byte> ^ key)
 			{
 				if (strPortName->IsNullOrEmpty(strPortName))
 					throw gcnew badPortException;
@@ -69,6 +69,9 @@ namespace netbridge
 				memset(myseshdata.portname, 0x00, sizeof(myseshdata.portname)+1);
 				for( int i = 0; i< byteCount; i++)
 					myseshdata.portname[i] =  (char)strPortName->ToCharArray()[i];
+
+				// Pass through encryption setting
+				myseshdata.useEncryption = useEncryption;
 
 				// Now, open the port.
 				if (!initPort(&myseshdata))

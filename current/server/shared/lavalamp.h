@@ -65,6 +65,7 @@ typedef struct appConfig_t
 	unsigned char nodeid;
 	unsigned char sensorid;
 	char* portname;
+	BOOL useEncryption;
 	unsigned long key[4];
 	int verbose;
 	HANDLE hnd;

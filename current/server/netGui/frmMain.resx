@@ -123,6 +123,29 @@
   <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>126, 17</value>
   </metadata>
+  <metadata name="imgLstNodes.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>551, 17</value>
+  </metadata>
+  <data name="imgLstNodes.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAD4
+        AgAAAk1TRnQBSQFMAwEBAAEEAQABBAEAARABAAEQAQAE/wEhAQAI/wFCAU0BNgcAATYDAAEoAwABQAMA
+        ARADAAEBAQABIAYAARD/AP8A/wA1AAJHAUYBcgMAAQHsAANGAW4EAAMlAToBkAGNAYkB/wMUARwDEAEW
+        AxEBFwMaASXUAAJIAUcBcgQAAyQBOAGLAYgBhAH/AyUBOgQAAa4BqgGmAf8BNAExATAB/wMbAf8DJQE6
+        Ax8BLgFwAWwBagHzAwQBBscAAQEDHgEsAYYBgwGAAf8DIAExBAABqgGmAaIB/wFMAUkBSAH/AVEBTAFL
+        Af8BwQG8AbgB/wE2ATMBMgH/AxwB/wMdAf8DMwFdAXEBbQFrAfMDGwEmAwsBD8gAAaYBogGeAf8BTQFK
+        AUgB/gFMAUgBRgH/Ab8BugG2Af8BlwGSAY8B/wGqAaYBowH/AaIBngGcAf8BjAGJAYYB/wFSAlEB/wNB
+        Af8DGwH/AScCJgH5AxUBHgMPARXAAAFRAU4BTAH7AU0BSgFIAf8BvAG3AbMB/wGVAZEBjgH/AaoBpgGi
+        Af8BhgGEAYIB/wNRAf8DSQH/A0IB/wM7Af8DNgH/AzIB/wNTAf8DIgH/AxwB+sQAATMBMgEwAf8BqgGm
+        AaMB/wGFAYMBggH/AWUCZAH/A18B/wNZAf8DUgH/A0sB/wFRAlAB/wJMAUsB/wJHAUYB/wMzAf8DMgH/
+        AzQB/wM8Ac3EAANNAWwDWgH/A2QB/wNlAf8CbAFrAf8CZwFmAf8CYQFgAf8DTAH/A0UB/wM+Af8DOAH/
+        Az4B+QNGAYcDKQE81AADXwHzA10B/wNcAf8DVQH/A1AB5AMyAUwDFAEb/wD/AP8A/wDcAAFCAU0BPgcA
+        AT4DAAEoAwABQAMAARADAAEBAQABAQUAAYAXAAP/AQAC/wYAAv8GAAL/BgAB/wE/BgAB+gEHBgAB0QEB
+        BgABCAcAAcAIAAEBBwABAQcAAQMGAAHgAT8GAAL/BgAC/wYAAv8GAAL/BgAL
+</value>
+  </data>
   <metadata name="contextMenuStripRules.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>271, 17</value>
   </metadata>

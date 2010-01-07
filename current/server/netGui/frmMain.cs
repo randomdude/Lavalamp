@@ -25,7 +25,8 @@ namespace netGui
                 if ((response == DialogResult.No) || (response == DialogResult.None))
                     throw new cantOpenPortException();
 
-                _mydriver = new _transmitterDriver(MyOptions.portname, MyOptions.myKey.keyArray);
+                _mydriver = new _transmitterDriver(MyOptions.portname, MyOptions.useEncryption, MyOptions.myKey.keyArray);
+                generalToolStripMenuItem.Enabled = false;
             } 
 
             return _mydriver;  
@@ -34,15 +35,6 @@ namespace netGui
         public FrmMain()
         {
             InitializeComponent();
-
-            // Initialise icons in the node list
-            ImageList iconSmall = new ImageList();
-            iconSmall.Images.Add(Properties.Resources.gearSmall );
-            lstNodes.SmallImageList = iconSmall;
-
-            ImageList iconLarge = new ImageList();
-            iconSmall.Images.Add(Properties.Resources.gearSmall);
-            lstNodes.LargeImageList = iconLarge;
         }
 
 
@@ -56,7 +48,7 @@ namespace netGui
         {
             try
             {
-                setMyDriver(new _transmitterDriver(MyOptions.portname, MyOptions.myKey.keyArray  ));
+                setMyDriver(new _transmitterDriver(MyOptions.portname, MyOptions.useEncryption, MyOptions.myKey.keyArray));
             }
             catch (badPortException)
             {
@@ -70,6 +62,7 @@ namespace netGui
             }
 
             MessageBox.Show("Port opened.");
+            generalToolStripMenuItem.Enabled = false;
         }
 
         public void disconnectFromTransmitter()
@@ -88,6 +81,7 @@ namespace netGui
             _mydriver = null;
             lstNodes.Clear();
             MessageBox.Show("Port closed.");
+            generalToolStripMenuItem.Enabled = true;
         }
 
         private void MnuItemConnectToTrans_Click(object sender, EventArgs e)
@@ -165,6 +159,7 @@ namespace netGui
             String sensorCount = newNode.sensors.Count.ToString();
 
             ListViewItem listItem = new ListViewItem(new[] { caption, id, name, sensorCount  }, 0);
+            listItem.ImageIndex = 0;
             listItem.Tag = newNode;
 
             lstNodes.Items.Add(listItem);            

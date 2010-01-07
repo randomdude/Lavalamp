@@ -62,6 +62,7 @@ namespace netGui
             this.largeIconsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.smallIconsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.detailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imgLstNodes = new System.Windows.Forms.ImageList(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblSensorCount = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -196,9 +197,11 @@ namespace netGui
             this.lstNodes.ContextMenuStrip = this.contextMenuStrip1;
             this.lstNodes.GridLines = true;
             this.lstNodes.LabelEdit = true;
+            this.lstNodes.LargeImageList = this.imgLstNodes;
             this.lstNodes.Location = new System.Drawing.Point(16, 20);
             this.lstNodes.Name = "lstNodes";
             this.lstNodes.Size = new System.Drawing.Size(317, 262);
+            this.lstNodes.SmallImageList = this.imgLstNodes;
             this.lstNodes.TabIndex = 1;
             this.lstNodes.UseCompatibleStateImageBehavior = false;
             this.lstNodes.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstNodes_MouseDoubleClick);
@@ -339,6 +342,12 @@ namespace netGui
             this.detailsToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.detailsToolStripMenuItem.Text = "Details";
             this.detailsToolStripMenuItem.Click += new System.EventHandler(this.detailsToolStripMenuItem_Click);
+            // 
+            // imgLstNodes
+            // 
+            this.imgLstNodes.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgLstNodes.ImageStream")));
+            this.imgLstNodes.TransparentColor = System.Drawing.Color.Transparent;
+            this.imgLstNodes.Images.SetKeyName(0, "ram.ico");
             // 
             // groupBox1
             // 
@@ -604,6 +613,7 @@ namespace netGui
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem runRuleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stopRuleToolStripMenuItem;
+        private System.Windows.Forms.ImageList imgLstNodes;
     }
 }
 

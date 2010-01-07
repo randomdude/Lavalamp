@@ -17,6 +17,7 @@ appConfig_t* getdefaultconfig()
 	myconfig->nodeid = 0x01;
 	myconfig->sensorid = 0x01;
 	myconfig->portname = "COM3";
+	myconfig->useEncryption = FALSE;
 	myconfig->key[0] = (long)0x00112233;
 	myconfig->key[1] = (long)0x44556677;
 	myconfig->key[2] = (long)0x8899aabb;
