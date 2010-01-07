@@ -12,12 +12,15 @@ extern "C"
 
 #define CMDIDENTIFY_LONGEST_NODE_NAME 0x20
 
+#pragma pack(push)  
+#pragma pack(1)     /* set alignment to 1 byte boundary */
+
 typedef struct datapkt_t
 {
-	unsigned char unused;
-	unsigned char seqByte1;
-	unsigned char seqByte2;
 	unsigned char seqByte3;
+	unsigned char seqByte2;
+	unsigned char seqByte1;
+	unsigned char unused;
 	unsigned char nodeid;
 	unsigned char byte6;
 	unsigned char byte7;
@@ -53,6 +56,7 @@ typedef struct cmdResponseGetSensorType
 	long totaltime;
 }cmdResponseGetSensorType_t;
 
+#pragma pack(pop)
 
 typedef struct appConfig_t
 {

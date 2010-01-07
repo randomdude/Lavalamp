@@ -23,6 +23,8 @@ void setnewseq(struct datapkt_t* ofthis, long toThis);
 generic_packet_response_t* sendPacket(appConfig_t* myconfig, datapkt_t tosend);
 generic_packet_response_t* sendPacketWithRetry(appConfig_t* myconfig, datapkt_t tosend);
 generic_packet_response_t* sendPacketTimed(appConfig_t* myconfig, datapkt_t tosend);
+long sendpacketwithtimeout( appConfig_t* myconfig, long* packet, long datalen, BOOL* didTimeout);
+long readpackettimeout( appConfig_t* myconfig, long* packet, long datalen, BOOL* didTimeout);
 
 
-#endif
+#endif	

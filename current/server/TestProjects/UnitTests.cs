@@ -10,7 +10,6 @@ namespace TestProjects
     [TestClass]
     public class UnitTests
     {
-        // todo: remove need for hardcoded filenames
         private string filenameParameters = @"..\..\..\testData\test-configuration.py";
         private const string filename = @"..\..\..\testData\test.py";
         private const string filenameCategory = @"..\..\..\testData\test-category.py";

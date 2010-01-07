@@ -6,7 +6,7 @@
 #include <windows.h>
 
 // define this to use no encryption at all.
-// #define CRYPT_DUMMY
+#define CRYPT_DUMMY
 
 void setrandomnewseq(datapkt_t* ofthis)
 {
@@ -113,7 +113,7 @@ generic_packet_response_t* sendPacket(appConfig_t* myconfig, datapkt_t tosend)
 	crypted.byte7 = rand(); // todo: make portable to other vals of RAND_MAX
 	crypted.byte8 = rand();
 
-	if (myconfig->verbose>2) printf("Challenged node 0x%08lx\n", (crypted.byte8)|(crypted.byte7<<8)|(crypted.byte6<<16) );
+	if (myconfig->verbose>2) printf("Challenged node 0x%08lx\n", getseq(&tosend) );
 
 	if (myconfig->verbose>1) { printf("Packet to send (plain  ):\n"); dumppacket(&crypted); }
 	encipher(0x20, (unsigned long*)(&crypted), myconfig->key , myconfig->verbose);
@@ -235,7 +235,9 @@ void encipher(unsigned int num_rounds, unsigned long* v, unsigned long* k, int v
 #ifndef CRYPT_DUMMY
 	unsigned long  v0,v1,i, sum, delta;
 
-	v[1] = revLongByteOrder(v[1]); 
+	// By convention, we use most-significant-byte-first byte ordering when sending crypted data to the PIC.
+	v[0] = revLongByteOrder(v[0]);
+	v[1] = revLongByteOrder(v[1]);
 
 	v0=v[0]; v1=v[1]; sum=0; delta=0x9E3779B9;
 	for(i=0; i<num_rounds; i++) 
@@ -248,20 +250,18 @@ void encipher(unsigned int num_rounds, unsigned long* v, unsigned long* k, int v
 	}
 	v[0]=v0; v[1]=v1;
 
+	// By convention, we use most-significant-byte-first byte ordering when sending crypted data to the PIC.
 	v[1] = revLongByteOrder(v[1]);
-
-#endif
-
-	// TODO: Calculate checksum here!
-
 	v[0] = revLongByteOrder(v[0]);
 
+#endif
 }
 void decipher(unsigned int num_rounds, unsigned long* v, unsigned long* k, int vebosity) 
 {
 #ifndef CRYPT_DUMMY
 	unsigned long v0, v1, i, delta, sum;
-	// Don't forget that the PIC operates in the opposite byte ordering to the x86.
+
+	// By convention, we use most-significant-byte-first byte ordering when sending crypted data to the PIC.
 	v[0] = revLongByteOrder(v[0]);
 	v[1] = revLongByteOrder(v[1]);
 
@@ -274,13 +274,12 @@ void decipher(unsigned int num_rounds, unsigned long* v, unsigned long* k, int v
 		v0 -= (((v1 << 4) ^ (v1 >> 5)) + v1) ^ (sum + k[sum & 3]);
 		if (vebosity>4) printf(" v1 = 0x%lx new sum 0x%lx\n", i, v1, sum);
 	}
-	v[0]=v1; v[1]=v0; 
+	v[0]=v0; v[1]=v1; 
 
-	revPacketByteOrder((datapkt_t*)v);
-
-#endif
+	// By convention, we use most-significant-byte-first byte ordering when sending crypted data to the PIC.
 	v[0] = revLongByteOrder(v[0]);
-
+	v[1] = revLongByteOrder(v[1]);
+#endif
 }
 
 long revLongByteOrder(long ofthis)

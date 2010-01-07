@@ -104,7 +104,7 @@ long readwithtimeout( appConfig_t* myconfig, char* data, long datalen,  BOOL* di
 				{
 					if (myconfig->verbose>2) printf("timeout read bytes - GLE %d\n", GetLastError() );
 					didTimeout[0]=TRUE;
-					CloseHandle(myoverlap.hEvent);
+					CloseHandle(myoverlap.hEvent);	
 					return FALSE;
 				}
 
@@ -156,7 +156,7 @@ BOOL __cdecl initPort(appConfig_t* myconfig)
 	}
 
 	GetCommState(myconfig->hnd,&mydcb);
-	mydcb.BaudRate = 2400;
+	mydcb.BaudRate = 9600;
 	mydcb.fBinary = TRUE;
 	mydcb.fParity = FALSE;
 	mydcb.fOutxCtsFlow = FALSE;
