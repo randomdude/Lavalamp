@@ -5,9 +5,10 @@
 	#include "main.h"
 	#include "tea.h"
 	#include "../shared/init.h"
-	#include "../shared/swuart.h"
-	#include "../shared/swuart-lowlevel.h"
+	#include "../shared/manchesteruart.h"
+	#include "../shared/manchesteruart-lowlevel.h"
 	#include "idletimer.h"
+	#include "sensorcfg.h"
 
 	errorlevel  -302  
 
@@ -15,12 +16,19 @@
 
 sendpacket:
 	GLOBAL sendpacket
+
+#ifdef COMMLINK_HWUART
+	goto sendpackethwuart
+#endif
+
+#ifdef COMMLINK_SWMANCHESTER
+	goto sendpackethwuart
+#endif
+
+#ifdef COMMLINK_SWMANCHESTER
+sendpacketmanchester:
 	; Sent a packet of data out via the software manchester
 	; UART.
-
-	; DEBUG - send to debug channel first
-	; call sendpackethwuart
-	; end debug code
 
 	; Since we're doing a lot of bit-banging here, disable
 	; interrupts.
@@ -74,12 +82,21 @@ idlebits2:
 	call enableidetimer
 
 	return
+#endif
 
+#ifdef COMMLINK_HWUART
 sendpackethwuart:
+; This crypts a packet,and sends a packet out through the hardware UART.
 	GLOBAL sendpackethwuart
 
-; This just sends a packet out through the hardware UART.
-; Mainly used for debugging.
+	; Address to transmitter
+	movlw 0x22
+	movwf packet4
+
+	; Now encrypt it	
+	movlw 0x40;		; 32 rounds
+	movwf halfroundcount
+	call encrypt
 
 	movfw packet0
 	call sendbytehwuart
@@ -101,15 +118,130 @@ sendpackethwuart:
 	return
 
 sendbytehwuart:
+	global sendbytehwuart
+	; Send 'w' to the HW UART.
 waituntilidle1:
 	btfss PIR1, TXIF	; are we idle?
 	goto waituntilidle1	; wait for idleness!
 	movwf TXREG
+	bsf STATUS, RP0  ; page 1
 	bsf TXSTA, TXEN
+	bcf STATUS, RP0  ; page 0
 waituntilidle2:			; we wait for our packet to finish sending before returning
 	btfss PIR1, TXIF	; are we idle?
 	goto waituntilidle2	; wait for idleness!
 
 	return
+#endif
 
+waitforpacket:
+	GLOBAL waitforpacket
+#ifdef COMMLINK_HWUART
+	goto waitforpackethwuart
+#endif
+#ifdef COMMLINK_SWMANCHESTER
+	goto recasmanchester
+#endif
+
+#ifdef COMMLINK_HWUART
+resetsyncbytesandwaitforpackethwuart
+	movlw 0x08
+	movwf syncbytes
+
+	; reset to 'no connections'
+	; TODO: Move?
+	bcf state, STATUS_BIT_CRYPTOSTATE
+waitforpackethwuart:
+	global waitforpackethwuart
+	; Await a packet of data from the hardwre UART. If we see
+	; eight consecutive 0xAA bytes - a sync packet - we reset
+	; to the start of the buffer.
+
+	call waitforbytehwuart
+	movwf packet0
+
+	movf syncbytes, f
+	btfsc STATUS, Z								; have we seen enough sync bytes?
+	goto resetsyncbytesandwaitforpackethwuart	; Yup. loop up.
+
+	call waitforbytehwuart
+	movwf packet1
+	movf syncbytes, f
+	btfsc STATUS, Z								; have we seen enough sync bytes?
+	goto resetsyncbytesandwaitforpackethwuart	; Yup. loop up.
+
+	call waitforbytehwuart
+	movwf packet2
+	movf syncbytes, f
+	btfsc STATUS, Z								; have we seen enough sync bytes?
+	goto resetsyncbytesandwaitforpackethwuart	; Yup. loop up.
+
+	call waitforbytehwuart
+	movwf packet3
+	movf syncbytes, f
+	btfsc STATUS, Z								; have we seen enough sync bytes?
+	goto resetsyncbytesandwaitforpackethwuart	; Yup. loop up.
+
+	call waitforbytehwuart
+	movwf packet4
+	movf syncbytes, f
+	btfsc STATUS, Z								; have we seen enough sync bytes?
+	goto resetsyncbytesandwaitforpackethwuart	; Yup. loop up.
+
+	call waitforbytehwuart
+	movwf packet5
+	movf syncbytes, f
+	btfsc STATUS, Z								; have we seen enough sync bytes?
+	goto resetsyncbytesandwaitforpackethwuart	; Yup. loop up.
+
+	call waitforbytehwuart
+	movwf packet6
+	movf syncbytes, f
+	btfsc STATUS, Z								; have we seen enough sync bytes?
+	goto resetsyncbytesandwaitforpackethwuart	; Yup. loop up.
+
+	call waitforbytehwuart
+	movwf packet7
+	movf syncbytes, f
+	btfsc STATUS, Z								; have we seen enough sync bytes?
+	goto resetsyncbytesandwaitforpackethwuart	; Yup. loop up.
+
+	return
+
+waitforbytehwuart:
+	btfss PIR1, RCIF		; data waiting?
+	goto waitforbytehwuart
+	movfw RCREG	
+
+	; If it's a sync byte, dec our sync counter (which starts at 8).
+	xorlw 0xAA
+	btfsc STATUS, Z
+	goto isSyncByte
+
+	; Not a sync byte. Clear our sync byte counter.
+	; We do this like this to avoid using a extra byte of memory.
+	clrf syncbytes
+	incf syncbytes, f
+	incf syncbytes, f
+	incf syncbytes, f
+	incf syncbytes, f
+	incf syncbytes, f
+	incf syncbytes, f
+	incf syncbytes, f
+	incf syncbytes, f
+
+	; W contains the recieved byte XOR 0xAA, so restore it to our recieved byte.
+	xorlw 0xAA
+
+	return
+
+isSyncByte:
+	decf syncbytes, f
+
+	; W contains the recieved byte XOR 0xAA, so restore it to our recieved byte.
+	xorlw 0xAA
+
+	return
+
+#endif
 	end

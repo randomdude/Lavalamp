@@ -26,13 +26,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_TYPE)
 		bcf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_TRIS, SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PWM_SPEED
+
+		clrf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_ROLLING_TIMER_LOW
 
 	#endif
 #endif

@@ -1,5 +1,5 @@
 	EXTERN sendpacket
-	EXTERN sendpackethwuart
+	EXTERN waitforpacket
 
 CMD_PING			EQU H'01'
 CMD_IDENT			EQU H'02'

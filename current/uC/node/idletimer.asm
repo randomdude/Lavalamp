@@ -19,7 +19,7 @@
 	; node will start observing packet start sequences, where they do
 	; not exist.
 
-	#undefine idletimerenabled
+	#define idletimerenabled
 
 idletimer:
 	global idletimer
@@ -36,9 +36,7 @@ idletimer:
 
 	; And our actual interrupt service routine.
 
-	bsf PORTB, 1	; DEBUG ONLY
 	call dopwmsensors
-	bcf PORTB, 1	; DEBUG ONLY
 
 	bcf INTCON, T0IF
 	bsf INTCON, T0IE
@@ -76,16 +74,13 @@ enableidetimer:
 
 
 	bsf STATUS, RP0	; trip to bank 1
-	bcf TRISB, 1	; DEBUG ONLY
 	bcf OPTION_REG, T0CS
 	bcf STATUS, RP0	; bank 0
 
-	bcf PORTB, 1	; DEBUG ONLY
-
 	bsf INTCON, GIE
 	bsf INTCON, T0IE
-	movlw IDLETIMER_SPEED	
 
+	movlw IDLETIMER_SPEED	
 	movwf TMR0
 
 	return

@@ -1,7 +1,6 @@
 
 	#include "p16f628.inc"
 
-
 key1 EQU	H'20' ; key bytes
 key2 EQU	H'21'
 key3 EQU	H'22'
@@ -55,14 +54,15 @@ arg7 EQU	H'53'
 arg8 EQU	H'54'
 
 sum1 EQU	H'55' ; the 'sum' used by XTEA - it gets 
-sum2 EQU	H'56' ; incrimented by DELTA every cycle
+sum2 EQU	H'56' ; incremented by DELTA every cycle
 sum3 EQU	H'57'
 sum4 EQU	H'58'
 
 cryptdir	EQU	H'59'
 nodeid		EQU	H'5b'
 
-; debug 	EQU H'5c'
+; How many consecutive 0xAA characters - sync bytes - have we seen?
+syncbytes 	EQU H'5c'
 
 p1	 EQU	H'5d'	; pretty important - these are used by 
 p2	 EQU	H'5e'	; the authentication process. They are 

@@ -3,12 +3,12 @@
 	radix	hex
 
 	#include "main.h"
+	#include "sensorcfg.h"
 	#include "tea.h"
 	#include "../shared/init.h"
 	#include "protocol.h"
 	#include "cmds.h"
 	#include "maths.h"
-	#include "../shared/swuart.h"
 	#include "eeprom.h"
 	#include "idletimer.h"
 	#include "tests.h"
@@ -16,6 +16,19 @@
 	errorlevel  -302  
 
 	__CONFIG _CP_OFF & _WDT_OFF & _HS_OSC & _LVP_OFF & _BODEN_OFF
+
+
+#ifndef COMMLINK_HWUART 
+#ifndef COMMLINK_SWMANCHESTER
+error "Define either COMMLINK_HWUART or COMMLINK_SWMANCHESTER"
+#endif
+#endif
+
+#ifdef COMMLINK_HWUART 
+#ifdef COMMLINK_SWMANCHESTER
+error "Do not define both COMMLINK_HWUART and COMMLINK_SWMANCHESTER"
+#endif
+#endif
 	
 	page CODE
 	ORG 0x00
@@ -31,27 +44,57 @@ start
 	global start
 
 	call init
-	call dotests
+	;call dotests
 
 	; set state to 'waiting for first packet' as opposed to 'waiting for transciever to auth'
 	bcf state, STATUS_BIT_CRYPTOSTATE
 waitfordata
 	; Get a 64bit packet of data.
-	call recasmanchester
+	call waitforpacket
+#ifdef lol
+	bsf state, STATUS_BIT_CRYPTOSTATE
+	movlw 0xd6
+	movwf packet0
+	movlw 0x82
+	movwf packet1
+	movlw 0xac
+	movwf packet2
+	movlw 0x62
+	movwf packet3
+	movlw 0xa4
+	movwf packet4
+	movlw 0xa4
+	movwf packet5
+	movlw 0xb3
+	movwf packet6
+	movlw 0xeb
+	movwf packet7
 
-	;	debug code - send recieved packet out over RS232
-	call sendpackethwuart
-
-	; debugging - dump recieved packet
-	;call sendpackethwuart
-
+	movlw 0xd3
+	movwf packet0
+	movlw 0xe0
+	movwf packet1
+	movlw 0xa3
+	movwf packet2
+	movlw 0xf9
+	movwf packet3
+	movlw 0x5d
+	movwf packet4
+	movlw 0x58
+	movwf packet5
+	movlw 0x9a
+	movwf packet6
+	movlw 0x87
+	movwf packet7
+#endif
 	; decrypt packet
 	movlw 0x40;		; 32 rounds
 	movwf halfroundcount
 	call decrypt
-	;	call sendpacket
 
-	; Are you talking to me, punk?
+	;call sendpacket
+
+	; Is the packet addressed to our node?
 	movfw packet4
 	xorwf nodeid, W
 	btfss STATUS, Z
@@ -63,9 +106,10 @@ waitfordata
 	btfsc state, STATUS_BIT_CRYPTOSTATE
 	goto processcmd
 
+	; We're in the unauthenticated phase of the protocol. Respond in bits 0 to 2
+	; and challenge the server in bits 5 through 7.
 sendp:
-
-	; Packet will be [       0xNNNNNN   (8bit unused) ournodeID rnd rnd rnd ].
+	; Packet will be       [ 0xNNNNNN   (8bit unused) ournodeID rnd rnd rnd ].
 	; We must respond with [ 0xNNNNNN+1 (8bit unused)  0x00      PP PP  PP ].
 	; See readme for details.
 	movlw 0x01
@@ -103,7 +147,7 @@ sendp:
 	goto resync 
 
 processcmd:
-	; First off, make sure the base station gave the correct P.
+	; Did the base station authenticate properly? is P correct?
 
 	movlw 0x01
 	movwf arg4
@@ -153,25 +197,27 @@ processcmd:
 	; save p to eeprom
 	call savep
 
+	; OK, this command has finished processing. Finish up any crypto if neccesary, then
+	; wait for the next packet.
 	goto finishedChallenge
 
 wrongP:
+	goto waitfordata;
 	; We got the wrong P? That's odd. 
 	; Since there is no timeout on the 'state' of the system, it
 	; is possible that a packet was dropped at some point and
 	; what we actually recieved was a first-state packet and not
 	; a second.. so let's try parsing it as that.
-
 	goto sendp
 
 finishedChallenge:
-
 	; reset to 'idle'
 	bcf state, STATUS_BIT_CRYPTOSTATE
 	goto resync 
 
 processpacketcmd:
-	; Right, aces. What command is it?
+	; Right. We have a command, and any authentication neccesary has been performed.
+	; What command is it?
 	movlw CMD_PING
 	xorwf packet5, W
 	btfss STATUS, Z		; Is it a CMD_PING?
@@ -296,14 +342,17 @@ cmddone:
 	return
 
 resync
+
 	; Command has ended. Do anything pending
 	btfsc state, STATUS_BIT_NEEDRELOAD
 	call init_from_eeprom
 	bcf state, STATUS_BIT_NEEDRELOAD
 
+#ifdef COMMLINK_SWMANCHESTER
 	;Here, we wait for a stable idle seq.
 	call awaitidlesymbol
+#endif
 
-	goto waitfordata	; wait for the next packet.
+	goto waitfordata
 
 	end

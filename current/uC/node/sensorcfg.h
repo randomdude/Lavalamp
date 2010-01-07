@@ -1,3 +1,16 @@
+; Select a communication scheme to use.
+;
+; COMMLINK_SWMANCHESTER involves using cheap, bare, RF modules
+; and doing Manchester encoding, etc, in software. It is buggy
+; and it is broken. Do not use it.
+;#define COMMLINK_SWMANCHESTER
+;
+; COMMLINK_HWUART uses a simple serial link to a host PC.
+#define COMMLINK_HWUART
+
+; Use 32-round XTEA encryption?
+; #define CRYPTO_XTEA
+
 #define KEY_0 0x00
 #define KEY_1 0x11
 #define KEY_2 0x22
@@ -15,7 +28,7 @@
 #define KEY_E 0xee
 #define KEY_F 0xff
 
-#define NODEID 0x1
+#define NODEID 0x01
 
 #define SENSOR_COUNT 3
 

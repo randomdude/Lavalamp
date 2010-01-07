@@ -1,7 +1,7 @@
 
 	#include "main.h"
-	#include "..\shared\swuart.h"
-	#include "..\shared\swuart-lowlevel.h"
+	#include "..\shared\manchesteruart.h"
+	#include "..\shared\manchesteruart-lowlevel.h"
 
 	errorlevel  -302  
 

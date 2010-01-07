@@ -1,24 +1,21 @@
 	#include "main.h"
 	#include "maths.h"
+	#include "sensorcfg.h"
 
 	errorlevel  -302  
 
 ; Handles encryption and decryption using XTEA. Uses a number
 ; of tmp* variables, so handle this with care.
 
-	; Define this to use no encryption on the link. Intended
-	; for debugging only.
-	#undefine CRYPT_DUMMY
-
 	CODE
 decrypt
 	global decrypt
 
-#ifdef CRYPT_DUMMY
-	return
+#ifndef CRYPTO_XTEA
+	return;
 #endif
 
-
+#ifdef CRYPTO_XTEA
 	movlw H'01'
 	movwf cryptdir	; set our direction flag to indicate decrypt
 
@@ -46,14 +43,16 @@ addmore:
 	call loadarg1to4tosum1to4
 	; aaand we have roundcount*delta in sum.
 	goto nexthalfcycle
+#endif
 
 encrypt
 	global encrypt
 
-#ifdef CRYPT_DUMMY
-	return
+#ifndef CRYPTO_XTEA
+	return;
 #endif
 
+#ifdef CRYPTO_XTEA
 	clrf cryptdir
 	clrf sum1;
 	clrf sum2;
@@ -318,13 +317,22 @@ dontadddelta:
 	decfsz halfroundcount, F;
 	goto nexthalfcycle
 
+
 	; encrypt/decrypt operation is finished.
-	; if we're decrypting, swap the first and second words,
-	; else return now.
-	btfsc cryptdir, 0
+	; if we're decrypting:
+	;  swap the first and second words.
+	;  reverse bytes in word 2.
+	; if encrypting
+	;  reverse bytes in words 1 and 2.
+	btfss cryptdir, 0
+	goto finishupEncrypting
+
 	call swaphalvesaround
 
 	return
+
+finishupEncrypting:
+	return;
 
 swaphalvesaround:
 	; swap first 4 bytes with last 4 bytes in packet
@@ -392,5 +400,5 @@ loadpacket4to7toarg1to4:
 	movwf arg4;
 
 	return
-
+#endif
 	end

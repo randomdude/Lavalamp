@@ -30,13 +30,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_1_TYPE)
 		bcf SENSOR_1_TRIS, SENSOR_1_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_1_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_1_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_1_PWM_SPEED
+
+		clrf SENSOR_1_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -51,13 +53,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_2_TYPE)
 		bcf SENSOR_2_TRIS, SENSOR_2_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_2_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_2_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_2_PWM_SPEED
+
+		clrf SENSOR_2_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -72,13 +76,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_3_TYPE)
 		bcf SENSOR_3_TRIS, SENSOR_3_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_3_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_3_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_3_PWM_SPEED
+
+		clrf SENSOR_3_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -93,13 +99,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_4_TYPE)
 		bcf SENSOR_4_TRIS, SENSOR_4_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_4_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_4_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_4_PWM_SPEED
+
+		clrf SENSOR_4_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -114,13 +122,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_5_TYPE)
 		bcf SENSOR_5_TRIS, SENSOR_5_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_5_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_5_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_5_PWM_SPEED
+
+		clrf SENSOR_5_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -135,13 +145,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_6_TYPE)
 		bcf SENSOR_6_TRIS, SENSOR_6_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_6_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_6_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_6_PWM_SPEED
+
+		clrf SENSOR_6_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -156,13 +168,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_7_TYPE)
 		bcf SENSOR_7_TRIS, SENSOR_7_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_7_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_7_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_7_PWM_SPEED
+
+		clrf SENSOR_7_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -177,13 +191,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_8_TYPE)
 		bcf SENSOR_8_TRIS, SENSOR_8_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_8_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_8_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_8_PWM_SPEED
+
+		clrf SENSOR_8_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -198,13 +214,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_9_TYPE)
 		bcf SENSOR_9_TRIS, SENSOR_9_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_9_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_9_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_9_PWM_SPEED
+
+		clrf SENSOR_9_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -219,13 +237,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_10_TYPE)
 		bcf SENSOR_10_TRIS, SENSOR_10_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_10_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_10_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_10_PWM_SPEED
+
+		clrf SENSOR_10_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -240,13 +260,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_11_TYPE)
 		bcf SENSOR_11_TRIS, SENSOR_11_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_11_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_11_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_11_PWM_SPEED
+
+		clrf SENSOR_11_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -261,13 +283,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_12_TYPE)
 		bcf SENSOR_12_TRIS, SENSOR_12_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_12_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_12_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_12_PWM_SPEED
+
+		clrf SENSOR_12_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -282,13 +306,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_13_TYPE)
 		bcf SENSOR_13_TRIS, SENSOR_13_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_13_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_13_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_13_PWM_SPEED
+
+		clrf SENSOR_13_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -303,13 +329,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_14_TYPE)
 		bcf SENSOR_14_TRIS, SENSOR_14_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_14_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_14_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_14_PWM_SPEED
+
+		clrf SENSOR_14_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -324,13 +352,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_15_TYPE)
 		bcf SENSOR_15_TRIS, SENSOR_15_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_15_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_15_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_15_PWM_SPEED
+
+		clrf SENSOR_15_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -345,13 +375,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_16_TYPE)
 		bcf SENSOR_16_TRIS, SENSOR_16_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_16_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_16_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_16_PWM_SPEED
+
+		clrf SENSOR_16_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -366,13 +398,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_17_TYPE)
 		bcf SENSOR_17_TRIS, SENSOR_17_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_17_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_17_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_17_PWM_SPEED
+
+		clrf SENSOR_17_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -387,13 +421,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_18_TYPE)
 		bcf SENSOR_18_TRIS, SENSOR_18_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_18_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_18_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_18_PWM_SPEED
+
+		clrf SENSOR_18_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -408,13 +444,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_19_TYPE)
 		bcf SENSOR_19_TRIS, SENSOR_19_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_19_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_19_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_19_PWM_SPEED
+
+		clrf SENSOR_19_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -429,13 +467,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_20_TYPE)
 		bcf SENSOR_20_TRIS, SENSOR_20_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_20_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_20_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_20_PWM_SPEED
+
+		clrf SENSOR_20_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -450,13 +490,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_21_TYPE)
 		bcf SENSOR_21_TRIS, SENSOR_21_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_21_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_21_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_21_PWM_SPEED
+
+		clrf SENSOR_21_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -471,13 +513,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_22_TYPE)
 		bcf SENSOR_22_TRIS, SENSOR_22_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_22_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_22_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_22_PWM_SPEED
+
+		clrf SENSOR_22_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -492,13 +536,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_23_TYPE)
 		bcf SENSOR_23_TRIS, SENSOR_23_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_23_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_23_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_23_PWM_SPEED
+
+		clrf SENSOR_23_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -513,13 +559,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_24_TYPE)
 		bcf SENSOR_24_TRIS, SENSOR_24_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_24_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_24_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_24_PWM_SPEED
+
+		clrf SENSOR_24_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -534,13 +582,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_25_TYPE)
 		bcf SENSOR_25_TRIS, SENSOR_25_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_25_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_25_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_25_PWM_SPEED
+
+		clrf SENSOR_25_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -555,13 +605,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_26_TYPE)
 		bcf SENSOR_26_TRIS, SENSOR_26_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_26_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_26_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_26_PWM_SPEED
+
+		clrf SENSOR_26_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -576,13 +628,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_27_TYPE)
 		bcf SENSOR_27_TRIS, SENSOR_27_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_27_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_27_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_27_PWM_SPEED
+
+		clrf SENSOR_27_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -597,13 +651,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_28_TYPE)
 		bcf SENSOR_28_TRIS, SENSOR_28_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_28_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_28_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_28_PWM_SPEED
+
+		clrf SENSOR_28_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -618,13 +674,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_29_TYPE)
 		bcf SENSOR_29_TRIS, SENSOR_29_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_29_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_29_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_29_PWM_SPEED
+
+		clrf SENSOR_29_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -639,13 +697,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_30_TYPE)
 		bcf SENSOR_30_TRIS, SENSOR_30_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_30_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_30_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_30_PWM_SPEED
+
+		clrf SENSOR_30_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -660,13 +720,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_31_TYPE)
 		bcf SENSOR_31_TRIS, SENSOR_31_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_31_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_31_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_31_PWM_SPEED
+
+		clrf SENSOR_31_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -681,13 +743,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_32_TYPE)
 		bcf SENSOR_32_TRIS, SENSOR_32_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_32_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_32_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_32_PWM_SPEED
+
+		clrf SENSOR_32_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -702,13 +766,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_33_TYPE)
 		bcf SENSOR_33_TRIS, SENSOR_33_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_33_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_33_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_33_PWM_SPEED
+
+		clrf SENSOR_33_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -723,13 +789,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_34_TYPE)
 		bcf SENSOR_34_TRIS, SENSOR_34_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_34_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_34_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_34_PWM_SPEED
+
+		clrf SENSOR_34_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -744,13 +812,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_35_TYPE)
 		bcf SENSOR_35_TRIS, SENSOR_35_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_35_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_35_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_35_PWM_SPEED
+
+		clrf SENSOR_35_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -765,13 +835,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_36_TYPE)
 		bcf SENSOR_36_TRIS, SENSOR_36_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_36_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_36_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_36_PWM_SPEED
+
+		clrf SENSOR_36_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -786,13 +858,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_37_TYPE)
 		bcf SENSOR_37_TRIS, SENSOR_37_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_37_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_37_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_37_PWM_SPEED
+
+		clrf SENSOR_37_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -807,13 +881,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_38_TYPE)
 		bcf SENSOR_38_TRIS, SENSOR_38_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_38_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_38_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_38_PWM_SPEED
+
+		clrf SENSOR_38_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -828,13 +904,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_39_TYPE)
 		bcf SENSOR_39_TRIS, SENSOR_39_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_39_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_39_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_39_PWM_SPEED
+
+		clrf SENSOR_39_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -849,13 +927,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_40_TYPE)
 		bcf SENSOR_40_TRIS, SENSOR_40_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_40_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_40_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_40_PWM_SPEED
+
+		clrf SENSOR_40_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -870,13 +950,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_41_TYPE)
 		bcf SENSOR_41_TRIS, SENSOR_41_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_41_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_41_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_41_PWM_SPEED
+
+		clrf SENSOR_41_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -891,13 +973,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_42_TYPE)
 		bcf SENSOR_42_TRIS, SENSOR_42_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_42_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_42_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_42_PWM_SPEED
+
+		clrf SENSOR_42_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -912,13 +996,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_43_TYPE)
 		bcf SENSOR_43_TRIS, SENSOR_43_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_43_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_43_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_43_PWM_SPEED
+
+		clrf SENSOR_43_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -933,13 +1019,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_44_TYPE)
 		bcf SENSOR_44_TRIS, SENSOR_44_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_44_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_44_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_44_PWM_SPEED
+
+		clrf SENSOR_44_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -954,13 +1042,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_45_TYPE)
 		bcf SENSOR_45_TRIS, SENSOR_45_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_45_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_45_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_45_PWM_SPEED
+
+		clrf SENSOR_45_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -975,13 +1065,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_46_TYPE)
 		bcf SENSOR_46_TRIS, SENSOR_46_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_46_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_46_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_46_PWM_SPEED
+
+		clrf SENSOR_46_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -996,13 +1088,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_47_TYPE)
 		bcf SENSOR_47_TRIS, SENSOR_47_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_47_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_47_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_47_PWM_SPEED
+
+		clrf SENSOR_47_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1017,13 +1111,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_48_TYPE)
 		bcf SENSOR_48_TRIS, SENSOR_48_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_48_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_48_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_48_PWM_SPEED
+
+		clrf SENSOR_48_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1038,13 +1134,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_49_TYPE)
 		bcf SENSOR_49_TRIS, SENSOR_49_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_49_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_49_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_49_PWM_SPEED
+
+		clrf SENSOR_49_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1059,13 +1157,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_50_TYPE)
 		bcf SENSOR_50_TRIS, SENSOR_50_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_50_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_50_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_50_PWM_SPEED
+
+		clrf SENSOR_50_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1080,13 +1180,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_51_TYPE)
 		bcf SENSOR_51_TRIS, SENSOR_51_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_51_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_51_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_51_PWM_SPEED
+
+		clrf SENSOR_51_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1101,13 +1203,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_52_TYPE)
 		bcf SENSOR_52_TRIS, SENSOR_52_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_52_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_52_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_52_PWM_SPEED
+
+		clrf SENSOR_52_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1122,13 +1226,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_53_TYPE)
 		bcf SENSOR_53_TRIS, SENSOR_53_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_53_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_53_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_53_PWM_SPEED
+
+		clrf SENSOR_53_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1143,13 +1249,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_54_TYPE)
 		bcf SENSOR_54_TRIS, SENSOR_54_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_54_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_54_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_54_PWM_SPEED
+
+		clrf SENSOR_54_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1164,13 +1272,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_55_TYPE)
 		bcf SENSOR_55_TRIS, SENSOR_55_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_55_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_55_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_55_PWM_SPEED
+
+		clrf SENSOR_55_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1185,13 +1295,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_56_TYPE)
 		bcf SENSOR_56_TRIS, SENSOR_56_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_56_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_56_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_56_PWM_SPEED
+
+		clrf SENSOR_56_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1206,13 +1318,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_57_TYPE)
 		bcf SENSOR_57_TRIS, SENSOR_57_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_57_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_57_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_57_PWM_SPEED
+
+		clrf SENSOR_57_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1227,13 +1341,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_58_TYPE)
 		bcf SENSOR_58_TRIS, SENSOR_58_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_58_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_58_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_58_PWM_SPEED
+
+		clrf SENSOR_58_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1248,13 +1364,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_59_TYPE)
 		bcf SENSOR_59_TRIS, SENSOR_59_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_59_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_59_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_59_PWM_SPEED
+
+		clrf SENSOR_59_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1269,13 +1387,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_60_TYPE)
 		bcf SENSOR_60_TRIS, SENSOR_60_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_60_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_60_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_60_PWM_SPEED
+
+		clrf SENSOR_60_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1290,13 +1410,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_61_TYPE)
 		bcf SENSOR_61_TRIS, SENSOR_61_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_61_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_61_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_61_PWM_SPEED
+
+		clrf SENSOR_61_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1311,13 +1433,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_62_TYPE)
 		bcf SENSOR_62_TRIS, SENSOR_62_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_62_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_62_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_62_PWM_SPEED
+
+		clrf SENSOR_62_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1332,13 +1456,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_63_TYPE)
 		bcf SENSOR_63_TRIS, SENSOR_63_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_63_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_63_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_63_PWM_SPEED
+
+		clrf SENSOR_63_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1353,13 +1479,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_64_TYPE)
 		bcf SENSOR_64_TRIS, SENSOR_64_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_64_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_64_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_64_PWM_SPEED
+
+		clrf SENSOR_64_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1374,13 +1502,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_65_TYPE)
 		bcf SENSOR_65_TRIS, SENSOR_65_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_65_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_65_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_65_PWM_SPEED
+
+		clrf SENSOR_65_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1395,13 +1525,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_66_TYPE)
 		bcf SENSOR_66_TRIS, SENSOR_66_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_66_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_66_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_66_PWM_SPEED
+
+		clrf SENSOR_66_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1416,13 +1548,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_67_TYPE)
 		bcf SENSOR_67_TRIS, SENSOR_67_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_67_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_67_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_67_PWM_SPEED
+
+		clrf SENSOR_67_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1437,13 +1571,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_68_TYPE)
 		bcf SENSOR_68_TRIS, SENSOR_68_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_68_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_68_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_68_PWM_SPEED
+
+		clrf SENSOR_68_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1458,13 +1594,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_69_TYPE)
 		bcf SENSOR_69_TRIS, SENSOR_69_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_69_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_69_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_69_PWM_SPEED
+
+		clrf SENSOR_69_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1479,13 +1617,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_70_TYPE)
 		bcf SENSOR_70_TRIS, SENSOR_70_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_70_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_70_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_70_PWM_SPEED
+
+		clrf SENSOR_70_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1500,13 +1640,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_71_TYPE)
 		bcf SENSOR_71_TRIS, SENSOR_71_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_71_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_71_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_71_PWM_SPEED
+
+		clrf SENSOR_71_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1521,13 +1663,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_72_TYPE)
 		bcf SENSOR_72_TRIS, SENSOR_72_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_72_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_72_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_72_PWM_SPEED
+
+		clrf SENSOR_72_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1542,13 +1686,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_73_TYPE)
 		bcf SENSOR_73_TRIS, SENSOR_73_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_73_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_73_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_73_PWM_SPEED
+
+		clrf SENSOR_73_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1563,13 +1709,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_74_TYPE)
 		bcf SENSOR_74_TRIS, SENSOR_74_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_74_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_74_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_74_PWM_SPEED
+
+		clrf SENSOR_74_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1584,13 +1732,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_75_TYPE)
 		bcf SENSOR_75_TRIS, SENSOR_75_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_75_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_75_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_75_PWM_SPEED
+
+		clrf SENSOR_75_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1605,13 +1755,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_76_TYPE)
 		bcf SENSOR_76_TRIS, SENSOR_76_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_76_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_76_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_76_PWM_SPEED
+
+		clrf SENSOR_76_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1626,13 +1778,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_77_TYPE)
 		bcf SENSOR_77_TRIS, SENSOR_77_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_77_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_77_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_77_PWM_SPEED
+
+		clrf SENSOR_77_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1647,13 +1801,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_78_TYPE)
 		bcf SENSOR_78_TRIS, SENSOR_78_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_78_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_78_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_78_PWM_SPEED
+
+		clrf SENSOR_78_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1668,13 +1824,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_79_TYPE)
 		bcf SENSOR_79_TRIS, SENSOR_79_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_79_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_79_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_79_PWM_SPEED
+
+		clrf SENSOR_79_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1689,13 +1847,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_80_TYPE)
 		bcf SENSOR_80_TRIS, SENSOR_80_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_80_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_80_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_80_PWM_SPEED
+
+		clrf SENSOR_80_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1710,13 +1870,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_81_TYPE)
 		bcf SENSOR_81_TRIS, SENSOR_81_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_81_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_81_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_81_PWM_SPEED
+
+		clrf SENSOR_81_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1731,13 +1893,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_82_TYPE)
 		bcf SENSOR_82_TRIS, SENSOR_82_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_82_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_82_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_82_PWM_SPEED
+
+		clrf SENSOR_82_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1752,13 +1916,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_83_TYPE)
 		bcf SENSOR_83_TRIS, SENSOR_83_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_83_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_83_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_83_PWM_SPEED
+
+		clrf SENSOR_83_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1773,13 +1939,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_84_TYPE)
 		bcf SENSOR_84_TRIS, SENSOR_84_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_84_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_84_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_84_PWM_SPEED
+
+		clrf SENSOR_84_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1794,13 +1962,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_85_TYPE)
 		bcf SENSOR_85_TRIS, SENSOR_85_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_85_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_85_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_85_PWM_SPEED
+
+		clrf SENSOR_85_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1815,13 +1985,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_86_TYPE)
 		bcf SENSOR_86_TRIS, SENSOR_86_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_86_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_86_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_86_PWM_SPEED
+
+		clrf SENSOR_86_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1836,13 +2008,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_87_TYPE)
 		bcf SENSOR_87_TRIS, SENSOR_87_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_87_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_87_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_87_PWM_SPEED
+
+		clrf SENSOR_87_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1857,13 +2031,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_88_TYPE)
 		bcf SENSOR_88_TRIS, SENSOR_88_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_88_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_88_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_88_PWM_SPEED
+
+		clrf SENSOR_88_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1878,13 +2054,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_89_TYPE)
 		bcf SENSOR_89_TRIS, SENSOR_89_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_89_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_89_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_89_PWM_SPEED
+
+		clrf SENSOR_89_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1899,13 +2077,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_90_TYPE)
 		bcf SENSOR_90_TRIS, SENSOR_90_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_90_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_90_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_90_PWM_SPEED
+
+		clrf SENSOR_90_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1920,13 +2100,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_91_TYPE)
 		bcf SENSOR_91_TRIS, SENSOR_91_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_91_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_91_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_91_PWM_SPEED
+
+		clrf SENSOR_91_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1941,13 +2123,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_92_TYPE)
 		bcf SENSOR_92_TRIS, SENSOR_92_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_92_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_92_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_92_PWM_SPEED
+
+		clrf SENSOR_92_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1962,13 +2146,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_93_TYPE)
 		bcf SENSOR_93_TRIS, SENSOR_93_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_93_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_93_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_93_PWM_SPEED
+
+		clrf SENSOR_93_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -1983,13 +2169,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_94_TYPE)
 		bcf SENSOR_94_TRIS, SENSOR_94_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_94_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_94_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_94_PWM_SPEED
+
+		clrf SENSOR_94_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -2004,13 +2192,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_95_TYPE)
 		bcf SENSOR_95_TRIS, SENSOR_95_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_95_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_95_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_95_PWM_SPEED
+
+		clrf SENSOR_95_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -2025,13 +2215,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_96_TYPE)
 		bcf SENSOR_96_TRIS, SENSOR_96_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_96_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_96_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_96_PWM_SPEED
+
+		clrf SENSOR_96_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -2046,13 +2238,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_97_TYPE)
 		bcf SENSOR_97_TRIS, SENSOR_97_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_97_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_97_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_97_PWM_SPEED
+
+		clrf SENSOR_97_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -2067,13 +2261,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_98_TYPE)
 		bcf SENSOR_98_TRIS, SENSOR_98_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_98_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_98_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_98_PWM_SPEED
+
+		clrf SENSOR_98_ROLLING_TIMER_LOW
 
 	#endif
 #endif
@@ -2088,13 +2284,15 @@ autogen_sensors_init:
 	#if (SENSOR_ID_PWM_LED == SENSOR_99_TYPE)
 		bcf SENSOR_99_TRIS, SENSOR_99_PIN	
 
-		; Yes, we need to remain in bank 1
+		; Stay in bank 1
 		movlw 0x01
 		movwf SENSOR_99_PWM_VOLUME
-		movlw 0xFF
+		movlw 0x01
 		movwf SENSOR_99_PWM_TARGET
-		movlw 0x10
+		movlw 0x01
 		movwf SENSOR_99_PWM_SPEED
+
+		clrf SENSOR_99_ROLLING_TIMER_LOW
 
 	#endif
 #endif

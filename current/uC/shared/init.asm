@@ -1,6 +1,6 @@
 
 	#include "main.h"
-	#include "swuart.h"
+	#include "manchesteruart.h"
 #ifndef IS_TRANSMITTER
 	#include "sensorcfg.h"
 	#include "idletimer.h"
@@ -70,7 +70,8 @@ inituart:
 
 	bsf STATUS, RP0  ; page 1
 
-	movlw 0x81		; 2400 @ 20mhz if you clear BRGH
+;	movlw 0x81		; 2400 @ 20mhz if you clear BRGH
+	movlw 0x19		; 9600 @  4mhz if you set BRGH
 	movwf SPBRG		; set baud rate 
 
 	bcf STATUS, RP0  ; page 0
@@ -83,13 +84,17 @@ inituart:
 	bsf TRISB, 2	; USART requires both to be set to 
 	bsf TRISB, 1	; INPUTs.
 
-	movlw b'10000000'	; TXSTA - set CSRC , and not brgh (2)
+	movlw b'00100100'	; TXSTA - set CSRC , and brgh (2)
 	movwf TXSTA
 
 	bsf TXSTA, TXEN
 
 	bcf STATUS, RP0  ; page 0
 	
+	; Also, init our sync bytes var, which the hw UART uses.
+	movlw 0x08
+	movwf syncbytes
+
 	return
 ;#endif
 	end

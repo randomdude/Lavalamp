@@ -21,7 +21,7 @@ DEEPROM CODE
 
 	DATA NODEID	; NODE ID BYTE
 	
-	DATA 0xaa	;
+	DATA 0xFE	;
 	DATA 0xbb	; initial P
 	DATA 0xcc	;
 

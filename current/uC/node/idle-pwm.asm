@@ -26,11 +26,12 @@ dopwmsensors:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_1_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_1_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade1	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_1_ROLLING_TIMER_HIGH, f
@@ -56,7 +57,7 @@ fadedown1:
 	decf SENSOR_1_PWM_VOLUME, f		; fade down!
 dontdofade1:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_1_ROLLING_TIMER_LOW
 	subwf SENSOR_1_PWM_VOLUME, w
 	btfss STATUS, C
@@ -68,7 +69,7 @@ dontdofade1:
 
 overlimit1:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_1_PORT, SENSOR_1_PIN
@@ -86,11 +87,12 @@ retnow1:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_2_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_2_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade2	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_2_ROLLING_TIMER_HIGH, f
@@ -116,7 +118,7 @@ fadedown2:
 	decf SENSOR_2_PWM_VOLUME, f		; fade down!
 dontdofade2:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_2_ROLLING_TIMER_LOW
 	subwf SENSOR_2_PWM_VOLUME, w
 	btfss STATUS, C
@@ -128,7 +130,7 @@ dontdofade2:
 
 overlimit2:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_2_PORT, SENSOR_2_PIN
@@ -146,11 +148,12 @@ retnow2:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_3_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_3_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade3	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_3_ROLLING_TIMER_HIGH, f
@@ -176,7 +179,7 @@ fadedown3:
 	decf SENSOR_3_PWM_VOLUME, f		; fade down!
 dontdofade3:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_3_ROLLING_TIMER_LOW
 	subwf SENSOR_3_PWM_VOLUME, w
 	btfss STATUS, C
@@ -188,7 +191,7 @@ dontdofade3:
 
 overlimit3:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_3_PORT, SENSOR_3_PIN
@@ -206,11 +209,12 @@ retnow3:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_4_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_4_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade4	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_4_ROLLING_TIMER_HIGH, f
@@ -236,7 +240,7 @@ fadedown4:
 	decf SENSOR_4_PWM_VOLUME, f		; fade down!
 dontdofade4:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_4_ROLLING_TIMER_LOW
 	subwf SENSOR_4_PWM_VOLUME, w
 	btfss STATUS, C
@@ -248,7 +252,7 @@ dontdofade4:
 
 overlimit4:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_4_PORT, SENSOR_4_PIN
@@ -266,11 +270,12 @@ retnow4:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_5_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_5_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade5	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_5_ROLLING_TIMER_HIGH, f
@@ -296,7 +301,7 @@ fadedown5:
 	decf SENSOR_5_PWM_VOLUME, f		; fade down!
 dontdofade5:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_5_ROLLING_TIMER_LOW
 	subwf SENSOR_5_PWM_VOLUME, w
 	btfss STATUS, C
@@ -308,7 +313,7 @@ dontdofade5:
 
 overlimit5:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_5_PORT, SENSOR_5_PIN
@@ -326,11 +331,12 @@ retnow5:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_6_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_6_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade6	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_6_ROLLING_TIMER_HIGH, f
@@ -356,7 +362,7 @@ fadedown6:
 	decf SENSOR_6_PWM_VOLUME, f		; fade down!
 dontdofade6:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_6_ROLLING_TIMER_LOW
 	subwf SENSOR_6_PWM_VOLUME, w
 	btfss STATUS, C
@@ -368,7 +374,7 @@ dontdofade6:
 
 overlimit6:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_6_PORT, SENSOR_6_PIN
@@ -386,11 +392,12 @@ retnow6:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_7_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_7_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade7	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_7_ROLLING_TIMER_HIGH, f
@@ -416,7 +423,7 @@ fadedown7:
 	decf SENSOR_7_PWM_VOLUME, f		; fade down!
 dontdofade7:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_7_ROLLING_TIMER_LOW
 	subwf SENSOR_7_PWM_VOLUME, w
 	btfss STATUS, C
@@ -428,7 +435,7 @@ dontdofade7:
 
 overlimit7:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_7_PORT, SENSOR_7_PIN
@@ -446,11 +453,12 @@ retnow7:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_8_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_8_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade8	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_8_ROLLING_TIMER_HIGH, f
@@ -476,7 +484,7 @@ fadedown8:
 	decf SENSOR_8_PWM_VOLUME, f		; fade down!
 dontdofade8:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_8_ROLLING_TIMER_LOW
 	subwf SENSOR_8_PWM_VOLUME, w
 	btfss STATUS, C
@@ -488,7 +496,7 @@ dontdofade8:
 
 overlimit8:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_8_PORT, SENSOR_8_PIN
@@ -506,11 +514,12 @@ retnow8:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_9_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_9_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade9	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_9_ROLLING_TIMER_HIGH, f
@@ -536,7 +545,7 @@ fadedown9:
 	decf SENSOR_9_PWM_VOLUME, f		; fade down!
 dontdofade9:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_9_ROLLING_TIMER_LOW
 	subwf SENSOR_9_PWM_VOLUME, w
 	btfss STATUS, C
@@ -548,7 +557,7 @@ dontdofade9:
 
 overlimit9:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_9_PORT, SENSOR_9_PIN
@@ -566,11 +575,12 @@ retnow9:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_10_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_10_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade10	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_10_ROLLING_TIMER_HIGH, f
@@ -596,7 +606,7 @@ fadedown10:
 	decf SENSOR_10_PWM_VOLUME, f		; fade down!
 dontdofade10:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_10_ROLLING_TIMER_LOW
 	subwf SENSOR_10_PWM_VOLUME, w
 	btfss STATUS, C
@@ -608,7 +618,7 @@ dontdofade10:
 
 overlimit10:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_10_PORT, SENSOR_10_PIN
@@ -626,11 +636,12 @@ retnow10:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_11_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_11_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade11	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_11_ROLLING_TIMER_HIGH, f
@@ -656,7 +667,7 @@ fadedown11:
 	decf SENSOR_11_PWM_VOLUME, f		; fade down!
 dontdofade11:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_11_ROLLING_TIMER_LOW
 	subwf SENSOR_11_PWM_VOLUME, w
 	btfss STATUS, C
@@ -668,7 +679,7 @@ dontdofade11:
 
 overlimit11:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_11_PORT, SENSOR_11_PIN
@@ -686,11 +697,12 @@ retnow11:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_12_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_12_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade12	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_12_ROLLING_TIMER_HIGH, f
@@ -716,7 +728,7 @@ fadedown12:
 	decf SENSOR_12_PWM_VOLUME, f		; fade down!
 dontdofade12:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_12_ROLLING_TIMER_LOW
 	subwf SENSOR_12_PWM_VOLUME, w
 	btfss STATUS, C
@@ -728,7 +740,7 @@ dontdofade12:
 
 overlimit12:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_12_PORT, SENSOR_12_PIN
@@ -746,11 +758,12 @@ retnow12:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_13_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_13_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade13	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_13_ROLLING_TIMER_HIGH, f
@@ -776,7 +789,7 @@ fadedown13:
 	decf SENSOR_13_PWM_VOLUME, f		; fade down!
 dontdofade13:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_13_ROLLING_TIMER_LOW
 	subwf SENSOR_13_PWM_VOLUME, w
 	btfss STATUS, C
@@ -788,7 +801,7 @@ dontdofade13:
 
 overlimit13:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_13_PORT, SENSOR_13_PIN
@@ -806,11 +819,12 @@ retnow13:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_14_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_14_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade14	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_14_ROLLING_TIMER_HIGH, f
@@ -836,7 +850,7 @@ fadedown14:
 	decf SENSOR_14_PWM_VOLUME, f		; fade down!
 dontdofade14:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_14_ROLLING_TIMER_LOW
 	subwf SENSOR_14_PWM_VOLUME, w
 	btfss STATUS, C
@@ -848,7 +862,7 @@ dontdofade14:
 
 overlimit14:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_14_PORT, SENSOR_14_PIN
@@ -866,11 +880,12 @@ retnow14:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_15_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_15_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade15	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_15_ROLLING_TIMER_HIGH, f
@@ -896,7 +911,7 @@ fadedown15:
 	decf SENSOR_15_PWM_VOLUME, f		; fade down!
 dontdofade15:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_15_ROLLING_TIMER_LOW
 	subwf SENSOR_15_PWM_VOLUME, w
 	btfss STATUS, C
@@ -908,7 +923,7 @@ dontdofade15:
 
 overlimit15:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_15_PORT, SENSOR_15_PIN
@@ -926,11 +941,12 @@ retnow15:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_16_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_16_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade16	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_16_ROLLING_TIMER_HIGH, f
@@ -956,7 +972,7 @@ fadedown16:
 	decf SENSOR_16_PWM_VOLUME, f		; fade down!
 dontdofade16:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_16_ROLLING_TIMER_LOW
 	subwf SENSOR_16_PWM_VOLUME, w
 	btfss STATUS, C
@@ -968,7 +984,7 @@ dontdofade16:
 
 overlimit16:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_16_PORT, SENSOR_16_PIN
@@ -986,11 +1002,12 @@ retnow16:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_17_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_17_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade17	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_17_ROLLING_TIMER_HIGH, f
@@ -1016,7 +1033,7 @@ fadedown17:
 	decf SENSOR_17_PWM_VOLUME, f		; fade down!
 dontdofade17:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_17_ROLLING_TIMER_LOW
 	subwf SENSOR_17_PWM_VOLUME, w
 	btfss STATUS, C
@@ -1028,7 +1045,7 @@ dontdofade17:
 
 overlimit17:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_17_PORT, SENSOR_17_PIN
@@ -1046,11 +1063,12 @@ retnow17:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_18_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_18_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade18	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_18_ROLLING_TIMER_HIGH, f
@@ -1076,7 +1094,7 @@ fadedown18:
 	decf SENSOR_18_PWM_VOLUME, f		; fade down!
 dontdofade18:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_18_ROLLING_TIMER_LOW
 	subwf SENSOR_18_PWM_VOLUME, w
 	btfss STATUS, C
@@ -1088,7 +1106,7 @@ dontdofade18:
 
 overlimit18:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_18_PORT, SENSOR_18_PIN
@@ -1106,11 +1124,12 @@ retnow18:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_19_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_19_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade19	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_19_ROLLING_TIMER_HIGH, f
@@ -1136,7 +1155,7 @@ fadedown19:
 	decf SENSOR_19_PWM_VOLUME, f		; fade down!
 dontdofade19:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_19_ROLLING_TIMER_LOW
 	subwf SENSOR_19_PWM_VOLUME, w
 	btfss STATUS, C
@@ -1148,7 +1167,7 @@ dontdofade19:
 
 overlimit19:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_19_PORT, SENSOR_19_PIN
@@ -1166,11 +1185,12 @@ retnow19:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_20_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_20_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade20	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_20_ROLLING_TIMER_HIGH, f
@@ -1196,7 +1216,7 @@ fadedown20:
 	decf SENSOR_20_PWM_VOLUME, f		; fade down!
 dontdofade20:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_20_ROLLING_TIMER_LOW
 	subwf SENSOR_20_PWM_VOLUME, w
 	btfss STATUS, C
@@ -1208,7 +1228,7 @@ dontdofade20:
 
 overlimit20:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_20_PORT, SENSOR_20_PIN
@@ -1226,11 +1246,12 @@ retnow20:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_21_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_21_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade21	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_21_ROLLING_TIMER_HIGH, f
@@ -1256,7 +1277,7 @@ fadedown21:
 	decf SENSOR_21_PWM_VOLUME, f		; fade down!
 dontdofade21:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_21_ROLLING_TIMER_LOW
 	subwf SENSOR_21_PWM_VOLUME, w
 	btfss STATUS, C
@@ -1268,7 +1289,7 @@ dontdofade21:
 
 overlimit21:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_21_PORT, SENSOR_21_PIN
@@ -1286,11 +1307,12 @@ retnow21:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_22_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_22_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade22	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_22_ROLLING_TIMER_HIGH, f
@@ -1316,7 +1338,7 @@ fadedown22:
 	decf SENSOR_22_PWM_VOLUME, f		; fade down!
 dontdofade22:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_22_ROLLING_TIMER_LOW
 	subwf SENSOR_22_PWM_VOLUME, w
 	btfss STATUS, C
@@ -1328,7 +1350,7 @@ dontdofade22:
 
 overlimit22:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_22_PORT, SENSOR_22_PIN
@@ -1346,11 +1368,12 @@ retnow22:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_23_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_23_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade23	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_23_ROLLING_TIMER_HIGH, f
@@ -1376,7 +1399,7 @@ fadedown23:
 	decf SENSOR_23_PWM_VOLUME, f		; fade down!
 dontdofade23:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_23_ROLLING_TIMER_LOW
 	subwf SENSOR_23_PWM_VOLUME, w
 	btfss STATUS, C
@@ -1388,7 +1411,7 @@ dontdofade23:
 
 overlimit23:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_23_PORT, SENSOR_23_PIN
@@ -1406,11 +1429,12 @@ retnow23:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_24_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_24_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade24	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_24_ROLLING_TIMER_HIGH, f
@@ -1436,7 +1460,7 @@ fadedown24:
 	decf SENSOR_24_PWM_VOLUME, f		; fade down!
 dontdofade24:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_24_ROLLING_TIMER_LOW
 	subwf SENSOR_24_PWM_VOLUME, w
 	btfss STATUS, C
@@ -1448,7 +1472,7 @@ dontdofade24:
 
 overlimit24:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_24_PORT, SENSOR_24_PIN
@@ -1466,11 +1490,12 @@ retnow24:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_25_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_25_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade25	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_25_ROLLING_TIMER_HIGH, f
@@ -1496,7 +1521,7 @@ fadedown25:
 	decf SENSOR_25_PWM_VOLUME, f		; fade down!
 dontdofade25:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_25_ROLLING_TIMER_LOW
 	subwf SENSOR_25_PWM_VOLUME, w
 	btfss STATUS, C
@@ -1508,7 +1533,7 @@ dontdofade25:
 
 overlimit25:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_25_PORT, SENSOR_25_PIN
@@ -1526,11 +1551,12 @@ retnow25:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_26_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_26_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade26	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_26_ROLLING_TIMER_HIGH, f
@@ -1556,7 +1582,7 @@ fadedown26:
 	decf SENSOR_26_PWM_VOLUME, f		; fade down!
 dontdofade26:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_26_ROLLING_TIMER_LOW
 	subwf SENSOR_26_PWM_VOLUME, w
 	btfss STATUS, C
@@ -1568,7 +1594,7 @@ dontdofade26:
 
 overlimit26:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_26_PORT, SENSOR_26_PIN
@@ -1586,11 +1612,12 @@ retnow26:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_27_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_27_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade27	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_27_ROLLING_TIMER_HIGH, f
@@ -1616,7 +1643,7 @@ fadedown27:
 	decf SENSOR_27_PWM_VOLUME, f		; fade down!
 dontdofade27:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_27_ROLLING_TIMER_LOW
 	subwf SENSOR_27_PWM_VOLUME, w
 	btfss STATUS, C
@@ -1628,7 +1655,7 @@ dontdofade27:
 
 overlimit27:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_27_PORT, SENSOR_27_PIN
@@ -1646,11 +1673,12 @@ retnow27:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_28_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_28_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade28	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_28_ROLLING_TIMER_HIGH, f
@@ -1676,7 +1704,7 @@ fadedown28:
 	decf SENSOR_28_PWM_VOLUME, f		; fade down!
 dontdofade28:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_28_ROLLING_TIMER_LOW
 	subwf SENSOR_28_PWM_VOLUME, w
 	btfss STATUS, C
@@ -1688,7 +1716,7 @@ dontdofade28:
 
 overlimit28:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_28_PORT, SENSOR_28_PIN
@@ -1706,11 +1734,12 @@ retnow28:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_29_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_29_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade29	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_29_ROLLING_TIMER_HIGH, f
@@ -1736,7 +1765,7 @@ fadedown29:
 	decf SENSOR_29_PWM_VOLUME, f		; fade down!
 dontdofade29:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_29_ROLLING_TIMER_LOW
 	subwf SENSOR_29_PWM_VOLUME, w
 	btfss STATUS, C
@@ -1748,7 +1777,7 @@ dontdofade29:
 
 overlimit29:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_29_PORT, SENSOR_29_PIN
@@ -1766,11 +1795,12 @@ retnow29:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_30_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_30_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade30	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_30_ROLLING_TIMER_HIGH, f
@@ -1796,7 +1826,7 @@ fadedown30:
 	decf SENSOR_30_PWM_VOLUME, f		; fade down!
 dontdofade30:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_30_ROLLING_TIMER_LOW
 	subwf SENSOR_30_PWM_VOLUME, w
 	btfss STATUS, C
@@ -1808,7 +1838,7 @@ dontdofade30:
 
 overlimit30:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_30_PORT, SENSOR_30_PIN
@@ -1826,11 +1856,12 @@ retnow30:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_31_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_31_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade31	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_31_ROLLING_TIMER_HIGH, f
@@ -1856,7 +1887,7 @@ fadedown31:
 	decf SENSOR_31_PWM_VOLUME, f		; fade down!
 dontdofade31:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_31_ROLLING_TIMER_LOW
 	subwf SENSOR_31_PWM_VOLUME, w
 	btfss STATUS, C
@@ -1868,7 +1899,7 @@ dontdofade31:
 
 overlimit31:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_31_PORT, SENSOR_31_PIN
@@ -1886,11 +1917,12 @@ retnow31:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_32_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_32_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade32	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_32_ROLLING_TIMER_HIGH, f
@@ -1916,7 +1948,7 @@ fadedown32:
 	decf SENSOR_32_PWM_VOLUME, f		; fade down!
 dontdofade32:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_32_ROLLING_TIMER_LOW
 	subwf SENSOR_32_PWM_VOLUME, w
 	btfss STATUS, C
@@ -1928,7 +1960,7 @@ dontdofade32:
 
 overlimit32:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_32_PORT, SENSOR_32_PIN
@@ -1946,11 +1978,12 @@ retnow32:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_33_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_33_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade33	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_33_ROLLING_TIMER_HIGH, f
@@ -1976,7 +2009,7 @@ fadedown33:
 	decf SENSOR_33_PWM_VOLUME, f		; fade down!
 dontdofade33:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_33_ROLLING_TIMER_LOW
 	subwf SENSOR_33_PWM_VOLUME, w
 	btfss STATUS, C
@@ -1988,7 +2021,7 @@ dontdofade33:
 
 overlimit33:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_33_PORT, SENSOR_33_PIN
@@ -2006,11 +2039,12 @@ retnow33:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_34_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_34_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade34	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_34_ROLLING_TIMER_HIGH, f
@@ -2036,7 +2070,7 @@ fadedown34:
 	decf SENSOR_34_PWM_VOLUME, f		; fade down!
 dontdofade34:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_34_ROLLING_TIMER_LOW
 	subwf SENSOR_34_PWM_VOLUME, w
 	btfss STATUS, C
@@ -2048,7 +2082,7 @@ dontdofade34:
 
 overlimit34:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_34_PORT, SENSOR_34_PIN
@@ -2066,11 +2100,12 @@ retnow34:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_35_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_35_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade35	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_35_ROLLING_TIMER_HIGH, f
@@ -2096,7 +2131,7 @@ fadedown35:
 	decf SENSOR_35_PWM_VOLUME, f		; fade down!
 dontdofade35:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_35_ROLLING_TIMER_LOW
 	subwf SENSOR_35_PWM_VOLUME, w
 	btfss STATUS, C
@@ -2108,7 +2143,7 @@ dontdofade35:
 
 overlimit35:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_35_PORT, SENSOR_35_PIN
@@ -2126,11 +2161,12 @@ retnow35:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_36_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_36_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade36	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_36_ROLLING_TIMER_HIGH, f
@@ -2156,7 +2192,7 @@ fadedown36:
 	decf SENSOR_36_PWM_VOLUME, f		; fade down!
 dontdofade36:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_36_ROLLING_TIMER_LOW
 	subwf SENSOR_36_PWM_VOLUME, w
 	btfss STATUS, C
@@ -2168,7 +2204,7 @@ dontdofade36:
 
 overlimit36:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_36_PORT, SENSOR_36_PIN
@@ -2186,11 +2222,12 @@ retnow36:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_37_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_37_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade37	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_37_ROLLING_TIMER_HIGH, f
@@ -2216,7 +2253,7 @@ fadedown37:
 	decf SENSOR_37_PWM_VOLUME, f		; fade down!
 dontdofade37:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_37_ROLLING_TIMER_LOW
 	subwf SENSOR_37_PWM_VOLUME, w
 	btfss STATUS, C
@@ -2228,7 +2265,7 @@ dontdofade37:
 
 overlimit37:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_37_PORT, SENSOR_37_PIN
@@ -2246,11 +2283,12 @@ retnow37:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_38_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_38_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade38	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_38_ROLLING_TIMER_HIGH, f
@@ -2276,7 +2314,7 @@ fadedown38:
 	decf SENSOR_38_PWM_VOLUME, f		; fade down!
 dontdofade38:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_38_ROLLING_TIMER_LOW
 	subwf SENSOR_38_PWM_VOLUME, w
 	btfss STATUS, C
@@ -2288,7 +2326,7 @@ dontdofade38:
 
 overlimit38:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_38_PORT, SENSOR_38_PIN
@@ -2306,11 +2344,12 @@ retnow38:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_39_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_39_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade39	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_39_ROLLING_TIMER_HIGH, f
@@ -2336,7 +2375,7 @@ fadedown39:
 	decf SENSOR_39_PWM_VOLUME, f		; fade down!
 dontdofade39:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_39_ROLLING_TIMER_LOW
 	subwf SENSOR_39_PWM_VOLUME, w
 	btfss STATUS, C
@@ -2348,7 +2387,7 @@ dontdofade39:
 
 overlimit39:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_39_PORT, SENSOR_39_PIN
@@ -2366,11 +2405,12 @@ retnow39:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_40_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_40_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade40	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_40_ROLLING_TIMER_HIGH, f
@@ -2396,7 +2436,7 @@ fadedown40:
 	decf SENSOR_40_PWM_VOLUME, f		; fade down!
 dontdofade40:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_40_ROLLING_TIMER_LOW
 	subwf SENSOR_40_PWM_VOLUME, w
 	btfss STATUS, C
@@ -2408,7 +2448,7 @@ dontdofade40:
 
 overlimit40:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_40_PORT, SENSOR_40_PIN
@@ -2426,11 +2466,12 @@ retnow40:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_41_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_41_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade41	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_41_ROLLING_TIMER_HIGH, f
@@ -2456,7 +2497,7 @@ fadedown41:
 	decf SENSOR_41_PWM_VOLUME, f		; fade down!
 dontdofade41:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_41_ROLLING_TIMER_LOW
 	subwf SENSOR_41_PWM_VOLUME, w
 	btfss STATUS, C
@@ -2468,7 +2509,7 @@ dontdofade41:
 
 overlimit41:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_41_PORT, SENSOR_41_PIN
@@ -2486,11 +2527,12 @@ retnow41:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_42_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_42_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade42	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_42_ROLLING_TIMER_HIGH, f
@@ -2516,7 +2558,7 @@ fadedown42:
 	decf SENSOR_42_PWM_VOLUME, f		; fade down!
 dontdofade42:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_42_ROLLING_TIMER_LOW
 	subwf SENSOR_42_PWM_VOLUME, w
 	btfss STATUS, C
@@ -2528,7 +2570,7 @@ dontdofade42:
 
 overlimit42:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_42_PORT, SENSOR_42_PIN
@@ -2546,11 +2588,12 @@ retnow42:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_43_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_43_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade43	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_43_ROLLING_TIMER_HIGH, f
@@ -2576,7 +2619,7 @@ fadedown43:
 	decf SENSOR_43_PWM_VOLUME, f		; fade down!
 dontdofade43:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_43_ROLLING_TIMER_LOW
 	subwf SENSOR_43_PWM_VOLUME, w
 	btfss STATUS, C
@@ -2588,7 +2631,7 @@ dontdofade43:
 
 overlimit43:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_43_PORT, SENSOR_43_PIN
@@ -2606,11 +2649,12 @@ retnow43:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_44_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_44_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade44	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_44_ROLLING_TIMER_HIGH, f
@@ -2636,7 +2680,7 @@ fadedown44:
 	decf SENSOR_44_PWM_VOLUME, f		; fade down!
 dontdofade44:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_44_ROLLING_TIMER_LOW
 	subwf SENSOR_44_PWM_VOLUME, w
 	btfss STATUS, C
@@ -2648,7 +2692,7 @@ dontdofade44:
 
 overlimit44:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_44_PORT, SENSOR_44_PIN
@@ -2666,11 +2710,12 @@ retnow44:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_45_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_45_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade45	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_45_ROLLING_TIMER_HIGH, f
@@ -2696,7 +2741,7 @@ fadedown45:
 	decf SENSOR_45_PWM_VOLUME, f		; fade down!
 dontdofade45:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_45_ROLLING_TIMER_LOW
 	subwf SENSOR_45_PWM_VOLUME, w
 	btfss STATUS, C
@@ -2708,7 +2753,7 @@ dontdofade45:
 
 overlimit45:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_45_PORT, SENSOR_45_PIN
@@ -2726,11 +2771,12 @@ retnow45:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_46_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_46_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade46	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_46_ROLLING_TIMER_HIGH, f
@@ -2756,7 +2802,7 @@ fadedown46:
 	decf SENSOR_46_PWM_VOLUME, f		; fade down!
 dontdofade46:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_46_ROLLING_TIMER_LOW
 	subwf SENSOR_46_PWM_VOLUME, w
 	btfss STATUS, C
@@ -2768,7 +2814,7 @@ dontdofade46:
 
 overlimit46:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_46_PORT, SENSOR_46_PIN
@@ -2786,11 +2832,12 @@ retnow46:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_47_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_47_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade47	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_47_ROLLING_TIMER_HIGH, f
@@ -2816,7 +2863,7 @@ fadedown47:
 	decf SENSOR_47_PWM_VOLUME, f		; fade down!
 dontdofade47:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_47_ROLLING_TIMER_LOW
 	subwf SENSOR_47_PWM_VOLUME, w
 	btfss STATUS, C
@@ -2828,7 +2875,7 @@ dontdofade47:
 
 overlimit47:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_47_PORT, SENSOR_47_PIN
@@ -2846,11 +2893,12 @@ retnow47:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_48_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_48_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade48	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_48_ROLLING_TIMER_HIGH, f
@@ -2876,7 +2924,7 @@ fadedown48:
 	decf SENSOR_48_PWM_VOLUME, f		; fade down!
 dontdofade48:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_48_ROLLING_TIMER_LOW
 	subwf SENSOR_48_PWM_VOLUME, w
 	btfss STATUS, C
@@ -2888,7 +2936,7 @@ dontdofade48:
 
 overlimit48:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_48_PORT, SENSOR_48_PIN
@@ -2906,11 +2954,12 @@ retnow48:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_49_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_49_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade49	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_49_ROLLING_TIMER_HIGH, f
@@ -2936,7 +2985,7 @@ fadedown49:
 	decf SENSOR_49_PWM_VOLUME, f		; fade down!
 dontdofade49:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_49_ROLLING_TIMER_LOW
 	subwf SENSOR_49_PWM_VOLUME, w
 	btfss STATUS, C
@@ -2948,7 +2997,7 @@ dontdofade49:
 
 overlimit49:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_49_PORT, SENSOR_49_PIN
@@ -2966,11 +3015,12 @@ retnow49:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_50_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_50_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade50	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_50_ROLLING_TIMER_HIGH, f
@@ -2996,7 +3046,7 @@ fadedown50:
 	decf SENSOR_50_PWM_VOLUME, f		; fade down!
 dontdofade50:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_50_ROLLING_TIMER_LOW
 	subwf SENSOR_50_PWM_VOLUME, w
 	btfss STATUS, C
@@ -3008,7 +3058,7 @@ dontdofade50:
 
 overlimit50:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_50_PORT, SENSOR_50_PIN
@@ -3026,11 +3076,12 @@ retnow50:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_51_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_51_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade51	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_51_ROLLING_TIMER_HIGH, f
@@ -3056,7 +3107,7 @@ fadedown51:
 	decf SENSOR_51_PWM_VOLUME, f		; fade down!
 dontdofade51:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_51_ROLLING_TIMER_LOW
 	subwf SENSOR_51_PWM_VOLUME, w
 	btfss STATUS, C
@@ -3068,7 +3119,7 @@ dontdofade51:
 
 overlimit51:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_51_PORT, SENSOR_51_PIN
@@ -3086,11 +3137,12 @@ retnow51:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_52_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_52_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade52	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_52_ROLLING_TIMER_HIGH, f
@@ -3116,7 +3168,7 @@ fadedown52:
 	decf SENSOR_52_PWM_VOLUME, f		; fade down!
 dontdofade52:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_52_ROLLING_TIMER_LOW
 	subwf SENSOR_52_PWM_VOLUME, w
 	btfss STATUS, C
@@ -3128,7 +3180,7 @@ dontdofade52:
 
 overlimit52:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_52_PORT, SENSOR_52_PIN
@@ -3146,11 +3198,12 @@ retnow52:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_53_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_53_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade53	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_53_ROLLING_TIMER_HIGH, f
@@ -3176,7 +3229,7 @@ fadedown53:
 	decf SENSOR_53_PWM_VOLUME, f		; fade down!
 dontdofade53:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_53_ROLLING_TIMER_LOW
 	subwf SENSOR_53_PWM_VOLUME, w
 	btfss STATUS, C
@@ -3188,7 +3241,7 @@ dontdofade53:
 
 overlimit53:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_53_PORT, SENSOR_53_PIN
@@ -3206,11 +3259,12 @@ retnow53:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_54_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_54_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade54	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_54_ROLLING_TIMER_HIGH, f
@@ -3236,7 +3290,7 @@ fadedown54:
 	decf SENSOR_54_PWM_VOLUME, f		; fade down!
 dontdofade54:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_54_ROLLING_TIMER_LOW
 	subwf SENSOR_54_PWM_VOLUME, w
 	btfss STATUS, C
@@ -3248,7 +3302,7 @@ dontdofade54:
 
 overlimit54:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_54_PORT, SENSOR_54_PIN
@@ -3266,11 +3320,12 @@ retnow54:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_55_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_55_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade55	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_55_ROLLING_TIMER_HIGH, f
@@ -3296,7 +3351,7 @@ fadedown55:
 	decf SENSOR_55_PWM_VOLUME, f		; fade down!
 dontdofade55:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_55_ROLLING_TIMER_LOW
 	subwf SENSOR_55_PWM_VOLUME, w
 	btfss STATUS, C
@@ -3308,7 +3363,7 @@ dontdofade55:
 
 overlimit55:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_55_PORT, SENSOR_55_PIN
@@ -3326,11 +3381,12 @@ retnow55:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_56_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_56_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade56	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_56_ROLLING_TIMER_HIGH, f
@@ -3356,7 +3412,7 @@ fadedown56:
 	decf SENSOR_56_PWM_VOLUME, f		; fade down!
 dontdofade56:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_56_ROLLING_TIMER_LOW
 	subwf SENSOR_56_PWM_VOLUME, w
 	btfss STATUS, C
@@ -3368,7 +3424,7 @@ dontdofade56:
 
 overlimit56:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_56_PORT, SENSOR_56_PIN
@@ -3386,11 +3442,12 @@ retnow56:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_57_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_57_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade57	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_57_ROLLING_TIMER_HIGH, f
@@ -3416,7 +3473,7 @@ fadedown57:
 	decf SENSOR_57_PWM_VOLUME, f		; fade down!
 dontdofade57:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_57_ROLLING_TIMER_LOW
 	subwf SENSOR_57_PWM_VOLUME, w
 	btfss STATUS, C
@@ -3428,7 +3485,7 @@ dontdofade57:
 
 overlimit57:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_57_PORT, SENSOR_57_PIN
@@ -3446,11 +3503,12 @@ retnow57:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_58_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_58_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade58	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_58_ROLLING_TIMER_HIGH, f
@@ -3476,7 +3534,7 @@ fadedown58:
 	decf SENSOR_58_PWM_VOLUME, f		; fade down!
 dontdofade58:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_58_ROLLING_TIMER_LOW
 	subwf SENSOR_58_PWM_VOLUME, w
 	btfss STATUS, C
@@ -3488,7 +3546,7 @@ dontdofade58:
 
 overlimit58:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_58_PORT, SENSOR_58_PIN
@@ -3506,11 +3564,12 @@ retnow58:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_59_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_59_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade59	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_59_ROLLING_TIMER_HIGH, f
@@ -3536,7 +3595,7 @@ fadedown59:
 	decf SENSOR_59_PWM_VOLUME, f		; fade down!
 dontdofade59:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_59_ROLLING_TIMER_LOW
 	subwf SENSOR_59_PWM_VOLUME, w
 	btfss STATUS, C
@@ -3548,7 +3607,7 @@ dontdofade59:
 
 overlimit59:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_59_PORT, SENSOR_59_PIN
@@ -3566,11 +3625,12 @@ retnow59:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_60_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_60_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade60	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_60_ROLLING_TIMER_HIGH, f
@@ -3596,7 +3656,7 @@ fadedown60:
 	decf SENSOR_60_PWM_VOLUME, f		; fade down!
 dontdofade60:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_60_ROLLING_TIMER_LOW
 	subwf SENSOR_60_PWM_VOLUME, w
 	btfss STATUS, C
@@ -3608,7 +3668,7 @@ dontdofade60:
 
 overlimit60:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_60_PORT, SENSOR_60_PIN
@@ -3626,11 +3686,12 @@ retnow60:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_61_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_61_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade61	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_61_ROLLING_TIMER_HIGH, f
@@ -3656,7 +3717,7 @@ fadedown61:
 	decf SENSOR_61_PWM_VOLUME, f		; fade down!
 dontdofade61:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_61_ROLLING_TIMER_LOW
 	subwf SENSOR_61_PWM_VOLUME, w
 	btfss STATUS, C
@@ -3668,7 +3729,7 @@ dontdofade61:
 
 overlimit61:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_61_PORT, SENSOR_61_PIN
@@ -3686,11 +3747,12 @@ retnow61:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_62_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_62_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade62	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_62_ROLLING_TIMER_HIGH, f
@@ -3716,7 +3778,7 @@ fadedown62:
 	decf SENSOR_62_PWM_VOLUME, f		; fade down!
 dontdofade62:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_62_ROLLING_TIMER_LOW
 	subwf SENSOR_62_PWM_VOLUME, w
 	btfss STATUS, C
@@ -3728,7 +3790,7 @@ dontdofade62:
 
 overlimit62:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_62_PORT, SENSOR_62_PIN
@@ -3746,11 +3808,12 @@ retnow62:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_63_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_63_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade63	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_63_ROLLING_TIMER_HIGH, f
@@ -3776,7 +3839,7 @@ fadedown63:
 	decf SENSOR_63_PWM_VOLUME, f		; fade down!
 dontdofade63:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_63_ROLLING_TIMER_LOW
 	subwf SENSOR_63_PWM_VOLUME, w
 	btfss STATUS, C
@@ -3788,7 +3851,7 @@ dontdofade63:
 
 overlimit63:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_63_PORT, SENSOR_63_PIN
@@ -3806,11 +3869,12 @@ retnow63:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_64_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_64_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade64	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_64_ROLLING_TIMER_HIGH, f
@@ -3836,7 +3900,7 @@ fadedown64:
 	decf SENSOR_64_PWM_VOLUME, f		; fade down!
 dontdofade64:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_64_ROLLING_TIMER_LOW
 	subwf SENSOR_64_PWM_VOLUME, w
 	btfss STATUS, C
@@ -3848,7 +3912,7 @@ dontdofade64:
 
 overlimit64:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_64_PORT, SENSOR_64_PIN
@@ -3866,11 +3930,12 @@ retnow64:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_65_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_65_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade65	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_65_ROLLING_TIMER_HIGH, f
@@ -3896,7 +3961,7 @@ fadedown65:
 	decf SENSOR_65_PWM_VOLUME, f		; fade down!
 dontdofade65:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_65_ROLLING_TIMER_LOW
 	subwf SENSOR_65_PWM_VOLUME, w
 	btfss STATUS, C
@@ -3908,7 +3973,7 @@ dontdofade65:
 
 overlimit65:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_65_PORT, SENSOR_65_PIN
@@ -3926,11 +3991,12 @@ retnow65:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_66_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_66_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade66	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_66_ROLLING_TIMER_HIGH, f
@@ -3956,7 +4022,7 @@ fadedown66:
 	decf SENSOR_66_PWM_VOLUME, f		; fade down!
 dontdofade66:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_66_ROLLING_TIMER_LOW
 	subwf SENSOR_66_PWM_VOLUME, w
 	btfss STATUS, C
@@ -3968,7 +4034,7 @@ dontdofade66:
 
 overlimit66:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_66_PORT, SENSOR_66_PIN
@@ -3986,11 +4052,12 @@ retnow66:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_67_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_67_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade67	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_67_ROLLING_TIMER_HIGH, f
@@ -4016,7 +4083,7 @@ fadedown67:
 	decf SENSOR_67_PWM_VOLUME, f		; fade down!
 dontdofade67:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_67_ROLLING_TIMER_LOW
 	subwf SENSOR_67_PWM_VOLUME, w
 	btfss STATUS, C
@@ -4028,7 +4095,7 @@ dontdofade67:
 
 overlimit67:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_67_PORT, SENSOR_67_PIN
@@ -4046,11 +4113,12 @@ retnow67:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_68_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_68_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade68	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_68_ROLLING_TIMER_HIGH, f
@@ -4076,7 +4144,7 @@ fadedown68:
 	decf SENSOR_68_PWM_VOLUME, f		; fade down!
 dontdofade68:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_68_ROLLING_TIMER_LOW
 	subwf SENSOR_68_PWM_VOLUME, w
 	btfss STATUS, C
@@ -4088,7 +4156,7 @@ dontdofade68:
 
 overlimit68:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_68_PORT, SENSOR_68_PIN
@@ -4106,11 +4174,12 @@ retnow68:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_69_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_69_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade69	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_69_ROLLING_TIMER_HIGH, f
@@ -4136,7 +4205,7 @@ fadedown69:
 	decf SENSOR_69_PWM_VOLUME, f		; fade down!
 dontdofade69:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_69_ROLLING_TIMER_LOW
 	subwf SENSOR_69_PWM_VOLUME, w
 	btfss STATUS, C
@@ -4148,7 +4217,7 @@ dontdofade69:
 
 overlimit69:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_69_PORT, SENSOR_69_PIN
@@ -4166,11 +4235,12 @@ retnow69:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_70_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_70_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade70	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_70_ROLLING_TIMER_HIGH, f
@@ -4196,7 +4266,7 @@ fadedown70:
 	decf SENSOR_70_PWM_VOLUME, f		; fade down!
 dontdofade70:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_70_ROLLING_TIMER_LOW
 	subwf SENSOR_70_PWM_VOLUME, w
 	btfss STATUS, C
@@ -4208,7 +4278,7 @@ dontdofade70:
 
 overlimit70:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_70_PORT, SENSOR_70_PIN
@@ -4226,11 +4296,12 @@ retnow70:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_71_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_71_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade71	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_71_ROLLING_TIMER_HIGH, f
@@ -4256,7 +4327,7 @@ fadedown71:
 	decf SENSOR_71_PWM_VOLUME, f		; fade down!
 dontdofade71:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_71_ROLLING_TIMER_LOW
 	subwf SENSOR_71_PWM_VOLUME, w
 	btfss STATUS, C
@@ -4268,7 +4339,7 @@ dontdofade71:
 
 overlimit71:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_71_PORT, SENSOR_71_PIN
@@ -4286,11 +4357,12 @@ retnow71:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_72_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_72_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade72	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_72_ROLLING_TIMER_HIGH, f
@@ -4316,7 +4388,7 @@ fadedown72:
 	decf SENSOR_72_PWM_VOLUME, f		; fade down!
 dontdofade72:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_72_ROLLING_TIMER_LOW
 	subwf SENSOR_72_PWM_VOLUME, w
 	btfss STATUS, C
@@ -4328,7 +4400,7 @@ dontdofade72:
 
 overlimit72:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_72_PORT, SENSOR_72_PIN
@@ -4346,11 +4418,12 @@ retnow72:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_73_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_73_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade73	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_73_ROLLING_TIMER_HIGH, f
@@ -4376,7 +4449,7 @@ fadedown73:
 	decf SENSOR_73_PWM_VOLUME, f		; fade down!
 dontdofade73:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_73_ROLLING_TIMER_LOW
 	subwf SENSOR_73_PWM_VOLUME, w
 	btfss STATUS, C
@@ -4388,7 +4461,7 @@ dontdofade73:
 
 overlimit73:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_73_PORT, SENSOR_73_PIN
@@ -4406,11 +4479,12 @@ retnow73:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_74_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_74_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade74	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_74_ROLLING_TIMER_HIGH, f
@@ -4436,7 +4510,7 @@ fadedown74:
 	decf SENSOR_74_PWM_VOLUME, f		; fade down!
 dontdofade74:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_74_ROLLING_TIMER_LOW
 	subwf SENSOR_74_PWM_VOLUME, w
 	btfss STATUS, C
@@ -4448,7 +4522,7 @@ dontdofade74:
 
 overlimit74:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_74_PORT, SENSOR_74_PIN
@@ -4466,11 +4540,12 @@ retnow74:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_75_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_75_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade75	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_75_ROLLING_TIMER_HIGH, f
@@ -4496,7 +4571,7 @@ fadedown75:
 	decf SENSOR_75_PWM_VOLUME, f		; fade down!
 dontdofade75:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_75_ROLLING_TIMER_LOW
 	subwf SENSOR_75_PWM_VOLUME, w
 	btfss STATUS, C
@@ -4508,7 +4583,7 @@ dontdofade75:
 
 overlimit75:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_75_PORT, SENSOR_75_PIN
@@ -4526,11 +4601,12 @@ retnow75:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_76_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_76_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade76	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_76_ROLLING_TIMER_HIGH, f
@@ -4556,7 +4632,7 @@ fadedown76:
 	decf SENSOR_76_PWM_VOLUME, f		; fade down!
 dontdofade76:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_76_ROLLING_TIMER_LOW
 	subwf SENSOR_76_PWM_VOLUME, w
 	btfss STATUS, C
@@ -4568,7 +4644,7 @@ dontdofade76:
 
 overlimit76:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_76_PORT, SENSOR_76_PIN
@@ -4586,11 +4662,12 @@ retnow76:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_77_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_77_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade77	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_77_ROLLING_TIMER_HIGH, f
@@ -4616,7 +4693,7 @@ fadedown77:
 	decf SENSOR_77_PWM_VOLUME, f		; fade down!
 dontdofade77:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_77_ROLLING_TIMER_LOW
 	subwf SENSOR_77_PWM_VOLUME, w
 	btfss STATUS, C
@@ -4628,7 +4705,7 @@ dontdofade77:
 
 overlimit77:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_77_PORT, SENSOR_77_PIN
@@ -4646,11 +4723,12 @@ retnow77:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_78_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_78_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade78	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_78_ROLLING_TIMER_HIGH, f
@@ -4676,7 +4754,7 @@ fadedown78:
 	decf SENSOR_78_PWM_VOLUME, f		; fade down!
 dontdofade78:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_78_ROLLING_TIMER_LOW
 	subwf SENSOR_78_PWM_VOLUME, w
 	btfss STATUS, C
@@ -4688,7 +4766,7 @@ dontdofade78:
 
 overlimit78:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_78_PORT, SENSOR_78_PIN
@@ -4706,11 +4784,12 @@ retnow78:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_79_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_79_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade79	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_79_ROLLING_TIMER_HIGH, f
@@ -4736,7 +4815,7 @@ fadedown79:
 	decf SENSOR_79_PWM_VOLUME, f		; fade down!
 dontdofade79:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_79_ROLLING_TIMER_LOW
 	subwf SENSOR_79_PWM_VOLUME, w
 	btfss STATUS, C
@@ -4748,7 +4827,7 @@ dontdofade79:
 
 overlimit79:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_79_PORT, SENSOR_79_PIN
@@ -4766,11 +4845,12 @@ retnow79:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_80_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_80_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade80	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_80_ROLLING_TIMER_HIGH, f
@@ -4796,7 +4876,7 @@ fadedown80:
 	decf SENSOR_80_PWM_VOLUME, f		; fade down!
 dontdofade80:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_80_ROLLING_TIMER_LOW
 	subwf SENSOR_80_PWM_VOLUME, w
 	btfss STATUS, C
@@ -4808,7 +4888,7 @@ dontdofade80:
 
 overlimit80:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_80_PORT, SENSOR_80_PIN
@@ -4826,11 +4906,12 @@ retnow80:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_81_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_81_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade81	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_81_ROLLING_TIMER_HIGH, f
@@ -4856,7 +4937,7 @@ fadedown81:
 	decf SENSOR_81_PWM_VOLUME, f		; fade down!
 dontdofade81:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_81_ROLLING_TIMER_LOW
 	subwf SENSOR_81_PWM_VOLUME, w
 	btfss STATUS, C
@@ -4868,7 +4949,7 @@ dontdofade81:
 
 overlimit81:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_81_PORT, SENSOR_81_PIN
@@ -4886,11 +4967,12 @@ retnow81:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_82_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_82_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade82	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_82_ROLLING_TIMER_HIGH, f
@@ -4916,7 +4998,7 @@ fadedown82:
 	decf SENSOR_82_PWM_VOLUME, f		; fade down!
 dontdofade82:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_82_ROLLING_TIMER_LOW
 	subwf SENSOR_82_PWM_VOLUME, w
 	btfss STATUS, C
@@ -4928,7 +5010,7 @@ dontdofade82:
 
 overlimit82:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_82_PORT, SENSOR_82_PIN
@@ -4946,11 +5028,12 @@ retnow82:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_83_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_83_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade83	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_83_ROLLING_TIMER_HIGH, f
@@ -4976,7 +5059,7 @@ fadedown83:
 	decf SENSOR_83_PWM_VOLUME, f		; fade down!
 dontdofade83:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_83_ROLLING_TIMER_LOW
 	subwf SENSOR_83_PWM_VOLUME, w
 	btfss STATUS, C
@@ -4988,7 +5071,7 @@ dontdofade83:
 
 overlimit83:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_83_PORT, SENSOR_83_PIN
@@ -5006,11 +5089,12 @@ retnow83:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_84_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_84_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade84	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_84_ROLLING_TIMER_HIGH, f
@@ -5036,7 +5120,7 @@ fadedown84:
 	decf SENSOR_84_PWM_VOLUME, f		; fade down!
 dontdofade84:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_84_ROLLING_TIMER_LOW
 	subwf SENSOR_84_PWM_VOLUME, w
 	btfss STATUS, C
@@ -5048,7 +5132,7 @@ dontdofade84:
 
 overlimit84:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_84_PORT, SENSOR_84_PIN
@@ -5066,11 +5150,12 @@ retnow84:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_85_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_85_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade85	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_85_ROLLING_TIMER_HIGH, f
@@ -5096,7 +5181,7 @@ fadedown85:
 	decf SENSOR_85_PWM_VOLUME, f		; fade down!
 dontdofade85:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_85_ROLLING_TIMER_LOW
 	subwf SENSOR_85_PWM_VOLUME, w
 	btfss STATUS, C
@@ -5108,7 +5193,7 @@ dontdofade85:
 
 overlimit85:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_85_PORT, SENSOR_85_PIN
@@ -5126,11 +5211,12 @@ retnow85:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_86_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_86_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade86	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_86_ROLLING_TIMER_HIGH, f
@@ -5156,7 +5242,7 @@ fadedown86:
 	decf SENSOR_86_PWM_VOLUME, f		; fade down!
 dontdofade86:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_86_ROLLING_TIMER_LOW
 	subwf SENSOR_86_PWM_VOLUME, w
 	btfss STATUS, C
@@ -5168,7 +5254,7 @@ dontdofade86:
 
 overlimit86:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_86_PORT, SENSOR_86_PIN
@@ -5186,11 +5272,12 @@ retnow86:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_87_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_87_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade87	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_87_ROLLING_TIMER_HIGH, f
@@ -5216,7 +5303,7 @@ fadedown87:
 	decf SENSOR_87_PWM_VOLUME, f		; fade down!
 dontdofade87:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_87_ROLLING_TIMER_LOW
 	subwf SENSOR_87_PWM_VOLUME, w
 	btfss STATUS, C
@@ -5228,7 +5315,7 @@ dontdofade87:
 
 overlimit87:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_87_PORT, SENSOR_87_PIN
@@ -5246,11 +5333,12 @@ retnow87:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_88_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_88_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade88	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_88_ROLLING_TIMER_HIGH, f
@@ -5276,7 +5364,7 @@ fadedown88:
 	decf SENSOR_88_PWM_VOLUME, f		; fade down!
 dontdofade88:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_88_ROLLING_TIMER_LOW
 	subwf SENSOR_88_PWM_VOLUME, w
 	btfss STATUS, C
@@ -5288,7 +5376,7 @@ dontdofade88:
 
 overlimit88:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_88_PORT, SENSOR_88_PIN
@@ -5306,11 +5394,12 @@ retnow88:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_89_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_89_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade89	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_89_ROLLING_TIMER_HIGH, f
@@ -5336,7 +5425,7 @@ fadedown89:
 	decf SENSOR_89_PWM_VOLUME, f		; fade down!
 dontdofade89:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_89_ROLLING_TIMER_LOW
 	subwf SENSOR_89_PWM_VOLUME, w
 	btfss STATUS, C
@@ -5348,7 +5437,7 @@ dontdofade89:
 
 overlimit89:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_89_PORT, SENSOR_89_PIN
@@ -5366,11 +5455,12 @@ retnow89:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_90_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_90_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade90	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_90_ROLLING_TIMER_HIGH, f
@@ -5396,7 +5486,7 @@ fadedown90:
 	decf SENSOR_90_PWM_VOLUME, f		; fade down!
 dontdofade90:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_90_ROLLING_TIMER_LOW
 	subwf SENSOR_90_PWM_VOLUME, w
 	btfss STATUS, C
@@ -5408,7 +5498,7 @@ dontdofade90:
 
 overlimit90:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_90_PORT, SENSOR_90_PIN
@@ -5426,11 +5516,12 @@ retnow90:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_91_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_91_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade91	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_91_ROLLING_TIMER_HIGH, f
@@ -5456,7 +5547,7 @@ fadedown91:
 	decf SENSOR_91_PWM_VOLUME, f		; fade down!
 dontdofade91:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_91_ROLLING_TIMER_LOW
 	subwf SENSOR_91_PWM_VOLUME, w
 	btfss STATUS, C
@@ -5468,7 +5559,7 @@ dontdofade91:
 
 overlimit91:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_91_PORT, SENSOR_91_PIN
@@ -5486,11 +5577,12 @@ retnow91:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_92_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_92_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade92	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_92_ROLLING_TIMER_HIGH, f
@@ -5516,7 +5608,7 @@ fadedown92:
 	decf SENSOR_92_PWM_VOLUME, f		; fade down!
 dontdofade92:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_92_ROLLING_TIMER_LOW
 	subwf SENSOR_92_PWM_VOLUME, w
 	btfss STATUS, C
@@ -5528,7 +5620,7 @@ dontdofade92:
 
 overlimit92:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_92_PORT, SENSOR_92_PIN
@@ -5546,11 +5638,12 @@ retnow92:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_93_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_93_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade93	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_93_ROLLING_TIMER_HIGH, f
@@ -5576,7 +5669,7 @@ fadedown93:
 	decf SENSOR_93_PWM_VOLUME, f		; fade down!
 dontdofade93:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_93_ROLLING_TIMER_LOW
 	subwf SENSOR_93_PWM_VOLUME, w
 	btfss STATUS, C
@@ -5588,7 +5681,7 @@ dontdofade93:
 
 overlimit93:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_93_PORT, SENSOR_93_PIN
@@ -5606,11 +5699,12 @@ retnow93:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_94_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_94_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade94	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_94_ROLLING_TIMER_HIGH, f
@@ -5636,7 +5730,7 @@ fadedown94:
 	decf SENSOR_94_PWM_VOLUME, f		; fade down!
 dontdofade94:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_94_ROLLING_TIMER_LOW
 	subwf SENSOR_94_PWM_VOLUME, w
 	btfss STATUS, C
@@ -5648,7 +5742,7 @@ dontdofade94:
 
 overlimit94:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_94_PORT, SENSOR_94_PIN
@@ -5666,11 +5760,12 @@ retnow94:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_95_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_95_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade95	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_95_ROLLING_TIMER_HIGH, f
@@ -5696,7 +5791,7 @@ fadedown95:
 	decf SENSOR_95_PWM_VOLUME, f		; fade down!
 dontdofade95:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_95_ROLLING_TIMER_LOW
 	subwf SENSOR_95_PWM_VOLUME, w
 	btfss STATUS, C
@@ -5708,7 +5803,7 @@ dontdofade95:
 
 overlimit95:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_95_PORT, SENSOR_95_PIN
@@ -5726,11 +5821,12 @@ retnow95:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_96_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_96_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade96	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_96_ROLLING_TIMER_HIGH, f
@@ -5756,7 +5852,7 @@ fadedown96:
 	decf SENSOR_96_PWM_VOLUME, f		; fade down!
 dontdofade96:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_96_ROLLING_TIMER_LOW
 	subwf SENSOR_96_PWM_VOLUME, w
 	btfss STATUS, C
@@ -5768,7 +5864,7 @@ dontdofade96:
 
 overlimit96:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_96_PORT, SENSOR_96_PIN
@@ -5786,11 +5882,12 @@ retnow96:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_97_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_97_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade97	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_97_ROLLING_TIMER_HIGH, f
@@ -5816,7 +5913,7 @@ fadedown97:
 	decf SENSOR_97_PWM_VOLUME, f		; fade down!
 dontdofade97:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_97_ROLLING_TIMER_LOW
 	subwf SENSOR_97_PWM_VOLUME, w
 	btfss STATUS, C
@@ -5828,7 +5925,7 @@ dontdofade97:
 
 overlimit97:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_97_PORT, SENSOR_97_PIN
@@ -5846,11 +5943,12 @@ retnow97:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_98_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_98_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade98	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_98_ROLLING_TIMER_HIGH, f
@@ -5876,7 +5974,7 @@ fadedown98:
 	decf SENSOR_98_PWM_VOLUME, f		; fade down!
 dontdofade98:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_98_ROLLING_TIMER_LOW
 	subwf SENSOR_98_PWM_VOLUME, w
 	btfss STATUS, C
@@ -5888,7 +5986,7 @@ dontdofade98:
 
 overlimit98:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_98_PORT, SENSOR_98_PIN
@@ -5906,11 +6004,12 @@ retnow98:
 
 	; Inc timer_low. this is the value which is used to toggle the
 	; output HIGH or LOW
-	incf SENSOR_99_ROLLING_TIMER_LOW, f
-	btfss STATUS, Z
+	movlw 0x0A
+	addwf SENSOR_99_ROLLING_TIMER_LOW, f
+	btfss STATUS, C
 	goto dontdofade99	; Only proceed in fading the LED towards
 												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM.
+												; as a delay timer as well as for PWM).
 
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_99_ROLLING_TIMER_HIGH, f
@@ -5936,7 +6035,7 @@ fadedown99:
 	decf SENSOR_99_PWM_VOLUME, f		; fade down!
 dontdofade99:
 
-	; perform PWM according to the value of TIMER_LOW
+	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_99_ROLLING_TIMER_LOW
 	subwf SENSOR_99_PWM_VOLUME, w
 	btfss STATUS, C
@@ -5948,7 +6047,7 @@ dontdofade99:
 
 overlimit99:
 	nop		; This is here to preserve timing. Because the above btfss causes a pipeline stall,
-	nop  	; we slow down the non-stalled branch with a nop.
+	nop  	; we slow down the non-stalled branch with a couple nops.
 
 	bcf STATUS, RP0 ; bank 0
 	bcf SENSOR_99_PORT, SENSOR_99_PIN
