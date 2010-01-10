@@ -27,6 +27,15 @@ SENSOR_1_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_1_TYPE)
+
+SENSOR_1_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_1_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -42,6 +51,15 @@ memptr=memptr+1
 SENSOR_2_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_2_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_2_TYPE)
+
+SENSOR_2_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_2_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -63,6 +81,15 @@ SENSOR_3_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_3_TYPE)
+
+SENSOR_3_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_3_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -78,6 +105,15 @@ memptr=memptr+1
 SENSOR_4_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_4_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_4_TYPE)
+
+SENSOR_4_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_4_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -99,6 +135,15 @@ SENSOR_5_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_5_TYPE)
+
+SENSOR_5_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_5_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -114,6 +159,15 @@ memptr=memptr+1
 SENSOR_6_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_6_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_6_TYPE)
+
+SENSOR_6_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_6_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -135,6 +189,15 @@ SENSOR_7_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_7_TYPE)
+
+SENSOR_7_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_7_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -150,6 +213,15 @@ memptr=memptr+1
 SENSOR_8_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_8_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_8_TYPE)
+
+SENSOR_8_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_8_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -171,6 +243,15 @@ SENSOR_9_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_9_TYPE)
+
+SENSOR_9_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_9_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -186,6 +267,15 @@ memptr=memptr+1
 SENSOR_10_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_10_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_10_TYPE)
+
+SENSOR_10_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_10_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -207,6 +297,15 @@ SENSOR_11_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_11_TYPE)
+
+SENSOR_11_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_11_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -222,6 +321,15 @@ memptr=memptr+1
 SENSOR_12_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_12_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_12_TYPE)
+
+SENSOR_12_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_12_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -243,6 +351,15 @@ SENSOR_13_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_13_TYPE)
+
+SENSOR_13_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_13_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -258,6 +375,15 @@ memptr=memptr+1
 SENSOR_14_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_14_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_14_TYPE)
+
+SENSOR_14_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_14_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -279,6 +405,15 @@ SENSOR_15_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_15_TYPE)
+
+SENSOR_15_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_15_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -294,6 +429,15 @@ memptr=memptr+1
 SENSOR_16_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_16_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_16_TYPE)
+
+SENSOR_16_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_16_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -315,6 +459,15 @@ SENSOR_17_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_17_TYPE)
+
+SENSOR_17_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_17_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -330,6 +483,15 @@ memptr=memptr+1
 SENSOR_18_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_18_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_18_TYPE)
+
+SENSOR_18_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_18_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -351,6 +513,15 @@ SENSOR_19_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_19_TYPE)
+
+SENSOR_19_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_19_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -366,6 +537,15 @@ memptr=memptr+1
 SENSOR_20_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_20_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_20_TYPE)
+
+SENSOR_20_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_20_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -387,6 +567,15 @@ SENSOR_21_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_21_TYPE)
+
+SENSOR_21_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_21_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -402,6 +591,15 @@ memptr=memptr+1
 SENSOR_22_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_22_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_22_TYPE)
+
+SENSOR_22_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_22_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -423,6 +621,15 @@ SENSOR_23_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_23_TYPE)
+
+SENSOR_23_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_23_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -438,6 +645,15 @@ memptr=memptr+1
 SENSOR_24_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_24_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_24_TYPE)
+
+SENSOR_24_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_24_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -459,6 +675,15 @@ SENSOR_25_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_25_TYPE)
+
+SENSOR_25_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_25_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -474,6 +699,15 @@ memptr=memptr+1
 SENSOR_26_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_26_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_26_TYPE)
+
+SENSOR_26_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_26_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -495,6 +729,15 @@ SENSOR_27_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_27_TYPE)
+
+SENSOR_27_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_27_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -510,6 +753,15 @@ memptr=memptr+1
 SENSOR_28_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_28_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_28_TYPE)
+
+SENSOR_28_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_28_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -531,6 +783,15 @@ SENSOR_29_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_29_TYPE)
+
+SENSOR_29_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_29_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -546,6 +807,15 @@ memptr=memptr+1
 SENSOR_30_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_30_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_30_TYPE)
+
+SENSOR_30_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_30_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -567,6 +837,15 @@ SENSOR_31_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_31_TYPE)
+
+SENSOR_31_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_31_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -582,6 +861,15 @@ memptr=memptr+1
 SENSOR_32_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_32_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_32_TYPE)
+
+SENSOR_32_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_32_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -603,6 +891,15 @@ SENSOR_33_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_33_TYPE)
+
+SENSOR_33_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_33_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -618,6 +915,15 @@ memptr=memptr+1
 SENSOR_34_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_34_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_34_TYPE)
+
+SENSOR_34_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_34_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -639,6 +945,15 @@ SENSOR_35_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_35_TYPE)
+
+SENSOR_35_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_35_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -654,6 +969,15 @@ memptr=memptr+1
 SENSOR_36_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_36_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_36_TYPE)
+
+SENSOR_36_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_36_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -675,6 +999,15 @@ SENSOR_37_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_37_TYPE)
+
+SENSOR_37_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_37_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -690,6 +1023,15 @@ memptr=memptr+1
 SENSOR_38_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_38_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_38_TYPE)
+
+SENSOR_38_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_38_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -711,6 +1053,15 @@ SENSOR_39_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_39_TYPE)
+
+SENSOR_39_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_39_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -726,6 +1077,15 @@ memptr=memptr+1
 SENSOR_40_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_40_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_40_TYPE)
+
+SENSOR_40_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_40_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -747,6 +1107,15 @@ SENSOR_41_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_41_TYPE)
+
+SENSOR_41_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_41_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -762,6 +1131,15 @@ memptr=memptr+1
 SENSOR_42_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_42_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_42_TYPE)
+
+SENSOR_42_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_42_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -783,6 +1161,15 @@ SENSOR_43_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_43_TYPE)
+
+SENSOR_43_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_43_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -798,6 +1185,15 @@ memptr=memptr+1
 SENSOR_44_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_44_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_44_TYPE)
+
+SENSOR_44_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_44_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -819,6 +1215,15 @@ SENSOR_45_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_45_TYPE)
+
+SENSOR_45_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_45_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -834,6 +1239,15 @@ memptr=memptr+1
 SENSOR_46_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_46_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_46_TYPE)
+
+SENSOR_46_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_46_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -855,6 +1269,15 @@ SENSOR_47_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_47_TYPE)
+
+SENSOR_47_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_47_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -870,6 +1293,15 @@ memptr=memptr+1
 SENSOR_48_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_48_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_48_TYPE)
+
+SENSOR_48_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_48_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -891,6 +1323,15 @@ SENSOR_49_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_49_TYPE)
+
+SENSOR_49_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_49_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -906,6 +1347,15 @@ memptr=memptr+1
 SENSOR_50_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_50_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_50_TYPE)
+
+SENSOR_50_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_50_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -927,6 +1377,15 @@ SENSOR_51_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_51_TYPE)
+
+SENSOR_51_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_51_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -942,6 +1401,15 @@ memptr=memptr+1
 SENSOR_52_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_52_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_52_TYPE)
+
+SENSOR_52_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_52_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -963,6 +1431,15 @@ SENSOR_53_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_53_TYPE)
+
+SENSOR_53_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_53_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -978,6 +1455,15 @@ memptr=memptr+1
 SENSOR_54_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_54_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_54_TYPE)
+
+SENSOR_54_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_54_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -999,6 +1485,15 @@ SENSOR_55_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_55_TYPE)
+
+SENSOR_55_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_55_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1014,6 +1509,15 @@ memptr=memptr+1
 SENSOR_56_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_56_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_56_TYPE)
+
+SENSOR_56_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_56_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1035,6 +1539,15 @@ SENSOR_57_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_57_TYPE)
+
+SENSOR_57_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_57_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1050,6 +1563,15 @@ memptr=memptr+1
 SENSOR_58_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_58_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_58_TYPE)
+
+SENSOR_58_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_58_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1071,6 +1593,15 @@ SENSOR_59_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_59_TYPE)
+
+SENSOR_59_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_59_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1086,6 +1617,15 @@ memptr=memptr+1
 SENSOR_60_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_60_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_60_TYPE)
+
+SENSOR_60_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_60_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1107,6 +1647,15 @@ SENSOR_61_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_61_TYPE)
+
+SENSOR_61_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_61_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1122,6 +1671,15 @@ memptr=memptr+1
 SENSOR_62_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_62_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_62_TYPE)
+
+SENSOR_62_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_62_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1143,6 +1701,15 @@ SENSOR_63_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_63_TYPE)
+
+SENSOR_63_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_63_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1158,6 +1725,15 @@ memptr=memptr+1
 SENSOR_64_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_64_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_64_TYPE)
+
+SENSOR_64_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_64_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1179,6 +1755,15 @@ SENSOR_65_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_65_TYPE)
+
+SENSOR_65_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_65_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1194,6 +1779,15 @@ memptr=memptr+1
 SENSOR_66_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_66_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_66_TYPE)
+
+SENSOR_66_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_66_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1215,6 +1809,15 @@ SENSOR_67_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_67_TYPE)
+
+SENSOR_67_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_67_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1230,6 +1833,15 @@ memptr=memptr+1
 SENSOR_68_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_68_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_68_TYPE)
+
+SENSOR_68_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_68_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1251,6 +1863,15 @@ SENSOR_69_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_69_TYPE)
+
+SENSOR_69_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_69_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1266,6 +1887,15 @@ memptr=memptr+1
 SENSOR_70_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_70_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_70_TYPE)
+
+SENSOR_70_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_70_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1287,6 +1917,15 @@ SENSOR_71_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_71_TYPE)
+
+SENSOR_71_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_71_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1302,6 +1941,15 @@ memptr=memptr+1
 SENSOR_72_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_72_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_72_TYPE)
+
+SENSOR_72_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_72_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1323,6 +1971,15 @@ SENSOR_73_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_73_TYPE)
+
+SENSOR_73_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_73_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1338,6 +1995,15 @@ memptr=memptr+1
 SENSOR_74_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_74_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_74_TYPE)
+
+SENSOR_74_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_74_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1359,6 +2025,15 @@ SENSOR_75_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_75_TYPE)
+
+SENSOR_75_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_75_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1374,6 +2049,15 @@ memptr=memptr+1
 SENSOR_76_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_76_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_76_TYPE)
+
+SENSOR_76_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_76_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1395,6 +2079,15 @@ SENSOR_77_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_77_TYPE)
+
+SENSOR_77_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_77_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1410,6 +2103,15 @@ memptr=memptr+1
 SENSOR_78_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_78_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_78_TYPE)
+
+SENSOR_78_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_78_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1431,6 +2133,15 @@ SENSOR_79_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_79_TYPE)
+
+SENSOR_79_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_79_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1446,6 +2157,15 @@ memptr=memptr+1
 SENSOR_80_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_80_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_80_TYPE)
+
+SENSOR_80_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_80_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1467,6 +2187,15 @@ SENSOR_81_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_81_TYPE)
+
+SENSOR_81_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_81_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1482,6 +2211,15 @@ memptr=memptr+1
 SENSOR_82_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_82_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_82_TYPE)
+
+SENSOR_82_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_82_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1503,6 +2241,15 @@ SENSOR_83_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_83_TYPE)
+
+SENSOR_83_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_83_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1518,6 +2265,15 @@ memptr=memptr+1
 SENSOR_84_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_84_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_84_TYPE)
+
+SENSOR_84_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_84_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1539,6 +2295,15 @@ SENSOR_85_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_85_TYPE)
+
+SENSOR_85_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_85_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1554,6 +2319,15 @@ memptr=memptr+1
 SENSOR_86_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_86_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_86_TYPE)
+
+SENSOR_86_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_86_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1575,6 +2349,15 @@ SENSOR_87_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_87_TYPE)
+
+SENSOR_87_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_87_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1590,6 +2373,15 @@ memptr=memptr+1
 SENSOR_88_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_88_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_88_TYPE)
+
+SENSOR_88_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_88_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1611,6 +2403,15 @@ SENSOR_89_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_89_TYPE)
+
+SENSOR_89_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_89_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1626,6 +2427,15 @@ memptr=memptr+1
 SENSOR_90_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_90_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_90_TYPE)
+
+SENSOR_90_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_90_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1647,6 +2457,15 @@ SENSOR_91_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_91_TYPE)
+
+SENSOR_91_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_91_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1662,6 +2481,15 @@ memptr=memptr+1
 SENSOR_92_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_92_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_92_TYPE)
+
+SENSOR_92_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_92_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1683,6 +2511,15 @@ SENSOR_93_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_93_TYPE)
+
+SENSOR_93_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_93_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1698,6 +2535,15 @@ memptr=memptr+1
 SENSOR_94_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_94_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_94_TYPE)
+
+SENSOR_94_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_94_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1719,6 +2565,15 @@ SENSOR_95_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_95_TYPE)
+
+SENSOR_95_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_95_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1734,6 +2589,15 @@ memptr=memptr+1
 SENSOR_96_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_96_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_96_TYPE)
+
+SENSOR_96_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_96_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif
@@ -1755,6 +2619,15 @@ SENSOR_97_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_97_TYPE)
+
+SENSOR_97_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_97_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1773,6 +2646,15 @@ SENSOR_98_PWM_SPEED 			EQU memptr
 memptr=memptr+1
 
 	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_98_TYPE)
+
+SENSOR_98_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_98_PWM_VOLUME   		EQU memptr
+memptr=memptr+1
+
+	#endif
 #endif
 
 
@@ -1788,6 +2670,15 @@ memptr=memptr+1
 SENSOR_99_PWM_TARGET 		EQU memptr
 memptr=memptr+1
 SENSOR_99_PWM_SPEED 			EQU memptr
+memptr=memptr+1
+
+	#endif
+
+	#if (SENSOR_ID_TRIAC == SENSOR_99_TYPE)
+
+SENSOR_99_ROLLING_TIMER_LOW	EQU memptr
+memptr=memptr+1
+SENSOR_99_PWM_VOLUME   		EQU memptr
 memptr=memptr+1
 
 	#endif

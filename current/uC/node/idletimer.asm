@@ -34,9 +34,15 @@ idletimer:
 	MOVWF STATUS_TEMP ;	save status to bank 0
 					  ; register
 
-	; And our actual interrupt service routine.
-
-	call dopwmsensors
+	; And our actual interrupt service routines.
+	; Jump to them - we can't call, in case we overflow the
+	; stack
+	goto dopwmsensors
+endpwmsensors:
+	global endpwmsensors
+	goto dotriacsensors
+endtriacsensors:
+	global endtriacsensors
 
 	bcf INTCON, T0IF
 	bsf INTCON, T0IE

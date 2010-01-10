@@ -211,7 +211,8 @@ void sync(appConfig_t* myconfig)
 			if (myconfig->verbose>0) printf("%d..", syncbytes);
 		}
 		if (myconfig->verbose>0) printf("OK.\n");
-	}	}
+	}	
+}
 
 void closePort(appConfig_t* myappconfig)
 {

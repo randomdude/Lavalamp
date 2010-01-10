@@ -51,7 +51,6 @@
             this.trackBarSpeed.AutoSize = false;
             this.trackBarSpeed.Location = new System.Drawing.Point(20, 62);
             this.trackBarSpeed.Maximum = 100;
-            this.trackBarSpeed.Minimum = 1;
             this.trackBarSpeed.Name = "trackBarSpeed";
             this.trackBarSpeed.Size = new System.Drawing.Size(137, 42);
             this.trackBarSpeed.TabIndex = 1;

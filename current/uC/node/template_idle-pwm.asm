@@ -4,6 +4,7 @@
 	#include "main.h"
 	#include "sensorcfg.h"
 	#include "protocol.h"
+	#include "idletimer.h"
 	#include "memoryplacement.h"
 
 	errorlevel  -302  
@@ -26,9 +27,13 @@ dopwmsensors:
 	addwf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade(AUTOGEN_EVERY_SENSOR_ID)	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately(AUTOGEN_EVERY_SENSOR_ID)
 
+dofade(AUTOGEN_EVERY_SENSOR_ID):
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_ROLLING_TIMER_HIGH, f
 	goto dontdofade(AUTOGEN_EVERY_SENSOR_ID)
@@ -51,8 +56,12 @@ dopwmsensors:
 	goto dontdofade(AUTOGEN_EVERY_SENSOR_ID)
 fadedown(AUTOGEN_EVERY_SENSOR_ID):
 	decf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PWM_VOLUME, f		; fade down!
-dontdofade(AUTOGEN_EVERY_SENSOR_ID):
+	goto dontdofade(AUTOGEN_EVERY_SENSOR_ID)
+updateImmediately(AUTOGEN_EVERY_SENSOR_ID):
+	movfw SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PWM_TARGET
+	movwf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PWM_VOLUME
 
+dontdofade(AUTOGEN_EVERY_SENSOR_ID):
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_ROLLING_TIMER_LOW
 	subwf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PWM_VOLUME, w
@@ -79,6 +88,6 @@ retnow(AUTOGEN_EVERY_SENSOR_ID):
 ;
 	bcf STATUS, RP0 ; bank 0
 
-	return
+	goto endpwmsensors
 
 	end

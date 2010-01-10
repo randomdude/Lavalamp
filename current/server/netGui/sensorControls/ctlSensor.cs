@@ -287,6 +287,8 @@ namespace netGui
                 graphTarget = new ctlOnOff();
             else if (sensorTypeEnum.pwm_out == thisSensorType)
                 graphTarget = new ctlPWM();
+            else if (sensorTypeEnum.triac_out == thisSensorType)
+                graphTarget = new ctlPWM();
             else
                 graphTarget = new ctlOnOff();       // just guess.
             

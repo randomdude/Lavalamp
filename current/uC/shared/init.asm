@@ -72,6 +72,7 @@ inituart:
 
 ;	movlw 0x81		; 2400 @ 20mhz if you clear BRGH
 	movlw 0x19		; 9600 @  4mhz if you set BRGH
+;	movlw 0x00		; 250000 @  4mhz if you set BRGH
 	movwf SPBRG		; set baud rate 
 
 	bcf STATUS, RP0  ; page 0

@@ -9,6 +9,7 @@
 	#include "main.h"
 	#include "sensorcfg.h"
 	#include "protocol.h"
+	#include "idletimer.h"
 	#include "memoryplacement.h"
 
 	errorlevel  -302  
@@ -30,9 +31,13 @@ dopwmsensors:
 	addwf SENSOR_1_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade1	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_1_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately1
 
+dofade1:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_1_ROLLING_TIMER_HIGH, f
 	goto dontdofade1
@@ -55,8 +60,12 @@ dopwmsensors:
 	goto dontdofade1
 fadedown1:
 	decf SENSOR_1_PWM_VOLUME, f		; fade down!
-dontdofade1:
+	goto dontdofade1
+updateImmediately1:
+	movfw SENSOR_1_PWM_TARGET
+	movwf SENSOR_1_PWM_VOLUME
 
+dontdofade1:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_1_ROLLING_TIMER_LOW
 	subwf SENSOR_1_PWM_VOLUME, w
@@ -91,9 +100,13 @@ retnow1:
 	addwf SENSOR_2_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade2	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_2_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately2
 
+dofade2:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_2_ROLLING_TIMER_HIGH, f
 	goto dontdofade2
@@ -116,8 +129,12 @@ retnow1:
 	goto dontdofade2
 fadedown2:
 	decf SENSOR_2_PWM_VOLUME, f		; fade down!
-dontdofade2:
+	goto dontdofade2
+updateImmediately2:
+	movfw SENSOR_2_PWM_TARGET
+	movwf SENSOR_2_PWM_VOLUME
 
+dontdofade2:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_2_ROLLING_TIMER_LOW
 	subwf SENSOR_2_PWM_VOLUME, w
@@ -152,9 +169,13 @@ retnow2:
 	addwf SENSOR_3_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade3	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_3_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately3
 
+dofade3:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_3_ROLLING_TIMER_HIGH, f
 	goto dontdofade3
@@ -177,8 +198,12 @@ retnow2:
 	goto dontdofade3
 fadedown3:
 	decf SENSOR_3_PWM_VOLUME, f		; fade down!
-dontdofade3:
+	goto dontdofade3
+updateImmediately3:
+	movfw SENSOR_3_PWM_TARGET
+	movwf SENSOR_3_PWM_VOLUME
 
+dontdofade3:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_3_ROLLING_TIMER_LOW
 	subwf SENSOR_3_PWM_VOLUME, w
@@ -213,9 +238,13 @@ retnow3:
 	addwf SENSOR_4_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade4	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_4_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately4
 
+dofade4:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_4_ROLLING_TIMER_HIGH, f
 	goto dontdofade4
@@ -238,8 +267,12 @@ retnow3:
 	goto dontdofade4
 fadedown4:
 	decf SENSOR_4_PWM_VOLUME, f		; fade down!
-dontdofade4:
+	goto dontdofade4
+updateImmediately4:
+	movfw SENSOR_4_PWM_TARGET
+	movwf SENSOR_4_PWM_VOLUME
 
+dontdofade4:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_4_ROLLING_TIMER_LOW
 	subwf SENSOR_4_PWM_VOLUME, w
@@ -274,9 +307,13 @@ retnow4:
 	addwf SENSOR_5_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade5	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_5_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately5
 
+dofade5:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_5_ROLLING_TIMER_HIGH, f
 	goto dontdofade5
@@ -299,8 +336,12 @@ retnow4:
 	goto dontdofade5
 fadedown5:
 	decf SENSOR_5_PWM_VOLUME, f		; fade down!
-dontdofade5:
+	goto dontdofade5
+updateImmediately5:
+	movfw SENSOR_5_PWM_TARGET
+	movwf SENSOR_5_PWM_VOLUME
 
+dontdofade5:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_5_ROLLING_TIMER_LOW
 	subwf SENSOR_5_PWM_VOLUME, w
@@ -335,9 +376,13 @@ retnow5:
 	addwf SENSOR_6_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade6	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_6_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately6
 
+dofade6:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_6_ROLLING_TIMER_HIGH, f
 	goto dontdofade6
@@ -360,8 +405,12 @@ retnow5:
 	goto dontdofade6
 fadedown6:
 	decf SENSOR_6_PWM_VOLUME, f		; fade down!
-dontdofade6:
+	goto dontdofade6
+updateImmediately6:
+	movfw SENSOR_6_PWM_TARGET
+	movwf SENSOR_6_PWM_VOLUME
 
+dontdofade6:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_6_ROLLING_TIMER_LOW
 	subwf SENSOR_6_PWM_VOLUME, w
@@ -396,9 +445,13 @@ retnow6:
 	addwf SENSOR_7_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade7	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_7_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately7
 
+dofade7:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_7_ROLLING_TIMER_HIGH, f
 	goto dontdofade7
@@ -421,8 +474,12 @@ retnow6:
 	goto dontdofade7
 fadedown7:
 	decf SENSOR_7_PWM_VOLUME, f		; fade down!
-dontdofade7:
+	goto dontdofade7
+updateImmediately7:
+	movfw SENSOR_7_PWM_TARGET
+	movwf SENSOR_7_PWM_VOLUME
 
+dontdofade7:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_7_ROLLING_TIMER_LOW
 	subwf SENSOR_7_PWM_VOLUME, w
@@ -457,9 +514,13 @@ retnow7:
 	addwf SENSOR_8_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade8	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_8_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately8
 
+dofade8:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_8_ROLLING_TIMER_HIGH, f
 	goto dontdofade8
@@ -482,8 +543,12 @@ retnow7:
 	goto dontdofade8
 fadedown8:
 	decf SENSOR_8_PWM_VOLUME, f		; fade down!
-dontdofade8:
+	goto dontdofade8
+updateImmediately8:
+	movfw SENSOR_8_PWM_TARGET
+	movwf SENSOR_8_PWM_VOLUME
 
+dontdofade8:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_8_ROLLING_TIMER_LOW
 	subwf SENSOR_8_PWM_VOLUME, w
@@ -518,9 +583,13 @@ retnow8:
 	addwf SENSOR_9_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade9	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_9_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately9
 
+dofade9:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_9_ROLLING_TIMER_HIGH, f
 	goto dontdofade9
@@ -543,8 +612,12 @@ retnow8:
 	goto dontdofade9
 fadedown9:
 	decf SENSOR_9_PWM_VOLUME, f		; fade down!
-dontdofade9:
+	goto dontdofade9
+updateImmediately9:
+	movfw SENSOR_9_PWM_TARGET
+	movwf SENSOR_9_PWM_VOLUME
 
+dontdofade9:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_9_ROLLING_TIMER_LOW
 	subwf SENSOR_9_PWM_VOLUME, w
@@ -579,9 +652,13 @@ retnow9:
 	addwf SENSOR_10_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade10	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_10_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately10
 
+dofade10:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_10_ROLLING_TIMER_HIGH, f
 	goto dontdofade10
@@ -604,8 +681,12 @@ retnow9:
 	goto dontdofade10
 fadedown10:
 	decf SENSOR_10_PWM_VOLUME, f		; fade down!
-dontdofade10:
+	goto dontdofade10
+updateImmediately10:
+	movfw SENSOR_10_PWM_TARGET
+	movwf SENSOR_10_PWM_VOLUME
 
+dontdofade10:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_10_ROLLING_TIMER_LOW
 	subwf SENSOR_10_PWM_VOLUME, w
@@ -640,9 +721,13 @@ retnow10:
 	addwf SENSOR_11_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade11	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_11_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately11
 
+dofade11:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_11_ROLLING_TIMER_HIGH, f
 	goto dontdofade11
@@ -665,8 +750,12 @@ retnow10:
 	goto dontdofade11
 fadedown11:
 	decf SENSOR_11_PWM_VOLUME, f		; fade down!
-dontdofade11:
+	goto dontdofade11
+updateImmediately11:
+	movfw SENSOR_11_PWM_TARGET
+	movwf SENSOR_11_PWM_VOLUME
 
+dontdofade11:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_11_ROLLING_TIMER_LOW
 	subwf SENSOR_11_PWM_VOLUME, w
@@ -701,9 +790,13 @@ retnow11:
 	addwf SENSOR_12_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade12	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_12_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately12
 
+dofade12:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_12_ROLLING_TIMER_HIGH, f
 	goto dontdofade12
@@ -726,8 +819,12 @@ retnow11:
 	goto dontdofade12
 fadedown12:
 	decf SENSOR_12_PWM_VOLUME, f		; fade down!
-dontdofade12:
+	goto dontdofade12
+updateImmediately12:
+	movfw SENSOR_12_PWM_TARGET
+	movwf SENSOR_12_PWM_VOLUME
 
+dontdofade12:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_12_ROLLING_TIMER_LOW
 	subwf SENSOR_12_PWM_VOLUME, w
@@ -762,9 +859,13 @@ retnow12:
 	addwf SENSOR_13_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade13	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_13_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately13
 
+dofade13:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_13_ROLLING_TIMER_HIGH, f
 	goto dontdofade13
@@ -787,8 +888,12 @@ retnow12:
 	goto dontdofade13
 fadedown13:
 	decf SENSOR_13_PWM_VOLUME, f		; fade down!
-dontdofade13:
+	goto dontdofade13
+updateImmediately13:
+	movfw SENSOR_13_PWM_TARGET
+	movwf SENSOR_13_PWM_VOLUME
 
+dontdofade13:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_13_ROLLING_TIMER_LOW
 	subwf SENSOR_13_PWM_VOLUME, w
@@ -823,9 +928,13 @@ retnow13:
 	addwf SENSOR_14_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade14	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_14_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately14
 
+dofade14:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_14_ROLLING_TIMER_HIGH, f
 	goto dontdofade14
@@ -848,8 +957,12 @@ retnow13:
 	goto dontdofade14
 fadedown14:
 	decf SENSOR_14_PWM_VOLUME, f		; fade down!
-dontdofade14:
+	goto dontdofade14
+updateImmediately14:
+	movfw SENSOR_14_PWM_TARGET
+	movwf SENSOR_14_PWM_VOLUME
 
+dontdofade14:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_14_ROLLING_TIMER_LOW
 	subwf SENSOR_14_PWM_VOLUME, w
@@ -884,9 +997,13 @@ retnow14:
 	addwf SENSOR_15_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade15	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_15_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately15
 
+dofade15:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_15_ROLLING_TIMER_HIGH, f
 	goto dontdofade15
@@ -909,8 +1026,12 @@ retnow14:
 	goto dontdofade15
 fadedown15:
 	decf SENSOR_15_PWM_VOLUME, f		; fade down!
-dontdofade15:
+	goto dontdofade15
+updateImmediately15:
+	movfw SENSOR_15_PWM_TARGET
+	movwf SENSOR_15_PWM_VOLUME
 
+dontdofade15:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_15_ROLLING_TIMER_LOW
 	subwf SENSOR_15_PWM_VOLUME, w
@@ -945,9 +1066,13 @@ retnow15:
 	addwf SENSOR_16_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade16	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_16_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately16
 
+dofade16:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_16_ROLLING_TIMER_HIGH, f
 	goto dontdofade16
@@ -970,8 +1095,12 @@ retnow15:
 	goto dontdofade16
 fadedown16:
 	decf SENSOR_16_PWM_VOLUME, f		; fade down!
-dontdofade16:
+	goto dontdofade16
+updateImmediately16:
+	movfw SENSOR_16_PWM_TARGET
+	movwf SENSOR_16_PWM_VOLUME
 
+dontdofade16:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_16_ROLLING_TIMER_LOW
 	subwf SENSOR_16_PWM_VOLUME, w
@@ -1006,9 +1135,13 @@ retnow16:
 	addwf SENSOR_17_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade17	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_17_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately17
 
+dofade17:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_17_ROLLING_TIMER_HIGH, f
 	goto dontdofade17
@@ -1031,8 +1164,12 @@ retnow16:
 	goto dontdofade17
 fadedown17:
 	decf SENSOR_17_PWM_VOLUME, f		; fade down!
-dontdofade17:
+	goto dontdofade17
+updateImmediately17:
+	movfw SENSOR_17_PWM_TARGET
+	movwf SENSOR_17_PWM_VOLUME
 
+dontdofade17:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_17_ROLLING_TIMER_LOW
 	subwf SENSOR_17_PWM_VOLUME, w
@@ -1067,9 +1204,13 @@ retnow17:
 	addwf SENSOR_18_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade18	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_18_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately18
 
+dofade18:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_18_ROLLING_TIMER_HIGH, f
 	goto dontdofade18
@@ -1092,8 +1233,12 @@ retnow17:
 	goto dontdofade18
 fadedown18:
 	decf SENSOR_18_PWM_VOLUME, f		; fade down!
-dontdofade18:
+	goto dontdofade18
+updateImmediately18:
+	movfw SENSOR_18_PWM_TARGET
+	movwf SENSOR_18_PWM_VOLUME
 
+dontdofade18:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_18_ROLLING_TIMER_LOW
 	subwf SENSOR_18_PWM_VOLUME, w
@@ -1128,9 +1273,13 @@ retnow18:
 	addwf SENSOR_19_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade19	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_19_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately19
 
+dofade19:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_19_ROLLING_TIMER_HIGH, f
 	goto dontdofade19
@@ -1153,8 +1302,12 @@ retnow18:
 	goto dontdofade19
 fadedown19:
 	decf SENSOR_19_PWM_VOLUME, f		; fade down!
-dontdofade19:
+	goto dontdofade19
+updateImmediately19:
+	movfw SENSOR_19_PWM_TARGET
+	movwf SENSOR_19_PWM_VOLUME
 
+dontdofade19:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_19_ROLLING_TIMER_LOW
 	subwf SENSOR_19_PWM_VOLUME, w
@@ -1189,9 +1342,13 @@ retnow19:
 	addwf SENSOR_20_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade20	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_20_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately20
 
+dofade20:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_20_ROLLING_TIMER_HIGH, f
 	goto dontdofade20
@@ -1214,8 +1371,12 @@ retnow19:
 	goto dontdofade20
 fadedown20:
 	decf SENSOR_20_PWM_VOLUME, f		; fade down!
-dontdofade20:
+	goto dontdofade20
+updateImmediately20:
+	movfw SENSOR_20_PWM_TARGET
+	movwf SENSOR_20_PWM_VOLUME
 
+dontdofade20:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_20_ROLLING_TIMER_LOW
 	subwf SENSOR_20_PWM_VOLUME, w
@@ -1250,9 +1411,13 @@ retnow20:
 	addwf SENSOR_21_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade21	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_21_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately21
 
+dofade21:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_21_ROLLING_TIMER_HIGH, f
 	goto dontdofade21
@@ -1275,8 +1440,12 @@ retnow20:
 	goto dontdofade21
 fadedown21:
 	decf SENSOR_21_PWM_VOLUME, f		; fade down!
-dontdofade21:
+	goto dontdofade21
+updateImmediately21:
+	movfw SENSOR_21_PWM_TARGET
+	movwf SENSOR_21_PWM_VOLUME
 
+dontdofade21:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_21_ROLLING_TIMER_LOW
 	subwf SENSOR_21_PWM_VOLUME, w
@@ -1311,9 +1480,13 @@ retnow21:
 	addwf SENSOR_22_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade22	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_22_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately22
 
+dofade22:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_22_ROLLING_TIMER_HIGH, f
 	goto dontdofade22
@@ -1336,8 +1509,12 @@ retnow21:
 	goto dontdofade22
 fadedown22:
 	decf SENSOR_22_PWM_VOLUME, f		; fade down!
-dontdofade22:
+	goto dontdofade22
+updateImmediately22:
+	movfw SENSOR_22_PWM_TARGET
+	movwf SENSOR_22_PWM_VOLUME
 
+dontdofade22:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_22_ROLLING_TIMER_LOW
 	subwf SENSOR_22_PWM_VOLUME, w
@@ -1372,9 +1549,13 @@ retnow22:
 	addwf SENSOR_23_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade23	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_23_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately23
 
+dofade23:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_23_ROLLING_TIMER_HIGH, f
 	goto dontdofade23
@@ -1397,8 +1578,12 @@ retnow22:
 	goto dontdofade23
 fadedown23:
 	decf SENSOR_23_PWM_VOLUME, f		; fade down!
-dontdofade23:
+	goto dontdofade23
+updateImmediately23:
+	movfw SENSOR_23_PWM_TARGET
+	movwf SENSOR_23_PWM_VOLUME
 
+dontdofade23:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_23_ROLLING_TIMER_LOW
 	subwf SENSOR_23_PWM_VOLUME, w
@@ -1433,9 +1618,13 @@ retnow23:
 	addwf SENSOR_24_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade24	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_24_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately24
 
+dofade24:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_24_ROLLING_TIMER_HIGH, f
 	goto dontdofade24
@@ -1458,8 +1647,12 @@ retnow23:
 	goto dontdofade24
 fadedown24:
 	decf SENSOR_24_PWM_VOLUME, f		; fade down!
-dontdofade24:
+	goto dontdofade24
+updateImmediately24:
+	movfw SENSOR_24_PWM_TARGET
+	movwf SENSOR_24_PWM_VOLUME
 
+dontdofade24:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_24_ROLLING_TIMER_LOW
 	subwf SENSOR_24_PWM_VOLUME, w
@@ -1494,9 +1687,13 @@ retnow24:
 	addwf SENSOR_25_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade25	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_25_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately25
 
+dofade25:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_25_ROLLING_TIMER_HIGH, f
 	goto dontdofade25
@@ -1519,8 +1716,12 @@ retnow24:
 	goto dontdofade25
 fadedown25:
 	decf SENSOR_25_PWM_VOLUME, f		; fade down!
-dontdofade25:
+	goto dontdofade25
+updateImmediately25:
+	movfw SENSOR_25_PWM_TARGET
+	movwf SENSOR_25_PWM_VOLUME
 
+dontdofade25:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_25_ROLLING_TIMER_LOW
 	subwf SENSOR_25_PWM_VOLUME, w
@@ -1555,9 +1756,13 @@ retnow25:
 	addwf SENSOR_26_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade26	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_26_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately26
 
+dofade26:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_26_ROLLING_TIMER_HIGH, f
 	goto dontdofade26
@@ -1580,8 +1785,12 @@ retnow25:
 	goto dontdofade26
 fadedown26:
 	decf SENSOR_26_PWM_VOLUME, f		; fade down!
-dontdofade26:
+	goto dontdofade26
+updateImmediately26:
+	movfw SENSOR_26_PWM_TARGET
+	movwf SENSOR_26_PWM_VOLUME
 
+dontdofade26:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_26_ROLLING_TIMER_LOW
 	subwf SENSOR_26_PWM_VOLUME, w
@@ -1616,9 +1825,13 @@ retnow26:
 	addwf SENSOR_27_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade27	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_27_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately27
 
+dofade27:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_27_ROLLING_TIMER_HIGH, f
 	goto dontdofade27
@@ -1641,8 +1854,12 @@ retnow26:
 	goto dontdofade27
 fadedown27:
 	decf SENSOR_27_PWM_VOLUME, f		; fade down!
-dontdofade27:
+	goto dontdofade27
+updateImmediately27:
+	movfw SENSOR_27_PWM_TARGET
+	movwf SENSOR_27_PWM_VOLUME
 
+dontdofade27:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_27_ROLLING_TIMER_LOW
 	subwf SENSOR_27_PWM_VOLUME, w
@@ -1677,9 +1894,13 @@ retnow27:
 	addwf SENSOR_28_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade28	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_28_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately28
 
+dofade28:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_28_ROLLING_TIMER_HIGH, f
 	goto dontdofade28
@@ -1702,8 +1923,12 @@ retnow27:
 	goto dontdofade28
 fadedown28:
 	decf SENSOR_28_PWM_VOLUME, f		; fade down!
-dontdofade28:
+	goto dontdofade28
+updateImmediately28:
+	movfw SENSOR_28_PWM_TARGET
+	movwf SENSOR_28_PWM_VOLUME
 
+dontdofade28:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_28_ROLLING_TIMER_LOW
 	subwf SENSOR_28_PWM_VOLUME, w
@@ -1738,9 +1963,13 @@ retnow28:
 	addwf SENSOR_29_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade29	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_29_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately29
 
+dofade29:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_29_ROLLING_TIMER_HIGH, f
 	goto dontdofade29
@@ -1763,8 +1992,12 @@ retnow28:
 	goto dontdofade29
 fadedown29:
 	decf SENSOR_29_PWM_VOLUME, f		; fade down!
-dontdofade29:
+	goto dontdofade29
+updateImmediately29:
+	movfw SENSOR_29_PWM_TARGET
+	movwf SENSOR_29_PWM_VOLUME
 
+dontdofade29:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_29_ROLLING_TIMER_LOW
 	subwf SENSOR_29_PWM_VOLUME, w
@@ -1799,9 +2032,13 @@ retnow29:
 	addwf SENSOR_30_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade30	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_30_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately30
 
+dofade30:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_30_ROLLING_TIMER_HIGH, f
 	goto dontdofade30
@@ -1824,8 +2061,12 @@ retnow29:
 	goto dontdofade30
 fadedown30:
 	decf SENSOR_30_PWM_VOLUME, f		; fade down!
-dontdofade30:
+	goto dontdofade30
+updateImmediately30:
+	movfw SENSOR_30_PWM_TARGET
+	movwf SENSOR_30_PWM_VOLUME
 
+dontdofade30:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_30_ROLLING_TIMER_LOW
 	subwf SENSOR_30_PWM_VOLUME, w
@@ -1860,9 +2101,13 @@ retnow30:
 	addwf SENSOR_31_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade31	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_31_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately31
 
+dofade31:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_31_ROLLING_TIMER_HIGH, f
 	goto dontdofade31
@@ -1885,8 +2130,12 @@ retnow30:
 	goto dontdofade31
 fadedown31:
 	decf SENSOR_31_PWM_VOLUME, f		; fade down!
-dontdofade31:
+	goto dontdofade31
+updateImmediately31:
+	movfw SENSOR_31_PWM_TARGET
+	movwf SENSOR_31_PWM_VOLUME
 
+dontdofade31:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_31_ROLLING_TIMER_LOW
 	subwf SENSOR_31_PWM_VOLUME, w
@@ -1921,9 +2170,13 @@ retnow31:
 	addwf SENSOR_32_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade32	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_32_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately32
 
+dofade32:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_32_ROLLING_TIMER_HIGH, f
 	goto dontdofade32
@@ -1946,8 +2199,12 @@ retnow31:
 	goto dontdofade32
 fadedown32:
 	decf SENSOR_32_PWM_VOLUME, f		; fade down!
-dontdofade32:
+	goto dontdofade32
+updateImmediately32:
+	movfw SENSOR_32_PWM_TARGET
+	movwf SENSOR_32_PWM_VOLUME
 
+dontdofade32:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_32_ROLLING_TIMER_LOW
 	subwf SENSOR_32_PWM_VOLUME, w
@@ -1982,9 +2239,13 @@ retnow32:
 	addwf SENSOR_33_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade33	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_33_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately33
 
+dofade33:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_33_ROLLING_TIMER_HIGH, f
 	goto dontdofade33
@@ -2007,8 +2268,12 @@ retnow32:
 	goto dontdofade33
 fadedown33:
 	decf SENSOR_33_PWM_VOLUME, f		; fade down!
-dontdofade33:
+	goto dontdofade33
+updateImmediately33:
+	movfw SENSOR_33_PWM_TARGET
+	movwf SENSOR_33_PWM_VOLUME
 
+dontdofade33:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_33_ROLLING_TIMER_LOW
 	subwf SENSOR_33_PWM_VOLUME, w
@@ -2043,9 +2308,13 @@ retnow33:
 	addwf SENSOR_34_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade34	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_34_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately34
 
+dofade34:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_34_ROLLING_TIMER_HIGH, f
 	goto dontdofade34
@@ -2068,8 +2337,12 @@ retnow33:
 	goto dontdofade34
 fadedown34:
 	decf SENSOR_34_PWM_VOLUME, f		; fade down!
-dontdofade34:
+	goto dontdofade34
+updateImmediately34:
+	movfw SENSOR_34_PWM_TARGET
+	movwf SENSOR_34_PWM_VOLUME
 
+dontdofade34:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_34_ROLLING_TIMER_LOW
 	subwf SENSOR_34_PWM_VOLUME, w
@@ -2104,9 +2377,13 @@ retnow34:
 	addwf SENSOR_35_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade35	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_35_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately35
 
+dofade35:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_35_ROLLING_TIMER_HIGH, f
 	goto dontdofade35
@@ -2129,8 +2406,12 @@ retnow34:
 	goto dontdofade35
 fadedown35:
 	decf SENSOR_35_PWM_VOLUME, f		; fade down!
-dontdofade35:
+	goto dontdofade35
+updateImmediately35:
+	movfw SENSOR_35_PWM_TARGET
+	movwf SENSOR_35_PWM_VOLUME
 
+dontdofade35:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_35_ROLLING_TIMER_LOW
 	subwf SENSOR_35_PWM_VOLUME, w
@@ -2165,9 +2446,13 @@ retnow35:
 	addwf SENSOR_36_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade36	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_36_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately36
 
+dofade36:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_36_ROLLING_TIMER_HIGH, f
 	goto dontdofade36
@@ -2190,8 +2475,12 @@ retnow35:
 	goto dontdofade36
 fadedown36:
 	decf SENSOR_36_PWM_VOLUME, f		; fade down!
-dontdofade36:
+	goto dontdofade36
+updateImmediately36:
+	movfw SENSOR_36_PWM_TARGET
+	movwf SENSOR_36_PWM_VOLUME
 
+dontdofade36:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_36_ROLLING_TIMER_LOW
 	subwf SENSOR_36_PWM_VOLUME, w
@@ -2226,9 +2515,13 @@ retnow36:
 	addwf SENSOR_37_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade37	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_37_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately37
 
+dofade37:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_37_ROLLING_TIMER_HIGH, f
 	goto dontdofade37
@@ -2251,8 +2544,12 @@ retnow36:
 	goto dontdofade37
 fadedown37:
 	decf SENSOR_37_PWM_VOLUME, f		; fade down!
-dontdofade37:
+	goto dontdofade37
+updateImmediately37:
+	movfw SENSOR_37_PWM_TARGET
+	movwf SENSOR_37_PWM_VOLUME
 
+dontdofade37:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_37_ROLLING_TIMER_LOW
 	subwf SENSOR_37_PWM_VOLUME, w
@@ -2287,9 +2584,13 @@ retnow37:
 	addwf SENSOR_38_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade38	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_38_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately38
 
+dofade38:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_38_ROLLING_TIMER_HIGH, f
 	goto dontdofade38
@@ -2312,8 +2613,12 @@ retnow37:
 	goto dontdofade38
 fadedown38:
 	decf SENSOR_38_PWM_VOLUME, f		; fade down!
-dontdofade38:
+	goto dontdofade38
+updateImmediately38:
+	movfw SENSOR_38_PWM_TARGET
+	movwf SENSOR_38_PWM_VOLUME
 
+dontdofade38:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_38_ROLLING_TIMER_LOW
 	subwf SENSOR_38_PWM_VOLUME, w
@@ -2348,9 +2653,13 @@ retnow38:
 	addwf SENSOR_39_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade39	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_39_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately39
 
+dofade39:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_39_ROLLING_TIMER_HIGH, f
 	goto dontdofade39
@@ -2373,8 +2682,12 @@ retnow38:
 	goto dontdofade39
 fadedown39:
 	decf SENSOR_39_PWM_VOLUME, f		; fade down!
-dontdofade39:
+	goto dontdofade39
+updateImmediately39:
+	movfw SENSOR_39_PWM_TARGET
+	movwf SENSOR_39_PWM_VOLUME
 
+dontdofade39:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_39_ROLLING_TIMER_LOW
 	subwf SENSOR_39_PWM_VOLUME, w
@@ -2409,9 +2722,13 @@ retnow39:
 	addwf SENSOR_40_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade40	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_40_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately40
 
+dofade40:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_40_ROLLING_TIMER_HIGH, f
 	goto dontdofade40
@@ -2434,8 +2751,12 @@ retnow39:
 	goto dontdofade40
 fadedown40:
 	decf SENSOR_40_PWM_VOLUME, f		; fade down!
-dontdofade40:
+	goto dontdofade40
+updateImmediately40:
+	movfw SENSOR_40_PWM_TARGET
+	movwf SENSOR_40_PWM_VOLUME
 
+dontdofade40:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_40_ROLLING_TIMER_LOW
 	subwf SENSOR_40_PWM_VOLUME, w
@@ -2470,9 +2791,13 @@ retnow40:
 	addwf SENSOR_41_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade41	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_41_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately41
 
+dofade41:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_41_ROLLING_TIMER_HIGH, f
 	goto dontdofade41
@@ -2495,8 +2820,12 @@ retnow40:
 	goto dontdofade41
 fadedown41:
 	decf SENSOR_41_PWM_VOLUME, f		; fade down!
-dontdofade41:
+	goto dontdofade41
+updateImmediately41:
+	movfw SENSOR_41_PWM_TARGET
+	movwf SENSOR_41_PWM_VOLUME
 
+dontdofade41:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_41_ROLLING_TIMER_LOW
 	subwf SENSOR_41_PWM_VOLUME, w
@@ -2531,9 +2860,13 @@ retnow41:
 	addwf SENSOR_42_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade42	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_42_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately42
 
+dofade42:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_42_ROLLING_TIMER_HIGH, f
 	goto dontdofade42
@@ -2556,8 +2889,12 @@ retnow41:
 	goto dontdofade42
 fadedown42:
 	decf SENSOR_42_PWM_VOLUME, f		; fade down!
-dontdofade42:
+	goto dontdofade42
+updateImmediately42:
+	movfw SENSOR_42_PWM_TARGET
+	movwf SENSOR_42_PWM_VOLUME
 
+dontdofade42:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_42_ROLLING_TIMER_LOW
 	subwf SENSOR_42_PWM_VOLUME, w
@@ -2592,9 +2929,13 @@ retnow42:
 	addwf SENSOR_43_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade43	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_43_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately43
 
+dofade43:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_43_ROLLING_TIMER_HIGH, f
 	goto dontdofade43
@@ -2617,8 +2958,12 @@ retnow42:
 	goto dontdofade43
 fadedown43:
 	decf SENSOR_43_PWM_VOLUME, f		; fade down!
-dontdofade43:
+	goto dontdofade43
+updateImmediately43:
+	movfw SENSOR_43_PWM_TARGET
+	movwf SENSOR_43_PWM_VOLUME
 
+dontdofade43:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_43_ROLLING_TIMER_LOW
 	subwf SENSOR_43_PWM_VOLUME, w
@@ -2653,9 +2998,13 @@ retnow43:
 	addwf SENSOR_44_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade44	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_44_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately44
 
+dofade44:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_44_ROLLING_TIMER_HIGH, f
 	goto dontdofade44
@@ -2678,8 +3027,12 @@ retnow43:
 	goto dontdofade44
 fadedown44:
 	decf SENSOR_44_PWM_VOLUME, f		; fade down!
-dontdofade44:
+	goto dontdofade44
+updateImmediately44:
+	movfw SENSOR_44_PWM_TARGET
+	movwf SENSOR_44_PWM_VOLUME
 
+dontdofade44:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_44_ROLLING_TIMER_LOW
 	subwf SENSOR_44_PWM_VOLUME, w
@@ -2714,9 +3067,13 @@ retnow44:
 	addwf SENSOR_45_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade45	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_45_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately45
 
+dofade45:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_45_ROLLING_TIMER_HIGH, f
 	goto dontdofade45
@@ -2739,8 +3096,12 @@ retnow44:
 	goto dontdofade45
 fadedown45:
 	decf SENSOR_45_PWM_VOLUME, f		; fade down!
-dontdofade45:
+	goto dontdofade45
+updateImmediately45:
+	movfw SENSOR_45_PWM_TARGET
+	movwf SENSOR_45_PWM_VOLUME
 
+dontdofade45:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_45_ROLLING_TIMER_LOW
 	subwf SENSOR_45_PWM_VOLUME, w
@@ -2775,9 +3136,13 @@ retnow45:
 	addwf SENSOR_46_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade46	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_46_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately46
 
+dofade46:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_46_ROLLING_TIMER_HIGH, f
 	goto dontdofade46
@@ -2800,8 +3165,12 @@ retnow45:
 	goto dontdofade46
 fadedown46:
 	decf SENSOR_46_PWM_VOLUME, f		; fade down!
-dontdofade46:
+	goto dontdofade46
+updateImmediately46:
+	movfw SENSOR_46_PWM_TARGET
+	movwf SENSOR_46_PWM_VOLUME
 
+dontdofade46:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_46_ROLLING_TIMER_LOW
 	subwf SENSOR_46_PWM_VOLUME, w
@@ -2836,9 +3205,13 @@ retnow46:
 	addwf SENSOR_47_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade47	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_47_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately47
 
+dofade47:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_47_ROLLING_TIMER_HIGH, f
 	goto dontdofade47
@@ -2861,8 +3234,12 @@ retnow46:
 	goto dontdofade47
 fadedown47:
 	decf SENSOR_47_PWM_VOLUME, f		; fade down!
-dontdofade47:
+	goto dontdofade47
+updateImmediately47:
+	movfw SENSOR_47_PWM_TARGET
+	movwf SENSOR_47_PWM_VOLUME
 
+dontdofade47:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_47_ROLLING_TIMER_LOW
 	subwf SENSOR_47_PWM_VOLUME, w
@@ -2897,9 +3274,13 @@ retnow47:
 	addwf SENSOR_48_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade48	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_48_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately48
 
+dofade48:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_48_ROLLING_TIMER_HIGH, f
 	goto dontdofade48
@@ -2922,8 +3303,12 @@ retnow47:
 	goto dontdofade48
 fadedown48:
 	decf SENSOR_48_PWM_VOLUME, f		; fade down!
-dontdofade48:
+	goto dontdofade48
+updateImmediately48:
+	movfw SENSOR_48_PWM_TARGET
+	movwf SENSOR_48_PWM_VOLUME
 
+dontdofade48:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_48_ROLLING_TIMER_LOW
 	subwf SENSOR_48_PWM_VOLUME, w
@@ -2958,9 +3343,13 @@ retnow48:
 	addwf SENSOR_49_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade49	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_49_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately49
 
+dofade49:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_49_ROLLING_TIMER_HIGH, f
 	goto dontdofade49
@@ -2983,8 +3372,12 @@ retnow48:
 	goto dontdofade49
 fadedown49:
 	decf SENSOR_49_PWM_VOLUME, f		; fade down!
-dontdofade49:
+	goto dontdofade49
+updateImmediately49:
+	movfw SENSOR_49_PWM_TARGET
+	movwf SENSOR_49_PWM_VOLUME
 
+dontdofade49:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_49_ROLLING_TIMER_LOW
 	subwf SENSOR_49_PWM_VOLUME, w
@@ -3019,9 +3412,13 @@ retnow49:
 	addwf SENSOR_50_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade50	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_50_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately50
 
+dofade50:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_50_ROLLING_TIMER_HIGH, f
 	goto dontdofade50
@@ -3044,8 +3441,12 @@ retnow49:
 	goto dontdofade50
 fadedown50:
 	decf SENSOR_50_PWM_VOLUME, f		; fade down!
-dontdofade50:
+	goto dontdofade50
+updateImmediately50:
+	movfw SENSOR_50_PWM_TARGET
+	movwf SENSOR_50_PWM_VOLUME
 
+dontdofade50:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_50_ROLLING_TIMER_LOW
 	subwf SENSOR_50_PWM_VOLUME, w
@@ -3080,9 +3481,13 @@ retnow50:
 	addwf SENSOR_51_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade51	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_51_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately51
 
+dofade51:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_51_ROLLING_TIMER_HIGH, f
 	goto dontdofade51
@@ -3105,8 +3510,12 @@ retnow50:
 	goto dontdofade51
 fadedown51:
 	decf SENSOR_51_PWM_VOLUME, f		; fade down!
-dontdofade51:
+	goto dontdofade51
+updateImmediately51:
+	movfw SENSOR_51_PWM_TARGET
+	movwf SENSOR_51_PWM_VOLUME
 
+dontdofade51:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_51_ROLLING_TIMER_LOW
 	subwf SENSOR_51_PWM_VOLUME, w
@@ -3141,9 +3550,13 @@ retnow51:
 	addwf SENSOR_52_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade52	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_52_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately52
 
+dofade52:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_52_ROLLING_TIMER_HIGH, f
 	goto dontdofade52
@@ -3166,8 +3579,12 @@ retnow51:
 	goto dontdofade52
 fadedown52:
 	decf SENSOR_52_PWM_VOLUME, f		; fade down!
-dontdofade52:
+	goto dontdofade52
+updateImmediately52:
+	movfw SENSOR_52_PWM_TARGET
+	movwf SENSOR_52_PWM_VOLUME
 
+dontdofade52:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_52_ROLLING_TIMER_LOW
 	subwf SENSOR_52_PWM_VOLUME, w
@@ -3202,9 +3619,13 @@ retnow52:
 	addwf SENSOR_53_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade53	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_53_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately53
 
+dofade53:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_53_ROLLING_TIMER_HIGH, f
 	goto dontdofade53
@@ -3227,8 +3648,12 @@ retnow52:
 	goto dontdofade53
 fadedown53:
 	decf SENSOR_53_PWM_VOLUME, f		; fade down!
-dontdofade53:
+	goto dontdofade53
+updateImmediately53:
+	movfw SENSOR_53_PWM_TARGET
+	movwf SENSOR_53_PWM_VOLUME
 
+dontdofade53:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_53_ROLLING_TIMER_LOW
 	subwf SENSOR_53_PWM_VOLUME, w
@@ -3263,9 +3688,13 @@ retnow53:
 	addwf SENSOR_54_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade54	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_54_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately54
 
+dofade54:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_54_ROLLING_TIMER_HIGH, f
 	goto dontdofade54
@@ -3288,8 +3717,12 @@ retnow53:
 	goto dontdofade54
 fadedown54:
 	decf SENSOR_54_PWM_VOLUME, f		; fade down!
-dontdofade54:
+	goto dontdofade54
+updateImmediately54:
+	movfw SENSOR_54_PWM_TARGET
+	movwf SENSOR_54_PWM_VOLUME
 
+dontdofade54:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_54_ROLLING_TIMER_LOW
 	subwf SENSOR_54_PWM_VOLUME, w
@@ -3324,9 +3757,13 @@ retnow54:
 	addwf SENSOR_55_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade55	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_55_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately55
 
+dofade55:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_55_ROLLING_TIMER_HIGH, f
 	goto dontdofade55
@@ -3349,8 +3786,12 @@ retnow54:
 	goto dontdofade55
 fadedown55:
 	decf SENSOR_55_PWM_VOLUME, f		; fade down!
-dontdofade55:
+	goto dontdofade55
+updateImmediately55:
+	movfw SENSOR_55_PWM_TARGET
+	movwf SENSOR_55_PWM_VOLUME
 
+dontdofade55:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_55_ROLLING_TIMER_LOW
 	subwf SENSOR_55_PWM_VOLUME, w
@@ -3385,9 +3826,13 @@ retnow55:
 	addwf SENSOR_56_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade56	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_56_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately56
 
+dofade56:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_56_ROLLING_TIMER_HIGH, f
 	goto dontdofade56
@@ -3410,8 +3855,12 @@ retnow55:
 	goto dontdofade56
 fadedown56:
 	decf SENSOR_56_PWM_VOLUME, f		; fade down!
-dontdofade56:
+	goto dontdofade56
+updateImmediately56:
+	movfw SENSOR_56_PWM_TARGET
+	movwf SENSOR_56_PWM_VOLUME
 
+dontdofade56:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_56_ROLLING_TIMER_LOW
 	subwf SENSOR_56_PWM_VOLUME, w
@@ -3446,9 +3895,13 @@ retnow56:
 	addwf SENSOR_57_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade57	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_57_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately57
 
+dofade57:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_57_ROLLING_TIMER_HIGH, f
 	goto dontdofade57
@@ -3471,8 +3924,12 @@ retnow56:
 	goto dontdofade57
 fadedown57:
 	decf SENSOR_57_PWM_VOLUME, f		; fade down!
-dontdofade57:
+	goto dontdofade57
+updateImmediately57:
+	movfw SENSOR_57_PWM_TARGET
+	movwf SENSOR_57_PWM_VOLUME
 
+dontdofade57:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_57_ROLLING_TIMER_LOW
 	subwf SENSOR_57_PWM_VOLUME, w
@@ -3507,9 +3964,13 @@ retnow57:
 	addwf SENSOR_58_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade58	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_58_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately58
 
+dofade58:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_58_ROLLING_TIMER_HIGH, f
 	goto dontdofade58
@@ -3532,8 +3993,12 @@ retnow57:
 	goto dontdofade58
 fadedown58:
 	decf SENSOR_58_PWM_VOLUME, f		; fade down!
-dontdofade58:
+	goto dontdofade58
+updateImmediately58:
+	movfw SENSOR_58_PWM_TARGET
+	movwf SENSOR_58_PWM_VOLUME
 
+dontdofade58:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_58_ROLLING_TIMER_LOW
 	subwf SENSOR_58_PWM_VOLUME, w
@@ -3568,9 +4033,13 @@ retnow58:
 	addwf SENSOR_59_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade59	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_59_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately59
 
+dofade59:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_59_ROLLING_TIMER_HIGH, f
 	goto dontdofade59
@@ -3593,8 +4062,12 @@ retnow58:
 	goto dontdofade59
 fadedown59:
 	decf SENSOR_59_PWM_VOLUME, f		; fade down!
-dontdofade59:
+	goto dontdofade59
+updateImmediately59:
+	movfw SENSOR_59_PWM_TARGET
+	movwf SENSOR_59_PWM_VOLUME
 
+dontdofade59:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_59_ROLLING_TIMER_LOW
 	subwf SENSOR_59_PWM_VOLUME, w
@@ -3629,9 +4102,13 @@ retnow59:
 	addwf SENSOR_60_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade60	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_60_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately60
 
+dofade60:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_60_ROLLING_TIMER_HIGH, f
 	goto dontdofade60
@@ -3654,8 +4131,12 @@ retnow59:
 	goto dontdofade60
 fadedown60:
 	decf SENSOR_60_PWM_VOLUME, f		; fade down!
-dontdofade60:
+	goto dontdofade60
+updateImmediately60:
+	movfw SENSOR_60_PWM_TARGET
+	movwf SENSOR_60_PWM_VOLUME
 
+dontdofade60:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_60_ROLLING_TIMER_LOW
 	subwf SENSOR_60_PWM_VOLUME, w
@@ -3690,9 +4171,13 @@ retnow60:
 	addwf SENSOR_61_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade61	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_61_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately61
 
+dofade61:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_61_ROLLING_TIMER_HIGH, f
 	goto dontdofade61
@@ -3715,8 +4200,12 @@ retnow60:
 	goto dontdofade61
 fadedown61:
 	decf SENSOR_61_PWM_VOLUME, f		; fade down!
-dontdofade61:
+	goto dontdofade61
+updateImmediately61:
+	movfw SENSOR_61_PWM_TARGET
+	movwf SENSOR_61_PWM_VOLUME
 
+dontdofade61:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_61_ROLLING_TIMER_LOW
 	subwf SENSOR_61_PWM_VOLUME, w
@@ -3751,9 +4240,13 @@ retnow61:
 	addwf SENSOR_62_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade62	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_62_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately62
 
+dofade62:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_62_ROLLING_TIMER_HIGH, f
 	goto dontdofade62
@@ -3776,8 +4269,12 @@ retnow61:
 	goto dontdofade62
 fadedown62:
 	decf SENSOR_62_PWM_VOLUME, f		; fade down!
-dontdofade62:
+	goto dontdofade62
+updateImmediately62:
+	movfw SENSOR_62_PWM_TARGET
+	movwf SENSOR_62_PWM_VOLUME
 
+dontdofade62:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_62_ROLLING_TIMER_LOW
 	subwf SENSOR_62_PWM_VOLUME, w
@@ -3812,9 +4309,13 @@ retnow62:
 	addwf SENSOR_63_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade63	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_63_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately63
 
+dofade63:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_63_ROLLING_TIMER_HIGH, f
 	goto dontdofade63
@@ -3837,8 +4338,12 @@ retnow62:
 	goto dontdofade63
 fadedown63:
 	decf SENSOR_63_PWM_VOLUME, f		; fade down!
-dontdofade63:
+	goto dontdofade63
+updateImmediately63:
+	movfw SENSOR_63_PWM_TARGET
+	movwf SENSOR_63_PWM_VOLUME
 
+dontdofade63:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_63_ROLLING_TIMER_LOW
 	subwf SENSOR_63_PWM_VOLUME, w
@@ -3873,9 +4378,13 @@ retnow63:
 	addwf SENSOR_64_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade64	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_64_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately64
 
+dofade64:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_64_ROLLING_TIMER_HIGH, f
 	goto dontdofade64
@@ -3898,8 +4407,12 @@ retnow63:
 	goto dontdofade64
 fadedown64:
 	decf SENSOR_64_PWM_VOLUME, f		; fade down!
-dontdofade64:
+	goto dontdofade64
+updateImmediately64:
+	movfw SENSOR_64_PWM_TARGET
+	movwf SENSOR_64_PWM_VOLUME
 
+dontdofade64:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_64_ROLLING_TIMER_LOW
 	subwf SENSOR_64_PWM_VOLUME, w
@@ -3934,9 +4447,13 @@ retnow64:
 	addwf SENSOR_65_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade65	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_65_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately65
 
+dofade65:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_65_ROLLING_TIMER_HIGH, f
 	goto dontdofade65
@@ -3959,8 +4476,12 @@ retnow64:
 	goto dontdofade65
 fadedown65:
 	decf SENSOR_65_PWM_VOLUME, f		; fade down!
-dontdofade65:
+	goto dontdofade65
+updateImmediately65:
+	movfw SENSOR_65_PWM_TARGET
+	movwf SENSOR_65_PWM_VOLUME
 
+dontdofade65:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_65_ROLLING_TIMER_LOW
 	subwf SENSOR_65_PWM_VOLUME, w
@@ -3995,9 +4516,13 @@ retnow65:
 	addwf SENSOR_66_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade66	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_66_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately66
 
+dofade66:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_66_ROLLING_TIMER_HIGH, f
 	goto dontdofade66
@@ -4020,8 +4545,12 @@ retnow65:
 	goto dontdofade66
 fadedown66:
 	decf SENSOR_66_PWM_VOLUME, f		; fade down!
-dontdofade66:
+	goto dontdofade66
+updateImmediately66:
+	movfw SENSOR_66_PWM_TARGET
+	movwf SENSOR_66_PWM_VOLUME
 
+dontdofade66:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_66_ROLLING_TIMER_LOW
 	subwf SENSOR_66_PWM_VOLUME, w
@@ -4056,9 +4585,13 @@ retnow66:
 	addwf SENSOR_67_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade67	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_67_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately67
 
+dofade67:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_67_ROLLING_TIMER_HIGH, f
 	goto dontdofade67
@@ -4081,8 +4614,12 @@ retnow66:
 	goto dontdofade67
 fadedown67:
 	decf SENSOR_67_PWM_VOLUME, f		; fade down!
-dontdofade67:
+	goto dontdofade67
+updateImmediately67:
+	movfw SENSOR_67_PWM_TARGET
+	movwf SENSOR_67_PWM_VOLUME
 
+dontdofade67:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_67_ROLLING_TIMER_LOW
 	subwf SENSOR_67_PWM_VOLUME, w
@@ -4117,9 +4654,13 @@ retnow67:
 	addwf SENSOR_68_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade68	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_68_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately68
 
+dofade68:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_68_ROLLING_TIMER_HIGH, f
 	goto dontdofade68
@@ -4142,8 +4683,12 @@ retnow67:
 	goto dontdofade68
 fadedown68:
 	decf SENSOR_68_PWM_VOLUME, f		; fade down!
-dontdofade68:
+	goto dontdofade68
+updateImmediately68:
+	movfw SENSOR_68_PWM_TARGET
+	movwf SENSOR_68_PWM_VOLUME
 
+dontdofade68:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_68_ROLLING_TIMER_LOW
 	subwf SENSOR_68_PWM_VOLUME, w
@@ -4178,9 +4723,13 @@ retnow68:
 	addwf SENSOR_69_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade69	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_69_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately69
 
+dofade69:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_69_ROLLING_TIMER_HIGH, f
 	goto dontdofade69
@@ -4203,8 +4752,12 @@ retnow68:
 	goto dontdofade69
 fadedown69:
 	decf SENSOR_69_PWM_VOLUME, f		; fade down!
-dontdofade69:
+	goto dontdofade69
+updateImmediately69:
+	movfw SENSOR_69_PWM_TARGET
+	movwf SENSOR_69_PWM_VOLUME
 
+dontdofade69:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_69_ROLLING_TIMER_LOW
 	subwf SENSOR_69_PWM_VOLUME, w
@@ -4239,9 +4792,13 @@ retnow69:
 	addwf SENSOR_70_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade70	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_70_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately70
 
+dofade70:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_70_ROLLING_TIMER_HIGH, f
 	goto dontdofade70
@@ -4264,8 +4821,12 @@ retnow69:
 	goto dontdofade70
 fadedown70:
 	decf SENSOR_70_PWM_VOLUME, f		; fade down!
-dontdofade70:
+	goto dontdofade70
+updateImmediately70:
+	movfw SENSOR_70_PWM_TARGET
+	movwf SENSOR_70_PWM_VOLUME
 
+dontdofade70:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_70_ROLLING_TIMER_LOW
 	subwf SENSOR_70_PWM_VOLUME, w
@@ -4300,9 +4861,13 @@ retnow70:
 	addwf SENSOR_71_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade71	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_71_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately71
 
+dofade71:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_71_ROLLING_TIMER_HIGH, f
 	goto dontdofade71
@@ -4325,8 +4890,12 @@ retnow70:
 	goto dontdofade71
 fadedown71:
 	decf SENSOR_71_PWM_VOLUME, f		; fade down!
-dontdofade71:
+	goto dontdofade71
+updateImmediately71:
+	movfw SENSOR_71_PWM_TARGET
+	movwf SENSOR_71_PWM_VOLUME
 
+dontdofade71:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_71_ROLLING_TIMER_LOW
 	subwf SENSOR_71_PWM_VOLUME, w
@@ -4361,9 +4930,13 @@ retnow71:
 	addwf SENSOR_72_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade72	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_72_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately72
 
+dofade72:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_72_ROLLING_TIMER_HIGH, f
 	goto dontdofade72
@@ -4386,8 +4959,12 @@ retnow71:
 	goto dontdofade72
 fadedown72:
 	decf SENSOR_72_PWM_VOLUME, f		; fade down!
-dontdofade72:
+	goto dontdofade72
+updateImmediately72:
+	movfw SENSOR_72_PWM_TARGET
+	movwf SENSOR_72_PWM_VOLUME
 
+dontdofade72:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_72_ROLLING_TIMER_LOW
 	subwf SENSOR_72_PWM_VOLUME, w
@@ -4422,9 +4999,13 @@ retnow72:
 	addwf SENSOR_73_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade73	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_73_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately73
 
+dofade73:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_73_ROLLING_TIMER_HIGH, f
 	goto dontdofade73
@@ -4447,8 +5028,12 @@ retnow72:
 	goto dontdofade73
 fadedown73:
 	decf SENSOR_73_PWM_VOLUME, f		; fade down!
-dontdofade73:
+	goto dontdofade73
+updateImmediately73:
+	movfw SENSOR_73_PWM_TARGET
+	movwf SENSOR_73_PWM_VOLUME
 
+dontdofade73:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_73_ROLLING_TIMER_LOW
 	subwf SENSOR_73_PWM_VOLUME, w
@@ -4483,9 +5068,13 @@ retnow73:
 	addwf SENSOR_74_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade74	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_74_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately74
 
+dofade74:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_74_ROLLING_TIMER_HIGH, f
 	goto dontdofade74
@@ -4508,8 +5097,12 @@ retnow73:
 	goto dontdofade74
 fadedown74:
 	decf SENSOR_74_PWM_VOLUME, f		; fade down!
-dontdofade74:
+	goto dontdofade74
+updateImmediately74:
+	movfw SENSOR_74_PWM_TARGET
+	movwf SENSOR_74_PWM_VOLUME
 
+dontdofade74:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_74_ROLLING_TIMER_LOW
 	subwf SENSOR_74_PWM_VOLUME, w
@@ -4544,9 +5137,13 @@ retnow74:
 	addwf SENSOR_75_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade75	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_75_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately75
 
+dofade75:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_75_ROLLING_TIMER_HIGH, f
 	goto dontdofade75
@@ -4569,8 +5166,12 @@ retnow74:
 	goto dontdofade75
 fadedown75:
 	decf SENSOR_75_PWM_VOLUME, f		; fade down!
-dontdofade75:
+	goto dontdofade75
+updateImmediately75:
+	movfw SENSOR_75_PWM_TARGET
+	movwf SENSOR_75_PWM_VOLUME
 
+dontdofade75:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_75_ROLLING_TIMER_LOW
 	subwf SENSOR_75_PWM_VOLUME, w
@@ -4605,9 +5206,13 @@ retnow75:
 	addwf SENSOR_76_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade76	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_76_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately76
 
+dofade76:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_76_ROLLING_TIMER_HIGH, f
 	goto dontdofade76
@@ -4630,8 +5235,12 @@ retnow75:
 	goto dontdofade76
 fadedown76:
 	decf SENSOR_76_PWM_VOLUME, f		; fade down!
-dontdofade76:
+	goto dontdofade76
+updateImmediately76:
+	movfw SENSOR_76_PWM_TARGET
+	movwf SENSOR_76_PWM_VOLUME
 
+dontdofade76:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_76_ROLLING_TIMER_LOW
 	subwf SENSOR_76_PWM_VOLUME, w
@@ -4666,9 +5275,13 @@ retnow76:
 	addwf SENSOR_77_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade77	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_77_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately77
 
+dofade77:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_77_ROLLING_TIMER_HIGH, f
 	goto dontdofade77
@@ -4691,8 +5304,12 @@ retnow76:
 	goto dontdofade77
 fadedown77:
 	decf SENSOR_77_PWM_VOLUME, f		; fade down!
-dontdofade77:
+	goto dontdofade77
+updateImmediately77:
+	movfw SENSOR_77_PWM_TARGET
+	movwf SENSOR_77_PWM_VOLUME
 
+dontdofade77:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_77_ROLLING_TIMER_LOW
 	subwf SENSOR_77_PWM_VOLUME, w
@@ -4727,9 +5344,13 @@ retnow77:
 	addwf SENSOR_78_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade78	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_78_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately78
 
+dofade78:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_78_ROLLING_TIMER_HIGH, f
 	goto dontdofade78
@@ -4752,8 +5373,12 @@ retnow77:
 	goto dontdofade78
 fadedown78:
 	decf SENSOR_78_PWM_VOLUME, f		; fade down!
-dontdofade78:
+	goto dontdofade78
+updateImmediately78:
+	movfw SENSOR_78_PWM_TARGET
+	movwf SENSOR_78_PWM_VOLUME
 
+dontdofade78:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_78_ROLLING_TIMER_LOW
 	subwf SENSOR_78_PWM_VOLUME, w
@@ -4788,9 +5413,13 @@ retnow78:
 	addwf SENSOR_79_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade79	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_79_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately79
 
+dofade79:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_79_ROLLING_TIMER_HIGH, f
 	goto dontdofade79
@@ -4813,8 +5442,12 @@ retnow78:
 	goto dontdofade79
 fadedown79:
 	decf SENSOR_79_PWM_VOLUME, f		; fade down!
-dontdofade79:
+	goto dontdofade79
+updateImmediately79:
+	movfw SENSOR_79_PWM_TARGET
+	movwf SENSOR_79_PWM_VOLUME
 
+dontdofade79:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_79_ROLLING_TIMER_LOW
 	subwf SENSOR_79_PWM_VOLUME, w
@@ -4849,9 +5482,13 @@ retnow79:
 	addwf SENSOR_80_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade80	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_80_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately80
 
+dofade80:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_80_ROLLING_TIMER_HIGH, f
 	goto dontdofade80
@@ -4874,8 +5511,12 @@ retnow79:
 	goto dontdofade80
 fadedown80:
 	decf SENSOR_80_PWM_VOLUME, f		; fade down!
-dontdofade80:
+	goto dontdofade80
+updateImmediately80:
+	movfw SENSOR_80_PWM_TARGET
+	movwf SENSOR_80_PWM_VOLUME
 
+dontdofade80:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_80_ROLLING_TIMER_LOW
 	subwf SENSOR_80_PWM_VOLUME, w
@@ -4910,9 +5551,13 @@ retnow80:
 	addwf SENSOR_81_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade81	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_81_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately81
 
+dofade81:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_81_ROLLING_TIMER_HIGH, f
 	goto dontdofade81
@@ -4935,8 +5580,12 @@ retnow80:
 	goto dontdofade81
 fadedown81:
 	decf SENSOR_81_PWM_VOLUME, f		; fade down!
-dontdofade81:
+	goto dontdofade81
+updateImmediately81:
+	movfw SENSOR_81_PWM_TARGET
+	movwf SENSOR_81_PWM_VOLUME
 
+dontdofade81:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_81_ROLLING_TIMER_LOW
 	subwf SENSOR_81_PWM_VOLUME, w
@@ -4971,9 +5620,13 @@ retnow81:
 	addwf SENSOR_82_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade82	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_82_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately82
 
+dofade82:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_82_ROLLING_TIMER_HIGH, f
 	goto dontdofade82
@@ -4996,8 +5649,12 @@ retnow81:
 	goto dontdofade82
 fadedown82:
 	decf SENSOR_82_PWM_VOLUME, f		; fade down!
-dontdofade82:
+	goto dontdofade82
+updateImmediately82:
+	movfw SENSOR_82_PWM_TARGET
+	movwf SENSOR_82_PWM_VOLUME
 
+dontdofade82:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_82_ROLLING_TIMER_LOW
 	subwf SENSOR_82_PWM_VOLUME, w
@@ -5032,9 +5689,13 @@ retnow82:
 	addwf SENSOR_83_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade83	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_83_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately83
 
+dofade83:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_83_ROLLING_TIMER_HIGH, f
 	goto dontdofade83
@@ -5057,8 +5718,12 @@ retnow82:
 	goto dontdofade83
 fadedown83:
 	decf SENSOR_83_PWM_VOLUME, f		; fade down!
-dontdofade83:
+	goto dontdofade83
+updateImmediately83:
+	movfw SENSOR_83_PWM_TARGET
+	movwf SENSOR_83_PWM_VOLUME
 
+dontdofade83:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_83_ROLLING_TIMER_LOW
 	subwf SENSOR_83_PWM_VOLUME, w
@@ -5093,9 +5758,13 @@ retnow83:
 	addwf SENSOR_84_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade84	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_84_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately84
 
+dofade84:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_84_ROLLING_TIMER_HIGH, f
 	goto dontdofade84
@@ -5118,8 +5787,12 @@ retnow83:
 	goto dontdofade84
 fadedown84:
 	decf SENSOR_84_PWM_VOLUME, f		; fade down!
-dontdofade84:
+	goto dontdofade84
+updateImmediately84:
+	movfw SENSOR_84_PWM_TARGET
+	movwf SENSOR_84_PWM_VOLUME
 
+dontdofade84:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_84_ROLLING_TIMER_LOW
 	subwf SENSOR_84_PWM_VOLUME, w
@@ -5154,9 +5827,13 @@ retnow84:
 	addwf SENSOR_85_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade85	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_85_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately85
 
+dofade85:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_85_ROLLING_TIMER_HIGH, f
 	goto dontdofade85
@@ -5179,8 +5856,12 @@ retnow84:
 	goto dontdofade85
 fadedown85:
 	decf SENSOR_85_PWM_VOLUME, f		; fade down!
-dontdofade85:
+	goto dontdofade85
+updateImmediately85:
+	movfw SENSOR_85_PWM_TARGET
+	movwf SENSOR_85_PWM_VOLUME
 
+dontdofade85:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_85_ROLLING_TIMER_LOW
 	subwf SENSOR_85_PWM_VOLUME, w
@@ -5215,9 +5896,13 @@ retnow85:
 	addwf SENSOR_86_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade86	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_86_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately86
 
+dofade86:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_86_ROLLING_TIMER_HIGH, f
 	goto dontdofade86
@@ -5240,8 +5925,12 @@ retnow85:
 	goto dontdofade86
 fadedown86:
 	decf SENSOR_86_PWM_VOLUME, f		; fade down!
-dontdofade86:
+	goto dontdofade86
+updateImmediately86:
+	movfw SENSOR_86_PWM_TARGET
+	movwf SENSOR_86_PWM_VOLUME
 
+dontdofade86:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_86_ROLLING_TIMER_LOW
 	subwf SENSOR_86_PWM_VOLUME, w
@@ -5276,9 +5965,13 @@ retnow86:
 	addwf SENSOR_87_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade87	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_87_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately87
 
+dofade87:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_87_ROLLING_TIMER_HIGH, f
 	goto dontdofade87
@@ -5301,8 +5994,12 @@ retnow86:
 	goto dontdofade87
 fadedown87:
 	decf SENSOR_87_PWM_VOLUME, f		; fade down!
-dontdofade87:
+	goto dontdofade87
+updateImmediately87:
+	movfw SENSOR_87_PWM_TARGET
+	movwf SENSOR_87_PWM_VOLUME
 
+dontdofade87:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_87_ROLLING_TIMER_LOW
 	subwf SENSOR_87_PWM_VOLUME, w
@@ -5337,9 +6034,13 @@ retnow87:
 	addwf SENSOR_88_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade88	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_88_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately88
 
+dofade88:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_88_ROLLING_TIMER_HIGH, f
 	goto dontdofade88
@@ -5362,8 +6063,12 @@ retnow87:
 	goto dontdofade88
 fadedown88:
 	decf SENSOR_88_PWM_VOLUME, f		; fade down!
-dontdofade88:
+	goto dontdofade88
+updateImmediately88:
+	movfw SENSOR_88_PWM_TARGET
+	movwf SENSOR_88_PWM_VOLUME
 
+dontdofade88:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_88_ROLLING_TIMER_LOW
 	subwf SENSOR_88_PWM_VOLUME, w
@@ -5398,9 +6103,13 @@ retnow88:
 	addwf SENSOR_89_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade89	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_89_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately89
 
+dofade89:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_89_ROLLING_TIMER_HIGH, f
 	goto dontdofade89
@@ -5423,8 +6132,12 @@ retnow88:
 	goto dontdofade89
 fadedown89:
 	decf SENSOR_89_PWM_VOLUME, f		; fade down!
-dontdofade89:
+	goto dontdofade89
+updateImmediately89:
+	movfw SENSOR_89_PWM_TARGET
+	movwf SENSOR_89_PWM_VOLUME
 
+dontdofade89:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_89_ROLLING_TIMER_LOW
 	subwf SENSOR_89_PWM_VOLUME, w
@@ -5459,9 +6172,13 @@ retnow89:
 	addwf SENSOR_90_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade90	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_90_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately90
 
+dofade90:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_90_ROLLING_TIMER_HIGH, f
 	goto dontdofade90
@@ -5484,8 +6201,12 @@ retnow89:
 	goto dontdofade90
 fadedown90:
 	decf SENSOR_90_PWM_VOLUME, f		; fade down!
-dontdofade90:
+	goto dontdofade90
+updateImmediately90:
+	movfw SENSOR_90_PWM_TARGET
+	movwf SENSOR_90_PWM_VOLUME
 
+dontdofade90:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_90_ROLLING_TIMER_LOW
 	subwf SENSOR_90_PWM_VOLUME, w
@@ -5520,9 +6241,13 @@ retnow90:
 	addwf SENSOR_91_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade91	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_91_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately91
 
+dofade91:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_91_ROLLING_TIMER_HIGH, f
 	goto dontdofade91
@@ -5545,8 +6270,12 @@ retnow90:
 	goto dontdofade91
 fadedown91:
 	decf SENSOR_91_PWM_VOLUME, f		; fade down!
-dontdofade91:
+	goto dontdofade91
+updateImmediately91:
+	movfw SENSOR_91_PWM_TARGET
+	movwf SENSOR_91_PWM_VOLUME
 
+dontdofade91:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_91_ROLLING_TIMER_LOW
 	subwf SENSOR_91_PWM_VOLUME, w
@@ -5581,9 +6310,13 @@ retnow91:
 	addwf SENSOR_92_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade92	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_92_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately92
 
+dofade92:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_92_ROLLING_TIMER_HIGH, f
 	goto dontdofade92
@@ -5606,8 +6339,12 @@ retnow91:
 	goto dontdofade92
 fadedown92:
 	decf SENSOR_92_PWM_VOLUME, f		; fade down!
-dontdofade92:
+	goto dontdofade92
+updateImmediately92:
+	movfw SENSOR_92_PWM_TARGET
+	movwf SENSOR_92_PWM_VOLUME
 
+dontdofade92:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_92_ROLLING_TIMER_LOW
 	subwf SENSOR_92_PWM_VOLUME, w
@@ -5642,9 +6379,13 @@ retnow92:
 	addwf SENSOR_93_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade93	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_93_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately93
 
+dofade93:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_93_ROLLING_TIMER_HIGH, f
 	goto dontdofade93
@@ -5667,8 +6408,12 @@ retnow92:
 	goto dontdofade93
 fadedown93:
 	decf SENSOR_93_PWM_VOLUME, f		; fade down!
-dontdofade93:
+	goto dontdofade93
+updateImmediately93:
+	movfw SENSOR_93_PWM_TARGET
+	movwf SENSOR_93_PWM_VOLUME
 
+dontdofade93:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_93_ROLLING_TIMER_LOW
 	subwf SENSOR_93_PWM_VOLUME, w
@@ -5703,9 +6448,13 @@ retnow93:
 	addwf SENSOR_94_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade94	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_94_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately94
 
+dofade94:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_94_ROLLING_TIMER_HIGH, f
 	goto dontdofade94
@@ -5728,8 +6477,12 @@ retnow93:
 	goto dontdofade94
 fadedown94:
 	decf SENSOR_94_PWM_VOLUME, f		; fade down!
-dontdofade94:
+	goto dontdofade94
+updateImmediately94:
+	movfw SENSOR_94_PWM_TARGET
+	movwf SENSOR_94_PWM_VOLUME
 
+dontdofade94:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_94_ROLLING_TIMER_LOW
 	subwf SENSOR_94_PWM_VOLUME, w
@@ -5764,9 +6517,13 @@ retnow94:
 	addwf SENSOR_95_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade95	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_95_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately95
 
+dofade95:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_95_ROLLING_TIMER_HIGH, f
 	goto dontdofade95
@@ -5789,8 +6546,12 @@ retnow94:
 	goto dontdofade95
 fadedown95:
 	decf SENSOR_95_PWM_VOLUME, f		; fade down!
-dontdofade95:
+	goto dontdofade95
+updateImmediately95:
+	movfw SENSOR_95_PWM_TARGET
+	movwf SENSOR_95_PWM_VOLUME
 
+dontdofade95:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_95_ROLLING_TIMER_LOW
 	subwf SENSOR_95_PWM_VOLUME, w
@@ -5825,9 +6586,13 @@ retnow95:
 	addwf SENSOR_96_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade96	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_96_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately96
 
+dofade96:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_96_ROLLING_TIMER_HIGH, f
 	goto dontdofade96
@@ -5850,8 +6615,12 @@ retnow95:
 	goto dontdofade96
 fadedown96:
 	decf SENSOR_96_PWM_VOLUME, f		; fade down!
-dontdofade96:
+	goto dontdofade96
+updateImmediately96:
+	movfw SENSOR_96_PWM_TARGET
+	movwf SENSOR_96_PWM_VOLUME
 
+dontdofade96:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_96_ROLLING_TIMER_LOW
 	subwf SENSOR_96_PWM_VOLUME, w
@@ -5886,9 +6655,13 @@ retnow96:
 	addwf SENSOR_97_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade97	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_97_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately97
 
+dofade97:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_97_ROLLING_TIMER_HIGH, f
 	goto dontdofade97
@@ -5911,8 +6684,12 @@ retnow96:
 	goto dontdofade97
 fadedown97:
 	decf SENSOR_97_PWM_VOLUME, f		; fade down!
-dontdofade97:
+	goto dontdofade97
+updateImmediately97:
+	movfw SENSOR_97_PWM_TARGET
+	movwf SENSOR_97_PWM_VOLUME
 
+dontdofade97:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_97_ROLLING_TIMER_LOW
 	subwf SENSOR_97_PWM_VOLUME, w
@@ -5947,9 +6724,13 @@ retnow97:
 	addwf SENSOR_98_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade98	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_98_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately98
 
+dofade98:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_98_ROLLING_TIMER_HIGH, f
 	goto dontdofade98
@@ -5972,8 +6753,12 @@ retnow97:
 	goto dontdofade98
 fadedown98:
 	decf SENSOR_98_PWM_VOLUME, f		; fade down!
-dontdofade98:
+	goto dontdofade98
+updateImmediately98:
+	movfw SENSOR_98_PWM_TARGET
+	movwf SENSOR_98_PWM_VOLUME
 
+dontdofade98:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_98_ROLLING_TIMER_LOW
 	subwf SENSOR_98_PWM_VOLUME, w
@@ -6008,9 +6793,13 @@ retnow98:
 	addwf SENSOR_99_ROLLING_TIMER_LOW, f
 	btfss STATUS, C
 	goto dontdofade99	; Only proceed in fading the LED towards
-												; TARGET if this is at 0 (see, we use it
-												; as a delay timer as well as for PWM).
+												; TARGET if this is at 0, to give some delay.
+												; Alternatively, if PWM_SPEED is zero, just go there immediately.
+	movf SENSOR_99_PWM_SPEED, f
+	btfsc STATUS, Z
+	goto updateImmediately99
 
+dofade99:
 	; update our rolling timer. is it time to fade slightly?
 	decfsz SENSOR_99_ROLLING_TIMER_HIGH, f
 	goto dontdofade99
@@ -6033,8 +6822,12 @@ retnow98:
 	goto dontdofade99
 fadedown99:
 	decf SENSOR_99_PWM_VOLUME, f		; fade down!
-dontdofade99:
+	goto dontdofade99
+updateImmediately99:
+	movfw SENSOR_99_PWM_TARGET
+	movwf SENSOR_99_PWM_VOLUME
 
+dontdofade99:
 	; perform PWM according to the value of TIMER_LOW.
 	movfw SENSOR_99_ROLLING_TIMER_LOW
 	subwf SENSOR_99_PWM_VOLUME, w
@@ -6059,6 +6852,6 @@ retnow99:
 
 	bcf STATUS, RP0 ; bank 0
 
-	return
+	goto endpwmsensors
 
 	end

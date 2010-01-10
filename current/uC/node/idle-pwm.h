@@ -1,1 +1,2 @@
 	EXTERN dopwmsensors
+	EXTERN dotriacsensors

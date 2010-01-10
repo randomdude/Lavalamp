@@ -53,38 +53,21 @@ waitfordata
 	call waitforpacket
 #ifdef lol
 	bsf state, STATUS_BIT_CRYPTOSTATE
-	movlw 0xd6
+	movlw 0x01
 	movwf packet0
-	movlw 0x82
+	movlw 0x01
 	movwf packet1
-	movlw 0xac
+	movlw 0x01
 	movwf packet2
-	movlw 0x62
+	movlw 0x01
 	movwf packet3
-	movlw 0xa4
+	movlw 0x01
 	movwf packet4
-	movlw 0xa4
+	movlw 0x01
 	movwf packet5
-	movlw 0xb3
+	movlw 0x01
 	movwf packet6
-	movlw 0xeb
-	movwf packet7
-
-	movlw 0xd3
-	movwf packet0
-	movlw 0xe0
-	movwf packet1
-	movlw 0xa3
-	movwf packet2
-	movlw 0xf9
-	movwf packet3
-	movlw 0x5d
-	movwf packet4
-	movlw 0x58
-	movwf packet5
-	movlw 0x9a
-	movwf packet6
-	movlw 0x87
+	movlw 0x01
 	movwf packet7
 #endif
 	; decrypt packet

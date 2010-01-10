@@ -10,7 +10,8 @@ namespace netbridge
 		unknown = 0x00,
 		generic_digital_in = 0x01,
 		generic_digital_out = 0x02,
-		pwm_out = 0x03
+		pwm_out = 0x03,
+		triac_out = 0x04
 	};
 
 	public ref class sensorType
@@ -295,6 +296,7 @@ namespace netbridge
 					toReturn->id = (short)sensorTypeResponse->type;
 					toReturn->FriendlyType = gcnew System::String(sensorTypeResponse->FriendlyType );
 					// Todo: move this switch to somewhere in the driver
+					// TODO: Remove this switch entirely! It's just another hurdle for people that add sensors.
 					switch (sensorTypeResponse->type)
 					{
 					case 0x01:
@@ -305,6 +307,9 @@ namespace netbridge
 						break;
 					case 0x03:
 						toReturn->enumeratedType = sensorTypeEnum::pwm_out;
+						break;
+					case 0x04:
+						toReturn->enumeratedType = sensorTypeEnum::triac_out;
 						break;
 					default:
 						toReturn->enumeratedType = sensorTypeEnum::unknown;

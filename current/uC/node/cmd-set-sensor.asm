@@ -661,9 +661,23 @@ cmd_set_1_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_1_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_1_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -688,9 +702,23 @@ cmd_set_2_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_2_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_2_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -715,9 +743,23 @@ cmd_set_3_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_3_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_3_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -742,9 +784,23 @@ cmd_set_4_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_4_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_4_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -769,9 +825,23 @@ cmd_set_5_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_5_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_5_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -796,9 +866,23 @@ cmd_set_6_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_6_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_6_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -823,9 +907,23 @@ cmd_set_7_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_7_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_7_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -850,9 +948,23 @@ cmd_set_8_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_8_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_8_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -877,9 +989,23 @@ cmd_set_9_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_9_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_9_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -904,9 +1030,23 @@ cmd_set_10_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_10_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_10_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -931,9 +1071,23 @@ cmd_set_11_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_11_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_11_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -958,9 +1112,23 @@ cmd_set_12_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_12_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_12_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -985,9 +1153,23 @@ cmd_set_13_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_13_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_13_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1012,9 +1194,23 @@ cmd_set_14_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_14_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_14_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1039,9 +1235,23 @@ cmd_set_15_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_15_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_15_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1066,9 +1276,23 @@ cmd_set_16_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_16_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_16_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1093,9 +1317,23 @@ cmd_set_17_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_17_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_17_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1120,9 +1358,23 @@ cmd_set_18_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_18_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_18_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1147,9 +1399,23 @@ cmd_set_19_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_19_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_19_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1174,9 +1440,23 @@ cmd_set_20_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_20_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_20_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1201,9 +1481,23 @@ cmd_set_21_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_21_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_21_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1228,9 +1522,23 @@ cmd_set_22_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_22_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_22_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1255,9 +1563,23 @@ cmd_set_23_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_23_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_23_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1282,9 +1604,23 @@ cmd_set_24_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_24_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_24_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1309,9 +1645,23 @@ cmd_set_25_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_25_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_25_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1336,9 +1686,23 @@ cmd_set_26_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_26_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_26_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1363,9 +1727,23 @@ cmd_set_27_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_27_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_27_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1390,9 +1768,23 @@ cmd_set_28_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_28_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_28_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1417,9 +1809,23 @@ cmd_set_29_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_29_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_29_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1444,9 +1850,23 @@ cmd_set_30_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_30_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_30_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1471,9 +1891,23 @@ cmd_set_31_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_31_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_31_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1498,9 +1932,23 @@ cmd_set_32_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_32_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_32_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1525,9 +1973,23 @@ cmd_set_33_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_33_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_33_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1552,9 +2014,23 @@ cmd_set_34_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_34_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_34_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1579,9 +2055,23 @@ cmd_set_35_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_35_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_35_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1606,9 +2096,23 @@ cmd_set_36_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_36_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_36_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1633,9 +2137,23 @@ cmd_set_37_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_37_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_37_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1660,9 +2178,23 @@ cmd_set_38_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_38_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_38_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1687,9 +2219,23 @@ cmd_set_39_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_39_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_39_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1714,9 +2260,23 @@ cmd_set_40_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_40_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_40_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1741,9 +2301,23 @@ cmd_set_41_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_41_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_41_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1768,9 +2342,23 @@ cmd_set_42_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_42_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_42_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1795,9 +2383,23 @@ cmd_set_43_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_43_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_43_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1822,9 +2424,23 @@ cmd_set_44_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_44_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_44_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1849,9 +2465,23 @@ cmd_set_45_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_45_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_45_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1876,9 +2506,23 @@ cmd_set_46_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_46_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_46_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1903,9 +2547,23 @@ cmd_set_47_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_47_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_47_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1930,9 +2588,23 @@ cmd_set_48_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_48_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_48_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1957,9 +2629,23 @@ cmd_set_49_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_49_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_49_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -1984,9 +2670,23 @@ cmd_set_50_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_50_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_50_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2011,9 +2711,23 @@ cmd_set_51_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_51_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_51_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2038,9 +2752,23 @@ cmd_set_52_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_52_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_52_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2065,9 +2793,23 @@ cmd_set_53_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_53_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_53_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2092,9 +2834,23 @@ cmd_set_54_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_54_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_54_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2119,9 +2875,23 @@ cmd_set_55_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_55_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_55_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2146,9 +2916,23 @@ cmd_set_56_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_56_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_56_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2173,9 +2957,23 @@ cmd_set_57_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_57_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_57_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2200,9 +2998,23 @@ cmd_set_58_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_58_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_58_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2227,9 +3039,23 @@ cmd_set_59_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_59_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_59_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2254,9 +3080,23 @@ cmd_set_60_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_60_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_60_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2281,9 +3121,23 @@ cmd_set_61_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_61_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_61_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2308,9 +3162,23 @@ cmd_set_62_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_62_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_62_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2335,9 +3203,23 @@ cmd_set_63_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_63_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_63_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2362,9 +3244,23 @@ cmd_set_64_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_64_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_64_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2389,9 +3285,23 @@ cmd_set_65_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_65_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_65_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2416,9 +3326,23 @@ cmd_set_66_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_66_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_66_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2443,9 +3367,23 @@ cmd_set_67_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_67_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_67_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2470,9 +3408,23 @@ cmd_set_68_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_68_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_68_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2497,9 +3449,23 @@ cmd_set_69_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_69_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_69_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2524,9 +3490,23 @@ cmd_set_70_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_70_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_70_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2551,9 +3531,23 @@ cmd_set_71_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_71_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_71_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2578,9 +3572,23 @@ cmd_set_72_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_72_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_72_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2605,9 +3613,23 @@ cmd_set_73_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_73_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_73_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2632,9 +3654,23 @@ cmd_set_74_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_74_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_74_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2659,9 +3695,23 @@ cmd_set_75_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_75_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_75_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2686,9 +3736,23 @@ cmd_set_76_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_76_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_76_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2713,9 +3777,23 @@ cmd_set_77_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_77_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_77_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2740,9 +3818,23 @@ cmd_set_78_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_78_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_78_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2767,9 +3859,23 @@ cmd_set_79_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_79_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_79_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2794,9 +3900,23 @@ cmd_set_80_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_80_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_80_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2821,9 +3941,23 @@ cmd_set_81_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_81_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_81_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2848,9 +3982,23 @@ cmd_set_82_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_82_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_82_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2875,9 +4023,23 @@ cmd_set_83_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_83_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_83_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2902,9 +4064,23 @@ cmd_set_84_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_84_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_84_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2929,9 +4105,23 @@ cmd_set_85_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_85_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_85_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2956,9 +4146,23 @@ cmd_set_86_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_86_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_86_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -2983,9 +4187,23 @@ cmd_set_87_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_87_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_87_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -3010,9 +4228,23 @@ cmd_set_88_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_88_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_88_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -3037,9 +4269,23 @@ cmd_set_89_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_89_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_89_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -3064,9 +4310,23 @@ cmd_set_90_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_90_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_90_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -3091,9 +4351,23 @@ cmd_set_91_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_91_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_91_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -3118,9 +4392,23 @@ cmd_set_92_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_92_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_92_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -3145,9 +4433,23 @@ cmd_set_93_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_93_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_93_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -3172,9 +4474,23 @@ cmd_set_94_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_94_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_94_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -3199,9 +4515,23 @@ cmd_set_95_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_95_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_95_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -3226,9 +4556,23 @@ cmd_set_96_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_96_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_96_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -3253,9 +4597,23 @@ cmd_set_97_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_97_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_97_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -3280,9 +4638,23 @@ cmd_set_98_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_98_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_98_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
@@ -3307,9 +4679,23 @@ cmd_set_99_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_99_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_99_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif

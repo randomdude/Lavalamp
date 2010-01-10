@@ -23,10 +23,10 @@
 ; Manchester-encoded values are marked by the start sequence of
 ; 0110, or '10' non-Manchestered.
 
-	; these twodefines will throw out some debug info
-	#define debugging 
-	#define debugoutput PORTB,0
-	#define debugtris TRISB,0
+	; these defines will throw out some debug info
+	#undefine debugging 
+	#undefine debugoutput PORTB,0
+	#undefine debugtris TRISB,0
 
 
 initswuart:

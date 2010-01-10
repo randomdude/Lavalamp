@@ -39,7 +39,16 @@ autogen_sensors_init:
 		movwf SENSOR_1_PWM_SPEED
 
 		clrf SENSOR_1_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_1_TYPE)
+		bcf SENSOR_1_TRIS, SENSOR_1_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_1_ZC_PORT, SENSOR_1_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_1_PWM_VOLUME
+		clrf SENSOR_1_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_2
@@ -62,7 +71,16 @@ autogen_sensors_init:
 		movwf SENSOR_2_PWM_SPEED
 
 		clrf SENSOR_2_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_2_TYPE)
+		bcf SENSOR_2_TRIS, SENSOR_2_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_2_ZC_PORT, SENSOR_2_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_2_PWM_VOLUME
+		clrf SENSOR_2_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_3
@@ -85,7 +103,16 @@ autogen_sensors_init:
 		movwf SENSOR_3_PWM_SPEED
 
 		clrf SENSOR_3_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_3_TYPE)
+		bcf SENSOR_3_TRIS, SENSOR_3_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_3_ZC_PORT, SENSOR_3_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_3_PWM_VOLUME
+		clrf SENSOR_3_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_4
@@ -108,7 +135,16 @@ autogen_sensors_init:
 		movwf SENSOR_4_PWM_SPEED
 
 		clrf SENSOR_4_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_4_TYPE)
+		bcf SENSOR_4_TRIS, SENSOR_4_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_4_ZC_PORT, SENSOR_4_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_4_PWM_VOLUME
+		clrf SENSOR_4_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_5
@@ -131,7 +167,16 @@ autogen_sensors_init:
 		movwf SENSOR_5_PWM_SPEED
 
 		clrf SENSOR_5_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_5_TYPE)
+		bcf SENSOR_5_TRIS, SENSOR_5_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_5_ZC_PORT, SENSOR_5_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_5_PWM_VOLUME
+		clrf SENSOR_5_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_6
@@ -154,7 +199,16 @@ autogen_sensors_init:
 		movwf SENSOR_6_PWM_SPEED
 
 		clrf SENSOR_6_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_6_TYPE)
+		bcf SENSOR_6_TRIS, SENSOR_6_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_6_ZC_PORT, SENSOR_6_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_6_PWM_VOLUME
+		clrf SENSOR_6_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_7
@@ -177,7 +231,16 @@ autogen_sensors_init:
 		movwf SENSOR_7_PWM_SPEED
 
 		clrf SENSOR_7_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_7_TYPE)
+		bcf SENSOR_7_TRIS, SENSOR_7_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_7_ZC_PORT, SENSOR_7_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_7_PWM_VOLUME
+		clrf SENSOR_7_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_8
@@ -200,7 +263,16 @@ autogen_sensors_init:
 		movwf SENSOR_8_PWM_SPEED
 
 		clrf SENSOR_8_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_8_TYPE)
+		bcf SENSOR_8_TRIS, SENSOR_8_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_8_ZC_PORT, SENSOR_8_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_8_PWM_VOLUME
+		clrf SENSOR_8_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_9
@@ -223,7 +295,16 @@ autogen_sensors_init:
 		movwf SENSOR_9_PWM_SPEED
 
 		clrf SENSOR_9_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_9_TYPE)
+		bcf SENSOR_9_TRIS, SENSOR_9_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_9_ZC_PORT, SENSOR_9_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_9_PWM_VOLUME
+		clrf SENSOR_9_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_10
@@ -246,7 +327,16 @@ autogen_sensors_init:
 		movwf SENSOR_10_PWM_SPEED
 
 		clrf SENSOR_10_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_10_TYPE)
+		bcf SENSOR_10_TRIS, SENSOR_10_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_10_ZC_PORT, SENSOR_10_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_10_PWM_VOLUME
+		clrf SENSOR_10_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_11
@@ -269,7 +359,16 @@ autogen_sensors_init:
 		movwf SENSOR_11_PWM_SPEED
 
 		clrf SENSOR_11_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_11_TYPE)
+		bcf SENSOR_11_TRIS, SENSOR_11_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_11_ZC_PORT, SENSOR_11_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_11_PWM_VOLUME
+		clrf SENSOR_11_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_12
@@ -292,7 +391,16 @@ autogen_sensors_init:
 		movwf SENSOR_12_PWM_SPEED
 
 		clrf SENSOR_12_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_12_TYPE)
+		bcf SENSOR_12_TRIS, SENSOR_12_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_12_ZC_PORT, SENSOR_12_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_12_PWM_VOLUME
+		clrf SENSOR_12_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_13
@@ -315,7 +423,16 @@ autogen_sensors_init:
 		movwf SENSOR_13_PWM_SPEED
 
 		clrf SENSOR_13_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_13_TYPE)
+		bcf SENSOR_13_TRIS, SENSOR_13_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_13_ZC_PORT, SENSOR_13_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_13_PWM_VOLUME
+		clrf SENSOR_13_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_14
@@ -338,7 +455,16 @@ autogen_sensors_init:
 		movwf SENSOR_14_PWM_SPEED
 
 		clrf SENSOR_14_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_14_TYPE)
+		bcf SENSOR_14_TRIS, SENSOR_14_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_14_ZC_PORT, SENSOR_14_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_14_PWM_VOLUME
+		clrf SENSOR_14_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_15
@@ -361,7 +487,16 @@ autogen_sensors_init:
 		movwf SENSOR_15_PWM_SPEED
 
 		clrf SENSOR_15_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_15_TYPE)
+		bcf SENSOR_15_TRIS, SENSOR_15_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_15_ZC_PORT, SENSOR_15_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_15_PWM_VOLUME
+		clrf SENSOR_15_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_16
@@ -384,7 +519,16 @@ autogen_sensors_init:
 		movwf SENSOR_16_PWM_SPEED
 
 		clrf SENSOR_16_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_16_TYPE)
+		bcf SENSOR_16_TRIS, SENSOR_16_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_16_ZC_PORT, SENSOR_16_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_16_PWM_VOLUME
+		clrf SENSOR_16_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_17
@@ -407,7 +551,16 @@ autogen_sensors_init:
 		movwf SENSOR_17_PWM_SPEED
 
 		clrf SENSOR_17_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_17_TYPE)
+		bcf SENSOR_17_TRIS, SENSOR_17_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_17_ZC_PORT, SENSOR_17_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_17_PWM_VOLUME
+		clrf SENSOR_17_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_18
@@ -430,7 +583,16 @@ autogen_sensors_init:
 		movwf SENSOR_18_PWM_SPEED
 
 		clrf SENSOR_18_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_18_TYPE)
+		bcf SENSOR_18_TRIS, SENSOR_18_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_18_ZC_PORT, SENSOR_18_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_18_PWM_VOLUME
+		clrf SENSOR_18_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_19
@@ -453,7 +615,16 @@ autogen_sensors_init:
 		movwf SENSOR_19_PWM_SPEED
 
 		clrf SENSOR_19_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_19_TYPE)
+		bcf SENSOR_19_TRIS, SENSOR_19_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_19_ZC_PORT, SENSOR_19_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_19_PWM_VOLUME
+		clrf SENSOR_19_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_20
@@ -476,7 +647,16 @@ autogen_sensors_init:
 		movwf SENSOR_20_PWM_SPEED
 
 		clrf SENSOR_20_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_20_TYPE)
+		bcf SENSOR_20_TRIS, SENSOR_20_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_20_ZC_PORT, SENSOR_20_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_20_PWM_VOLUME
+		clrf SENSOR_20_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_21
@@ -499,7 +679,16 @@ autogen_sensors_init:
 		movwf SENSOR_21_PWM_SPEED
 
 		clrf SENSOR_21_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_21_TYPE)
+		bcf SENSOR_21_TRIS, SENSOR_21_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_21_ZC_PORT, SENSOR_21_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_21_PWM_VOLUME
+		clrf SENSOR_21_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_22
@@ -522,7 +711,16 @@ autogen_sensors_init:
 		movwf SENSOR_22_PWM_SPEED
 
 		clrf SENSOR_22_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_22_TYPE)
+		bcf SENSOR_22_TRIS, SENSOR_22_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_22_ZC_PORT, SENSOR_22_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_22_PWM_VOLUME
+		clrf SENSOR_22_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_23
@@ -545,7 +743,16 @@ autogen_sensors_init:
 		movwf SENSOR_23_PWM_SPEED
 
 		clrf SENSOR_23_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_23_TYPE)
+		bcf SENSOR_23_TRIS, SENSOR_23_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_23_ZC_PORT, SENSOR_23_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_23_PWM_VOLUME
+		clrf SENSOR_23_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_24
@@ -568,7 +775,16 @@ autogen_sensors_init:
 		movwf SENSOR_24_PWM_SPEED
 
 		clrf SENSOR_24_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_24_TYPE)
+		bcf SENSOR_24_TRIS, SENSOR_24_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_24_ZC_PORT, SENSOR_24_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_24_PWM_VOLUME
+		clrf SENSOR_24_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_25
@@ -591,7 +807,16 @@ autogen_sensors_init:
 		movwf SENSOR_25_PWM_SPEED
 
 		clrf SENSOR_25_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_25_TYPE)
+		bcf SENSOR_25_TRIS, SENSOR_25_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_25_ZC_PORT, SENSOR_25_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_25_PWM_VOLUME
+		clrf SENSOR_25_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_26
@@ -614,7 +839,16 @@ autogen_sensors_init:
 		movwf SENSOR_26_PWM_SPEED
 
 		clrf SENSOR_26_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_26_TYPE)
+		bcf SENSOR_26_TRIS, SENSOR_26_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_26_ZC_PORT, SENSOR_26_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_26_PWM_VOLUME
+		clrf SENSOR_26_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_27
@@ -637,7 +871,16 @@ autogen_sensors_init:
 		movwf SENSOR_27_PWM_SPEED
 
 		clrf SENSOR_27_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_27_TYPE)
+		bcf SENSOR_27_TRIS, SENSOR_27_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_27_ZC_PORT, SENSOR_27_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_27_PWM_VOLUME
+		clrf SENSOR_27_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_28
@@ -660,7 +903,16 @@ autogen_sensors_init:
 		movwf SENSOR_28_PWM_SPEED
 
 		clrf SENSOR_28_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_28_TYPE)
+		bcf SENSOR_28_TRIS, SENSOR_28_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_28_ZC_PORT, SENSOR_28_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_28_PWM_VOLUME
+		clrf SENSOR_28_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_29
@@ -683,7 +935,16 @@ autogen_sensors_init:
 		movwf SENSOR_29_PWM_SPEED
 
 		clrf SENSOR_29_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_29_TYPE)
+		bcf SENSOR_29_TRIS, SENSOR_29_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_29_ZC_PORT, SENSOR_29_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_29_PWM_VOLUME
+		clrf SENSOR_29_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_30
@@ -706,7 +967,16 @@ autogen_sensors_init:
 		movwf SENSOR_30_PWM_SPEED
 
 		clrf SENSOR_30_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_30_TYPE)
+		bcf SENSOR_30_TRIS, SENSOR_30_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_30_ZC_PORT, SENSOR_30_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_30_PWM_VOLUME
+		clrf SENSOR_30_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_31
@@ -729,7 +999,16 @@ autogen_sensors_init:
 		movwf SENSOR_31_PWM_SPEED
 
 		clrf SENSOR_31_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_31_TYPE)
+		bcf SENSOR_31_TRIS, SENSOR_31_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_31_ZC_PORT, SENSOR_31_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_31_PWM_VOLUME
+		clrf SENSOR_31_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_32
@@ -752,7 +1031,16 @@ autogen_sensors_init:
 		movwf SENSOR_32_PWM_SPEED
 
 		clrf SENSOR_32_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_32_TYPE)
+		bcf SENSOR_32_TRIS, SENSOR_32_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_32_ZC_PORT, SENSOR_32_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_32_PWM_VOLUME
+		clrf SENSOR_32_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_33
@@ -775,7 +1063,16 @@ autogen_sensors_init:
 		movwf SENSOR_33_PWM_SPEED
 
 		clrf SENSOR_33_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_33_TYPE)
+		bcf SENSOR_33_TRIS, SENSOR_33_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_33_ZC_PORT, SENSOR_33_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_33_PWM_VOLUME
+		clrf SENSOR_33_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_34
@@ -798,7 +1095,16 @@ autogen_sensors_init:
 		movwf SENSOR_34_PWM_SPEED
 
 		clrf SENSOR_34_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_34_TYPE)
+		bcf SENSOR_34_TRIS, SENSOR_34_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_34_ZC_PORT, SENSOR_34_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_34_PWM_VOLUME
+		clrf SENSOR_34_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_35
@@ -821,7 +1127,16 @@ autogen_sensors_init:
 		movwf SENSOR_35_PWM_SPEED
 
 		clrf SENSOR_35_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_35_TYPE)
+		bcf SENSOR_35_TRIS, SENSOR_35_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_35_ZC_PORT, SENSOR_35_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_35_PWM_VOLUME
+		clrf SENSOR_35_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_36
@@ -844,7 +1159,16 @@ autogen_sensors_init:
 		movwf SENSOR_36_PWM_SPEED
 
 		clrf SENSOR_36_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_36_TYPE)
+		bcf SENSOR_36_TRIS, SENSOR_36_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_36_ZC_PORT, SENSOR_36_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_36_PWM_VOLUME
+		clrf SENSOR_36_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_37
@@ -867,7 +1191,16 @@ autogen_sensors_init:
 		movwf SENSOR_37_PWM_SPEED
 
 		clrf SENSOR_37_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_37_TYPE)
+		bcf SENSOR_37_TRIS, SENSOR_37_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_37_ZC_PORT, SENSOR_37_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_37_PWM_VOLUME
+		clrf SENSOR_37_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_38
@@ -890,7 +1223,16 @@ autogen_sensors_init:
 		movwf SENSOR_38_PWM_SPEED
 
 		clrf SENSOR_38_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_38_TYPE)
+		bcf SENSOR_38_TRIS, SENSOR_38_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_38_ZC_PORT, SENSOR_38_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_38_PWM_VOLUME
+		clrf SENSOR_38_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_39
@@ -913,7 +1255,16 @@ autogen_sensors_init:
 		movwf SENSOR_39_PWM_SPEED
 
 		clrf SENSOR_39_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_39_TYPE)
+		bcf SENSOR_39_TRIS, SENSOR_39_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_39_ZC_PORT, SENSOR_39_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_39_PWM_VOLUME
+		clrf SENSOR_39_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_40
@@ -936,7 +1287,16 @@ autogen_sensors_init:
 		movwf SENSOR_40_PWM_SPEED
 
 		clrf SENSOR_40_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_40_TYPE)
+		bcf SENSOR_40_TRIS, SENSOR_40_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_40_ZC_PORT, SENSOR_40_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_40_PWM_VOLUME
+		clrf SENSOR_40_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_41
@@ -959,7 +1319,16 @@ autogen_sensors_init:
 		movwf SENSOR_41_PWM_SPEED
 
 		clrf SENSOR_41_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_41_TYPE)
+		bcf SENSOR_41_TRIS, SENSOR_41_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_41_ZC_PORT, SENSOR_41_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_41_PWM_VOLUME
+		clrf SENSOR_41_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_42
@@ -982,7 +1351,16 @@ autogen_sensors_init:
 		movwf SENSOR_42_PWM_SPEED
 
 		clrf SENSOR_42_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_42_TYPE)
+		bcf SENSOR_42_TRIS, SENSOR_42_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_42_ZC_PORT, SENSOR_42_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_42_PWM_VOLUME
+		clrf SENSOR_42_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_43
@@ -1005,7 +1383,16 @@ autogen_sensors_init:
 		movwf SENSOR_43_PWM_SPEED
 
 		clrf SENSOR_43_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_43_TYPE)
+		bcf SENSOR_43_TRIS, SENSOR_43_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_43_ZC_PORT, SENSOR_43_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_43_PWM_VOLUME
+		clrf SENSOR_43_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_44
@@ -1028,7 +1415,16 @@ autogen_sensors_init:
 		movwf SENSOR_44_PWM_SPEED
 
 		clrf SENSOR_44_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_44_TYPE)
+		bcf SENSOR_44_TRIS, SENSOR_44_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_44_ZC_PORT, SENSOR_44_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_44_PWM_VOLUME
+		clrf SENSOR_44_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_45
@@ -1051,7 +1447,16 @@ autogen_sensors_init:
 		movwf SENSOR_45_PWM_SPEED
 
 		clrf SENSOR_45_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_45_TYPE)
+		bcf SENSOR_45_TRIS, SENSOR_45_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_45_ZC_PORT, SENSOR_45_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_45_PWM_VOLUME
+		clrf SENSOR_45_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_46
@@ -1074,7 +1479,16 @@ autogen_sensors_init:
 		movwf SENSOR_46_PWM_SPEED
 
 		clrf SENSOR_46_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_46_TYPE)
+		bcf SENSOR_46_TRIS, SENSOR_46_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_46_ZC_PORT, SENSOR_46_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_46_PWM_VOLUME
+		clrf SENSOR_46_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_47
@@ -1097,7 +1511,16 @@ autogen_sensors_init:
 		movwf SENSOR_47_PWM_SPEED
 
 		clrf SENSOR_47_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_47_TYPE)
+		bcf SENSOR_47_TRIS, SENSOR_47_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_47_ZC_PORT, SENSOR_47_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_47_PWM_VOLUME
+		clrf SENSOR_47_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_48
@@ -1120,7 +1543,16 @@ autogen_sensors_init:
 		movwf SENSOR_48_PWM_SPEED
 
 		clrf SENSOR_48_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_48_TYPE)
+		bcf SENSOR_48_TRIS, SENSOR_48_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_48_ZC_PORT, SENSOR_48_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_48_PWM_VOLUME
+		clrf SENSOR_48_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_49
@@ -1143,7 +1575,16 @@ autogen_sensors_init:
 		movwf SENSOR_49_PWM_SPEED
 
 		clrf SENSOR_49_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_49_TYPE)
+		bcf SENSOR_49_TRIS, SENSOR_49_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_49_ZC_PORT, SENSOR_49_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_49_PWM_VOLUME
+		clrf SENSOR_49_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_50
@@ -1166,7 +1607,16 @@ autogen_sensors_init:
 		movwf SENSOR_50_PWM_SPEED
 
 		clrf SENSOR_50_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_50_TYPE)
+		bcf SENSOR_50_TRIS, SENSOR_50_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_50_ZC_PORT, SENSOR_50_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_50_PWM_VOLUME
+		clrf SENSOR_50_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_51
@@ -1189,7 +1639,16 @@ autogen_sensors_init:
 		movwf SENSOR_51_PWM_SPEED
 
 		clrf SENSOR_51_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_51_TYPE)
+		bcf SENSOR_51_TRIS, SENSOR_51_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_51_ZC_PORT, SENSOR_51_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_51_PWM_VOLUME
+		clrf SENSOR_51_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_52
@@ -1212,7 +1671,16 @@ autogen_sensors_init:
 		movwf SENSOR_52_PWM_SPEED
 
 		clrf SENSOR_52_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_52_TYPE)
+		bcf SENSOR_52_TRIS, SENSOR_52_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_52_ZC_PORT, SENSOR_52_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_52_PWM_VOLUME
+		clrf SENSOR_52_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_53
@@ -1235,7 +1703,16 @@ autogen_sensors_init:
 		movwf SENSOR_53_PWM_SPEED
 
 		clrf SENSOR_53_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_53_TYPE)
+		bcf SENSOR_53_TRIS, SENSOR_53_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_53_ZC_PORT, SENSOR_53_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_53_PWM_VOLUME
+		clrf SENSOR_53_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_54
@@ -1258,7 +1735,16 @@ autogen_sensors_init:
 		movwf SENSOR_54_PWM_SPEED
 
 		clrf SENSOR_54_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_54_TYPE)
+		bcf SENSOR_54_TRIS, SENSOR_54_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_54_ZC_PORT, SENSOR_54_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_54_PWM_VOLUME
+		clrf SENSOR_54_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_55
@@ -1281,7 +1767,16 @@ autogen_sensors_init:
 		movwf SENSOR_55_PWM_SPEED
 
 		clrf SENSOR_55_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_55_TYPE)
+		bcf SENSOR_55_TRIS, SENSOR_55_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_55_ZC_PORT, SENSOR_55_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_55_PWM_VOLUME
+		clrf SENSOR_55_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_56
@@ -1304,7 +1799,16 @@ autogen_sensors_init:
 		movwf SENSOR_56_PWM_SPEED
 
 		clrf SENSOR_56_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_56_TYPE)
+		bcf SENSOR_56_TRIS, SENSOR_56_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_56_ZC_PORT, SENSOR_56_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_56_PWM_VOLUME
+		clrf SENSOR_56_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_57
@@ -1327,7 +1831,16 @@ autogen_sensors_init:
 		movwf SENSOR_57_PWM_SPEED
 
 		clrf SENSOR_57_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_57_TYPE)
+		bcf SENSOR_57_TRIS, SENSOR_57_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_57_ZC_PORT, SENSOR_57_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_57_PWM_VOLUME
+		clrf SENSOR_57_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_58
@@ -1350,7 +1863,16 @@ autogen_sensors_init:
 		movwf SENSOR_58_PWM_SPEED
 
 		clrf SENSOR_58_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_58_TYPE)
+		bcf SENSOR_58_TRIS, SENSOR_58_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_58_ZC_PORT, SENSOR_58_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_58_PWM_VOLUME
+		clrf SENSOR_58_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_59
@@ -1373,7 +1895,16 @@ autogen_sensors_init:
 		movwf SENSOR_59_PWM_SPEED
 
 		clrf SENSOR_59_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_59_TYPE)
+		bcf SENSOR_59_TRIS, SENSOR_59_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_59_ZC_PORT, SENSOR_59_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_59_PWM_VOLUME
+		clrf SENSOR_59_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_60
@@ -1396,7 +1927,16 @@ autogen_sensors_init:
 		movwf SENSOR_60_PWM_SPEED
 
 		clrf SENSOR_60_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_60_TYPE)
+		bcf SENSOR_60_TRIS, SENSOR_60_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_60_ZC_PORT, SENSOR_60_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_60_PWM_VOLUME
+		clrf SENSOR_60_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_61
@@ -1419,7 +1959,16 @@ autogen_sensors_init:
 		movwf SENSOR_61_PWM_SPEED
 
 		clrf SENSOR_61_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_61_TYPE)
+		bcf SENSOR_61_TRIS, SENSOR_61_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_61_ZC_PORT, SENSOR_61_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_61_PWM_VOLUME
+		clrf SENSOR_61_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_62
@@ -1442,7 +1991,16 @@ autogen_sensors_init:
 		movwf SENSOR_62_PWM_SPEED
 
 		clrf SENSOR_62_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_62_TYPE)
+		bcf SENSOR_62_TRIS, SENSOR_62_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_62_ZC_PORT, SENSOR_62_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_62_PWM_VOLUME
+		clrf SENSOR_62_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_63
@@ -1465,7 +2023,16 @@ autogen_sensors_init:
 		movwf SENSOR_63_PWM_SPEED
 
 		clrf SENSOR_63_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_63_TYPE)
+		bcf SENSOR_63_TRIS, SENSOR_63_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_63_ZC_PORT, SENSOR_63_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_63_PWM_VOLUME
+		clrf SENSOR_63_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_64
@@ -1488,7 +2055,16 @@ autogen_sensors_init:
 		movwf SENSOR_64_PWM_SPEED
 
 		clrf SENSOR_64_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_64_TYPE)
+		bcf SENSOR_64_TRIS, SENSOR_64_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_64_ZC_PORT, SENSOR_64_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_64_PWM_VOLUME
+		clrf SENSOR_64_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_65
@@ -1511,7 +2087,16 @@ autogen_sensors_init:
 		movwf SENSOR_65_PWM_SPEED
 
 		clrf SENSOR_65_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_65_TYPE)
+		bcf SENSOR_65_TRIS, SENSOR_65_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_65_ZC_PORT, SENSOR_65_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_65_PWM_VOLUME
+		clrf SENSOR_65_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_66
@@ -1534,7 +2119,16 @@ autogen_sensors_init:
 		movwf SENSOR_66_PWM_SPEED
 
 		clrf SENSOR_66_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_66_TYPE)
+		bcf SENSOR_66_TRIS, SENSOR_66_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_66_ZC_PORT, SENSOR_66_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_66_PWM_VOLUME
+		clrf SENSOR_66_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_67
@@ -1557,7 +2151,16 @@ autogen_sensors_init:
 		movwf SENSOR_67_PWM_SPEED
 
 		clrf SENSOR_67_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_67_TYPE)
+		bcf SENSOR_67_TRIS, SENSOR_67_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_67_ZC_PORT, SENSOR_67_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_67_PWM_VOLUME
+		clrf SENSOR_67_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_68
@@ -1580,7 +2183,16 @@ autogen_sensors_init:
 		movwf SENSOR_68_PWM_SPEED
 
 		clrf SENSOR_68_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_68_TYPE)
+		bcf SENSOR_68_TRIS, SENSOR_68_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_68_ZC_PORT, SENSOR_68_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_68_PWM_VOLUME
+		clrf SENSOR_68_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_69
@@ -1603,7 +2215,16 @@ autogen_sensors_init:
 		movwf SENSOR_69_PWM_SPEED
 
 		clrf SENSOR_69_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_69_TYPE)
+		bcf SENSOR_69_TRIS, SENSOR_69_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_69_ZC_PORT, SENSOR_69_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_69_PWM_VOLUME
+		clrf SENSOR_69_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_70
@@ -1626,7 +2247,16 @@ autogen_sensors_init:
 		movwf SENSOR_70_PWM_SPEED
 
 		clrf SENSOR_70_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_70_TYPE)
+		bcf SENSOR_70_TRIS, SENSOR_70_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_70_ZC_PORT, SENSOR_70_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_70_PWM_VOLUME
+		clrf SENSOR_70_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_71
@@ -1649,7 +2279,16 @@ autogen_sensors_init:
 		movwf SENSOR_71_PWM_SPEED
 
 		clrf SENSOR_71_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_71_TYPE)
+		bcf SENSOR_71_TRIS, SENSOR_71_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_71_ZC_PORT, SENSOR_71_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_71_PWM_VOLUME
+		clrf SENSOR_71_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_72
@@ -1672,7 +2311,16 @@ autogen_sensors_init:
 		movwf SENSOR_72_PWM_SPEED
 
 		clrf SENSOR_72_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_72_TYPE)
+		bcf SENSOR_72_TRIS, SENSOR_72_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_72_ZC_PORT, SENSOR_72_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_72_PWM_VOLUME
+		clrf SENSOR_72_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_73
@@ -1695,7 +2343,16 @@ autogen_sensors_init:
 		movwf SENSOR_73_PWM_SPEED
 
 		clrf SENSOR_73_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_73_TYPE)
+		bcf SENSOR_73_TRIS, SENSOR_73_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_73_ZC_PORT, SENSOR_73_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_73_PWM_VOLUME
+		clrf SENSOR_73_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_74
@@ -1718,7 +2375,16 @@ autogen_sensors_init:
 		movwf SENSOR_74_PWM_SPEED
 
 		clrf SENSOR_74_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_74_TYPE)
+		bcf SENSOR_74_TRIS, SENSOR_74_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_74_ZC_PORT, SENSOR_74_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_74_PWM_VOLUME
+		clrf SENSOR_74_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_75
@@ -1741,7 +2407,16 @@ autogen_sensors_init:
 		movwf SENSOR_75_PWM_SPEED
 
 		clrf SENSOR_75_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_75_TYPE)
+		bcf SENSOR_75_TRIS, SENSOR_75_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_75_ZC_PORT, SENSOR_75_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_75_PWM_VOLUME
+		clrf SENSOR_75_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_76
@@ -1764,7 +2439,16 @@ autogen_sensors_init:
 		movwf SENSOR_76_PWM_SPEED
 
 		clrf SENSOR_76_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_76_TYPE)
+		bcf SENSOR_76_TRIS, SENSOR_76_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_76_ZC_PORT, SENSOR_76_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_76_PWM_VOLUME
+		clrf SENSOR_76_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_77
@@ -1787,7 +2471,16 @@ autogen_sensors_init:
 		movwf SENSOR_77_PWM_SPEED
 
 		clrf SENSOR_77_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_77_TYPE)
+		bcf SENSOR_77_TRIS, SENSOR_77_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_77_ZC_PORT, SENSOR_77_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_77_PWM_VOLUME
+		clrf SENSOR_77_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_78
@@ -1810,7 +2503,16 @@ autogen_sensors_init:
 		movwf SENSOR_78_PWM_SPEED
 
 		clrf SENSOR_78_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_78_TYPE)
+		bcf SENSOR_78_TRIS, SENSOR_78_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_78_ZC_PORT, SENSOR_78_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_78_PWM_VOLUME
+		clrf SENSOR_78_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_79
@@ -1833,7 +2535,16 @@ autogen_sensors_init:
 		movwf SENSOR_79_PWM_SPEED
 
 		clrf SENSOR_79_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_79_TYPE)
+		bcf SENSOR_79_TRIS, SENSOR_79_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_79_ZC_PORT, SENSOR_79_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_79_PWM_VOLUME
+		clrf SENSOR_79_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_80
@@ -1856,7 +2567,16 @@ autogen_sensors_init:
 		movwf SENSOR_80_PWM_SPEED
 
 		clrf SENSOR_80_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_80_TYPE)
+		bcf SENSOR_80_TRIS, SENSOR_80_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_80_ZC_PORT, SENSOR_80_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_80_PWM_VOLUME
+		clrf SENSOR_80_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_81
@@ -1879,7 +2599,16 @@ autogen_sensors_init:
 		movwf SENSOR_81_PWM_SPEED
 
 		clrf SENSOR_81_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_81_TYPE)
+		bcf SENSOR_81_TRIS, SENSOR_81_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_81_ZC_PORT, SENSOR_81_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_81_PWM_VOLUME
+		clrf SENSOR_81_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_82
@@ -1902,7 +2631,16 @@ autogen_sensors_init:
 		movwf SENSOR_82_PWM_SPEED
 
 		clrf SENSOR_82_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_82_TYPE)
+		bcf SENSOR_82_TRIS, SENSOR_82_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_82_ZC_PORT, SENSOR_82_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_82_PWM_VOLUME
+		clrf SENSOR_82_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_83
@@ -1925,7 +2663,16 @@ autogen_sensors_init:
 		movwf SENSOR_83_PWM_SPEED
 
 		clrf SENSOR_83_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_83_TYPE)
+		bcf SENSOR_83_TRIS, SENSOR_83_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_83_ZC_PORT, SENSOR_83_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_83_PWM_VOLUME
+		clrf SENSOR_83_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_84
@@ -1948,7 +2695,16 @@ autogen_sensors_init:
 		movwf SENSOR_84_PWM_SPEED
 
 		clrf SENSOR_84_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_84_TYPE)
+		bcf SENSOR_84_TRIS, SENSOR_84_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_84_ZC_PORT, SENSOR_84_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_84_PWM_VOLUME
+		clrf SENSOR_84_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_85
@@ -1971,7 +2727,16 @@ autogen_sensors_init:
 		movwf SENSOR_85_PWM_SPEED
 
 		clrf SENSOR_85_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_85_TYPE)
+		bcf SENSOR_85_TRIS, SENSOR_85_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_85_ZC_PORT, SENSOR_85_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_85_PWM_VOLUME
+		clrf SENSOR_85_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_86
@@ -1994,7 +2759,16 @@ autogen_sensors_init:
 		movwf SENSOR_86_PWM_SPEED
 
 		clrf SENSOR_86_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_86_TYPE)
+		bcf SENSOR_86_TRIS, SENSOR_86_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_86_ZC_PORT, SENSOR_86_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_86_PWM_VOLUME
+		clrf SENSOR_86_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_87
@@ -2017,7 +2791,16 @@ autogen_sensors_init:
 		movwf SENSOR_87_PWM_SPEED
 
 		clrf SENSOR_87_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_87_TYPE)
+		bcf SENSOR_87_TRIS, SENSOR_87_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_87_ZC_PORT, SENSOR_87_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_87_PWM_VOLUME
+		clrf SENSOR_87_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_88
@@ -2040,7 +2823,16 @@ autogen_sensors_init:
 		movwf SENSOR_88_PWM_SPEED
 
 		clrf SENSOR_88_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_88_TYPE)
+		bcf SENSOR_88_TRIS, SENSOR_88_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_88_ZC_PORT, SENSOR_88_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_88_PWM_VOLUME
+		clrf SENSOR_88_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_89
@@ -2063,7 +2855,16 @@ autogen_sensors_init:
 		movwf SENSOR_89_PWM_SPEED
 
 		clrf SENSOR_89_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_89_TYPE)
+		bcf SENSOR_89_TRIS, SENSOR_89_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_89_ZC_PORT, SENSOR_89_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_89_PWM_VOLUME
+		clrf SENSOR_89_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_90
@@ -2086,7 +2887,16 @@ autogen_sensors_init:
 		movwf SENSOR_90_PWM_SPEED
 
 		clrf SENSOR_90_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_90_TYPE)
+		bcf SENSOR_90_TRIS, SENSOR_90_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_90_ZC_PORT, SENSOR_90_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_90_PWM_VOLUME
+		clrf SENSOR_90_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_91
@@ -2109,7 +2919,16 @@ autogen_sensors_init:
 		movwf SENSOR_91_PWM_SPEED
 
 		clrf SENSOR_91_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_91_TYPE)
+		bcf SENSOR_91_TRIS, SENSOR_91_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_91_ZC_PORT, SENSOR_91_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_91_PWM_VOLUME
+		clrf SENSOR_91_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_92
@@ -2132,7 +2951,16 @@ autogen_sensors_init:
 		movwf SENSOR_92_PWM_SPEED
 
 		clrf SENSOR_92_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_92_TYPE)
+		bcf SENSOR_92_TRIS, SENSOR_92_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_92_ZC_PORT, SENSOR_92_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_92_PWM_VOLUME
+		clrf SENSOR_92_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_93
@@ -2155,7 +2983,16 @@ autogen_sensors_init:
 		movwf SENSOR_93_PWM_SPEED
 
 		clrf SENSOR_93_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_93_TYPE)
+		bcf SENSOR_93_TRIS, SENSOR_93_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_93_ZC_PORT, SENSOR_93_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_93_PWM_VOLUME
+		clrf SENSOR_93_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_94
@@ -2178,7 +3015,16 @@ autogen_sensors_init:
 		movwf SENSOR_94_PWM_SPEED
 
 		clrf SENSOR_94_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_94_TYPE)
+		bcf SENSOR_94_TRIS, SENSOR_94_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_94_ZC_PORT, SENSOR_94_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_94_PWM_VOLUME
+		clrf SENSOR_94_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_95
@@ -2201,7 +3047,16 @@ autogen_sensors_init:
 		movwf SENSOR_95_PWM_SPEED
 
 		clrf SENSOR_95_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_95_TYPE)
+		bcf SENSOR_95_TRIS, SENSOR_95_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_95_ZC_PORT, SENSOR_95_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_95_PWM_VOLUME
+		clrf SENSOR_95_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_96
@@ -2224,7 +3079,16 @@ autogen_sensors_init:
 		movwf SENSOR_96_PWM_SPEED
 
 		clrf SENSOR_96_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_96_TYPE)
+		bcf SENSOR_96_TRIS, SENSOR_96_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_96_ZC_PORT, SENSOR_96_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_96_PWM_VOLUME
+		clrf SENSOR_96_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_97
@@ -2247,7 +3111,16 @@ autogen_sensors_init:
 		movwf SENSOR_97_PWM_SPEED
 
 		clrf SENSOR_97_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_97_TYPE)
+		bcf SENSOR_97_TRIS, SENSOR_97_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_97_ZC_PORT, SENSOR_97_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_97_PWM_VOLUME
+		clrf SENSOR_97_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_98
@@ -2270,7 +3143,16 @@ autogen_sensors_init:
 		movwf SENSOR_98_PWM_SPEED
 
 		clrf SENSOR_98_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_98_TYPE)
+		bcf SENSOR_98_TRIS, SENSOR_98_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_98_ZC_PORT, SENSOR_98_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_98_PWM_VOLUME
+		clrf SENSOR_98_ROLLING_TIMER_LOW
 	#endif
 #endif
 ; SENSOR_99
@@ -2293,7 +3175,16 @@ autogen_sensors_init:
 		movwf SENSOR_99_PWM_SPEED
 
 		clrf SENSOR_99_ROLLING_TIMER_LOW
+	#endif
 
+	#if (SENSOR_ID_TRIAC == SENSOR_99_TYPE)
+		bcf SENSOR_99_TRIS, SENSOR_99_PIN	
+		; Set tristate for zero-crossing port, too
+		bsf SENSOR_99_ZC_PORT, SENSOR_99_ZC_PIN	
+
+		movlw 0x20
+		movwf SENSOR_99_PWM_VOLUME
+		clrf SENSOR_99_ROLLING_TIMER_LOW
 	#endif
 #endif
     bcf STATUS, RP0 ; bank 0

@@ -72,9 +72,23 @@ cmd_set_(AUTOGEN_EVERY_SENSOR_ID)_is_clear:
 			bcf STATUS, RP0	; bank 0
 			goto cmd_set_return_ok
 		#else
-			; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+			; SENSOR_TRIAC
+			#if (SENSOR_ID_TRIAC == SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_TYPE)
 
-			goto cmd_set_return_wrong_type
+				; Take our byte of data and scale it from 0-255 to 0-32
+				bcf STATUS, C
+				rrf packet6, f
+				bcf STATUS, C
+				rrf packet6, w
+				
+				bsf STATUS, RP0	; bank 1
+				movwf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PWM_VOLUME
+				bcf STATUS, RP0	; bank 0
+				goto cmd_set_return_ok
+	
+				; Add your own handlers here, in an #if..#else block. encompass the following goto in the else.
+				goto cmd_set_return_wrong_type
+			#endif ; sensor_triac
 		#endif	; sensor_pwm_led
 	
 	#endif
