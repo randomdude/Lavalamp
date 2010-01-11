@@ -226,4 +226,5 @@ cmdResponseIdentify_t* cmdIdentify(appConfig_t* myconfig)
 void cmd_free(void* stuff)
 {
 	free(stuff);
+
 }
