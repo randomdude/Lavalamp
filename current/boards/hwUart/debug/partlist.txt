@@ -1,0 +1,19 @@
+
+QTY DESC              Maplin part no.
+
+1   MAX232            FD92A     2.53
+1   PIC 16f628        RF03D     3.48
+1   16-pin DIL socket BL19V     0.21
+1   18-pin DIL socket HQ76H     0.22
+1   7805              QL31J     0.91
+2   LED               CJ56L     0.39
+1   0.1uf             BX03D     0.15
+1   0.33uf            
+5   1uf               VH03D     0.14
+2   22pf              WX48C     0.15
+2   220 ohm           M220R     0.17
+3   10K ohm           M10K      0.17
+1   9v battery clip   L90AN     1.49
+2   RJ-45 socket      
+1   4Mhz crystal      FY82D     0.79
+1   pin strip         JW59P     0.89
