@@ -72,6 +72,7 @@ inituart:
 
 ;	movlw 0x81		; 2400 @ 20mhz if you clear BRGH
 	movlw 0x19		; 9600 @  4mhz if you set BRGH
+	movlw 0x81		; 9600 @ 20mhz if you clear BRGH
 ;	movlw 0x00		; 250000 @  4mhz if you set BRGH
 	movwf SPBRG		; set baud rate 
 
@@ -85,7 +86,8 @@ inituart:
 	bsf TRISB, 2	; USART requires both to be set to 
 	bsf TRISB, 1	; INPUTs.
 
-	movlw b'00100100'	; TXSTA - set CSRC , and brgh (2)
+;	movlw b'00100100'	; TXSTA - set CSRC , and brgh (2)
+	movlw b'00000100'	; TXSTA - set CSRC , and clear brgh (2)
 	movwf TXSTA
 
 	bsf TXSTA, TXEN

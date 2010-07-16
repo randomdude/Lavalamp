@@ -46,6 +46,12 @@ start
 	call init
 	;call dotests
 
+;foo
+;	movlw 0x01
+;	movwf packet0
+;	call sendpacket
+;	goto foo	
+
 	; set state to 'waiting for first packet' as opposed to 'waiting for transciever to auth'
 	bcf state, STATUS_BIT_CRYPTOSTATE
 waitfordata
