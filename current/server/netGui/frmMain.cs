@@ -1,5 +1,4 @@
 using System;
-using System.Configuration;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -12,8 +11,8 @@ namespace netGui
 {
     public partial class FrmMain : Form
     {
-        private ITransmitter _mydriver = null;   
-        public options MyOptions = new options();
+        private ITransmitter _mydriver = null;
+        private options MyOptions = new options();
 
         public ITransmitter getMyDriver()
         {

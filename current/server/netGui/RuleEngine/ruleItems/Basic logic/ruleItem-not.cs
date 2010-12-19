@@ -46,7 +46,5 @@ namespace netGui.RuleEngine.ruleItems
                 if ((tristate)pinInfo["output1"].value.getData() != newOutput)
                     pinInfo["output1"].value.setData(newOutput);
         }
-
-        public ruleItem_not() {}
     }
 }

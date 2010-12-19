@@ -1,5 +1,4 @@
-﻿using System;
-using netbridge;
+﻿using netbridge;
 
 namespace netGui
 {

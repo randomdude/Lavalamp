@@ -36,7 +36,7 @@ namespace netGui.RuleEngine
         /// <summary>
         /// Delegates which are fired when this pin changes. TODO: Move to proper Event style.
         /// </summary>
-        public readonly List<ruleItemBase.changeNotifyDelegate> changeHandlers = new List<ruleItemBase.changeNotifyDelegate>();
+        private readonly List<ruleItemBase.changeNotifyDelegate> changeHandlers = new List<ruleItemBase.changeNotifyDelegate>();
 
         /// <summary>
         /// Invoke all the delegates in the changeHandlers. TODO: Move to proper Event style.

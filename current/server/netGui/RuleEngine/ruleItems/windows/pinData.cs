@@ -9,11 +9,11 @@ namespace netGui.RuleEngine.ruleItems.windows
         private readonly pin parentPin;
 
 // ReSharper disable PublicConstructorInAbstractClass
-        // Explicity call this constructor in your inheriting classes!
-        public pinData(ruleItemBase parentRuleItem, pin newParentPin)
+        // Explicitly call this constructor in your inheriting classes!
+        public pinData(ruleItemBase newParentRuleItem, pin newParentPin)
 // ReSharper restore PublicConstructorInAbstractClass
         {
-            this.parentRuleItem = parentRuleItem;
+            this.parentRuleItem = newParentRuleItem;
             this.parentPin = newParentPin;
         }
 

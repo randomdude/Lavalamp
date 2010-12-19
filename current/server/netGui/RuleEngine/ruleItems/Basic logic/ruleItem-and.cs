@@ -42,9 +42,5 @@ namespace netGui.RuleEngine.ruleItems
             if ((bool)pinInfo["output1"].value.getData() != newState)
                 pinInfo["output1"].value.setData(newState);
         }
-
-        public ruleItem_and()
-        {
-        }
     }
 }
