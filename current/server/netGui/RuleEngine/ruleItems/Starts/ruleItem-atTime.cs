@@ -103,11 +103,11 @@ namespace netGui.RuleEngine.ruleItems.Starts
 
             if (doit == true)
             {
-                this.pinStates["timeIsNow"].setData(true);
+                this.pinInfo["timeIsNow"].value.setData(true);
             }
             else
             {
-                this.pinStates["timeIsNow"].setData(false);
+                this.pinInfo["timeIsNow"].value.setData(false);
             }
 
             lastHours = now.Hour;

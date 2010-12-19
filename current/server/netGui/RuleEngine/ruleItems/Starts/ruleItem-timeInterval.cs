@@ -67,10 +67,10 @@ namespace netGui.RuleEngine.ruleItems.Starts
         
         private void timerCallbackSet(object state)
         {
-            this.pinStates["IntervalIsNow"].setData(true);
+            this.pinInfo["IntervalIsNow"].value.setData(true);
             // pass the change over to the ctlTimeInterval so it can flash for the user
             System.Threading.Thread.Sleep(timerHigh);
-            this.pinStates["IntervalIsNow"].setData(false);
+            this.pinInfo["IntervalIsNow"].value.setData(false);
             timer.setTo(false);
         }
 

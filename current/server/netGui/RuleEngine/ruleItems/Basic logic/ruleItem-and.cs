@@ -28,8 +28,8 @@ namespace netGui.RuleEngine.ruleItems
 
         public override void evaluate()
         {
-            bool input1 = (bool)pinStates["input1"].getData();
-            bool input2 = (bool)pinStates["input2"].getData();
+            bool input1 = (bool)pinInfo["input1"].value.getData();
+            bool input2 = (bool)pinInfo["input2"].value.getData();
 
             bool newState;
 
@@ -39,8 +39,8 @@ namespace netGui.RuleEngine.ruleItems
                 newState = false;
 
             // only set the output if necessary! constantly setting the output will result in a stack overflow.
-            if ((bool)pinStates["output1"].getData() != newState)
-                pinStates["output1"].setData(newState);
+            if ((bool)pinInfo["output1"].value.getData() != newState)
+                pinInfo["output1"].value.setData(newState);
         }
 
         public ruleItem_and()

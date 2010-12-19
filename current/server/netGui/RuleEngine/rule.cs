@@ -194,16 +194,14 @@ namespace netGui.RuleEngine
 
             // Stop each ruleItem, and set all pins to false
             foreach (ruleItemBase anItem in ruleItems.Values)
+                anItem.stop();
+            
+            foreach (ruleItemBase anItem in ruleItems.Values)
             {
                 anItem.stop();
 
-                List<String> pinNames = new List<String>();
-
-                foreach (string thisPinName in anItem.pinStates.Keys)
-                    pinNames.Add(thisPinName);
-
-                foreach (string thisPinName in pinNames)
-                    anItem.pinStates[thisPinName].setToDefault();
+                foreach (pin thisPin in anItem.pinInfo.Values)
+                    thisPin.value.setToDefault();
             }
         }
     }

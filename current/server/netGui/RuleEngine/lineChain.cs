@@ -71,17 +71,18 @@ namespace netGui.RuleEngine
 
         public void deleteSelf()
         {
-            // Find both involved pins and disconnect them if neccesary
+            // Find both involved pins and disconnect them if necessary
             pin source = myDelegates.GetPinFromGuid(sourcePin);
             pin dest = myDelegates.GetPinFromGuid(destPin);
+
             if (source.isConnected)
                 source.disconnect();
             if (dest.isConnected)
                 dest.disconnect();
 
             // remove any changeHandler delegates currently hooked up
-            myDelegates.GetRuleItemFromGuid(source.parentRuleItem).removePinChangeHandler(source.name);
-            myDelegates.GetRuleItemFromGuid(source.parentRuleItem).removePinChangeHandler(dest.name);
+            source.removeAllPinHandlers();
+            dest.removeAllPinHandlers();
 
             // goodbye cruel world
             deleted = true;
@@ -98,7 +99,7 @@ namespace netGui.RuleEngine
                 pin source = myDelegates.GetPinFromGuid(sourcePin);
                 ruleItemBase sourceItem = myDelegates.GetRuleItemFromGuid(source.parentRuleItem);
 
-                destItem.pinStates[dest.name].setData( sourceItem.pinStates[source.name].getData() );
+                destItem.pinInfo[dest.name].value.setData( sourceItem.pinInfo[source.name].value.getData() );
             }
         }
     }

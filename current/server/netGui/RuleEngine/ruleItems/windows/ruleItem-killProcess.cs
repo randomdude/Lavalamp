@@ -32,7 +32,7 @@ namespace netGui.RuleEngine.ruleItems.windows
 
         public override void evaluate()
         {
-            bool input1 = (bool) pinStates["input1"].getData();
+            bool input1 = (bool)pinInfo["input1"].value.getData();
 
             if (input1 && !lastInput)
                 killProcess();

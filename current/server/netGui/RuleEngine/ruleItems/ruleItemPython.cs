@@ -63,12 +63,12 @@ namespace netGui.RuleEngine.ruleItems
 
         public override void evaluate()
         {
-            Dictionary<string, pinData> newPins = myEng.runPythonFile(pinStates, parameters);
+            Dictionary<string, pinData> newPins = myEng.runPythonFile(pinInfo, parameters);
 
             foreach(String thisKey in newPins.Keys)
             {
-                if (((bool)pinStates[thisKey].getData()) != ((bool)newPins[thisKey].getData()))
-                    pinStates[thisKey].setData(((bool)newPins[thisKey].getData()));
+                if (((bool)pinInfo[thisKey].value.getData()) != ((bool)newPins[thisKey].getData()))
+                    pinInfo[thisKey].value.setData(((bool)newPins[thisKey].getData()));
             }
         }
 
@@ -83,7 +83,7 @@ namespace netGui.RuleEngine.ruleItems
 
             // populate with default pin states
             Dictionary<String, pin> pinInfo = getPinInfo();
-            pinStates.pinInfo = getPinInfo();
+            pinInfo = getPinInfo();
             throw new Exception("TODO: see code in ruleItemBase");
             //foreach (String pinName in pinInfo.Keys)
             //    this.pinStates.Add(pinName, false); 

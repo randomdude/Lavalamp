@@ -198,7 +198,7 @@ namespace netGui.RuleEngine
 
             currentLine.destPin = dest.serial;
             currentLine.sourcePin = source.serial;
-            sourceItemWidget.targetRuleItem.addPinChangeHandler(source.name, currentLine.handleStateChange);
+            sourceItemWidget.targetRuleItem.pinInfo[source.name].addChangeHandler(currentLine.handleStateChange);
 
             myDelegates.AddLineChainToGlobalPool(currentLine);
 

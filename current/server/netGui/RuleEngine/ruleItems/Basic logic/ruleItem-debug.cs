@@ -21,29 +21,29 @@ namespace netGui.RuleEngine.ruleItems
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
 
-            pinList.Add("input", new pin { name = "input", description = "to monitor", direction = pinDirection.input, type = typeof(pinDataTristate) });
-            pinList.Add("output", new pin { name = "output", description = "input is true", direction = pinDirection.output, type = typeof(pinDataTristate) });
+            pinList.Add("input", new pin { name = "input", description = "to monitor", direction = pinDirection.input, valueType = typeof(pinDataTristate) });
+            pinList.Add("output", new pin { name = "output", description = "input is true", direction = pinDirection.output, valueType = typeof(pinDataTristate) });
 
             return pinList;
         }
 
         public override void evaluate()
         {
-            if (pinStates["input"].ToString() != lastState)
+            if (pinInfo["input"].value.ToString() != lastState)
             {
-                if ( (pinStates["input"].ToString() == "False") ||
-                     (pinStates["input"].ToString() == "no") )
+                if ((pinInfo["input"].value.ToString() == "False") ||
+                     (pinInfo["input"].value.ToString() == "no"))
                     indicator.Image = netGui.Properties.Resources._0;
                 else
                     indicator.Image = netGui.Properties.Resources._1;
 
                 indicator.Invalidate();
 
-                lastState = pinStates["input"].ToString();
+                lastState = pinInfo["input"].ToString();
             }
 
-            if (pinStates["output"].ToString() != pinStates["input"].ToString())
-                pinStates["output"] = pinStates["input"];
+            if (pinInfo["output"].value.ToString() != pinInfo["input"].value.ToString())
+                pinInfo["output"].value = pinInfo["input"].value;
         }
 
 

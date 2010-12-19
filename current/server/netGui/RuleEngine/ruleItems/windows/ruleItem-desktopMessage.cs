@@ -46,7 +46,7 @@ namespace netGui.RuleEngine.ruleItems
 
         public override void evaluate()
         {
-            bool newState = (bool)pinStates["trigger"].getData();
+            bool newState = (bool)pinInfo["trigger"].value.getData();
 
             if ( (newState != lastState) && (newState == true) )
                 showIt();

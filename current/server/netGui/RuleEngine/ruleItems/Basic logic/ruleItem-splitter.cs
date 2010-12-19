@@ -29,17 +29,13 @@ namespace netGui.RuleEngine.ruleItems
 
         public override void evaluate()
         {
-            bool input1 = (bool)pinStates["input1"].getData();
+            bool input1 = (bool)pinInfo["input1"].value.getData();
 
-            // only set the outputs if neccessary! constantly setting the output will result in a stack overflow.
-            if ((bool)pinStates["output1"].getData() != input1)
-                pinStates["output1"].setData(input1);
-            if ((bool)pinStates["output2"].getData() != input1)
-                pinStates["output2"].setData(input1);
-        }
-
-        public ruleItem_splitter()
-        {
+            // only set the outputs if necessary! constantly setting the output will result in a stack overflow.
+            if ((bool)pinInfo["output1"].value.getData() != input1)
+                pinInfo["output1"].value.setData(input1);
+            if ((bool)pinInfo["output2"].value.getData() != input1)
+                pinInfo["output2"].value.setData(input1);
         }
     }
 }

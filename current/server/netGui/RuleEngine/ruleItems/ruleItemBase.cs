@@ -12,7 +12,7 @@ using netGui.RuleEngine.ruleItems.windows;
 namespace netGui.RuleEngine.ruleItems
 {
     [XmlRoot("config" )]
-    public class ruleItemBase 
+    public abstract class ruleItemBase 
     {
         [XmlIgnore] public ruleItemGuid serial = new ruleItemGuid() { id = Guid.NewGuid() };
         [XmlIgnore] private PictureBox errorIcon = new PictureBox();
@@ -20,17 +20,27 @@ namespace netGui.RuleEngine.ruleItems
         [XmlIgnore] public Exception whyIsErrored;
         [XmlIgnore] public Point location = new Point(0, 0);
         [XmlIgnore] public List<Control> controls = new List<Control>();
-        [XmlIgnore] public triggeredDictionary pinStates = new triggeredDictionary();
 
-        // methods to be overriden by the new ruleItem
+        /// <summary>
+        /// Pin objects on this ruleItem, indexed by pin name
+        /// </summary>
+        [XmlIgnore] public Dictionary<string, pin> pinInfo = new Dictionary<string, pin>();
+
+        /// <summary>
+        /// Is this ruleItem currently permitted to evaluate()?
+        /// </summary>
+        [XmlIgnore] private bool isEnabled;
+
+        // methods to be overridden by the new ruleItem
         public virtual Size preferredSize() { return new Size(75, 75); }
-        public virtual string ruleName() { return "base"; }
+        public abstract string ruleName();
         public virtual Dictionary<String, pin> getPinInfo() { return new Dictionary<String,pin>(); }
-        public virtual void evaluate() { }
+        public abstract void evaluate();
         public virtual Image background() { return null; }
         public virtual void start() { }
         public virtual void stop() { }
         public virtual void onResize(Control parent) { }
+        public virtual string caption() { return null; }
 
         public delegate void changeNotifyDelegate();
         public delegate void evaluateDelegate() ;
@@ -41,7 +51,7 @@ namespace netGui.RuleEngine.ruleItems
 
         [XmlIgnore] public bool isDeleted = false;
 
-        public ruleItemBase()
+        protected ruleItemBase()
         {
             Size currentPreferredSize = preferredSize();
 
@@ -86,32 +96,29 @@ namespace netGui.RuleEngine.ruleItems
             }
         }
 
+        /// <summary>
+        /// Get pin info from the inheriting ruleItem. Call this only once, as it creates new Pins and thus Pin GUIDs.
+        /// </summary>
         public void initPins()
         {
-            pinStates.pinInfo = getPinInfo();
+            pinInfo = getPinInfo();
         }
 
         public void setPinDefaults()
         {
             // Add default states for pins.
-            foreach (KeyValuePair<string, pin> thisPinInfo in pinStates.pinInfo)
+            foreach (KeyValuePair<string, pin> thisPinInfo in pinInfo)
             {
-                // Set the value of our pins according to the type of the pin. Call the appropriate constructor.
-                Type pinValueType = thisPinInfo.Value.type;
+                // Set the value of our pins according to the type of the pin. Call the appropriate constructor, finding it via reflection.
+                // We pass the constructor the parent ruleItemBase, and the parent pin.
+                Type pinValueType = thisPinInfo.Value.valueType;
+
+                // Find the constructor
                 ConstructorInfo pinValueTypeConstructor = pinValueType.GetConstructor(new Type[] { typeof(ruleItemBase), typeof(pin) });
 
-                pinStates.Add(thisPinInfo.Key, (pinData) pinValueTypeConstructor.Invoke( new object[] {this, thisPinInfo.Value}));
+                // Call the constructor, storing the new object in our pinInfo.
+                pinInfo[thisPinInfo.Key].value = (pinData) pinValueTypeConstructor.Invoke(new object[] {this, thisPinInfo.Value});
             }
-        }
-
-        public void addPinChangeHandler (string pinName, changeNotifyDelegate target)
-        {
-            pinChangeHandlers.Add(pinName, target);
-        }
-
-        public void removePinChangeHandler(string pinName)
-        {
-            pinChangeHandlers.Remove(pinName);
         }
 
         public void errorHandler(Exception ex)
@@ -120,7 +127,7 @@ namespace netGui.RuleEngine.ruleItems
 
             this.isErrored = true;
             this.whyIsErrored = ex;
-            this.pinStates.enabled = false;
+            this.isEnabled = false;
 
             if (errorIcon.Parent == null)
             {
@@ -150,16 +157,8 @@ namespace netGui.RuleEngine.ruleItems
         public void clearErrors()
         {
             isErrored = false;
-            pinStates.enabled = true;
+            isEnabled = true;
             errorIcon.Visible = false;
-        }
-
-        public virtual string caption() { return null; }
-
-        public void invokePinChangeHandler(string name)
-        {
-            if (pinChangeHandlers.ContainsKey(name))
-                pinChangeHandlers[name].Invoke();
         }
     }
 

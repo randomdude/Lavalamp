@@ -80,25 +80,25 @@ namespace netGui.RuleEngine
         {
             targetRuleItem = newRuleItem;
 
-            if (targetRuleItem.pinStates.pinInfo == null)
+            if (targetRuleItem.pinInfo == null)
             {
-                targetRuleItem.pinStates.pinInfo = new Dictionary<String, pin>();
+                targetRuleItem.pinInfo = new Dictionary<String, pin>();
 
                 // Since we've just been deserialised, we need to initialise the pins that the ruleItem uses.
                 // We do this by going through each pin, checking if it's one of ours, and if it is, adding
                 // an entry in pinInfo.
                 // todo: move
-                foreach (KeyValuePair<string, pin> thisPin in pins)
+                foreach (pin thisPin in pins.Values)
                 {
-                    if (thisPin.Value.parentRuleItem.ToString() == newRuleItem.serial.ToString())
+                    if (thisPin.parentRuleItem.ToString() == newRuleItem.serial.ToString())
                     {
-                        targetRuleItem.pinStates.pinInfo.Add(thisPin.Value.name, thisPin.Value);
+                        targetRuleItem.pinInfo.Add(thisPin.name, thisPin);
 
                         // Wire up the pin to do stuff when activated, if necessary.
-                        if (thisPin.Value.isConnected)
+                        if (thisPin.isConnected)
                         {
-                            lineChain dest = myDelegates.GetLineChainFromGuid(thisPin.Value.parentLineChain );
-                            targetRuleItem.addPinChangeHandler(thisPin.Value.name, dest.handleStateChange );
+                            lineChain dest = myDelegates.GetLineChainFromGuid(thisPin.parentLineChain);
+                            thisPin.addChangeHandler(dest.handleStateChange);
                         }
                     }
                 }
@@ -106,7 +106,7 @@ namespace netGui.RuleEngine
 
             // Load up input/output pin icons 
             conPins.Clear();
-            foreach (pin thisPin in targetRuleItem.pinStates.pinInfo.Values)
+            foreach (pin thisPin in targetRuleItem.pinInfo.Values)
             {
                 addIcon(thisPin);
                 // If we've just been deserialised, the pin will already be in the global pin collection

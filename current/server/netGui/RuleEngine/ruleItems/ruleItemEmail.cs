@@ -40,14 +40,14 @@ namespace netGui.RuleEngine.ruleItems
 
         public override void evaluate()
         {
-            bool thisState = (bool) pinStates["checkNow"].getData();
+            bool thisState = (bool) pinInfo["checkNow"].value.getData();
 
             imapChecker mychecker = new imapChecker(widget.options);
 
             if ((lastState != thisState ) && (thisState == true))
             {
-                if (mychecker.newMail != (bool)pinStates["newEmail"].getData())
-                    pinStates["newEmail"].setData(mychecker.newMail);
+                if (mychecker.newMail != (bool)pinInfo["newEmail"].value.getData())
+                    pinInfo["newEmail"].value.setData(mychecker.newMail);
             }
             lastState = thisState;
         }

@@ -72,7 +72,7 @@ namespace netGui.RuleEngine.ruleItems.Starts
 
         public override void evaluate()
         {
-            bool input1 = (bool)pinStates["shutdownNow"].getData();
+            bool input1 = (bool)pinInfo["shutdownNow"].value.getData();
 
             if (input1 && !lastInput)
             {

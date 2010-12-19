@@ -243,11 +243,9 @@
     <Compile Include="RuleEngine\ruleItems\windows\ruleItem-runexe.cs" />
     <Compile Include="RuleEngine\ruleItems\ruleItemBase.cs">
     </Compile>
-    <Compile Include="RuleEngine\ruleItems\sink.cs" />
     <Compile Include="RuleEngine\Exceptions.cs" />
     <Compile Include="RuleEngine\ruleItems\windows\tristate.cs" />
     <Compile Include="RuleEngine\ruleState.cs" />
-    <Compile Include="RuleEngine\triggeredDictionary.cs" />
     <Compile Include="RuleEngine\XmlReaderExtender.cs" />
     <Compile Include="RuleEngine\XmlWriterExtender.cs" />
     <Compile Include="sensorControls\ctlOnOff.cs">

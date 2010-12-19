@@ -28,14 +28,14 @@ namespace netGui.RuleEngine.ruleItems
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
 
-            pinList.Add("input1", new pin { name = "input1", description = "trigger to start program", direction = pinDirection.input, type = typeof (pinDataTristate) });
+            pinList.Add("input1", new pin { name = "input1", description = "trigger to start program", direction = pinDirection.input, valueType = typeof (pinDataTristate) });
 
             return pinList;
         }
 
         public override void evaluate()
         {
-            tristate newState = (tristate)pinStates["input1"].getData();
+            tristate newState = (tristate)pinInfo["input1"].value.getData();
 
             if (newState != lastState && newState == tristate.yes)
                 executeIt();

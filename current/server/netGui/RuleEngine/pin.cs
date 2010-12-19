@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.Serialization;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using netGui.RuleEngine.ruleItems;
 using netGui.RuleEngine.ruleItems.windows;
 
 namespace netGui.RuleEngine
@@ -20,7 +22,42 @@ namespace netGui.RuleEngine
         public pinGuid linkedTo = new pinGuid();
         public lineChainGuid parentLineChain = new lineChainGuid() ;
         public ruleItemGuid parentRuleItem = new ruleItemGuid() ;
-        public Type type = typeof (pinDataBool);
+
+        /// <summary>
+        /// The type of data which is present on the pin
+        /// </summary>
+        public Type valueType = typeof (pinDataBool);
+
+        /// <summary>
+        /// The data which is present on the pin
+        /// </summary>
+        public pinData value;
+
+        /// <summary>
+        /// Delegates which are fired when this pin changes. TODO: Move to proper Event style.
+        /// </summary>
+        public readonly List<ruleItemBase.changeNotifyDelegate> changeHandlers = new List<ruleItemBase.changeNotifyDelegate>();
+
+        /// <summary>
+        /// Invoke all the delegates in the changeHandlers. TODO: Move to proper Event style.
+        /// </summary>
+        public void invokeChangeHandlers()
+        {
+            foreach (ruleItemBase.changeNotifyDelegate thisDelegate in changeHandlers)
+            {
+                thisDelegate.Invoke();
+            }
+        }
+
+        public void addChangeHandler(ruleItemBase.changeNotifyDelegate target)
+        {
+            changeHandlers.Add(target);
+        }
+
+        public void removeAllPinHandlers()
+        {
+            changeHandlers.Clear();
+        }
 
         public bool isConnected
         {

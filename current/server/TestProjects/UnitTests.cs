@@ -74,13 +74,13 @@ namespace TestProjects
 
             testItem.parameters["clampToZero"] = "NO U";
 
-            testItem.pinStates["myInputPin"].setData(true);
+            testItem.pinInfo["myInputPin"].value.setData(true);
             testItem.evaluate();
-            Assert.IsTrue((bool)testItem.pinStates["myOutputPin"].getData() );
+            Assert.IsTrue((bool)testItem.pinInfo["myOutputPin"].value.getData());
 
             testItem.parameters["clampToZero"] = "yes";
             testItem.evaluate();
-            Assert.IsFalse((bool)testItem.pinStates["myOutputPin"].getData() );
+            Assert.IsFalse((bool)testItem.pinInfo["myOutputPin"].value.getData());
         }
 
         [TestMethod]
@@ -89,13 +89,13 @@ namespace TestProjects
             pythonEngine myEng = new pythonEngine(filename);
 
             ruleItem_python testItem = new ruleItem_python(myEng);
-            testItem.pinStates["myInputPin"].setData(false);
+            testItem.pinInfo["myInputPin"].value.setData(false);
             testItem.evaluate();
-            Assert.IsTrue(((bool)testItem.pinStates["myOutputPin"].getData()) == false);
+            Assert.IsTrue(((bool)testItem.pinInfo["myOutputPin"].value.getData()) == false);
 
-            testItem.pinStates["myInputPin"].setData(true);
+            testItem.pinInfo["myInputPin"].value.setData(true);
             testItem.evaluate();
-            Assert.IsTrue(((bool)testItem.pinStates["myOutputPin"].getData()) == true);
+            Assert.IsTrue(((bool)testItem.pinInfo["myOutputPin"].value.getData()) == true);
         }
 
 
@@ -105,8 +105,8 @@ namespace TestProjects
         {
             netGui.RuleEngine.ruleItems.ruleItem_Email testItem = new netGui.RuleEngine.ruleItems.ruleItem_Email();
 
-            testItem.pinStates["checkNow"].setData(false);
-            testItem.pinStates["checkNow"].setData(true);
+            testItem.pinInfo["checkNow"].value.setData(false);
+            testItem.pinInfo["checkNow"].value.setData(true);
         }   
     }
 }

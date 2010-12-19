@@ -39,13 +39,13 @@ namespace netGui.RuleEngine.ruleItems.Starts
 
         private void setOutput(object state)
         {
-            pinStates["StartOfSim"].setData(true);
+            pinInfo["StartOfSim"].value.setData(true);
             cancelTimer = new Timer(cancelOutput, null, 100, System.Threading.Timeout.Infinite);
         }
 
         private void cancelOutput(object state)
         {
-            pinStates["StartOfSim"].setData(false);
+            pinInfo["StartOfSim"].value.setData(false);
         }
 
         public override void stop()

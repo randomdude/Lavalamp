@@ -36,7 +36,7 @@ namespace netGui.RuleEngine.ruleItems.windows
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
 
             pinList.Add("trigger", new pin { name = "trigger", description = "trigger to check for process ", direction = pinDirection.input });
-            pinList.Add("output1", new pin { name = "output1", description = "process is running", direction = pinDirection.output, type = typeof(pinDataTristate) });
+            pinList.Add("output1", new pin { name = "output1", description = "process is running", direction = pinDirection.output, valueType = typeof(pinDataTristate) });
 
             return pinList;
         }
@@ -50,7 +50,7 @@ namespace netGui.RuleEngine.ruleItems.windows
  
         public override void evaluate()
         {
-            bool trigger = (bool)pinStates["trigger"].getData();
+            bool trigger = (bool)pinInfo["trigger"].value.getData();
 
             if (!trigger || (lastState == trigger))
             {
@@ -69,8 +69,8 @@ namespace netGui.RuleEngine.ruleItems.windows
                 }
             }
 
-            if ( (tristate) pinStates["output1"].getData() != newState)
-                pinStates["output1"].setData(newState);
+            if ((tristate)pinInfo["output1"].value.getData() != newState)
+                pinInfo["output1"].value.setData(newState);
         }
 
     }

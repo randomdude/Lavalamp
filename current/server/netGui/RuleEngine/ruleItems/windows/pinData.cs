@@ -42,7 +42,7 @@ namespace netGui.RuleEngine.ruleItems.windows
             {
                 // If it was an output pin, or if we don't know what direction it was, we propagate the change out of the pin.
                 // pass new pins to next ruleItem
-                parentRuleItem.invokePinChangeHandler(parentPin.name);
+                parentPin.invokeChangeHandlers();
             }
 
             // And now the aesthetic bit - set the pin background.

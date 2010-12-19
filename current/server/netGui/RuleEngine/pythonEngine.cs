@@ -186,7 +186,7 @@ namespace netGui.RuleEngine
             return output + " = " + name + ".pins[" + index + "].name";
         }
 
-        public Dictionary<string, pinData> runPythonFile(Dictionary<string, pinData> pinList, Dictionary<string, string> parameters)
+        public Dictionary<string, pinData> runPythonFile(Dictionary<string, pin> pinList, Dictionary<string, string> parameters)
         {
             ScriptSource source;
 

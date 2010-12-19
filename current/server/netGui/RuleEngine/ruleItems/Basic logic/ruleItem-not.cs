@@ -16,15 +16,15 @@ namespace netGui.RuleEngine.ruleItems
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
 
-            pinList.Add("input1", new pin { name = "input1", description = "input to invert", direction = pinDirection.input, type = typeof (pinDataTristate) });
-            pinList.Add("output1", new pin { name = "output1", description = "input is false", direction = pinDirection.output, type = typeof (pinDataTristate) });
+            pinList.Add("input1", new pin { name = "input1", description = "input to invert", direction = pinDirection.input, valueType = typeof (pinDataTristate) });
+            pinList.Add("output1", new pin { name = "output1", description = "input is false", direction = pinDirection.output, valueType = typeof(pinDataTristate) });
 
             return pinList;
         }
 
         public override void evaluate()
         {
-            tristate input1 = (tristate)pinStates["input1"].getData();
+            tristate input1 = (tristate)pinInfo["input1"].value.getData();
             tristate newOutput;
 
             switch (input1)
@@ -43,8 +43,8 @@ namespace netGui.RuleEngine.ruleItems
             }
 
             // only set the output if necessary! constantly setting the output will result in a stack overflow.
-                if ((tristate)pinStates["output1"].getData() != newOutput)
-                    pinStates["output1"].setData(newOutput);
+                if ((tristate)pinInfo["output1"].value.getData() != newOutput)
+                    pinInfo["output1"].value.setData(newOutput);
         }
 
         public ruleItem_not() {}

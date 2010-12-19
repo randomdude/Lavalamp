@@ -38,7 +38,7 @@ namespace ruleItems_winamp
         {
             try
             {
-                if ((bool)pinStates["trigger"].getData() == true && lastInput != pinStates["trigger"].getData())
+                if ((bool)pinInfo["trigger"].value.getData() == true && lastInput != pinInfo["trigger"].value.getData())
                 {
                     myPipe = new NamedPipeClientStream(".", "lavalamp winamp control", PipeDirection.InOut,
                                                        PipeOptions.None);
@@ -48,7 +48,7 @@ namespace ruleItems_winamp
                     myWriter.Write(Cmd);
                     myPipe.Close();
                 }
-                lastInput = pinStates["trigger"];
+                lastInput = pinInfo["trigger"].value;
             }
             catch (ObjectDisposedException)
             {
