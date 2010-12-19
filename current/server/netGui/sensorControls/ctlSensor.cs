@@ -207,7 +207,7 @@ namespace netGui
 
             try
             {
-                this.node.SetValue(this.targetSensorIndex, sendThis, true);
+                this.node.setValue(this.targetSensorIndex, sendThis, true);
                 SafelySetStatus("last update OK");
             }
             catch (sensorException )

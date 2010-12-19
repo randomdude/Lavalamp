@@ -36,21 +36,18 @@ namespace netGui.RuleEngine.ruleItems
             widget.Location = new Point(0,0);
             widget.Size = this.preferredSize();
             this.controls.Add(widget);
-
-            this.pinStates.evaluate = new evaluateDelegate(evaluate);
-            pinStates.setErrorHandler(new errorDelegate(base.errorHandler));
         }
 
         public override void evaluate()
         {
-            bool thisState = (bool) pinStates["checkNow"];
+            bool thisState = (bool) pinStates["checkNow"].getData();
 
             imapChecker mychecker = new imapChecker(widget.options);
 
             if ((lastState != thisState ) && (thisState == true))
             {
-                if (mychecker.newMail != (bool)pinStates["newEmail"])
-                    pinStates["newEmail"] = mychecker.newMail;
+                if (mychecker.newMail != (bool)pinStates["newEmail"].getData())
+                    pinStates["newEmail"].setData(mychecker.newMail);
             }
             lastState = thisState;
         }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using netbridge;
 
 namespace netGui
@@ -37,7 +35,7 @@ namespace netGui
 
         public object getValue(bool silently)
         {
-            return parentNode.UpdateValue(this.id, silently);
+            return parentNode.updateValue(this.id, silently);
         }
 
     }

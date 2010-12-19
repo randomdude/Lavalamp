@@ -325,12 +325,12 @@ namespace netGui.RuleEngine
             this.Invalidate();
         }
 
-        public void setOutput(object sender, bool toThis)
-        {
-        }
-
         public delegate void setTsStatusDlg(String toThis);
 
+        /// <summary>
+        /// Sets the text of the toolstrip's 'status' label
+        /// </summary>
+        /// <param name="toThis">new status</param>
         public void setTsStatus(string toThis)
         {
             if (toThis != null) 

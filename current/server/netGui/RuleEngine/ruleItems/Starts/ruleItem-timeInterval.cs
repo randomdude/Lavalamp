@@ -26,8 +26,6 @@ namespace netGui.RuleEngine.ruleItems.Starts
 
         public ruleItem_timeInterval()
         {
-            this.pinStates.evaluate = new evaluateDelegate(evaluate);
-            pinStates.setErrorHandler(new errorDelegate(base.errorHandler));
             timer.Visible = true;
             timer.setInterval = new setIntervalDelegate(handleSetTimerInterval);
             timer.getInterval = new getIntervalDelegate(handleGetTimerInterval);
@@ -69,10 +67,10 @@ namespace netGui.RuleEngine.ruleItems.Starts
         
         private void timerCallbackSet(object state)
         {
-            this.pinStates["IntervalIsNow"] = true;
+            this.pinStates["IntervalIsNow"].setData(true);
             // pass the change over to the ctlTimeInterval so it can flash for the user
             System.Threading.Thread.Sleep(timerHigh);
-            this.pinStates["IntervalIsNow"] = false;
+            this.pinStates["IntervalIsNow"].setData(false);
             timer.setTo(false);
         }
 

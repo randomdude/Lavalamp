@@ -40,6 +40,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -120,6 +121,7 @@
     <Compile Include="RuleEngine\ctlRule.Designer.cs">
       <DependentUpon>ctlRule.cs</DependentUpon>
     </Compile>
+    <Compile Include="RuleEngine\guidTypes\ctlRuleItemWidgetGuid.cs" />
     <Compile Include="RuleEngine\delegatePack.cs" />
     <Compile Include="RuleEngine\FrmAskName.cs">
       <SubType>Form</SubType>
@@ -147,7 +149,9 @@
     </Compile>
     <Compile Include="RuleEngine\lineChain-xml.cs" />
     <Compile Include="RuleEngine\lineChain.cs" />
-    <Compile Include="RuleEngine\pinStuff.cs" />
+    <Compile Include="RuleEngine\guidTypes\lineChainGuid.cs" />
+    <Compile Include="RuleEngine\guidTypes\pinGuid.cs" />
+    <Compile Include="RuleEngine\pin.cs" />
     <Compile Include="RuleEngine\rule-xml.cs" />
     <Compile Include="RuleEngine\rule.cs" />
     <Compile Include="RuleEngine\frmRuleEdit.cs">
@@ -156,6 +160,7 @@
     <Compile Include="RuleEngine\frmRuleEdit.Designer.cs">
       <DependentUpon>frmRuleEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="RuleEngine\guidTypes\ruleItemGuid.cs" />
     <Compile Include="RuleEngine\ruleItemInfo.cs" />
     <Compile Include="RuleEngine\ruleItems\Basic logic\ruleItem-not.cs" />
     <Compile Include="RuleEngine\ruleItems\Basic logic\ruleItem-splitter.cs" />
@@ -190,6 +195,9 @@
     <Compile Include="RuleEngine\ruleItems\windows\FrmDesktopMessageOptions.Designer.cs">
       <DependentUpon>FrmDesktopMessageOptions.cs</DependentUpon>
     </Compile>
+    <Compile Include="RuleEngine\ruleItems\windows\pinData.cs" />
+    <Compile Include="RuleEngine\ruleItems\windows\pinDataBool.cs" />
+    <Compile Include="RuleEngine\ruleItems\windows\pinDataTristate.cs" />
     <Compile Include="RuleEngine\ruleItems\windows\ruleItem-desktopMessage.cs" />
     <Compile Include="RuleEngine\ruleItems\windows\ctlIsProcRunning.cs">
       <SubType>UserControl</SubType>
@@ -237,6 +245,7 @@
     </Compile>
     <Compile Include="RuleEngine\ruleItems\sink.cs" />
     <Compile Include="RuleEngine\Exceptions.cs" />
+    <Compile Include="RuleEngine\ruleItems\windows\tristate.cs" />
     <Compile Include="RuleEngine\ruleState.cs" />
     <Compile Include="RuleEngine\triggeredDictionary.cs" />
     <Compile Include="RuleEngine\XmlReaderExtender.cs" />

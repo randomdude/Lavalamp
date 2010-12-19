@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Security;
 using System.Windows.Forms;
 using netGui.RuleEngine.ruleItems.itemControls;
+using netGui.RuleEngine.ruleItems.windows;
 
 namespace netGui.RuleEngine.ruleItems 
 {
@@ -15,7 +16,7 @@ namespace netGui.RuleEngine.ruleItems
 
         public delegate void executeItNowDelegate();    // this is used by the control, when the user asks to 'test' configuration by running the target
 
-        private bool lastState;
+        private tristate lastState;
         private ctlRunFile controlwidget = null;
 
         public override System.Drawing.Image background()
@@ -27,16 +28,16 @@ namespace netGui.RuleEngine.ruleItems
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
 
-            pinList.Add("input1", new pin { name = "input1", description = "trigger to start program", direction = pinDirection.input });
+            pinList.Add("input1", new pin { name = "input1", description = "trigger to start program", direction = pinDirection.input, type = typeof (pinDataTristate) });
 
             return pinList;
         }
 
         public override void evaluate()
         {
-            bool newState = (bool)pinStates["input1"];
+            tristate newState = (tristate)pinStates["input1"].getData();
 
-            if (newState != lastState && newState == true)
+            if (newState != lastState && newState == tristate.yes)
                 executeIt();
 
             lastState = newState;

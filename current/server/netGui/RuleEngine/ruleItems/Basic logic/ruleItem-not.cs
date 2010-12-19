@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using netGui.RuleEngine.ruleItems.windows;
 
 namespace netGui.RuleEngine.ruleItems 
 {
@@ -15,19 +16,35 @@ namespace netGui.RuleEngine.ruleItems
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
 
-            pinList.Add("input1", new pin { name = "input1", description = "input to invert", direction = pinDirection.input });
-            pinList.Add("output1", new pin { name = "output1", description = "input is false", direction = pinDirection.output });
+            pinList.Add("input1", new pin { name = "input1", description = "input to invert", direction = pinDirection.input, type = typeof (pinDataTristate) });
+            pinList.Add("output1", new pin { name = "output1", description = "input is false", direction = pinDirection.output, type = typeof (pinDataTristate) });
 
             return pinList;
         }
 
         public override void evaluate()
         {
-            bool input1 = (bool)pinStates["input1"];
+            tristate input1 = (tristate)pinStates["input1"].getData();
+            tristate newOutput;
 
-            // only set the output if neccesary! constantly setting the output will result in a stack overflow.
-            if ((bool)pinStates["output1"] != !input1 )
-                pinStates["output1"] = !input1 ;
+            switch (input1)
+            {
+                case tristate.noValue:
+                    newOutput = tristate.noValue;
+                    break;
+                case tristate.yes:
+                    newOutput = tristate.no;
+                    break;
+                case tristate.no:
+                    newOutput = tristate.yes;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            // only set the output if necessary! constantly setting the output will result in a stack overflow.
+                if ((tristate)pinStates["output1"].getData() != newOutput)
+                    pinStates["output1"].setData(newOutput);
         }
 
         public ruleItem_not() {}

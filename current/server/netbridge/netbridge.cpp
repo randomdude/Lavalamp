@@ -290,7 +290,7 @@ namespace netbridge
 				myseshdata.sensorid = (unsigned char)sensorId;
 				sensorTypeResponse = cmdGetSensorType(&myseshdata);
 
-				if (sensorTypeResponse ->errorcode==errcode_none)
+				if (sensorTypeResponse->errorcode==errcode_none)
 				{
 					sensorType ^ toReturn = gcnew sensorType();
 					toReturn->id = (short)sensorTypeResponse->type;
@@ -327,7 +327,6 @@ namespace netbridge
 					serialLock->ReleaseMutex();
 					throwerror(errcode);
 				}
-				return gcnew sensorType();	// Dummy return value - code can never get to this point
 			}
 			void doSetPWMSpeed(Int16 nodeId, Int16 speed, Int16 sensorId)
 			{

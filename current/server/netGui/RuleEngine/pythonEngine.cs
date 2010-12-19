@@ -10,6 +10,7 @@ using IronPython.Runtime.Types;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
 using Microsoft.Scripting.Runtime;
+using netGui.RuleEngine.ruleItems.windows;
 
 namespace netGui.RuleEngine
 {
@@ -185,7 +186,7 @@ namespace netGui.RuleEngine
             return output + " = " + name + ".pins[" + index + "].name";
         }
 
-        public Dictionary<string, object> runPythonFile(Dictionary<string, object> pinList, Dictionary<string, string> parameters)
+        public Dictionary<string, pinData> runPythonFile(Dictionary<string, pinData> pinList, Dictionary<string, string> parameters)
         {
             ScriptSource source;
 
@@ -225,7 +226,8 @@ namespace netGui.RuleEngine
                 toRet[varName] = scope.GetVariable("temp");
             }
 
-            return toRet;
+            throw new Exception("TODO: Make python code return objects deriving from pinData");
+            //return toRet;
         }
     }
 }

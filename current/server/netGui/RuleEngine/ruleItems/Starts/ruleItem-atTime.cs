@@ -55,9 +55,6 @@ namespace netGui.RuleEngine.ruleItems.Starts
             hours = 20;
             minutes = 01;
             controls.Add(lblCaption);
-
-            this.pinStates.evaluate = new evaluateDelegate(evaluate);
-            pinStates.setErrorHandler(new errorDelegate(base.errorHandler));
         }
 
         public override ContextMenuStrip addMenus(ContextMenuStrip strip1)
@@ -106,11 +103,11 @@ namespace netGui.RuleEngine.ruleItems.Starts
 
             if (doit == true)
             {
-                this.pinStates["timeIsNow"] = true;
+                this.pinStates["timeIsNow"].setData(true);
             }
             else
             {
-                this.pinStates["timeIsNow"] = false;
+                this.pinStates["timeIsNow"].setData(false);
             }
 
             lastHours = now.Hour;

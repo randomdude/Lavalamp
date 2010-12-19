@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 using netGui.Properties;
+using netGui.RuleEngine.ruleItems.windows;
 
 namespace netGui.RuleEngine.ruleItems
 {
@@ -12,7 +13,7 @@ namespace netGui.RuleEngine.ruleItems
     class ruleItem_debug : ruleItemBase 
     {
         private PictureBox indicator;
-        private bool lastState = false;
+        private string lastState = string.Empty;
 
         public override string ruleName() { return "Debug indicator"; }
 
@@ -20,27 +21,28 @@ namespace netGui.RuleEngine.ruleItems
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
 
-            pinList.Add("input", new pin { name = "input", description = "to monitor", direction = pinDirection.input });
-            pinList.Add("output", new pin { name = "output", description = "input is true", direction = pinDirection.output });
+            pinList.Add("input", new pin { name = "input", description = "to monitor", direction = pinDirection.input, type = typeof(pinDataTristate) });
+            pinList.Add("output", new pin { name = "output", description = "input is true", direction = pinDirection.output, type = typeof(pinDataTristate) });
 
             return pinList;
         }
 
         public override void evaluate()
         {
-            if ((bool)pinStates["input"] != lastState)
+            if (pinStates["input"].ToString() != lastState)
             {
-                if ((bool) pinStates["input"] == true)
-                    indicator.Image = netGui.Properties.Resources._1;
-                else
+                if ( (pinStates["input"].ToString() == "False") ||
+                     (pinStates["input"].ToString() == "no") )
                     indicator.Image = netGui.Properties.Resources._0;
+                else
+                    indicator.Image = netGui.Properties.Resources._1;
 
                 indicator.Invalidate();
 
-                lastState = (bool) pinStates["input"];
+                lastState = pinStates["input"].ToString();
             }
 
-            if (pinStates["output"] != pinStates["input"])
+            if (pinStates["output"].ToString() != pinStates["input"].ToString())
                 pinStates["output"] = pinStates["input"];
         }
 
@@ -58,8 +60,6 @@ namespace netGui.RuleEngine.ruleItems
 
             controls.Add(indicator);
 
-            this.pinStates.evaluate = new evaluateDelegate(evaluate);
-            pinStates.setErrorHandler(new errorDelegate(base.errorHandler));
         }
     }
 }

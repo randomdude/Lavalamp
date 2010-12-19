@@ -27,8 +27,6 @@ namespace netGui.RuleEngine.ruleItems.Starts
             lblCaption.Visible = true;
             controls.Add(lblCaption);
 
-            pinStates.evaluate = new evaluateDelegate(evaluate);
-            pinStates.setErrorHandler(new errorDelegate(base.errorHandler));
         }
 
         public override void start()
@@ -41,13 +39,13 @@ namespace netGui.RuleEngine.ruleItems.Starts
 
         private void setOutput(object state)
         {
-            pinStates["StartOfSim"] = true;
+            pinStates["StartOfSim"].setData(true);
             cancelTimer = new Timer(cancelOutput, null, 100, System.Threading.Timeout.Infinite);
         }
 
         private void cancelOutput(object state)
         {
-            pinStates["StartOfSim"] = false;
+            pinStates["StartOfSim"].setData(false);
         }
 
         public override void stop()

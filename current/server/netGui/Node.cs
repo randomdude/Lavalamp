@@ -7,7 +7,7 @@ namespace netGui
     public class Node
     {
         public ITransmitter Mydriver = null;
-        private FrmMain ownerWindow = null;
+        private FrmMain _ownerWindow = null;
  
         #region delegates
         public delegate frmWait makeNewFrmWaitDelegateType();
@@ -17,14 +17,14 @@ namespace netGui
 
         public FrmMain OwnerWindow
         {
-            get { return ownerWindow; }
-            set { ownerWindow = value; }
+            get { return _ownerWindow; }
+            set { _ownerWindow = value; }
         }
 
         private frmWait SafelyMakeNewFrmWait()
         {
-            if (ownerWindow.InvokeRequired)
-                return (frmWait)ownerWindow.Invoke(makeNewFrmWaitDelegate);
+            if (_ownerWindow.InvokeRequired)
+                return (frmWait)_ownerWindow.Invoke(makeNewFrmWaitDelegate);
             else
                 return makeNewFrmWaitDelegate();
         }
@@ -36,8 +36,8 @@ namespace netGui
 
         private void safelyCloseFormWait(frmWait thisone)
         {
-            if (ownerWindow.InvokeRequired)
-                ownerWindow.Invoke(closeFrmWaitDelegate, thisone);
+            if (_ownerWindow.InvokeRequired)
+                _ownerWindow.Invoke(closeFrmWaitDelegate, thisone);
             else
                 closeFormWait(thisone);
         }
@@ -49,13 +49,13 @@ namespace netGui
             Mydriver = driver;
 
             fillProperties();
-            makeNewFrmWaitDelegate = MakeNewFrmWait;
+            makeNewFrmWaitDelegate = makeNewFrmWait;
             closeFrmWaitDelegate = closeFormWait;
         }
         public Node(Int16 newid)
         {
             id = newid;
-            makeNewFrmWaitDelegate = MakeNewFrmWait;
+            makeNewFrmWaitDelegate = makeNewFrmWait;
             closeFrmWaitDelegate = closeFormWait;
         }
 
@@ -63,17 +63,17 @@ namespace netGui
         public string name;
         public Dictionary<Int16, sensor> sensors = new Dictionary<Int16, sensor>();
 
-        private frmWait MakeNewFrmWait()
+        private frmWait makeNewFrmWait()
         {
             frmWait holdup = new frmWait();
-            if (null == ownerWindow)
+            if (null == _ownerWindow)
             {
                 holdup.Show();
             }
             else
             {
                 holdup.Visible = false;
-                holdup.Show(ownerWindow);
+                holdup.Show(_ownerWindow);
                 holdup.center();
                 holdup.Visible = true;
             }
@@ -90,12 +90,12 @@ namespace netGui
             sensors.Clear();
             for (Int16 n=1; n < sensorCount+1; n++)
             {
-                sensor newSensor = new sensor(this);
-                newSensor.id = n;
+                sensor newSensor = new sensor(this) {id = n};
 
                 sensors.Add(newSensor.id, newSensor);
             }
         }
+
         public int getSensorCount()
         {
             frmWait holdup = SafelyMakeNewFrmWait();
@@ -123,6 +123,7 @@ namespace netGui
                 safelyCloseFormWait(holdup);
             }
         }
+
         public string doGetName()
         {
             frmWait holdup = SafelyMakeNewFrmWait();
@@ -151,7 +152,7 @@ namespace netGui
             }            
         }
 
-        public Object UpdateValue(Int16 sensorId, bool silently)
+        public Object updateValue(Int16 sensorId, bool silently)
         {
             frmWait holdup = null;
             if (!silently)
@@ -168,7 +169,7 @@ namespace netGui
                     safelyCloseFormWait(holdup);
             }
         }
-        public void SetValue(Int16 sensorId, object toThis, bool silently)
+        public void setValue(Int16 sensorId, object toThis, bool silently)
         {
             frmWait holdup = null;
             if (!silently)

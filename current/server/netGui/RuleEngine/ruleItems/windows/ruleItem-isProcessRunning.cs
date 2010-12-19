@@ -21,7 +21,6 @@ namespace netGui.RuleEngine.ruleItems.windows
 
         public ruleItem_isProcessRunning()
         {
-            this.pinStates.evaluate = new evaluateDelegate(evaluate);
             this.controls.Add(control);
         }
 
@@ -37,7 +36,7 @@ namespace netGui.RuleEngine.ruleItems.windows
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
 
             pinList.Add("trigger", new pin { name = "trigger", description = "trigger to check for process ", direction = pinDirection.input });
-            pinList.Add("output1", new pin { name = "output1", description = "process is running", direction = pinDirection.output });
+            pinList.Add("output1", new pin { name = "output1", description = "process is running", direction = pinDirection.output, type = typeof(pinDataTristate) });
 
             return pinList;
         }
@@ -51,26 +50,27 @@ namespace netGui.RuleEngine.ruleItems.windows
  
         public override void evaluate()
         {
-            bool trigger = (bool)pinStates["trigger"];
+            bool trigger = (bool)pinStates["trigger"].getData();
 
-            bool newState = false;
-
-            if (trigger && lastState != trigger)
+            if (!trigger || (lastState == trigger))
             {
-                foreach (Process runningProcess in Process.GetProcesses())
+                lastState = trigger;
+                return;
+            }
+            lastState = trigger;
+
+            tristate newState = tristate.no;
+            foreach (Process runningProcess in Process.GetProcesses())
+            {
+                if (runningProcess.ProcessName.ToUpper().Trim() == control.processName.ToUpper().Trim())
                 {
-                    if (runningProcess.ProcessName.ToUpper().Trim() == control.processName.ToUpper().Trim())
-                    {
-                        newState = true;
-                        break;
-                    }
+                    newState = tristate.yes;
+                    break;
                 }
             }
 
-            lastState = trigger;
-
-            if ((bool)pinStates["output1"] != newState)
-                pinStates["output1"] = newState;
+            if ( (tristate) pinStates["output1"].getData() != newState)
+                pinStates["output1"].setData(newState);
         }
 
     }

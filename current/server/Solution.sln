@@ -32,6 +32,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test data", "Test data", "{
 	EndProjectSection
 EndProject
 Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		clr|Any CPU = clr|Any CPU
 		clr|Mixed Platforms = clr|Mixed Platforms

@@ -32,7 +32,7 @@ namespace netGui.RuleEngine.ruleItems.windows
 
         public override void evaluate()
         {
-            bool input1 = (bool) pinStates["input1"];
+            bool input1 = (bool) pinStates["input1"].getData();
 
             if (input1 && !lastInput)
                 killProcess();
@@ -61,8 +61,6 @@ namespace netGui.RuleEngine.ruleItems.windows
             lblCaption.Visible = true;
             lblCaption.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             controls.Add(lblCaption);
-            this.pinStates.evaluate = new evaluateDelegate(evaluate);
-            pinStates.setErrorHandler(new errorDelegate(base.errorHandler));
         }
 
         public override System.Windows.Forms.ContextMenuStrip addMenus(System.Windows.Forms.ContextMenuStrip strip1)

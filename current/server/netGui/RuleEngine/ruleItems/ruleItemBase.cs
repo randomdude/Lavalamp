@@ -7,6 +7,7 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using netGui.RuleEngine;
+using netGui.RuleEngine.ruleItems.windows;
 
 namespace netGui.RuleEngine.ruleItems
 {
@@ -69,8 +70,6 @@ namespace netGui.RuleEngine.ruleItems
                 controls.Add(lblCaption);
             }
 
-            this.pinStates.evaluate = new evaluateDelegate(evaluate);
-            pinStates.setErrorHandler(new errorDelegate(errorHandler));
         }
 
         public void errorIcon_Click(object sender, EventArgs e)
@@ -94,21 +93,25 @@ namespace netGui.RuleEngine.ruleItems
 
         public void setPinDefaults()
         {
-            // Add default states for pins. TODO: non-bool types? Should probably be in each ruleItem, not just the base.
+            // Add default states for pins.
             foreach (KeyValuePair<string, pin> thisPinInfo in pinStates.pinInfo)
-                pinStates.Add(thisPinInfo.Key, false);
+            {
+                // Set the value of our pins according to the type of the pin. Call the appropriate constructor.
+                Type pinValueType = thisPinInfo.Value.type;
+                ConstructorInfo pinValueTypeConstructor = pinValueType.GetConstructor(new Type[] { typeof(ruleItemBase), typeof(pin) });
+
+                pinStates.Add(thisPinInfo.Key, (pinData) pinValueTypeConstructor.Invoke( new object[] {this, thisPinInfo.Value}));
+            }
         }
 
         public void addPinChangeHandler (string pinName, changeNotifyDelegate target)
         {
             pinChangeHandlers.Add(pinName, target);
-            pinStates.pinChangeHandlers.Add(pinName, target);
         }
 
         public void removePinChangeHandler(string pinName)
         {
             pinChangeHandlers.Remove(pinName);
-            pinStates.pinChangeHandlers.Remove(pinName);
         }
 
         public void errorHandler(Exception ex)
@@ -153,6 +156,11 @@ namespace netGui.RuleEngine.ruleItems
 
         public virtual string caption() { return null; }
 
+        public void invokePinChangeHandler(string name)
+        {
+            if (pinChangeHandlers.ContainsKey(name))
+                pinChangeHandlers[name].Invoke();
+        }
     }
 
 }

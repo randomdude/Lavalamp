@@ -187,6 +187,7 @@
 		</Configuration>
 		<Configuration
 			Name="clr|Win32"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			>
 			<Tool

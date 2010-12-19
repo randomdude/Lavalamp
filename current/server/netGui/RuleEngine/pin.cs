@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using netGui.RuleEngine.ruleItems.windows;
 
 namespace netGui.RuleEngine
 {
@@ -19,6 +20,7 @@ namespace netGui.RuleEngine
         public pinGuid linkedTo = new pinGuid();
         public lineChainGuid parentLineChain = new lineChainGuid() ;
         public ruleItemGuid parentRuleItem = new ruleItemGuid() ;
+        public Type type = typeof (pinDataBool);
 
         public bool isConnected
         {
@@ -106,74 +108,6 @@ namespace netGui.RuleEngine
         }
 
         #endregion
-    }
-
-    public class ruleItemGuid 
-    {
-        public Guid id = Guid.Empty;
-
-        public ruleItemGuid() {}
-
-        public ruleItemGuid(string newGuid)
-        {
-            this.id = new Guid(newGuid);
-        }
-
-        public new string ToString()
-        {
-            return this.id.ToString();
-        }
-    }
-
-    public class pinGuid 
-    {
-        public Guid id = Guid.Empty;
-
-        public pinGuid() {}
-
-        public pinGuid(string newGuid)
-        {
-            this.id = new Guid(newGuid);
-        }
-
-        public new string ToString()
-        {
-            return this.id.ToString();
-        }
-    }
-
-    public class lineChainGuid
-    {
-        public Guid id = Guid.NewGuid();
-
-        public lineChainGuid() { }
-
-        public lineChainGuid(string newGuid)
-        {
-            id = new Guid(newGuid);
-        }
-
-        public new string ToString()
-        {
-            return id.ToString();
-        }
-    }
-
-    public class ctlRuleItemWidgetGuid
-    {
-        public Guid id = Guid.Empty;
-
-        public ctlRuleItemWidgetGuid() {}
-
-        public ctlRuleItemWidgetGuid(string newGuid)
-        {
-            this.id = new Guid(newGuid);
-        }
-
-        public new string ToString()
-        {
-            return this.id.ToString();
-        }
     }
 
     public enum pinDirection { input, output }

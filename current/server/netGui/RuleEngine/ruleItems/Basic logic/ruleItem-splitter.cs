@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using netGui.Properties;
+using netGui.RuleEngine.ruleItems.windows;
 
 namespace netGui.RuleEngine.ruleItems 
 {
@@ -28,19 +29,17 @@ namespace netGui.RuleEngine.ruleItems
 
         public override void evaluate()
         {
-            bool input1 = (bool)pinStates["input1"];
+            bool input1 = (bool)pinStates["input1"].getData();
 
-            // only set the outputs if neccesary! constantly setting the output will result in a stack overflow.
-            if ((bool)pinStates["output1"] != input1)
-                pinStates["output1"] = input1;
-            if ((bool)pinStates["output2"] != input1)
-                pinStates["output2"] = input1;
+            // only set the outputs if neccessary! constantly setting the output will result in a stack overflow.
+            if ((bool)pinStates["output1"].getData() != input1)
+                pinStates["output1"].setData(input1);
+            if ((bool)pinStates["output2"].getData() != input1)
+                pinStates["output2"].setData(input1);
         }
 
         public ruleItem_splitter()
         {
-            this.pinStates.evaluate = new evaluateDelegate(evaluate);
-            pinStates.setErrorHandler(new errorDelegate(base.errorHandler));
         }
     }
 }

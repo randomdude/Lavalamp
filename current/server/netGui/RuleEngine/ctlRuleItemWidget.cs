@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
-using System.IO;
 using System.Xml;
 using System.Xml.Schema;
-using System.Xml.Serialization;
-using netGui.Properties;
 using netGui.RuleEngine.ruleItems;
 
 namespace netGui.RuleEngine
@@ -17,21 +13,19 @@ namespace netGui.RuleEngine
     [Serializable]
     public class ctlRuleItemWidget : UserControl 
     {
-        public String ruleName;
-
-        public Dictionary<pin, PictureBox> conPins = new Dictionary<pin, PictureBox>();
+        public readonly Dictionary<pin, PictureBox> conPins = new Dictionary<pin, PictureBox>();
         public ruleItems.ruleItemBase targetRuleItem;
 
         private ContextMenuStrip contextMenuStrip1;
         private System.ComponentModel.IContainer components;
         private ToolStripMenuItem deleteToolStripMenuItem1;
-        private ctlRule.setTsStatusDlg setToolbarText;
+        private readonly ctlRule.setTsStatusDlg setToolbarText;
 
-        public Point? mouseDownAt = null;
-        public ctlRuleItemWidgetGuid serial = new ctlRuleItemWidgetGuid() { id = Guid.NewGuid() };
+        private Point? mouseDownAt = null;
+        public readonly ctlRuleItemWidgetGuid serial = new ctlRuleItemWidgetGuid() { id = Guid.NewGuid() };
         private ToolStripMenuItem showDebugInfoToolStripMenuItem;
 
-        public delegatePack myDelegates;
+        private delegatePack myDelegates;
 
         #region serialisation
 
@@ -85,7 +79,6 @@ namespace netGui.RuleEngine
         private void loadRuleItem(ruleItemBase newRuleItem, bool justBeenDeserialised, Dictionary<string, pin> pins)
         {
             targetRuleItem = newRuleItem;
-            ruleName = newRuleItem.ruleName();
 
             if (targetRuleItem.pinStates.pinInfo == null)
             {
@@ -101,7 +94,7 @@ namespace netGui.RuleEngine
                     {
                         targetRuleItem.pinStates.pinInfo.Add(thisPin.Value.name, thisPin.Value);
 
-                        // Wire up the pin to do stuff when activated, if neccesary.
+                        // Wire up the pin to do stuff when activated, if necessary.
                         if (thisPin.Value.isConnected)
                         {
                             lineChain dest = myDelegates.GetLineChainFromGuid(thisPin.Value.parentLineChain );

@@ -38,7 +38,7 @@ namespace ruleItems_winamp
         {
             try
             {
-                if ((bool)pinStates["trigger"] == true && lastInput != pinStates["trigger"])
+                if ((bool)pinStates["trigger"].getData() == true && lastInput != pinStates["trigger"].getData())
                 {
                     myPipe = new NamedPipeClientStream(".", "lavalamp winamp control", PipeDirection.InOut,
                                                        PipeOptions.None);
@@ -72,8 +72,6 @@ namespace ruleItems_winamp
             //pinStates.pinInfo = getPinInfo();
             //foreach (String pinName in pinInfo.Keys)
             //    this.pinStates.Add(pinName, false);
-
-            this.pinStates.evaluate = new evaluateDelegate(evaluate);
         }
 
         public override void stop()

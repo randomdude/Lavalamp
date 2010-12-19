@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Xml;
-using System.Xml.Schema;
 using netGui.RuleEngine.ruleItems;
 
 namespace netGui.RuleEngine
@@ -22,7 +20,7 @@ namespace netGui.RuleEngine
 
         public List<Point> points;
 
-        private delegatePack myDelegates;
+        private readonly delegatePack myDelegates;
 
         public lineChain() {}
 
@@ -89,12 +87,6 @@ namespace netGui.RuleEngine
             deleted = true;
         }
 
-        public void connectTo(pin source, pin dest)
-        {
-            dest.connectTo(serial, source.serial);
-            source.connectTo(serial, dest.serial);
-        }
-
         public void handleStateChange()
         {
             // coax signal from start of wire to end, which will fire off the appropriate events at the destination end.
@@ -106,7 +98,7 @@ namespace netGui.RuleEngine
                 pin source = myDelegates.GetPinFromGuid(sourcePin);
                 ruleItemBase sourceItem = myDelegates.GetRuleItemFromGuid(source.parentRuleItem);
 
-                destItem.pinStates[dest.name] = sourceItem.pinStates[source.name];
+                destItem.pinStates[dest.name].setData( sourceItem.pinStates[source.name].getData() );
             }
         }
     }

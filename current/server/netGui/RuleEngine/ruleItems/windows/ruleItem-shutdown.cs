@@ -23,11 +23,11 @@ namespace netGui.RuleEngine.ruleItems.Starts
 
         public ruleItem_shutdown()
         {
-            Dictionary<String, pin> pinInfo = getPinInfo();
-            pinStates.pinInfo = getPinInfo();
+            //Dictionary<String, pin> pinInfo = getPinInfo();
+            //pinStates.pinInfo = getPinInfo();
 
-            foreach (String pinName in pinInfo.Keys)
-                this.pinStates.Add(pinName, false);
+            //foreach (String pinName in pinInfo.Keys)
+            //    this.pinStates.Add(pinName, false);
 
             lblCaption = new Label();
             lblCaption.AutoSize = false;
@@ -40,8 +40,6 @@ namespace netGui.RuleEngine.ruleItems.Starts
             lblCaption.Text = "Shut down the system";
             controls.Add(lblCaption);
 
-            this.pinStates.evaluate = new evaluateDelegate(evaluate);
-            pinStates.setErrorHandler(new errorDelegate(base.errorHandler));
         }
 
         public override ContextMenuStrip addMenus(ContextMenuStrip strip1)
@@ -74,7 +72,7 @@ namespace netGui.RuleEngine.ruleItems.Starts
 
         public override void evaluate()
         {
-            bool input1 = (bool)pinStates["shutdownNow"];
+            bool input1 = (bool)pinStates["shutdownNow"].getData();
 
             if (input1 && !lastInput)
             {

@@ -203,7 +203,7 @@ namespace netGui.RuleEngine
                     pinNames.Add(thisPinName);
 
                 foreach (string thisPinName in pinNames)
-                    anItem.pinStates[thisPinName] = false;
+                    anItem.pinStates[thisPinName].setToDefault();
             }
         }
     }

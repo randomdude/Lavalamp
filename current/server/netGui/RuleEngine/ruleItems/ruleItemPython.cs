@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 using IronPython.Hosting;
 using netGui.Properties;
+using netGui.RuleEngine.ruleItems.windows;
 
 namespace netGui.RuleEngine.ruleItems
 {
@@ -62,12 +63,12 @@ namespace netGui.RuleEngine.ruleItems
 
         public override void evaluate()
         {
-            Dictionary<string, object> newPins = myEng.runPythonFile(pinStates, parameters);
+            Dictionary<string, pinData> newPins = myEng.runPythonFile(pinStates, parameters);
 
             foreach(String thisKey in newPins.Keys)
             {
-                if (((bool)pinStates[thisKey]) != ((bool)newPins[thisKey]))
-                    pinStates[thisKey] = ((bool)newPins[thisKey]);
+                if (((bool)pinStates[thisKey].getData()) != ((bool)newPins[thisKey].getData()))
+                    pinStates[thisKey].setData(((bool)newPins[thisKey].getData()));
             }
         }
 
@@ -83,8 +84,9 @@ namespace netGui.RuleEngine.ruleItems
             // populate with default pin states
             Dictionary<String, pin> pinInfo = getPinInfo();
             pinStates.pinInfo = getPinInfo();
-            foreach (String pinName in pinInfo.Keys)
-                this.pinStates.Add(pinName, false); 
+            throw new Exception("TODO: see code in ruleItemBase");
+            //foreach (String pinName in pinInfo.Keys)
+            //    this.pinStates.Add(pinName, false); 
             
             // Create our label
             Label caption = new Label();
@@ -96,8 +98,6 @@ namespace netGui.RuleEngine.ruleItems
             caption.Visible = true;
             controls.Add(caption);
 
-            this.pinStates.evaluate = new evaluateDelegate(evaluate);
-            pinStates.setErrorHandler(new errorDelegate(base.errorHandler));
         }
     }
 }
