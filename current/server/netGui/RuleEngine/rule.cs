@@ -198,11 +198,13 @@ namespace netGui.RuleEngine
             
             foreach (ruleItemBase anItem in ruleItems.Values)
             {
-                anItem.stop();
-
                 foreach (pin thisPin in anItem.pinInfo.Values)
+                {
                     thisPin.value.setToDefault();
+                    thisPin.updateUI();
+                }
             }
+
         }
     }
 }

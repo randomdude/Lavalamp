@@ -29,7 +29,8 @@ namespace netGui.RuleEngine.ruleItems
         /// <summary>
         /// Is this ruleItem currently permitted to evaluate()?
         /// </summary>
-        [XmlIgnore] private bool isEnabled;
+        // TODO: change to public get/private set
+        [XmlIgnore] public bool isEnabled;
 
         // methods to be overridden by the new ruleItem
         public virtual Size preferredSize() { return new Size(75, 75); }
@@ -53,6 +54,7 @@ namespace netGui.RuleEngine.ruleItems
 
         protected ruleItemBase()
         {
+            // Control stuff (!?)
             Size currentPreferredSize = preferredSize();
 
             errorIcon.Image = netGui.Properties.Resources.error.ToBitmap();
@@ -79,7 +81,6 @@ namespace netGui.RuleEngine.ruleItems
 
                 controls.Add(lblCaption);
             }
-
         }
 
         public void errorIcon_Click(object sender, EventArgs e)
@@ -102,23 +103,8 @@ namespace netGui.RuleEngine.ruleItems
         public void initPins()
         {
             pinInfo = getPinInfo();
-        }
-
-        public void setPinDefaults()
-        {
-            // Add default states for pins.
-            foreach (KeyValuePair<string, pin> thisPinInfo in pinInfo)
-            {
-                // Set the value of our pins according to the type of the pin. Call the appropriate constructor, finding it via reflection.
-                // We pass the constructor the parent ruleItemBase, and the parent pin.
-                Type pinValueType = thisPinInfo.Value.valueType;
-
-                // Find the constructor
-                ConstructorInfo pinValueTypeConstructor = pinValueType.GetConstructor(new Type[] { typeof(ruleItemBase), typeof(pin) });
-
-                // Call the constructor, storing the new object in our pinInfo.
-                pinInfo[thisPinInfo.Key].value = (pinData) pinValueTypeConstructor.Invoke(new object[] {this, thisPinInfo.Value});
-            }
+            foreach (pin thisPinInfo in pinInfo.Values)
+                thisPinInfo.createValue(this);
         }
 
         public void errorHandler(Exception ex)

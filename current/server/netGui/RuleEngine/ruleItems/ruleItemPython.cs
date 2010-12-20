@@ -14,9 +14,9 @@ namespace netGui.RuleEngine.ruleItems
     // when loading a python script.
     public class ruleItem_python : ruleItemBase
     {
-        private pythonEngine myEng;
-        private Dictionary<String, pin> pinList;
-        public Dictionary<String, String> parameters;
+        public pythonEngine myEng;
+        //private Dictionary<String, pin> pinList;
+        public Dictionary<String, String> parameters = new Dictionary<string,string>();
         private String ruleNameString;
         public string category;
 
@@ -32,7 +32,7 @@ namespace netGui.RuleEngine.ruleItems
 
         public override Dictionary<String, pin> getPinInfo()
         {
-            return pinList;
+            return myEng.pinList;
         }
 
         public override ContextMenuStrip addMenus(ContextMenuStrip strip1)
@@ -63,31 +63,20 @@ namespace netGui.RuleEngine.ruleItems
 
         public override void evaluate()
         {
-            Dictionary<string, pinData> newPins = myEng.runPythonFile(pinInfo, parameters);
-
-            foreach(String thisKey in newPins.Keys)
-            {
-                if (((bool)pinInfo[thisKey].value.getData()) != ((bool)newPins[thisKey].getData()))
-                    pinInfo[thisKey].value.setData(((bool)newPins[thisKey].getData()));
-            }
+            myEng.runPythonFile();
         }
 
         public ruleItem_python(pythonEngine newEng)
         {
             myEng = newEng;
-            // hook up pin name/directions
-            pinList = myEng.pinList;
+            // hook up things from the python engine
             ruleNameString = myEng.description;
             category = myEng.category;
             parameters = myEng.Parameters;
 
-            // populate with default pin states
-            Dictionary<String, pin> pinInfo = getPinInfo();
-            pinInfo = getPinInfo();
-            throw new Exception("TODO: see code in ruleItemBase");
-            //foreach (String pinName in pinInfo.Keys)
-            //    this.pinStates.Add(pinName, false); 
-            
+            // Initialise the Pins on the control. This will generate a new guid for each pin.
+            base.initPins();
+
             // Create our label
             Label caption = new Label();
             caption.Text = ruleNameString;
@@ -97,7 +86,6 @@ namespace netGui.RuleEngine.ruleItems
             caption.TextAlign = ContentAlignment.BottomCenter;
             caption.Visible = true;
             controls.Add(caption);
-
         }
     }
 }

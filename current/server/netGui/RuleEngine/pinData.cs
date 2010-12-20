@@ -5,7 +5,7 @@ namespace netGui.RuleEngine.ruleItems.windows
 {
     public abstract class pinData
     {
-        private readonly ruleItemBase parentRuleItem;
+        protected readonly ruleItemBase parentRuleItem;
         private readonly pin parentPin;
 
 // ReSharper disable PublicConstructorInAbstractClass
@@ -15,6 +15,7 @@ namespace netGui.RuleEngine.ruleItems.windows
         {
             this.parentRuleItem = newParentRuleItem;
             this.parentPin = newParentPin;
+            this.setToDefault();
         }
 
         public abstract void setToDefault();
@@ -45,9 +46,7 @@ namespace netGui.RuleEngine.ruleItems.windows
                 parentPin.invokeChangeHandlers();
             }
 
-            // And now the aesthetic bit - set the pin background.
-            parentPin.imageBox.BackColor = getColour();
+            parentPin.updateUI();
         }
-
     }
 }

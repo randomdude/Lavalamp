@@ -12,7 +12,8 @@ namespace netGui.RuleEngine.ruleItems.windows
         public override void setToDefault()
         {
             data = tristate.noValue;
-            base.reevaluate();
+            if (base.parentRuleItem.isEnabled)
+                base.reevaluate();
         }
 
         public override object getData()
@@ -22,6 +23,9 @@ namespace netGui.RuleEngine.ruleItems.windows
 
         public override void setData(Object newData)
         {
+            if (data == (tristate)newData)
+                return;
+
             data = (tristate)newData;
             base.reevaluate();
         }

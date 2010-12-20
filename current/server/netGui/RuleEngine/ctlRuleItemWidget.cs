@@ -308,7 +308,6 @@ namespace netGui.RuleEngine
 
             commonConstructorStuff();
             this.loadRuleItem(newRuleItemBase, justBeenDeserialised, pinList);
-            newRuleItemBase.setPinDefaults();
             try
             {
                 this.ContextMenuStrip = newRuleItemBase.addMenus(this.contextMenuStrip1);

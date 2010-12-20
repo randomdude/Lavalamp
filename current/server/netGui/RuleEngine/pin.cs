@@ -8,6 +8,7 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using netGui.RuleEngine.ruleItems;
 using netGui.RuleEngine.ruleItems.windows;
+using System.Reflection;
 
 namespace netGui.RuleEngine
 {
@@ -37,6 +38,19 @@ namespace netGui.RuleEngine
         /// Delegates which are fired when this pin changes. TODO: Move to proper Event style.
         /// </summary>
         private readonly List<ruleItemBase.changeNotifyDelegate> changeHandlers = new List<ruleItemBase.changeNotifyDelegate>();
+
+        public void createValue(ruleItemBase parentRuleItem)
+        {
+            // Set the .value of our pin to an object of type according to .valueType.
+            // Call the appropriate constructor, finding it via reflection.
+            // We pass the constructor the parent ruleItemBase, and the parent pin.
+
+            // Find the constructor
+            ConstructorInfo pinValueTypeConstructor = valueType.GetConstructor(new Type[] { typeof(ruleItemBase), typeof(pin) });
+
+            // Call the constructor, storing the new object.
+            value = (pinData) pinValueTypeConstructor.Invoke(new object[] {parentRuleItem, this});
+        }
 
         /// <summary>
         /// Invoke all the delegates in the changeHandlers. TODO: Move to proper Event style.
@@ -84,6 +98,13 @@ namespace netGui.RuleEngine
             linkedTo.id = newTargetPin.id;
         }
 
+        // todo - this should be on an onUIUpdate event or suchlike.
+        public void updateUI()
+        {
+            // And now the aesthetic bit - set the pin background.
+            if (imageBox != null)   // Will be during tests or when UI-less
+                imageBox.BackColor = value.getColour();
+        }
 
         #region XML serialisation
         public XmlSchema GetSchema()

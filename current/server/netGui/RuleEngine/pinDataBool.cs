@@ -21,6 +21,9 @@ namespace netGui.RuleEngine.ruleItems.windows
 
         public override void setData(Object newData)
         {
+            if (data == (bool)newData)
+                return;
+
             data = (bool)newData;
             base.reevaluate();
         }

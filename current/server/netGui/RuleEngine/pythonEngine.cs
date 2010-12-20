@@ -11,20 +11,22 @@ using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
 using Microsoft.Scripting.Runtime;
 using netGui.RuleEngine.ruleItems.windows;
+using netGui.RuleEngine.ruleItems;
 
 namespace netGui.RuleEngine
 {
-    public class pythonEngine
+    public class pythonEngine 
     {
-        public const string magicIndicator = "lavalampRuleItem_";
+        private const string magicIndicator = "lavalampRuleItem_";
         public string description;
-        public Dictionary<String, pin> pinList = new Dictionary<string, pin>();
-        ScriptEngine engine;
-        ScriptScope scope;
         public string category;
         public Dictionary<String,String> Parameters = new Dictionary<string, string>();
+        public readonly Dictionary<string, pin> pinList = new Dictionary<string, pin>();
 
-        public pythonEngine(String filename)
+        ScriptEngine engine;
+        ScriptScope scope;
+
+        public pythonEngine(String pythonFilename)
         {
             // Create a new engine and scope
             ScriptRuntimeSetup setup = new ScriptRuntimeSetup();
@@ -34,12 +36,18 @@ namespace netGui.RuleEngine
             engine = runtime.GetEngine("IronPython");
             scope = engine.CreateScope();
 
-            // Run the new script
+            loadPythonFile(pythonFilename);
+        }
+
+        private void loadPythonFile(string filename)
+        {
+            // Run the new script, in order to register classes from it
             ScriptSource source = engine.CreateScriptSourceFromFile(filename);
             source.Execute(scope);
 
             // Fish out any methods that begin with our magic
             // todo: this could be improved to not use a temporary value.
+            // todo: eep, what if this temporary value clashes with one in the script?!
             source = engine.CreateScriptSourceFromString("g=globals()", SourceCodeKind.Statements);
             source.Execute(scope);
             PythonDictionary globals = (PythonDictionary) scope.GetVariable("g");
@@ -47,14 +55,11 @@ namespace netGui.RuleEngine
             foreach (String globalName in globals.keys())
             {
                 if (globalName.ToUpper().Contains(magicIndicator.ToUpper()))
-                {
-                    processPythonClass(globalName);
-                    break;  // each file should have only one class.
-                }
+                    loadPythonClass(globalName);
             }
         }
 
-        private void processPythonClass(string name)
+        private void loadPythonClass(string name)
         {
             // Pluck static fields out of our python module
             loadFriendlyName(name);
@@ -72,13 +77,15 @@ namespace netGui.RuleEngine
             // Now fish out paramter objects
             ScriptSource source = engine.CreateScriptSourceFromString("temp = " + name + ".parameters",
                                                                       SourceCodeKind.Statements);
+            this.Parameters.Clear();
+
+            //TODO: noooooo
             try
             {
                 source.Execute(scope);
             } 
             catch (System.MissingMemberException)
             {
-                this.Parameters = null;
                 return;
             }
 
@@ -119,7 +126,8 @@ namespace netGui.RuleEngine
 
         private void loadPins(string name)
         {
-            // Now fish out pin objects
+            // Now fish out pin objects, storing them in our class list. The rest of the app
+            // will pluck them out via the getPinInfo() method.
             ScriptSource source = engine.CreateScriptSourceFromString("temp = " + name + ".pins", SourceCodeKind.Statements);
             source.Execute(scope);
             List pins = (IronPython.Runtime.List)scope.GetVariable("temp");
@@ -143,14 +151,11 @@ namespace netGui.RuleEngine
                 else
                     throw new Exception("Unrecognised pin direction '" + thisPinDirectionString + "'. Should be 'input' or 'output'.");
 
-                try
-                {
-                    pinList.Add(thisPinName, new pin { name = thisPinName, direction = thisPinDirection });
-                }
-                catch (System.ArgumentException)
-                {
+                if (pinList.ContainsKey(thisPinName))
                     throw new Exception("Pin names are not unique. They should be.");
-                }
+
+                pin newPin = new pin { name = thisPinName, direction = thisPinDirection };
+                pinList.Add(thisPinName, newPin);
             }
         }
 
@@ -186,48 +191,72 @@ namespace netGui.RuleEngine
             return output + " = " + name + ".pins[" + index + "].name";
         }
 
-        public Dictionary<string, pinData> runPythonFile(Dictionary<string, pin> pinList, Dictionary<string, string> parameters)
+        /// <summary>
+        /// Execute some python code
+        /// </summary>
+        /// <param name="codeToExecute">some python code to execute</param>
+        private void executePython(string codeToExecute)
         {
-            ScriptSource source;
+            ScriptSource source = engine.CreateScriptSourceFromString(codeToExecute, SourceCodeKind.Statements);
+            source.Execute(scope);
+        }
 
-            // Throw our pin states in to the object instance
+        /// <summary>
+        /// Update the .state method of pin objects in our python instance
+        /// </summary>
+        private void propagatePinStatesToPython()
+        {
             foreach (string varName in pinList.Keys)
             {
-                // todo: This is a bit of a kludge because I can't figure out how to access instance methods from ironPython. plz halp!
-                source = engine.CreateScriptSourceFromString("objectInstance." + varName + ".state = " + pinList[varName], SourceCodeKind.Statements);
-                source.Execute(scope);
+                // todo: This is a bit of a kludge because I can't figure out how to access
+                // instance methods from IronPython.
+                string pythonCommand = "objectInstance." + varName + ".state = " + pinList[varName].value.getData();
+                executePython(pythonCommand);
             }
+        }
 
-            if (parameters != null)
+        /// <summary>
+        /// update the .value member of our python object instance to reflect current parameters
+        /// </summary>
+        private void propogateParametersToPython()
+        {
+            // Add any parameters to the object instance
+            if (Parameters != null)
             {
-                // Add any parameters to the object instance
-                foreach (string paramName in parameters.Keys)
+                foreach (string paramName in Parameters.Keys)
                 {
                     // todo: This is a bit of a kludge because I can't figure out how to access instance methods from ironPython. plz halp!
-                    source =
-                        engine.CreateScriptSourceFromString(
-                            "objectInstance." + paramName + ".value = '" + parameters[paramName] + "'",
-                            SourceCodeKind.Statements);
-                    source.Execute(scope);
+                    string pythonCommand = "objectInstance." + paramName + ".value = '" + Parameters[paramName] + "'";
+                    executePython(pythonCommand);
                 }
             }
+        }
 
-            // call the python!
-            source = engine.CreateScriptSourceFromString("objectInstance.eval()", SourceCodeKind.Statements);
-            source.Execute(scope);
+        public void runPythonFile()
+        {
+            // prepare the python object instance for execution, by supplying it with the
+            // neccessary inputs and parameters.
+            propagatePinStatesToPython();
+            propogateParametersToPython();
 
-            // And suck all our parameters out.
-            Dictionary<string, Object> toRet = new Dictionary<string, Object>();
+            // call the python class itself
+            executePython("objectInstance.eval()");
+
+            // And suck all our outputs out, propogating them to their relevant output
+            // pins.
             foreach (string varName in pinList.Keys)
             {
-                // fixme: again, a nasty kludge
-                source = engine.CreateScriptSourceFromString("temp = objectInstance." + varName + ".state", SourceCodeKind.Statements);
-                source.Execute(scope);
-                toRet[varName] = scope.GetVariable("temp");
-            }
+                if (pinList[varName].direction == pinDirection.input)
+                    continue;
 
-            throw new Exception("TODO: Make python code return objects deriving from pinData");
-            //return toRet;
+                // Get the value..
+                string pythonCode = "temp = objectInstance." + varName + ".state";
+                executePython(pythonCode);
+                bool newvalue = (bool)scope.GetVariable("temp");
+
+                // propogate the new value to the new pin
+                pinList[varName].value.setData(newvalue);
+            }
         }
     }
 }

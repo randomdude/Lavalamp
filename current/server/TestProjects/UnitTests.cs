@@ -89,13 +89,13 @@ namespace TestProjects
             pythonEngine myEng = new pythonEngine(filename);
 
             ruleItem_python testItem = new ruleItem_python(myEng);
-            testItem.pinInfo["myInputPin"].value.setData(false);
+            testItem.myEng.pinList["myInputPin"].value.setData(false);
             testItem.evaluate();
             Assert.IsTrue(((bool)testItem.pinInfo["myOutputPin"].value.getData()) == false);
 
-            testItem.pinInfo["myInputPin"].value.setData(true);
+            testItem.myEng.pinList["myInputPin"].value.setData(true);
             testItem.evaluate();
-            Assert.IsTrue(((bool)testItem.pinInfo["myOutputPin"].value.getData()) == true);
+            Assert.IsTrue(((bool)testItem.myEng.pinList["myOutputPin"].value.getData()) == true);
         }
 
 

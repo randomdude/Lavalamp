@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{560BFC3D-3D57-46B5-B1C5-A3E01A88963C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -195,9 +195,9 @@
     <Compile Include="RuleEngine\ruleItems\windows\FrmDesktopMessageOptions.Designer.cs">
       <DependentUpon>FrmDesktopMessageOptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="RuleEngine\ruleItems\windows\pinData.cs" />
-    <Compile Include="RuleEngine\ruleItems\windows\pinDataBool.cs" />
-    <Compile Include="RuleEngine\ruleItems\windows\pinDataTristate.cs" />
+    <Compile Include="RuleEngine\pinData.cs" />
+    <Compile Include="RuleEngine\pinDataBool.cs" />
+    <Compile Include="RuleEngine\pinDataTristate.cs" />
     <Compile Include="RuleEngine\ruleItems\windows\ruleItem-desktopMessage.cs" />
     <Compile Include="RuleEngine\ruleItems\windows\ctlIsProcRunning.cs">
       <SubType>UserControl</SubType>
