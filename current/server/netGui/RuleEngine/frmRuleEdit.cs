@@ -42,13 +42,12 @@ namespace netGui.RuleEngine
         {
             try
             {
-                pythonEngine myEng = new pythonEngine(filename);
-                ruleItem_python jake = new ruleItem_python(myEng);
+                ruleItem_script jake = new ruleItem_script(filename);
 
                 ruleItemInfo itemInfo = new ruleItemInfo();
                 itemInfo.itemType = ruleItemType.PythonFile;
                 itemInfo.pythonFileName = filename;
-                itemInfo.pythonCategory = jake.category;
+                itemInfo.pythonCategory = jake.getCategory();
 
                 addRuleItemObjectToToolbox(jake, itemInfo);
             }

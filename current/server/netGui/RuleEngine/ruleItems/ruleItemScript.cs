@@ -12,17 +12,37 @@ namespace netGui.RuleEngine.ruleItems
 {
     // This is a special wrapper class, and so it isn't visible in the toolbar box. It is called specifically
     // when loading a python script.
-    public class ruleItem_python : ruleItemBase
+    public class ruleItem_script : ruleItemBase
     {
-        public pythonEngine myEng;
-        //private Dictionary<String, pin> pinList;
-        public Dictionary<String, String> parameters = new Dictionary<string,string>();
-        private String ruleNameString;
-        public string category;
+        /// <summary>
+        /// The script 'engine' which does all the work.
+        /// </summary>
+        private IScriptEngine myEng;
+
+        /// <summary>
+        /// Expose parameter array, entirely for the use of unit tests.
+        /// </summary>
+        public Dictionary<string, string> parameters
+        {
+            get
+            {
+                return myEng.parameters;
+            }
+        }
+
+        /// <summary>
+        /// the UI toolbox Category of this item.
+        /// </summary>
+        /// <returns>A string representing the UI category</returns>
+        public String getCategory()
+        {
+            // Since we can't tag the assembly at design-time, we find categories at runtime
+            return myEng.getCategory();
+        }
 
         public override string ruleName()
         {
-            return ruleNameString;
+            return myEng.getDescription();
         }
 
         public override System.Drawing.Image background()
@@ -32,7 +52,7 @@ namespace netGui.RuleEngine.ruleItems
 
         public override Dictionary<String, pin> getPinInfo()
         {
-            return myEng.pinList;
+            return myEng.getPinInfo();
         }
 
         public override ContextMenuStrip addMenus(ContextMenuStrip strip1)
@@ -42,7 +62,7 @@ namespace netGui.RuleEngine.ruleItems
             if (toRet.Items.Count > 0)
                 toRet.Items.Add("-");
 
-            if (parameters.Count > 0)
+            if (myEng.parameters.Count > 0)
             {
                 ToolStripMenuItem newItem = new ToolStripMenuItem("Item options..");
                 newItem.Click += setParameters;
@@ -54,32 +74,29 @@ namespace netGui.RuleEngine.ruleItems
 
         private void setParameters(object sender, EventArgs e)
         {
-            frmPythonParameters paramForm = new frmPythonParameters(parameters);
+            frmPythonParameters paramForm = new frmPythonParameters(myEng.parameters);
             paramForm.ShowDialog();
 
             if (paramForm.newParams != null)
-                this.parameters = paramForm.newParams;
+                myEng.parameters = paramForm.newParams;
         }
 
         public override void evaluate()
         {
-            myEng.runPythonFile();
+            myEng.evaluateScript();
         }
 
-        public ruleItem_python(pythonEngine newEng)
+        public ruleItem_script(string sourceFilename)
         {
-            myEng = newEng;
-            // hook up things from the python engine
-            ruleNameString = myEng.description;
-            category = myEng.category;
-            parameters = myEng.Parameters;
-
+            // Create a new engine for our python script
+            myEng = new PythonEngine(sourceFilename);
+ 
             // Initialise the Pins on the control. This will generate a new guid for each pin.
             base.initPins();
 
             // Create our label
             Label caption = new Label();
-            caption.Text = ruleNameString;
+            caption.Text = this.ruleName();
             caption.AutoSize = false;
             caption.Size = this.preferredSize();
             caption.Location = new Point(0, 0);

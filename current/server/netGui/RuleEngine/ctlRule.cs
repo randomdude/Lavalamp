@@ -62,7 +62,7 @@ namespace netGui.RuleEngine
             }
             else if (info.itemType == ruleItemType.PythonFile)
             {
-                newRuleItem = new ruleItem_python(new pythonEngine(info.pythonFileName));
+                newRuleItem = new ruleItem_script(info.pythonFileName);
             }
             else
                 throw new Exception("eh? Unrecognised file type?");

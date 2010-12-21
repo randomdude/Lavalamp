@@ -20,15 +20,13 @@ namespace TestProjects
         [TestMethod]
         public void testLoadOfPythonRuleItem()
         {
-            pythonEngine myEng = new pythonEngine(filename);
-
-            ruleItem_python testItem = new ruleItem_python(myEng);
+            ruleItem_script testItem = new ruleItem_script(filename);
 
             Assert.AreEqual("test python rule item", testItem.ruleName());
 
             Dictionary<String, pin> pins = testItem.getPinInfo();
 
-            Assert.IsTrue(testItem.category == "");
+            Assert.IsTrue(testItem.getCategory() == "");
 
             Assert.IsTrue(pins.Count == 2 );
             Assert.IsTrue(pins.ContainsKey("myInputPin"));
@@ -41,26 +39,22 @@ namespace TestProjects
         [TestMethod]
         public void testLoadOfPythonRuleItemWithCategory()
         {
-            pythonEngine myEng = new pythonEngine(filenameCategory);
+            ruleItem_script testItem = new ruleItem_script(filenameCategory);
 
-            ruleItem_python testItem = new ruleItem_python(myEng);
-
-            Assert.AreEqual("test category", myEng.category);
-            Assert.AreEqual("test category", testItem.category);
+            Assert.AreEqual("test python rule item", testItem.ruleName());
+            Assert.AreEqual("test category", testItem.getCategory());
         }
 
         [TestMethod]
         public void testLoadOfPythonRuleItemWithParameters()
         {
-            pythonEngine myEng = new pythonEngine(filenameParameters);
+            ruleItem_script testItem = new ruleItem_script(filenameParameters);
 
-            ruleItem_python testItem = new ruleItem_python(myEng);
+            Assert.AreEqual(2, testItem.parameters.Count);
+            Assert.AreEqual("first value", testItem.parameters["clampToZero"]);
+            Assert.AreEqual("second value", testItem.parameters["IAmTheSecondOption"]);
 
-            Assert.AreEqual(2, myEng.Parameters.Count);
-            Assert.AreEqual("first value", myEng.Parameters["clampToZero"]);
-            Assert.AreEqual("second value", myEng.Parameters["IAmTheSecondOption"]);
-
-            Assert.AreEqual(2, testItem.parameters.Count );
+            Assert.AreEqual(2, testItem.parameters.Count);
             Assert.AreEqual("first value", testItem.parameters["clampToZero"]);
             Assert.AreEqual("second value", testItem.parameters["IAmTheSecondOption"]);
         }
@@ -68,9 +62,7 @@ namespace TestProjects
         [TestMethod]
         public void testFunctionalityOfPythonRuleItemWithParameters()
         {
-            pythonEngine myEng = new pythonEngine(filenameParameters);
-
-            ruleItem_python testItem = new ruleItem_python(myEng);
+            ruleItem_script testItem = new ruleItem_script(filenameParameters);
 
             testItem.parameters["clampToZero"] = "NO U";
 
@@ -86,16 +78,14 @@ namespace TestProjects
         [TestMethod]
         public void testFunctionalityOfPythonRuleItem()
         {
-            pythonEngine myEng = new pythonEngine(filename);
-
-            ruleItem_python testItem = new ruleItem_python(myEng);
-            testItem.myEng.pinList["myInputPin"].value.setData(false);
+            ruleItem_script testItem = new ruleItem_script(filename);
+            testItem.pinInfo["myInputPin"].value.setData(false);
             testItem.evaluate();
             Assert.IsTrue(((bool)testItem.pinInfo["myOutputPin"].value.getData()) == false);
 
-            testItem.myEng.pinList["myInputPin"].value.setData(true);
+            testItem.pinInfo["myInputPin"].value.setData(true);
             testItem.evaluate();
-            Assert.IsTrue(((bool)testItem.myEng.pinList["myOutputPin"].value.getData()) == true);
+            Assert.IsTrue(((bool)testItem.pinInfo["myOutputPin"].value.getData()) == true);
         }
 
 
