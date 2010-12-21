@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.Security;
 using System.Windows.Forms;
-using netGui.Properties;
 
 namespace netGui.RuleEngine.ruleItems.itemControls
 {

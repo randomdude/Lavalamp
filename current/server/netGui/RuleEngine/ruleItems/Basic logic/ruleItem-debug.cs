@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Reflection;
 using System.Windows.Forms;
-using netGui.Properties;
 using netGui.RuleEngine.ruleItems.windows;
 
 namespace netGui.RuleEngine.ruleItems

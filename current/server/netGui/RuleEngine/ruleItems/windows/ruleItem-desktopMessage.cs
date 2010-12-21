@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using netGui.RuleEngine.ruleItems.windows;
-using Timer=System.Timers.Timer;
 
 namespace netGui.RuleEngine.ruleItems 
 {

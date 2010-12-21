@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using Timer=System.Threading.Timer;
+using Timer = System.Threading.Timer;
 
 namespace netGui.RuleEngine.ruleItems.Starts
 {

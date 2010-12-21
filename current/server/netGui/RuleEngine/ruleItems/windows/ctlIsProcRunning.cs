@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Security;
 using System.Windows.Forms;
 
 namespace netGui.RuleEngine.ruleItems.windows

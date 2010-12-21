@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
-using netGui.sensorControls;
-using netbridge;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
+using netbridge;
+using netGui.sensorControls;
 
 namespace netGui
 {

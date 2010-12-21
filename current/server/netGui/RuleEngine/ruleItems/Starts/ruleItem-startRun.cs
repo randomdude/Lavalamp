@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Windows.Forms;
-using Timer=System.Threading.Timer;
+using Timer = System.Threading.Timer;
 
 namespace netGui.RuleEngine.ruleItems.Starts
 {

@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Runtime.Serialization;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using netGui.RuleEngine.ruleItems;
 using netGui.RuleEngine.ruleItems.windows;
-using System.Reflection;
 
 namespace netGui.RuleEngine
 {

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using netGui.Properties;
-using netGui.RuleEngine.ruleItems.windows;
 
 namespace netGui.RuleEngine.ruleItems 
 {
