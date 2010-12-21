@@ -80,9 +80,9 @@ namespace netGui.RuleEngine
             // Make rule item controls for each rule
             foreach (ruleItemBase thisRule in this.targetRule.ruleItems.Values)
             {
-                ctlRuleItemWidget newCtl = new ctlRuleItemWidget(thisRule as ruleItemBase, myDelegates, this.setTsStatus, true, targetRule.pins);
+                ctlRuleItemWidget newCtl = new ctlRuleItemWidget(thisRule, myDelegates, this.setTsStatus, true, targetRule.pins);
                 myDelegates.AddctlRuleItemWidgetToGlobalPool(newCtl);
-                this.Controls.Add(newCtl);
+                Controls.Add(newCtl);
                 newCtl.BringToFront();
             }
         }

@@ -186,12 +186,16 @@ namespace netGui.RuleEngine
             // mark this as not running..
             state = ruleState.stopped;
 
-            // Stop each ruleItem, and set all pins to false
+            // Stop each ruleItem, then and set all pins to false.
             foreach (ruleItemBase anItem in ruleItems.Values)
-                anItem.stop();
+                if (!anItem.isDeleted) 
+                    anItem.stop();
             
             foreach (ruleItemBase anItem in ruleItems.Values)
             {
+                if (anItem.isDeleted)
+                    continue;
+
                 foreach (pin thisPin in anItem.pinInfo.Values)
                 {
                     thisPin.value.setToDefault();

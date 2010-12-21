@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using netbridge;
 using netGui.nodeEditForms;
 using netGui.RuleEngine;
@@ -304,7 +303,7 @@ namespace netGui
 
         private void showRuleEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RuleEngine.frmRuleEdit editor = new RuleEngine.frmRuleEdit();
+            RuleEngine.frmRuleEdit editor = new RuleEngine.frmRuleEdit(onSaveRule, onCloseRuleEditorDialog);
             editor.Show();
         }
 
@@ -372,9 +371,7 @@ namespace netGui
 
             rule rule = (rule) ruleItem.Tag;
 
-            frmRuleEdit newForm = new frmRuleEdit();
-            newForm.saveCallback = new frmRuleEdit.saveRuleDelegate(onSaveRule);
-            newForm.closeCallback = new frmRuleEdit.closeRuleDelegate(onCloseRuleEditorDialog);
+            frmRuleEdit newForm = new frmRuleEdit(onSaveRule, onCloseRuleEditorDialog);
             // We serialise the rule before we pass it to the rule edit form. This is to ease the transition
             // to a client-server style rule engine / rule editor kind of situations later on
             newForm.loadRule(rule.serialise());
@@ -503,6 +500,11 @@ namespace netGui
 
         private void loadAllRulesToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            loadAllRules();
+        }
+
+        private void loadAllRules()
+        {
             DirectoryInfo rulesDir;
             FileInfo[] fileList;
             try
@@ -527,9 +529,7 @@ namespace netGui
                         newEditor.loadRule(thisFileReader.ReadToEnd());
 
                         // Add our new rule name to our listView, with a .tag() set to the rule object itself.
-                        ListViewItem newItem = new ListViewItem(thisFile.Name);
-                        newItem.Tag = newEditor.ctlRule1.targetRule;
-                        lstRules.Items.Add(newItem);
+                        addNewRule(newEditor.ctlRule1.targetRule);
                     }
                 } catch {
                     MessageBox.Show("Unable to read rule file '" + thisFile.FullName + "'" );
@@ -598,14 +598,14 @@ namespace netGui
         private void FrmMain_Load(object sender, EventArgs e)
         {
             Properties.Settings.Default.Reload();
+            loadAllRules();
+        }
 
-            XmlSerializer mySer = new XmlSerializer( typeof(rule) );
-            Encoding ascii = Encoding.BigEndianUnicode;
-            Stream stream = new MemoryStream(ascii.GetBytes(Properties.Settings.Default["serialisedRules"].ToString()));
-            //Clipboard.SetText((string) Properties.Settings.Default["serialisedRules"]);
-            while (stream.Position < stream.Length )
-                addNewRule((rule) mySer.Deserialize(stream));
-            
+        private void editRuleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lstRules.SelectedItems.Count == 0) return;
+
+            editRuleItem(lstRules.SelectedItems[0]);
         }
 
     }

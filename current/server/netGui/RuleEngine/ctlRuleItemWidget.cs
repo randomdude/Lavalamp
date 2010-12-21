@@ -80,10 +80,8 @@ namespace netGui.RuleEngine
         {
             targetRuleItem = newRuleItem;
 
-            if (targetRuleItem.pinInfo == null)
+            if (targetRuleItem.pinInfo.Count == 0)
             {
-                targetRuleItem.pinInfo = new Dictionary<String, pin>();
-
                 // Since we've just been deserialised, we need to initialise the pins that the ruleItem uses.
                 // We do this by going through each pin, checking if it's one of ours, and if it is, adding
                 // an entry in pinInfo.
@@ -92,6 +90,7 @@ namespace netGui.RuleEngine
                 {
                     if (thisPin.parentRuleItem.ToString() == newRuleItem.serial.ToString())
                     {
+                        thisPin.createValue(newRuleItem);
                         targetRuleItem.pinInfo.Add(thisPin.name, thisPin);
 
                         // Wire up the pin to do stuff when activated, if necessary.

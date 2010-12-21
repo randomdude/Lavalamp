@@ -10,7 +10,7 @@ namespace netGui.RuleEngine.ruleItems
     public abstract class ruleItemBase 
     {
         [XmlIgnore] public ruleItemGuid serial = new ruleItemGuid() { id = Guid.NewGuid() };
-        [XmlIgnore] private PictureBox errorIcon = new PictureBox();
+        [XmlIgnore] private PictureBox _errorIcon = new PictureBox();
         [XmlIgnore] public bool isErrored = false;
         [XmlIgnore] public Exception whyIsErrored;
         [XmlIgnore] public Point location = new Point(0, 0);
@@ -24,8 +24,13 @@ namespace netGui.RuleEngine.ruleItems
         /// <summary>
         /// Is this ruleItem currently permitted to evaluate()?
         /// </summary>
-        // TODO: change to public get/private set
-        [XmlIgnore] public bool isEnabled;
+        [XmlIgnore] public bool isEnabled
+        {
+            get { return _isEnabled;  }
+            private set { _isEnabled = value; }
+        }
+
+        [XmlIgnore] private bool _isEnabled;
 
         // methods to be overridden by the new ruleItem
         public virtual Size preferredSize() { return new Size(75, 75); }
@@ -52,15 +57,15 @@ namespace netGui.RuleEngine.ruleItems
             // Control stuff (!?)
             Size currentPreferredSize = preferredSize();
 
-            errorIcon.Image = netGui.Properties.Resources.error.ToBitmap();
-            errorIcon.Size = errorIcon.Image.Size;
-            errorIcon.Visible = false;
-            errorIcon.Left = currentPreferredSize.Width - errorIcon.Width;
-            errorIcon.Top = currentPreferredSize.Height - errorIcon.Height;
-            errorIcon.Cursor = Cursors.Help;
-            errorIcon.Click += new EventHandler(errorIcon_Click);
+            _errorIcon.Image = netGui.Properties.Resources.error.ToBitmap();
+            _errorIcon.Size = _errorIcon.Image.Size;
+            _errorIcon.Visible = false;
+            _errorIcon.Left = currentPreferredSize.Width - _errorIcon.Width;
+            _errorIcon.Top = currentPreferredSize.Height - _errorIcon.Height;
+            _errorIcon.Cursor = Cursors.Help;
+            _errorIcon.Click += new EventHandler(errorIcon_Click);
 
-            controls.Add(errorIcon);
+            controls.Add(_errorIcon);
 
             // caption label
             String currentCaption = this.caption();
@@ -110,15 +115,15 @@ namespace netGui.RuleEngine.ruleItems
             this.whyIsErrored = ex;
             this.isEnabled = false;
 
-            if (errorIcon.Parent == null)
+            if (_errorIcon.Parent == null)
             {
                 // Oh crap! We've got no window - we're probably running a unit test?
                 // todo/fixme: what happens when we run rules without a UI?
                 throw ex;
             }
-            errorIcon.Invoke( () => errorIcon.BringToFront());
 
-            errorIcon.Invoke( () => errorIcon.Visible = true );
+            _errorIcon.Invoke( () => _errorIcon.BringToFront());
+            _errorIcon.Invoke( () => _errorIcon.Visible = true );
         }
 
         public virtual ContextMenuStrip addMenus(ContextMenuStrip strip1)
@@ -139,7 +144,7 @@ namespace netGui.RuleEngine.ruleItems
         {
             isErrored = false;
             isEnabled = true;
-            errorIcon.Visible = false;
+            _errorIcon.Visible = false;
         }
     }
 

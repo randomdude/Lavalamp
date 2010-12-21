@@ -27,6 +27,14 @@ namespace netGui.RuleEngine
             InitializeComponent();
         }
 
+        public frmRuleEdit(saveRuleDelegate onSaveRule, closeRuleDelegate onCloseRuleEditorDialog)
+        {
+            saveCallback = onSaveRule;
+            closeCallback = onCloseRuleEditorDialog;
+
+            InitializeComponent();
+        }
+
         private void frmRuleEdit_Load(object sender, EventArgs e)
         {
             populateToolbox();
