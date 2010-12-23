@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using netGui.RuleEngine;
 using netGui.RuleEngine.ruleItems;
 using System.Collections.Generic;
@@ -8,9 +7,9 @@ using System;
 namespace TestProjects
 {
     [TestClass]
-    public class UnitTests
+    public class pythonRuleItemTests
     {
-        private string filenameParameters = @"..\..\..\testData\test-configuration.py";
+        private const string filenameParameters = @"..\..\..\testData\test-configuration.py";
         private const string filename = @"..\..\..\testData\test.py";
         private const string filenameCategory = @"..\..\..\testData\test-category.py";
 
