@@ -53,7 +53,7 @@ namespace netGui.RuleEngine
                 }
                 if (xmlName == "state" && reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
                 {
-                    _state = (ruleState)Enum.Parse(_state.GetType(), reader.ReadElementContentAsString());
+                    state = (ruleState)Enum.Parse(state.GetType(), reader.ReadElementContentAsString());
                     inhibitNextRead = true;
                 }
                 if (xmlName == "linechains" && reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
@@ -76,12 +76,20 @@ namespace netGui.RuleEngine
                     keepGoing = reader.Read();
                 inhibitNextRead = false;
             }
+
+            claimPinsPostDeSer();
+        }
+
+        public void claimPinsPostDeSer()
+        {
+            foreach (ruleItemBase thisRuleItem in ruleItems.Values)
+                thisRuleItem.claimPinsPostDeSer(generateDelegates(), pins.Values);
         }
 
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteElementString("name", name);
-            writer.WriteElementString("state", _state.ToString());
+            writer.WriteElementString("state", state.ToString());
 
             writer.WriteElementRuleItemDictionary("ruleItems", ruleItems);  // this _must_ be before the others! TODO: Is this still the case? Check if it _does_ need to be before the others.
             writer.WriteElementLineChainDictionary("lineChains", lineChains);
@@ -158,7 +166,7 @@ namespace netGui.RuleEngine
                 ConstructorInfo constr = info.ruleItemBaseType.GetConstructor(new Type[0]);
                 newRuleItem = (ruleItemBase)constr.Invoke(new object[0] { });
             }
-            else if (info.itemType == ruleItemType.PythonFile)
+            else if (info.itemType == ruleItemType.scriptFile)
             {
                 newRuleItem = new ruleItem_script(info.pythonFileName);
             }

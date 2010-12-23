@@ -12,6 +12,6 @@ namespace netGui.RuleEngine
 
     public enum ruleItemType
     {
-        RuleItem, PythonFile
+        RuleItem, scriptFile
     }
 }

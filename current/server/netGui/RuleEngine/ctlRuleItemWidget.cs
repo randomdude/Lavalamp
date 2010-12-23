@@ -76,32 +76,9 @@ namespace netGui.RuleEngine
 
         #region IO marker stuff
 
-        private void loadRuleItem(ruleItemBase newRuleItem, bool justBeenDeserialised, Dictionary<string, pin> pins)
+        private void loadRuleItem(ruleItemBase newRuleItem, bool justBeenDeserialised, IEnumerable<pin> pins)
         {
             targetRuleItem = newRuleItem;
-
-            if (targetRuleItem.pinInfo.Count == 0)
-            {
-                // Since we've just been deserialised, we need to initialise the pins that the ruleItem uses.
-                // We do this by going through each pin, checking if it's one of ours, and if it is, adding
-                // an entry in pinInfo.
-                // todo: move
-                foreach (pin thisPin in pins.Values)
-                {
-                    if (thisPin.parentRuleItem.ToString() == newRuleItem.serial.ToString())
-                    {
-                        thisPin.createValue(newRuleItem);
-                        targetRuleItem.pinInfo.Add(thisPin.name, thisPin);
-
-                        // Wire up the pin to do stuff when activated, if necessary.
-                        if (thisPin.isConnected)
-                        {
-                            lineChain dest = myDelegates.GetLineChainFromGuid(thisPin.parentLineChain);
-                            thisPin.addChangeHandler(dest.handleStateChange);
-                        }
-                    }
-                }
-            }
 
             // Load up input/output pin icons 
             conPins.Clear();
@@ -300,7 +277,7 @@ namespace netGui.RuleEngine
 #endif
         }
 
-        public ctlRuleItemWidget(ruleItemBase newRuleItemBase, delegatePack newDelegates, ctlRule.setTsStatusDlg newSetToolbarText, bool justBeenDeserialised, Dictionary<string, pin> pinList)
+        public ctlRuleItemWidget(ruleItemBase newRuleItemBase, delegatePack newDelegates, ctlRule.setTsStatusDlg newSetToolbarText, bool justBeenDeserialised, IEnumerable<pin> pinList)
         {
             myDelegates = newDelegates;
             setToolbarText = newSetToolbarText;

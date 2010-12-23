@@ -81,7 +81,7 @@ namespace netGui
             MessageBox.Show("Port closed.");
             generalToolStripMenuItem.Enabled = true;
         }
-
+        
         private void MnuItemConnectToTrans_Click(object sender, EventArgs e)
         {
             if (_mydriver == null)
@@ -375,7 +375,7 @@ namespace netGui
             // We serialise the rule before we pass it to the rule edit form. This is to ease the transition
             // to a client-server style rule engine / rule editor kind of situations later on
             newForm.loadRule(rule.serialise());
-            newForm.ctlRule1.targetRule.onStatusUpdate += updateRuleIcon;
+            newForm.ctlRule1.getRule().onStatusUpdate += updateRuleIcon;
             newForm.Show();
 
             // Mark this rule as being open in the editor
@@ -529,7 +529,7 @@ namespace netGui
                         newEditor.loadRule(thisFileReader.ReadToEnd());
 
                         // Add our new rule name to our listView, with a .tag() set to the rule object itself.
-                        addNewRule(newEditor.ctlRule1.targetRule);
+                        addNewRule(newEditor.ctlRule1.getRule());
                     }
                 } catch {
                     MessageBox.Show("Unable to read rule file '" + thisFile.FullName + "'" );

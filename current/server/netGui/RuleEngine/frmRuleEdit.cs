@@ -53,7 +53,7 @@ namespace netGui.RuleEngine
                 ruleItem_script jake = new ruleItem_script(filename);
 
                 ruleItemInfo itemInfo = new ruleItemInfo();
-                itemInfo.itemType = ruleItemType.PythonFile;
+                itemInfo.itemType = ruleItemType.scriptFile;
                 itemInfo.pythonFileName = filename;
                 itemInfo.pythonCategory = jake.getCategory();
 
@@ -111,7 +111,7 @@ namespace netGui.RuleEngine
             {
                 catName = "";
             }
-            if (itemInfo.itemType == ruleItemType.PythonFile)
+            if (itemInfo.itemType == ruleItemType.scriptFile)
                 catName = itemInfo.pythonCategory;
 
 
@@ -183,9 +183,9 @@ namespace netGui.RuleEngine
             }
             else
             {
-                String serialised = ctlRule1.SerialiseRule();
+                //String serialised = ctlRule1.serialiseRule();
                 //Clipboard.SetText(serialised);
-                saveCallback.Invoke(ctlRule1.targetRule);
+                saveCallback.Invoke(ctlRule1.getRule());
             }
         }
 
@@ -232,9 +232,7 @@ namespace netGui.RuleEngine
             StringReader myReader = new StringReader(utf8Xml);
 
             XmlSerializer mySer = new XmlSerializer(typeof(rule));
-            ctlRule1.targetRule = (rule)mySer.Deserialize(myReader);
-            ctlRule1.addRuleItemControlsAfterDeserialisation();
-            ctlRule1.targetRule.state = ruleState.stopped;
+            ctlRule1.loadRule((rule) mySer.Deserialize(myReader));
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -253,7 +251,7 @@ namespace netGui.RuleEngine
         private void closeRule()
         {
             if (ctlRule1 != null)
-                closeCallback.Invoke(ctlRule1.targetRule);
+                closeCallback.Invoke(ctlRule1.getRule());
 
             isClosing = true;
             Close();

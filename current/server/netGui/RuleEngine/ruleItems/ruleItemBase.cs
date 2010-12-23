@@ -146,6 +146,34 @@ namespace netGui.RuleEngine.ruleItems
             isEnabled = true;
             _errorIcon.Visible = false;
         }
+
+        /// <summary>
+        /// After deserialisation, we have no pins, and they are in the global pins()
+        /// list. This function claims them.
+        /// </summary>
+        /// <param name="myDelegates"></param>
+        /// <param name="pins">Global list of pins</param>
+        public void claimPinsPostDeSer(delegatePack myDelegates, IEnumerable<pin> pins)
+        {
+            // Since we've just been deserialised, we need to initialise the pins that the ruleItem uses.
+            // We do this by going through each pin, checking if it's one of ours, and if it is, adding
+            // an entry in pinInfo.
+            foreach (pin thisPin in pins)
+            {
+                if (thisPin.parentRuleItem.ToString() == serial.ToString())
+                {
+                    thisPin.createValue(this);
+                    pinInfo.Add(thisPin.name, thisPin);
+
+                    // Wire up the pin to do stuff when activated, if necessary.
+                    if (thisPin.isConnected)
+                    {
+                        lineChain dest = myDelegates.GetLineChainFromGuid(thisPin.parentLineChain);
+                        thisPin.addChangeHandler(dest.handleStateChange);
+                    }
+                }
+            }
+        }
     }
 
 }

@@ -48,7 +48,7 @@ namespace netGui.RuleEngine
                 }
                 if (xmlName == "points" && reader.NodeType == XmlNodeType.Element)
                 {
-                    points = reader.ReadContentAsPointsCollection();
+                    midPoints = reader.ReadContentAsPointsCollection();
                 }
                 if (xmlName == "deleted" && reader.NodeType == XmlNodeType.Element)
                 {
@@ -86,7 +86,7 @@ namespace netGui.RuleEngine
             writer.WriteBool("deleted", deleted);
             writer.WriteBool("isdrawnbackwards", isdrawnbackwards);
             writer.WriteStartElement("points");
-            foreach (Point thisPoint in points)
+            foreach (Point thisPoint in midPoints)
                 writer.WritePoint("point", thisPoint);
             writer.WriteEndElement();
         }

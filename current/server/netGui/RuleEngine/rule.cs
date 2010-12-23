@@ -202,7 +202,96 @@ namespace netGui.RuleEngine
                     thisPin.updateUI();
                 }
             }
+        }
 
+        public bool isRunning
+        {
+            get { return state == ruleState.running; }
+        }
+
+        public ruleItemBase addRuleItem(ruleItemInfo info)
+        {
+            // Make new ruleItem control of this RuleItem type. 
+            ruleItemBase newRuleItem;
+            if (info.itemType == ruleItemType.RuleItem)
+            {
+                // .net ruleItems are loaded via reflection. We find the parameterless
+                // constructor, and then call it.
+                ConstructorInfo constr = info.ruleItemBaseType.GetConstructor(new Type[0]);
+                newRuleItem = (ruleItemBase)constr.Invoke(new object[0] { });
+            }
+            else if (info.itemType == ruleItemType.scriptFile)
+            {
+                // Script items are loaded by their own constructor, as we need information
+                // at runtime.
+                newRuleItem = new ruleItem_script(info.pythonFileName);
+            }
+            else
+                // This should only happen if a ruleItem is loaded of an unsupported
+                // type - ie, never.
+                throw new Exception("Unrecognised file type");
+
+            // Initialise the Pins on the control. This will generate a new guid for each pin.
+            // FIXME: It's kind of messy that we have to do this here.
+            newRuleItem.initPins();
+
+            generateDelegates().AddRuleItemToGlobalPool(newRuleItem);
+            return newRuleItem;
+        }
+
+        public IEnumerable<ruleItemBase> getRuleItems()
+        {
+            return ruleItems.Values;
+        }
+
+        /// <summary>
+        /// Return a new collection, containing only non-deleted lineChains.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<lineChain> getNonDeletedLineChains()
+        {
+            IEnumerable<lineChain> lineChains = getLineChains();
+            return lineChains.Where(lineChain => !lineChain.deleted).ToList();
+        }
+
+        public IEnumerable<lineChain> getLineChains()
+        {
+            return lineChains.Values;
+        }
+
+        public static rule deserialise(string serialised)
+        {
+            // Create a new rule, and deserialise in to it.
+            XmlSerializer mySer = new XmlSerializer(typeof(rule));
+            Encoding ascii = Encoding.BigEndianUnicode;
+            Stream stream = new MemoryStream(ascii.GetBytes(serialised));
+            return (rule)mySer.Deserialize(stream);
+        }
+
+        public void deleteRuleItem(ruleItemBase toDelete)
+        {
+            // Remove any lineChains attatched to the to-delete item
+            foreach (pin thisPin in toDelete.pinInfo.Values)
+            {
+                if (thisPin.isConnected)
+                {
+                    lineChain tonuke = GetLineChainFromGuid(thisPin.parentLineChain);
+                    tonuke.deleteSelf();
+                }
+            }
+
+            // mark as deleted.
+            toDelete.isDeleted = true;
+        }
+
+        public void deleteCtlRuleItem(ctlRuleItemWidget toDelete)
+        {
+            ctlRuleItems.Remove(toDelete.serial.id.ToString());
+        }
+
+        public IEnumerable<pin> getPins()
+        {
+            return pins.Values;
         }
     }
 }

@@ -31,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test data", "Test data", "{
 		testData\test.py = testData\test.py
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "netservice", "netservice\netservice.csproj", "{54B5ACD6-A5A2-4293-9317-765BEF9E2950}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -153,6 +155,21 @@ Global
 		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}.Release|Win32.ActiveCfg = Release|Win32
 		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}.Release|Win32.Build.0 = Release|Win32
+		{54B5ACD6-A5A2-4293-9317-765BEF9E2950}.clr|Any CPU.ActiveCfg = Release|Any CPU
+		{54B5ACD6-A5A2-4293-9317-765BEF9E2950}.clr|Any CPU.Build.0 = Release|Any CPU
+		{54B5ACD6-A5A2-4293-9317-765BEF9E2950}.clr|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{54B5ACD6-A5A2-4293-9317-765BEF9E2950}.clr|Mixed Platforms.Build.0 = Release|Any CPU
+		{54B5ACD6-A5A2-4293-9317-765BEF9E2950}.clr|Win32.ActiveCfg = Release|Any CPU
+		{54B5ACD6-A5A2-4293-9317-765BEF9E2950}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54B5ACD6-A5A2-4293-9317-765BEF9E2950}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54B5ACD6-A5A2-4293-9317-765BEF9E2950}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{54B5ACD6-A5A2-4293-9317-765BEF9E2950}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{54B5ACD6-A5A2-4293-9317-765BEF9E2950}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{54B5ACD6-A5A2-4293-9317-765BEF9E2950}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54B5ACD6-A5A2-4293-9317-765BEF9E2950}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54B5ACD6-A5A2-4293-9317-765BEF9E2950}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{54B5ACD6-A5A2-4293-9317-765BEF9E2950}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{54B5ACD6-A5A2-4293-9317-765BEF9E2950}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

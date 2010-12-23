@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
@@ -15,29 +16,29 @@ namespace netGui.RuleEngine
         public ctlRule()
         {
             InitializeComponent();
-            targetRule = new rule();
+            _rule = new rule();
+            commonConstructorStuff();
+        }
 
+        public ctlRule(rule ruleToDisplay)
+        {
+            InitializeComponent();
+            _rule = ruleToDisplay;
             commonConstructorStuff();
         }
 
         void commonConstructorStuff()
         {
-            currentLine = new lineChain(myDelegates);            
+            currentLine = new lineChain(_rule.generateDelegates());
 #if DEBUG
             showDebugInfoToolStripMenuItem.Visible = true;
 #endif
         }
 
-        public delegatePack myDelegates
-        {
-            get { return targetRule.generateDelegates(); }
-        }
+        private rule _rule;
 
-        private bool running = false;
-
-        public rule targetRule;
-
-        private PictureBox currentlyConnecting;         // These three hold the pictureBox and (partial-)lineChain which we are currently wiring up
+        // These two hold the pictureBox and (partial-)lineChain which we are currently wiring up
+        private PictureBox currentlyConnecting;
         public lineChain currentLine;
 
         private lineChain currentlyDraggingLine = null;         // These two are indexes to the lineChain/point that we are dragging when we drag a handle
@@ -46,59 +47,56 @@ namespace netGui.RuleEngine
         private lineChain currentlyConextedLine = null;         // These two are indexes to the lineChain/point that we right-clicked on, when showing a context menu
         private int currentlyConextedPoint = -1;
 
+        private readonly Color connectingPinColour = Color.Cyan;
+        private Color normalPinColour = Color.Transparent;
 
         #region rule manipulation
 
+        /// <summary>
+        /// Spawn a new ruleItem of the described type
+        /// </summary>
+        /// <param name="info">Description of the type to create</param>
         public void addRuleItem(ruleItemInfo info)
         {
-            // Make new ruleItem control of this RuleItem type
-            ruleItemBase newRuleItem;
-            if (info.itemType == ruleItemType.RuleItem)
-            {
-                ConstructorInfo constr = info.ruleItemBaseType.GetConstructor(new Type[0]);
-                newRuleItem = (ruleItemBase) constr.Invoke(new object[0] { });
-            }
-            else if (info.itemType == ruleItemType.PythonFile)
-            {
-                newRuleItem = new ruleItem_script(info.pythonFileName);
-            }
-            else
-                throw new Exception("eh? Unrecognised file type?");
+            // Create our rule item
+            ruleItemBase newRuleItem = _rule.addRuleItem(info);
 
-            // Initialise the Pins on the control. This will generate a new guid for each pin.
-            newRuleItem.initPins();
-
-            ctlRuleItemWidget newCtl = new ctlRuleItemWidget(newRuleItem , myDelegates, this.setTsStatus, false, targetRule.pins);
-            myDelegates.AddRuleItemToGlobalPool(newCtl.targetRuleItem);
+            // add a visual widget for it, and then add it to the visible controls
+            delegatePack myDelegates = _rule.generateDelegates();
+            ctlRuleItemWidget newCtl = new ctlRuleItemWidget(newRuleItem, myDelegates, this.setTsStatus, false, _rule.getPins());
             myDelegates.AddctlRuleItemWidgetToGlobalPool(newCtl);
             this.Controls.Add(newCtl);
             newCtl.BringToFront();
         }
 
+        /// <summary>
+        /// Make rule item controls for every rule item present in our rule.
+        /// </summary>
         public void addRuleItemControlsAfterDeserialisation()
         {
-            // Make rule item controls for each rule
-            foreach (ruleItemBase thisRule in this.targetRule.ruleItems.Values)
+            IEnumerable<ruleItemBase> childRuleItems = _rule.getRuleItems();
+            delegatePack myDelegates = _rule.generateDelegates();
+
+            foreach (ruleItemBase thisRule in childRuleItems)
             {
-                ctlRuleItemWidget newCtl = new ctlRuleItemWidget(thisRule, myDelegates, this.setTsStatus, true, targetRule.pins);
+                //if (thisRule.pinInfo.Count == 0)
+                //    thisRule.claimPinsPostDeSer(myDelegates, _runner.getPins());
+
+                ctlRuleItemWidget newCtl = new ctlRuleItemWidget(thisRule, myDelegates, setTsStatus, true, _rule.getPins());
                 myDelegates.AddctlRuleItemWidgetToGlobalPool(newCtl);
                 Controls.Add(newCtl);
                 newCtl.BringToFront();
             }
         }
 
-        public string SerialiseRule()
+        public string serialiseRule()
         {
-            return this.targetRule.serialise();
+            return _rule.serialise();
         }
 
-        public void DeserialiseRule(string serialised)
+        public void deserialiseRule(string serialised)
         {
-            // Create a new rule, and deserialise in to it.
-            XmlSerializer mySer = new XmlSerializer(targetRule.GetType());
-            Encoding ascii = Encoding.BigEndianUnicode;
-            Stream stream = new MemoryStream(ascii.GetBytes(serialised));
-            targetRule = (rule) mySer.Deserialize(stream);
+            _rule = rule.deserialise(serialised);
         }
 
         #endregion
@@ -123,22 +121,24 @@ namespace netGui.RuleEngine
         private void startLine(PictureBox from)
         {
             pin source = (pin)from.Tag;
+
             if ( source.isConnected )
             {
                 MessageBox.Show("Pin is already connected to something");
                 return;
             }
+
             currentlyConnecting = from;
-            currentlyConnecting.BackColor = Color.Cyan;
-            currentLine = new lineChain(myDelegates);
+            currentlyConnecting.BackColor = connectingPinColour;
+            currentLine = new lineChain( _rule.generateDelegates() );
             currentLine.start = PointToClient(Control.MousePosition);
-            currentLine.end = PointToClient(Control.MousePosition);             // set temporarily, so the line doesn't stretch to the origin until the first mouseMove
+            // set temporarily, so the line doesn't stretch to the origin until the first mouseMove
+            currentLine.end = PointToClient(Control.MousePosition);             
         }
 
         public void finishLine(PictureBox endTarget)
         {
             ctlRuleItemWidget sourceItemWidget;
-            ctlRuleItemWidget destItemWidget;
 
             pin source;
             pin dest;
@@ -147,7 +147,6 @@ namespace netGui.RuleEngine
             if (((pin)currentlyConnecting.Tag).direction == pinDirection.output)
             {
                 sourceItemWidget = ((ctlRuleItemWidget)currentlyConnecting.Parent);
-                destItemWidget   = ((ctlRuleItemWidget)endTarget.Parent);
 
                 source = (pin)currentlyConnecting.Tag;
                 dest = (pin)endTarget.Tag;
@@ -156,39 +155,39 @@ namespace netGui.RuleEngine
             {
                 // the user has drawn the line from destination to source.
                 currentLine.isdrawnbackwards = true;
-                destItemWidget = ((ctlRuleItemWidget)currentlyConnecting.Parent);
                 sourceItemWidget = ((ctlRuleItemWidget)endTarget.Parent);
 
                 dest = (pin)currentlyConnecting.Tag;
                 source = (pin)endTarget.Tag;
             }
 
-            currentlyConnecting.BackColor = Color.Transparent;  // erase highlight
+            currentlyConnecting.BackColor = normalPinColour;  // erase highlight
 
+            // A few sanity checks
+            bool errored = false;
             if (source.isConnected || dest.isConnected )
             {
                 MessageBox.Show("Pin is already connected to something");
-                currentLine = new lineChain(myDelegates);
-                source.parentLineChain.id = Guid.Empty;
-                currentlyConnecting = null;
-                return;
+                errored = true;
             }
             if (source == dest)
             {
                 MessageBox.Show("Pin cannot be connected to itself");
-                currentLine = new lineChain(myDelegates);
-                source.parentLineChain.id = Guid.Empty;
-                currentlyConnecting = null;
-                return;
+                errored = true;
             }
             if (source.direction == dest.direction)
             {
                 MessageBox.Show(source.direction.ToString() + " pins cannot be connected to other " + source.direction.ToString() + " pins. Wires must connect inputs to outputs.");
-                currentLine = new lineChain(myDelegates);
+                errored = true;
+            }            
+
+            if(errored)
+            {
+                currentLine = new lineChain(_rule.generateDelegates());
                 source.parentLineChain.id = Guid.Empty;
                 currentlyConnecting = null;
                 return;
-            }            
+            }
             
             // Hook pins up
             dest.connectTo(currentLine.serial, source.serial);
@@ -198,9 +197,9 @@ namespace netGui.RuleEngine
             currentLine.sourcePin = source.serial;
             sourceItemWidget.targetRuleItem.pinInfo[source.name].addChangeHandler(currentLine.handleStateChange);
 
-            myDelegates.AddLineChainToGlobalPool(currentLine);
-
-            
+            delegatePack myDelegates = _rule.generateDelegates();
+ 
+            myDelegates.AddLineChainToGlobalPool(currentLine);            
             currentLine = new lineChain(myDelegates);
 
             ((ctlRuleItemWidget)endTarget.Parent).alignWires();
@@ -209,28 +208,47 @@ namespace netGui.RuleEngine
             currentlyConnecting = null;
         }
 
+        /// <summary>
+        /// Determine if the current mouse cursor is hovering over a draggable handle.
+        /// </summary>
+        /// <returns></returns>
         private bool isHandleUnderPointer()
         {
             Point cursor = PointToClient(Control.MousePosition);
-            foreach (lineChain aLine in targetRule.lineChains.Values )
+
+            IEnumerable<lineChain> childLines = _rule.getNonDeletedLineChains();
+            foreach (lineChain aLine in childLines )
             {
                 if (isHandleUnderPoint(aLine.start, cursor))
                     return true;
-                foreach (Point aPoint in aLine.points)
-                    if (isHandleUnderPoint(aPoint, cursor))
-                        return true;
+
                 if (isHandleUnderPoint(aLine.end, cursor))
                     return true;
+
+                foreach (Point aPoint in aLine.midPoints)
+                {
+                    if (isHandleUnderPoint(aPoint, cursor))
+                        return true;
+                }
             }
+
             return false;
         }
 
+        /// <summary>
+        /// Is there a draggable handle directly under a given Point?
+        /// </summary>
+        /// <param name="checkThis"></param>
+        /// <param name="cursor"></param>
+        /// <returns></returns>
         private bool isHandleUnderPoint(Point checkThis, Point cursor)
         {
             int offX = Math.Abs(checkThis.X - cursor.X);
             int offY = Math.Abs(checkThis.Y - cursor.Y);
+
             if (offX <= lineChain.handleSize / 2 && offY <= lineChain.handleSize / 2)
                 return true;
+
             return false;
         }
 
@@ -239,16 +257,17 @@ namespace netGui.RuleEngine
         private void selectCurrentHandleAsContexted(Point cursor)
         {
             // Find the handle under the mouse cursor and select it as the 'contexted'.
-
             currentlyConextedLine = null;
             currentlyConextedPoint = -1;
-            foreach (lineChain aLine in targetRule.lineChains.Values)
-            {
-                if (aLine.deleted)
-                    continue;
 
+            IEnumerable<lineChain> lines = _rule.getNonDeletedLineChains();
+            foreach (lineChain aLine in lines)
+            {
+
+                // First, see if the cursor is over a draggable midPoint, and start 
+                // dragging it if so.
                 int pointIndex = 0;
-                foreach (Point aPoint in aLine.points)
+                foreach (Point aPoint in aLine.midPoints)
                 {
                     if (isHandleUnderPoint(aPoint, cursor))
                     {
@@ -260,32 +279,36 @@ namespace netGui.RuleEngine
                 }
             }
 
-            // If we got here, we didn't find the handle under the pointer. try .start/.ends.
-            foreach (lineChain aLine in targetRule.lineChains.Values)
+            // If we got here, we didn't find the handle under the pointer. 
+            // Perhaps a start/end is being positioned (which are handled differently).
+            foreach (lineChain aLine in lines)
             {
-                if (aLine.deleted)
-                    continue;
-                // If the cursor _is_ hovering over a start or end, don't set currentlyContextedPoint (since there isn't one), just -Line.
+                // If the cursor _is_ hovering over a start or end, don't set 
+                // currentlyContextedPoint (since there isn't one),just -Line.
                 if (isHandleUnderPoint(aLine.start, cursor))
                 {
                     currentlyConextedLine = aLine;
                     return;
                 }
+
                 if (isHandleUnderPoint(aLine.end, cursor))
                 {
                     currentlyConextedLine = aLine;
                     return;
                 }
             }
+
+            throw new Exception("Unable to find current Handle");
         }
 
         private void selectCurrentHandleAsDragging(Point cursor)
         {
-            int lineIndex = 0;
-            foreach (lineChain aLine in targetRule.lineChains.Values)
+            IEnumerable<lineChain> lines = _rule.getNonDeletedLineChains();
+            foreach (lineChain aLine in lines)
             {
                 int pointIndex = 0;
-                foreach (Point aPoint in aLine.points)
+
+                foreach (Point aPoint in aLine.midPoints)
                 {
                     if (isHandleUnderPoint(aPoint, cursor))
                     {
@@ -295,31 +318,18 @@ namespace netGui.RuleEngine
                     }
                     pointIndex++;
                 }
-                lineIndex++;
             }
         }
 
         public void deleteRuleItem(ctlRuleItemWidget toDelete)
         {
-            // Remove any lineChains attatched to the to-delete item
-            foreach (pin thisPin in toDelete.conPins.Keys)
-            {
-                if (thisPin.isConnected)
-                {
-                    lineChain tonuke = targetRule.GetLineChainFromGuid(thisPin.parentLineChain);
-                    tonuke.deleteSelf();
-                }
-            }
+            _rule.deleteRuleItem(toDelete.targetRuleItem);
+
+            // remove the associated ctlRuleItem
+            _rule.deleteCtlRuleItem(toDelete);
 
             // remove the actual control
             this.Controls.Remove(toDelete);
-
-            // remove the associated ruleItem
-            targetRule.ctlRuleItems.Remove(toDelete.serial.id.ToString());
-
-            // remove from our global pool
-            toDelete.targetRuleItem.isDeleted = true;
-
             this.Invalidate();
         }
 
@@ -339,12 +349,9 @@ namespace netGui.RuleEngine
 
         private void FrmRule_Paint(object sender, PaintEventArgs e)
         {
-            if (targetRule != null && targetRule.lineChains != null)
-            {
-                foreach (lineChain aLine in targetRule.lineChains.Values)
-                    if (!aLine.deleted)
-                        aLine.draw( Graphics.FromHwnd(this.Handle)  );
-            }
+            IEnumerable<lineChain> lines = _rule.getNonDeletedLineChains();
+            foreach (lineChain aLine in lines)
+                aLine.draw( Graphics.FromHwnd(this.Handle)  );
 
             if (currentlyConnecting != null)
                 currentLine.draw(Graphics.FromHwnd(this.Handle));
@@ -355,7 +362,7 @@ namespace netGui.RuleEngine
             if (currentlyConnecting != null)
             {
                 // We are currently drawing a wire. Add a line segment.
-                currentLine.points.Add(PointToClient(Control.MousePosition));
+                currentLine.midPoints.Add(PointToClient(Control.MousePosition));
             } 
             else if ( e.GetType() == typeof(MouseEventArgs) &&  ((MouseEventArgs)e).Button == System.Windows.Forms.MouseButtons.Right  )
             {
@@ -376,7 +383,6 @@ namespace netGui.RuleEngine
                     mnuStripHandles.Location = (Control.MousePosition);
                 }
             }
-
         }
 
         private void FrmRule_MouseDown(object sender, MouseEventArgs e)
@@ -412,7 +418,7 @@ namespace netGui.RuleEngine
                 {
                     // User is attempting to drag a wire corner handle
                     setTsStatus("");
-                    currentlyDraggingLine.points[currentlyDraggingPoint] = PointToClient(Control.MousePosition);
+                    currentlyDraggingLine.midPoints[currentlyDraggingPoint] = PointToClient(Control.MousePosition);
                     this.Invalidate(false);
                 }
                 else
@@ -439,7 +445,7 @@ namespace netGui.RuleEngine
 
         private void mnuItemDelJunc_Click(object sender, EventArgs e)
         {
-            currentlyConextedLine.points.RemoveAt(currentlyConextedPoint);
+            currentlyConextedLine.midPoints.RemoveAt(currentlyConextedPoint);
             this.Invalidate();
         }
 
@@ -450,7 +456,7 @@ namespace netGui.RuleEngine
             if (currentlyConextedPoint == 0)
             {
                 prevPoint = currentlyConextedLine.start;
-                nextPoint = currentlyConextedLine.points[currentlyConextedPoint];
+                nextPoint = currentlyConextedLine.midPoints[currentlyConextedPoint];
             }
             else if (currentlyConextedPoint == -1)
             {
@@ -458,14 +464,14 @@ namespace netGui.RuleEngine
                 prevPoint = currentlyConextedLine.start;
                 nextPoint = currentlyConextedLine.end;
             }
-            else if (currentlyConextedLine.points.Count > currentlyConextedPoint +1)
+            else if (currentlyConextedLine.midPoints.Count > currentlyConextedPoint +1)
             {
-                prevPoint = currentlyConextedLine.points[currentlyConextedPoint];
-                nextPoint = currentlyConextedLine.points[currentlyConextedPoint + 1];
+                prevPoint = currentlyConextedLine.midPoints[currentlyConextedPoint];
+                nextPoint = currentlyConextedLine.midPoints[currentlyConextedPoint + 1];
             } 
             else 
             {
-                prevPoint = currentlyConextedLine.points[currentlyConextedPoint];
+                prevPoint = currentlyConextedLine.midPoints[currentlyConextedPoint];
                 nextPoint = currentlyConextedLine.end;
             }
 
@@ -486,9 +492,9 @@ namespace netGui.RuleEngine
                 newPoint.Y = prevPoint.Y - (nextLine.Y / 2);
 
             if (currentlyConextedPoint < 1 )
-                currentlyConextedLine.points.Insert(0 , newPoint);
+                currentlyConextedLine.midPoints.Insert(0 , newPoint);
             else
-                currentlyConextedLine.points.Insert(currentlyConextedPoint + 1 , newPoint);
+                currentlyConextedLine.midPoints.Insert(currentlyConextedPoint + 1 , newPoint);
 
             this.Invalidate();
         }
@@ -503,27 +509,25 @@ namespace netGui.RuleEngine
 
         public void stop()
         {
-            if (running)
+            if (_rule.isRunning)
             {
-                running = false;
                 this.Enabled = true;
                 toolStripProgressBar.MarqueeAnimationSpeed = 0;
                 toolStripProgressBar.Visible = false;
 
-                targetRule.stop();
+                _rule.stop();
             }
         }
 
         public void start()
         {
-            if (!running)
+            if (!_rule.isRunning)
             {
-                running = true;
                 this.Enabled = false;
                 toolStripProgressBar.MarqueeAnimationSpeed = 100;
                 toolStripProgressBar.Visible = true;
 
-                targetRule.start();
+                _rule.start();
             }
         }
 
@@ -532,5 +536,17 @@ namespace netGui.RuleEngine
             new frmDebug(currentlyConextedLine).Show();
         }
 
+        public rule getRule()
+        {
+            return _rule;
+        }
+
+        public void loadRule(rule toLoad)
+        {
+            stop();
+            _rule = toLoad;
+
+            addRuleItemControlsAfterDeserialisation();
+        }
     }
 }

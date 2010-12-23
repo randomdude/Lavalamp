@@ -18,7 +18,7 @@ namespace netGui.RuleEngine
         public bool isdrawnbackwards;   // was the line drawn from destination to source?
         public lineChainGuid serial = new lineChainGuid();
 
-        public List<Point> points;
+        public List<Point> midPoints;
 
         private readonly delegatePack myDelegates;
 
@@ -26,7 +26,7 @@ namespace netGui.RuleEngine
 
         public lineChain(delegatePack newDelegates)
         {
-            points = new List<Point>();
+            midPoints = new List<Point>();
             start = new Point(0, 0);
             end = new Point(0, 0);
 
@@ -46,7 +46,7 @@ namespace netGui.RuleEngine
         {
             Point cursor = start;
             drawHandle(toThis, start);
-            foreach (Point nextPoint in points)
+            foreach (Point nextPoint in midPoints)
             {
                 drawLine(toThis, cursor, nextPoint, col);
                 drawHandle(toThis, nextPoint);
