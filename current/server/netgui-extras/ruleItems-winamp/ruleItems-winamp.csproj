@@ -65,6 +65,10 @@
       <Project>{560BFC3D-3D57-46B5-B1C5-A3E01A88963C}</Project>
       <Name>netGui</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ruleEngine\ruleEngine.csproj">
+      <Project>{04834DB5-4E91-48EA-9107-FD2246087122}</Project>
+      <Name>ruleEngine</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

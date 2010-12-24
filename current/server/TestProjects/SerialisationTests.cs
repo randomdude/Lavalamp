@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Reflection;
-using System.Xml.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using netGui.RuleEngine;
-using netGui.RuleEngine.ruleItems;
+using ruleEngine;
+using ruleEngine.ruleItems;
 
 namespace TestProjects
 {

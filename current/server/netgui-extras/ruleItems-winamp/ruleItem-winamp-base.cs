@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.IO.Pipes;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using netGui.RuleEngine;
-using netGui.RuleEngine.ruleItems;
+using ruleEngine;
+using ruleEngine.ruleItems;
 
 namespace ruleItems_winamp
 {

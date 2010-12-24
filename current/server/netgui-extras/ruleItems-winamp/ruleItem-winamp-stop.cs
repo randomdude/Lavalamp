@@ -1,7 +1,5 @@
 ﻿using System.Drawing;
-using System.IO.Pipes;
-using netGui.RuleEngine;
-using netGui.RuleEngine.ruleItems;
+using ruleEngine;
 
 namespace ruleItems_winamp
 {

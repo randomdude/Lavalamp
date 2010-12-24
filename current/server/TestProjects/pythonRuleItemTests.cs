@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using netGui.RuleEngine;
-using netGui.RuleEngine.ruleItems;
 using System.Collections.Generic;
 using System;
+using ruleEngine;
+using ruleEngine.ruleItems;
 
 namespace TestProjects
 {
@@ -92,7 +92,7 @@ namespace TestProjects
         //[TestMethod]
         public void testFunctionalityOfEmailModule()
         {
-            netGui.RuleEngine.ruleItems.ruleItem_Email testItem = new netGui.RuleEngine.ruleItems.ruleItem_Email();
+            ruleItem_Email testItem = new ruleItem_Email();
 
             testItem.pinInfo["checkNow"].value.setData(false);
             testItem.pinInfo["checkNow"].value.setData(true);
