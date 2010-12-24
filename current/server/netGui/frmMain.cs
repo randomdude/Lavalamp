@@ -4,7 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using netbridge;
 using netGui.nodeEditForms;
-using netGui.RuleEngine;
+using ruleEngine;
 
 namespace netGui
 {
@@ -303,7 +303,7 @@ namespace netGui
 
         private void showRuleEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RuleEngine.frmRuleEdit editor = new RuleEngine.frmRuleEdit(onSaveRule, onCloseRuleEditorDialog);
+            ruleEngine.frmRuleEdit editor = new ruleEngine.frmRuleEdit(onSaveRule, onCloseRuleEditorDialog);
             editor.Show();
         }
 
@@ -313,7 +313,7 @@ namespace netGui
 
         private void newRuleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmAskName newname = new FrmAskName("New rule name", "UnnamedRule");
+            frmQuestion newname = new frmQuestion("New rule name", "UnnamedRule");
             newname.ShowDialog(this);
 
             if (newname.cancelled)

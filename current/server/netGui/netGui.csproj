@@ -54,14 +54,6 @@
     <OutputPath>bin\clr\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IronPython, Version=2.0.0.5000, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Third Party\IronPython.dll</HintPath>
-    </Reference>
-    <Reference Include="IronPython.Modules, Version=2.0.0.5000, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Third Party\IronPython.Modules.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Dynamic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Third Party\Microsoft.Dynamic.dll</HintPath>
@@ -116,147 +108,6 @@
     <Compile Include="nodeEditForms\FrmChangeId.Designer.cs">
       <DependentUpon>FrmChangeId.cs</DependentUpon>
     </Compile>
-    <Compile Include="RuleEngine\crossThreads.cs" />
-    <Compile Include="RuleEngine\ctlPythonSetting.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="RuleEngine\ctlPythonSetting.Designer.cs">
-      <DependentUpon>ctlPythonSetting.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RuleEngine\ctlRule.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="RuleEngine\ctlRule.Designer.cs">
-      <DependentUpon>ctlRule.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RuleEngine\guidTypes\ctlRuleItemWidgetGuid.cs" />
-    <Compile Include="RuleEngine\delegatePack.cs" />
-    <Compile Include="RuleEngine\FrmAskName.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RuleEngine\FrmAskName.Designer.cs">
-      <DependentUpon>FrmAskName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RuleEngine\frmDebug.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RuleEngine\frmDebug.Designer.cs">
-      <DependentUpon>frmDebug.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RuleEngine\frmException.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RuleEngine\frmException.Designer.cs">
-      <DependentUpon>frmException.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RuleEngine\frmPythonParameters.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RuleEngine\frmPythonParameters.Designer.cs">
-      <DependentUpon>frmPythonParameters.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RuleEngine\IScriptEngine.cs" />
-    <Compile Include="RuleEngine\lineChain-xml.cs" />
-    <Compile Include="RuleEngine\lineChain.cs" />
-    <Compile Include="RuleEngine\guidTypes\lineChainGuid.cs" />
-    <Compile Include="RuleEngine\guidTypes\pinGuid.cs" />
-    <Compile Include="RuleEngine\pin.cs" />
-    <Compile Include="RuleEngine\rule-xml.cs" />
-    <Compile Include="RuleEngine\rule.cs" />
-    <Compile Include="RuleEngine\frmRuleEdit.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RuleEngine\frmRuleEdit.Designer.cs">
-      <DependentUpon>frmRuleEdit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RuleEngine\guidTypes\ruleItemGuid.cs" />
-    <Compile Include="RuleEngine\ruleItemInfo.cs" />
-    <Compile Include="RuleEngine\ruleItems\Basic logic\ruleItem-not.cs" />
-    <Compile Include="RuleEngine\ruleItems\Basic logic\ruleItem-splitter.cs" />
-    <Compile Include="RuleEngine\pythonEngine.cs" />
-    <Compile Include="RuleEngine\ruleItems\ctlCheckEmail.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="RuleEngine\ruleItems\ctlCheckEmail.Designer.cs">
-      <DependentUpon>ctlCheckEmail.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RuleEngine\ruleItems\frmCheckEmailOptions.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RuleEngine\ruleItems\frmCheckEmailOptions.Designer.cs">
-      <DependentUpon>frmCheckEmailOptions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RuleEngine\ruleItems\ruleItemEmail.cs" />
-    <Compile Include="RuleEngine\ruleItems\ruleItemScript.cs" />
-    <Compile Include="RuleEngine\ruleItems\Starts\imapChecker.cs" />
-    <Compile Include="RuleEngine\ruleItems\Starts\ruleItem-atTime.cs" />
-    <Compile Include="RuleEngine\ruleItems\Starts\ruleItem-startRun.cs" />
-    <Compile Include="RuleEngine\ruleItems\windows\desktopMessageOptions.cs" />
-    <Compile Include="RuleEngine\ruleItems\windows\frmDesktopMessage.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RuleEngine\ruleItems\windows\frmDesktopMessage.Designer.cs">
-      <DependentUpon>frmDesktopMessage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RuleEngine\ruleItems\windows\FrmDesktopMessageOptions.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RuleEngine\ruleItems\windows\FrmDesktopMessageOptions.Designer.cs">
-      <DependentUpon>FrmDesktopMessageOptions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RuleEngine\pinData.cs" />
-    <Compile Include="RuleEngine\pinDataBool.cs" />
-    <Compile Include="RuleEngine\pinDataTristate.cs" />
-    <Compile Include="RuleEngine\ruleItems\windows\ruleItem-desktopMessage.cs" />
-    <Compile Include="RuleEngine\ruleItems\windows\ctlIsProcRunning.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="RuleEngine\ruleItems\windows\ctlIsProcRunning.Designer.cs">
-      <DependentUpon>ctlIsProcRunning.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RuleEngine\ruleItems\windows\frmPickProcess.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RuleEngine\ruleItems\windows\frmPickProcess.Designer.cs">
-      <DependentUpon>frmPickProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RuleEngine\ruleItems\windows\frmRunExeOptions.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RuleEngine\ruleItems\windows\frmRunExeOptions.Designer.cs">
-      <DependentUpon>frmRunExeOptions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RuleEngine\ruleItems\windows\ctlRunFile.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="RuleEngine\ruleItems\windows\ctlRunFile.Designer.cs">
-      <DependentUpon>ctlRunFile.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RuleEngine\ruleItems\Starts\ctlTimeInterval.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="RuleEngine\ruleItems\Starts\ctlTimeInterval.Designer.cs">
-      <DependentUpon>ctlTimeInterval.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RuleEngine\ruleItems\Basic logic\ruleItem-debug.cs" />
-    <Compile Include="RuleEngine\ruleItems\Starts\ruleItem-timeInterval.cs" />
-    <Compile Include="RuleEngine\ruleItems\Basic logic\ruleItem-or.cs" />
-    <Compile Include="RuleEngine\ruleItems\Basic logic\ruleItem-and.cs">
-    </Compile>
-    <Compile Include="RuleEngine\ctlRuleItemWidget.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="RuleEngine\ruleItems\windows\ruleItem-shutdown.cs" />
-    <Compile Include="RuleEngine\ruleItems\windows\ruleItem-killProcess.cs" />
-    <Compile Include="RuleEngine\ruleItems\windows\ruleItem-isProcessRunning.cs" />
-    <Compile Include="RuleEngine\ruleItems\windows\ruleItem-runexe.cs" />
-    <Compile Include="RuleEngine\ruleItems\ruleItemBase.cs">
-    </Compile>
-    <Compile Include="RuleEngine\Exceptions.cs" />
-    <Compile Include="RuleEngine\ruleItems\windows\tristate.cs" />
-    <Compile Include="RuleEngine\ruleState.cs" />
-    <Compile Include="RuleEngine\XmlReaderExtender.cs" />
-    <Compile Include="RuleEngine\XmlWriterExtender.cs" />
     <Compile Include="sensorControls\ctlOnOff.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -329,14 +180,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="nodeEditForms\FrmChangeId.resx">
       <DependentUpon>FrmChangeId.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RuleEngine\FrmAskName.resx">
-      <DependentUpon>FrmAskName.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RuleEngine\frmRuleEdit.resx">
-      <DependentUpon>frmRuleEdit.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="sensorControls\ctlOnOff.resx">
@@ -423,107 +266,21 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\1.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\0.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\ArrowRight.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\ArrowLeft.png" />
-    <EmbeddedResource Include="RuleEngine\ctlRule.resx">
-      <DependentUpon>ctlRule.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RuleEngine\ctlRuleItemWidget.resx">
-      <DependentUpon>ctlRuleItemWidget.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\baiscLogic\ruleItem_and.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\baiscLogic\ruleItem_or.png" />
-    <EmbeddedResource Include="RuleEngine\ruleItems\Starts\ctlTimeInterval.resx">
-      <DependentUpon>ctlTimeInterval.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\clock21.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\baiscLogic\ruleItem_splitter.png" />
-    <EmbeddedResource Include="RuleEngine\ctlPythonSetting.resx">
-      <DependentUpon>ctlPythonSetting.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RuleEngine\frmDebug.resx">
-      <DependentUpon>frmDebug.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RuleEngine\frmException.resx">
-      <DependentUpon>frmException.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RuleEngine\frmPythonParameters.resx">
-      <DependentUpon>frmPythonParameters.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RuleEngine\ruleItems\ctlCheckEmail.resx">
-      <DependentUpon>ctlCheckEmail.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RuleEngine\ruleItems\frmCheckEmailOptions.resx">
-      <DependentUpon>frmCheckEmailOptions.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RuleEngine\ruleItems\windows\ctlIsProcRunning.resx">
-      <DependentUpon>ctlIsProcRunning.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RuleEngine\ruleItems\windows\frmDesktopMessage.resx">
-      <DependentUpon>frmDesktopMessage.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RuleEngine\ruleItems\windows\FrmDesktopMessageOptions.resx">
-      <DependentUpon>FrmDesktopMessageOptions.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RuleEngine\ruleItems\windows\frmPickProcess.resx">
-      <DependentUpon>frmPickProcess.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RuleEngine\ruleItems\windows\frmRunExeOptions.resx">
-      <DependentUpon>frmRunExeOptions.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RuleEngine\ruleItems\windows\ctlRunFile.resx">
-      <DependentUpon>ctlRunFile.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Content Include="Resources\baiscLogic\ruleItem_not.png" />
-    <None Include="Resources\ram.ico" />
     <None Include="Resources\Run.bmp" />
     <None Include="Resources\Pause.bmp" />
-    <None Include="Resources\gearSmall.bmp" />
-    <None Include="Resources\Keys.png" />
-    <None Include="Resources\delete2.PNG" />
-    <None Include="Resources\delete.png" />
-    <None Include="Resources\Gear.png" />
-    <None Include="Resources\IPML.ICO" />
-    <None Include="Resources\Shortcut.ico" />
-    <None Include="Resources\New.ico" />
-    <None Include="Resources\error.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\netbridge\netbridge.vcproj">
       <Project>{ADFA97F6-D7A7-489F-86AF-D7A835D18E51}</Project>
       <Name>netbridge</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ruleEngine\ruleEngine.csproj">
+      <Project>{04834DB5-4E91-48EA-9107-FD2246087122}</Project>
+      <Name>ruleEngine</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="RuleEngine\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
