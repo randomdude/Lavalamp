@@ -219,7 +219,7 @@ namespace ruleEngine.ruleItems
         public void evaluateScript()
         {
             // prepare the python object instance for execution, by supplying it with the
-            // neccessary inputs and parameters.
+            // necessary inputs and parameters.
             propagatePinStatesToPython();
             propogateParametersToPython();
 

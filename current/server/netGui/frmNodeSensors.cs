@@ -83,15 +83,14 @@ namespace netGui
         {
             // Add some menus to our controlbox
             int sysMenu = GetSystemMenu(this.Handle.ToInt32(), 0 );
-            long s;
 
             if (0==sysMenu || -1 == sysMenu)
             {
                 MessageBox.Show("Unable to get system menu handle");
             } else {
-                s = AppendMenu(sysMenu, 0xA00, 0, null);
-                s = AppendMenu(sysMenu, 0x000, 0x100, "Minimize to &tray");
-                s = AppendMenu(sysMenu, 0x000, 0x101, "&Always on top");
+                AppendMenu(sysMenu, 0xA00, 0, null);
+                AppendMenu(sysMenu, 0x000, 0x100, "Minimize to &tray");
+                AppendMenu(sysMenu, 0x000, 0x101, "&Always on top");
             }
         }
 
@@ -107,7 +106,7 @@ namespace netGui
         {
             switch (wParam)
             {
-                case 0x100: // minimise to tray
+                case 0x100: // minimize to tray
                     minimizeToTray_Click(this, new EventArgs());
                     break;
                 case 0x101: // Always on top

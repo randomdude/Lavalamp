@@ -5,7 +5,7 @@ namespace netGui
 {
     public class sensor
     {
-        private Node parentNode;
+        private readonly Node parentNode;
 
         public sensor()
         {
