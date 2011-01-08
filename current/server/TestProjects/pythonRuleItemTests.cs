@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Diagnostics;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System;
 using ruleEngine;
@@ -9,9 +10,9 @@ namespace TestProjects
     [TestClass]
     public class pythonRuleItemTests
     {
-        private const string filenameParameters = @"..\..\..\testData\test-configuration.py";
-        private const string filename = @"..\..\..\testData\test.py";
-        private const string filenameCategory = @"..\..\..\testData\test-category.py";
+        private const string filenameParameters =  @"\test-configuration.py";
+        private const string filename = @"\test.py";
+        private const string filenameCategory = @"\test-category.py";
 
         /// <summary>
         /// Verify load of an example python ruleItem, ensuring that the getPinInfo operates.
@@ -19,7 +20,7 @@ namespace TestProjects
         [TestMethod]
         public void testLoadOfPythonRuleItem()
         {
-            ruleItem_script testItem = new ruleItem_script(filename);
+            ruleItem_script testItem = new ruleItem_script(Properties.Settings.Default.testDataPath + filename);
 
             Assert.AreEqual("test python rule item", testItem.ruleName());
 
@@ -38,7 +39,7 @@ namespace TestProjects
         [TestMethod]
         public void testLoadOfPythonRuleItemWithCategory()
         {
-            ruleItem_script testItem = new ruleItem_script(filenameCategory);
+            ruleItem_script testItem = new ruleItem_script(Properties.Settings.Default.testDataPath + filenameCategory);
 
             Assert.AreEqual("test python rule item", testItem.ruleName());
             Assert.AreEqual("test category", testItem.getCategory());
@@ -47,7 +48,7 @@ namespace TestProjects
         [TestMethod]
         public void testLoadOfPythonRuleItemWithParameters()
         {
-            ruleItem_script testItem = new ruleItem_script(filenameParameters);
+            ruleItem_script testItem = new ruleItem_script(Properties.Settings.Default.testDataPath + filenameParameters);
 
             Assert.AreEqual(2, testItem.parameters.Count);
             Assert.AreEqual("first value", testItem.parameters["clampToZero"]);
