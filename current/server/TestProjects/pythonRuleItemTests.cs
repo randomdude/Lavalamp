@@ -62,7 +62,7 @@ namespace TestProjects
         [TestMethod]
         public void testFunctionalityOfPythonRuleItemWithParameters()
         {
-            ruleItem_script testItem = new ruleItem_script(filenameParameters);
+            ruleItem_script testItem = new ruleItem_script(Properties.Settings.Default.testDataPath + filenameParameters);
 
             testItem.parameters["clampToZero"] = "NO U";
 
@@ -78,7 +78,7 @@ namespace TestProjects
         [TestMethod]
         public void testFunctionalityOfPythonRuleItem()
         {
-            ruleItem_script testItem = new ruleItem_script(filename);
+            ruleItem_script testItem = new ruleItem_script(Properties.Settings.Default.testDataPath + filename);
             testItem.pinInfo["myInputPin"].value.setData(false);
             testItem.evaluate();
             Assert.IsTrue(((bool)testItem.pinInfo["myOutputPin"].value.getData()) == false);
