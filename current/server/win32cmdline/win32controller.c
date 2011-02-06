@@ -1,6 +1,5 @@
 
 #include <stdio.h>
-#include <windows.h>
 #include "../shared/lavalamp.h"
 
 #include "main.h"
