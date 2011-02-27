@@ -147,11 +147,14 @@ BOOL __cdecl initPort(appConfig_t* myconfig)
 {
 	DCB mydcb;
 
-	myconfig->hnd = CreateFile(myconfig->portname, GENERIC_READ|GENERIC_WRITE, (DWORD)NULL, NULL, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, (HANDLE)NULL);
+	char* portpath = malloc(strlen(myconfig->portname) + 10);
+	wsprintf(portpath, "\\\\.\\%s", myconfig->portname);
+	myconfig->hnd = CreateFile(portpath, GENERIC_READ|GENERIC_WRITE, (DWORD)NULL, NULL, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, (HANDLE)NULL);
+	free (portpath);
 
 	if (INVALID_HANDLE_VALUE == myconfig->hnd)
 	{
-		printf("Unable to open port '%s'\n", myconfig->portname);
+		printf("Unable to open port '%s': error code %d\n", myconfig->portname, GetLastError() );
 		return FALSE ;
 	}
 

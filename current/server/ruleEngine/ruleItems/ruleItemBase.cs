@@ -184,7 +184,7 @@ namespace ruleEngine
 
     public class ToolboxRuleCategoryAttribute : Attribute
     {
-        internal string name;
+        internal readonly string name;
 
         public ToolboxRuleCategoryAttribute(string newName)
         {

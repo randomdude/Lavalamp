@@ -67,9 +67,12 @@ namespace netbridge
 				int byteCount = myEncoding->GetByteCount(strPortName) ;
 
 				myseshdata.portname = (char*)malloc(byteCount+1);
-				memset(myseshdata.portname, 0x00, sizeof(myseshdata.portname)+1);
+
+				// Getting data from a System::String is tricky. Is there a better way to do it than this?
+				// ERK, this is coming straight of a unicode char in to an ascii! fixme!
 				for( int i = 0; i< byteCount; i++)
 					myseshdata.portname[i] =  (char)strPortName->ToCharArray()[i];
+				myseshdata.portname[byteCount] = 0;
 
 				// Pass through encryption setting
 				myseshdata.useEncryption = useEncryption;
