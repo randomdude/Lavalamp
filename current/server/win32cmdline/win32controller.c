@@ -557,7 +557,7 @@ void doUsage()
 	printf(" -n <id>            : Select node to talk to. can be hex (prefix with 0x)\n%s" , \
 		   "                      or decimal.\n");
 	printf(" -p <name>          : Select IO device to use\n");
-	printf(" -i                 : Do not treat the IO device as a port - do not set baud rate, etc. The IO device may be a named pipe.\n");
+	printf(" -i                 : Force not to treat the IO device as a port - do not set baud rate, etc. The IO device may be a named pipe. This should be autodetected under normal usage.\n");
 	printf(" -v                 : Be verbose. Specify up to three times:\n");
 	printf("                        Once for basic info\n");
 	printf("                        Twice for protocol info\n");

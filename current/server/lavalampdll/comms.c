@@ -14,9 +14,6 @@ long sendwithtimeout( appConfig_t* myconfig, char* data, long datalen, BOOL* did
 	OVERLAPPED myoverlap;
 	didTimeout[0]=FALSE;
 
-	// debugging!
-	CancelIo(myconfig->hnd);
-
 	memset(&myoverlap, 0x00, sizeof(OVERLAPPED));
 	myoverlap.hEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
 	if (0 == myoverlap.hEvent)
@@ -160,6 +157,9 @@ BOOL __cdecl initPort(appConfig_t* myconfig)
 
 	// Only set the serial parameters if we are using a serial port, since we can also communicate over named 
 	// pipes or suchlike.
+	if (strnicmp(myconfig->portname, "pipe\\", 5) == 0)
+		myconfig->isSerialPort = FALSE;
+
 	if (myconfig->isSerialPort)
 	{
 		GetCommState(myconfig->hnd,&mydcb);
@@ -193,7 +193,7 @@ BOOL __cdecl initPort(appConfig_t* myconfig)
 }
 BOOL isPortOpen(appConfig_t* myappconfig)
 {
-	return (!(INVALID_HANDLE_VALUE == myappconfig->hnd));
+	return (INVALID_HANDLE_VALUE != myappconfig->hnd);
 }
 
 void syncNetwork(appConfig_t* myconfig)
