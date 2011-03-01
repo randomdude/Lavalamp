@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -51,8 +52,16 @@
     </Compile>
     <Compile Include="SerialisationTests.cs" />
     <Compile Include="pythonRuleItemTests.cs" />
+    <Compile Include="virtualNetworkTests\basicTests.cs" />
+    <Compile Include="virtualNetworkTests\commandTests.cs" />
+    <Compile Include="virtualNetworkTests\networkTest.cs" />
+    <Compile Include="virtualNetworkTests\threadParams.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\netbridge\netbridge.vcproj">
+      <Project>{ADFA97F6-D7A7-489F-86AF-D7A835D18E51}</Project>
+      <Name>netbridge</Name>
+    </ProjectReference>
     <ProjectReference Include="..\netGui\netGui.csproj">
       <Project>{560BFC3D-3D57-46B5-B1C5-A3E01A88963C}</Project>
       <Name>netGui</Name>
@@ -60,6 +69,10 @@
     <ProjectReference Include="..\ruleEngine\ruleEngine.csproj">
       <Project>{04834DB5-4E91-48EA-9107-FD2246087122}</Project>
       <Name>ruleEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\virtualNodeNetwork\virtualNodeNetwork.csproj">
+      <Project>{C5253F17-CF0C-4966-86A9-D9CB95137735}</Project>
+      <Name>virtualNodeNetwork</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

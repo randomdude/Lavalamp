@@ -6,7 +6,7 @@
 	ProjectGUID="{ADFA97F6-D7A7-489F-86AF-D7A835D18E51}"
 	RootNamespace="netbridge"
 	Keyword="ManagedCProj"
-	TargetFrameworkVersion="131072"
+	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
 		<Platform
@@ -181,10 +181,6 @@
 			RelativePath="System.XML.dll"
 			AssemblyName="System.Xml, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
 			MinFrameworkVersion="131072"
-		/>
-		<ProjectReference
-			ReferencedProjectIdentifier="{B71E2089-C4C8-46E7-81F7-E5BC0806A08B}"
-			RelativePathToProject=".\lavalampdll\lavalampdll.vcproj"
 		/>
 	</References>
 	<Files>

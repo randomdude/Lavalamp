@@ -160,7 +160,11 @@ generic_packet_response_t* sendPacket(appConfig_t* myconfig, datapkt_t tosend)
 	p |= response->byte8 <<  0;
 	if (myconfig->verbose>2) printf("Node challenged us 0x%08lx\n", p);
 
-	// respond with p+1 and command payload
+	// respond with p+1 and command payload. 
+	// We can also inject a fault here, by responding with an incorrect P, so do that if needed.
+	if (myconfig->injectFaultInvalidResponse)
+		p++;	// Use an incorrect P, as we are simulating a fault
+
 	setseq( &crypted , p+1 );
 	crypted.nodeid = tosend.nodeid;
 	crypted.byte6 = tosend.byte6;
@@ -176,7 +180,7 @@ generic_packet_response_t* sendPacket(appConfig_t* myconfig, datapkt_t tosend)
 	if (!s ||  timeout )
 	{
 		if (myconfig->verbose>0)
-			printf("Unable to send data - GetLastError 0x%lx. Tmeout status %s\n", GetLastError(), timeout?"TRUE":"FALSE");
+			printf("Unable to send data - GetLastError 0x%lx. Timeout status %s\n", GetLastError(), timeout?"TRUE":"FALSE");
 		if (timeout)
 			wrappedresponse->errorcode=errcode_timeout;
 		else
@@ -199,10 +203,10 @@ generic_packet_response_t* sendPacket(appConfig_t* myconfig, datapkt_t tosend)
 		return wrappedresponse;
 	}
 
-	if (myconfig->verbose>2) { printf("Packet recieved (crypted):\n"); dumppacket(response); }
+	if (myconfig->verbose>2) { printf("Packet received (crypted):\n"); dumppacket(response); }
 	if (myconfig->useEncryption)
 		decipher(0x20, (unsigned long*)(response), myconfig->key, myconfig->verbose);
-	if (myconfig->verbose>1) { printf("Packet recieved (plain  ):\n"); dumppacket(response); }
+	if (myconfig->verbose>1) { printf("Packet received (plain  ):\n"); dumppacket(response); }
 
 	// This should be the response to our command (and p+2).
 	if ( getseq(response) == p+2 )

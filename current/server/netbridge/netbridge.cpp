@@ -85,33 +85,33 @@ namespace netbridge
 				serialLock = gcnew System::Threading::Mutex();
 
 				// Save the key
-				if (key->Length != 16) throw gcnew ArgumentException("Key is of an invalid length");
+				if (useEncryption)
+				{
+					if (key->Length != 16) throw gcnew ArgumentException("Key is of an invalid length");
 
-				myseshdata.key[0] =	(key[ 3] <<  0 ) |
-									(key[ 2] <<  8 ) | 
-									(key[ 1] << 16 ) | 
-									(key[ 0] << 24 )   ;
-				myseshdata.key[1] =	(key[ 7] <<  0 ) |
-									(key[ 6] <<  8 ) | 
-									(key[ 5] << 16 ) | 
-									(key[ 4] << 24 )   ;
-				myseshdata.key[2] =	(key[11] <<  0 ) |
-									(key[10] <<  8 ) | 
-									(key[ 9] << 16 ) | 
-									(key[ 8] << 24 )   ;
-				myseshdata.key[3] =	(key[15] <<  0 ) |
-									(key[14] <<  8 ) | 
-									(key[13] << 16 ) | 
-									(key[12] << 24 )   ;
-
-				// Set some defaults
-				//myseshdata.key[0] = (long)0x00112233;
-				//myseshdata.key[1] = (long)0x44556677;
-				//myseshdata.key[2] = (long)0x8899aabb;
-				//myseshdata.key[3] = (long)0xccddeeff;
+					myseshdata.key[0] =	(key[ 3] <<  0 ) |
+										(key[ 2] <<  8 ) | 
+										(key[ 1] << 16 ) | 
+										(key[ 0] << 24 )   ;
+					myseshdata.key[1] =	(key[ 7] <<  0 ) |
+										(key[ 6] <<  8 ) | 
+										(key[ 5] << 16 ) | 
+										(key[ 4] << 24 )   ;
+					myseshdata.key[2] =	(key[11] <<  0 ) |
+										(key[10] <<  8 ) | 
+										(key[ 9] << 16 ) | 
+										(key[ 8] << 24 )   ;
+					myseshdata.key[3] =	(key[15] <<  0 ) |
+										(key[14] <<  8 ) | 
+										(key[13] << 16 ) | 
+										(key[12] << 24 )   ;
+				}
+				else
+				{
+					memset(myseshdata.key, 0x00, 16 );
+				}
 
 				myseshdata.assume_synced = FALSE;
-				myseshdata.com_timeout = 3;
 				myseshdata.verbose = 0;
 				myseshdata.machineoutput = FALSE;
 				myseshdata.com_timeout = 5;
@@ -124,6 +124,11 @@ namespace netbridge
 					return true;
 				else
 					return false;
+			}
+
+			void setInjectFaultInvalidResponse(System::Boolean ^ newVal)
+			{
+				myseshdata.injectFaultInvalidResponse = ((System::Boolean)newVal);
 			}
 
 			~transmitterDriver()
@@ -214,6 +219,12 @@ namespace netbridge
 				}
 			}
 
+			void doSyncNetwork()
+			{
+				serialLock->WaitOne();
+				syncNetwork(&myseshdata);
+				serialLock->ReleaseMutex();
+			}
 
 			// This observes a sensorType and uses the relevant function to obtain a weakly-typed result.
 			Object ^ doGetValue(sensorType ^ thisSensorType,  Int16 nodeId, Int16 sensorId)
@@ -331,6 +342,7 @@ namespace netbridge
 					throwerror(errcode);
 				}
 			}
+
 			void doSetPWMSpeed(Int16 nodeId, Int16 speed, Int16 sensorId)
 			{
 				if (nodeId>255 || speed > 255 || sensorId > 255)

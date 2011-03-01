@@ -73,6 +73,8 @@ typedef struct appConfig_t
 	long com_timeout;
 	BOOL assume_synced;
 	long retries;
+	BOOL isSerialPort;
+	BOOL injectFaultInvalidResponse;
 } appConfig_t ;
 
 BOOL initPort(appConfig_t*);
@@ -90,6 +92,7 @@ cmdResponseGeneric_t*  cmdSetP(appConfig_t* myconfig, byte byte1, byte byte2, BO
 cmdResponseGeneric_t*  cmdSetNodeId(appConfig_t* myconfig, unsigned char tothis);
 cmdResponseGeneric_t*  cmdSetNodeKeyByte(appConfig_t* myconfig, unsigned char index, unsigned char newVal);
 cmdResponseGeneric_t*  cmdReload(appConfig_t* myconfig);
+void syncNetwork(appConfig_t* myconfig);
 
 void cmd_free(void* stuff);
 

@@ -26,6 +26,8 @@ appConfig_t* getdefaultconfig()
 	myconfig->machineoutput = FALSE;
 	myconfig->com_timeout = 1000;
 	myconfig->assume_synced = FALSE;
+	myconfig->isSerialPort = TRUE;
+	myconfig->injectFaultInvalidResponse = FALSE;
 	myconfig->retries = 1;	// todo: add this as a commandline parameter
 
 	return myconfig;
@@ -98,6 +100,9 @@ void parsecmdline(int argc, char* argv[], appConfig_t* myappconfig)
 					break;
 			case 'a':
 					myappconfig->assume_synced=TRUE;
+					break;
+			case 'i':
+					myappconfig->isSerialPort=FALSE;
 					break;
 			case 'k':
 					defaultkey=FALSE;
@@ -174,6 +179,7 @@ void reporterror(int errorcode)
 {
 	printf("Error %d - '%s'\n",errorcode, geterrormessage(errorcode));
 }
+
 void readkey(appConfig_t* myappconfig)
 {
 	char inputbuf[100];
@@ -528,19 +534,19 @@ int main(int argc, char* argv[])
 
 void doUsage()
 {
-	printf("Command-line controller for home/industy automation system\n");
+	printf("Command-line controller for  automation system\n");
 	printf("Copyright Alan Hammond, 2007\n\n");
 	printf("Options:\n");
 	printf(" -c <command>       : Specify which command to perform as below:\n");
 	printf("    identify        : Query the node for its identification string (eg. 'desk \n%s", \
 		   "                      light')\n");
 	printf("    ping            : Ensure connectivity with node\n");
-	printf("    get_sensor_count: Ask node how many sensors are attatched to it\n");
+	printf("    get_sensor_count: Ask node how many sensors are attached to it\n");
 	printf("    get_sensor_type : Get type of a given sensor \n");
 	printf("    get_sensor_generic_digital : Get state of a 'generic digital' sensor \n");
 	printf("    set_sensor_generic : Set a 'generic' type sensor\n");
 	printf("    get_sensor_fade_speed : Set fading speed of an PWM output\n");
-	printf("    set_p			: Set crypto seed 'p' (note: advanced!)\n");
+	printf("    set_p			: Set crypto seed 'p'\n");
 	printf("    set_id			: Set node ID\n");
 	printf(" -s                 : Select sensor to operate on\n");
 	printf(" -o                 : Select output payload of command, eg. value to set_sensor to, or new value to set node ID to\n");
@@ -550,11 +556,12 @@ void doUsage()
 	printf(" -m                 : 'Machine output' - output parsed command output\n");
 	printf(" -n <id>            : Select node to talk to. can be hex (prefix with 0x)\n%s" , \
 		   "                      or decimal.\n");
-	printf(" -p <name>          : Select serial device to use\n");
+	printf(" -p <name>          : Select IO device to use\n");
+	printf(" -i                 : Do not treat the IO device as a port - do not set baud rate, etc. The IO device may be a named pipe.\n");
 	printf(" -v                 : Be verbose. Specify up to three times:\n");
 	printf("                        Once for basic info\n");
 	printf("                        Twice for protocol info\n");
 	printf("                        Thrice for protocol info (unused)\n");
-	printf("                        Four times for hardcore cryption innards\n");
+	printf("                        Four times for hardcore crypto innards\n");
 	exit(1);
 }

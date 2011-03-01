@@ -158,31 +158,36 @@ BOOL __cdecl initPort(appConfig_t* myconfig)
 		return FALSE ;
 	}
 
-	GetCommState(myconfig->hnd,&mydcb);
-	mydcb.BaudRate = 9600;
-	mydcb.fBinary = TRUE;
-	mydcb.fParity = FALSE;
-	mydcb.fOutxCtsFlow = FALSE;
-	mydcb.fOutxDsrFlow = FALSE;
-	mydcb.fDtrControl = DTR_CONTROL_DISABLE	;
-	mydcb.fDsrSensitivity = FALSE;
-	mydcb.fOutX = FALSE;
-	mydcb.fInX = FALSE;
-	mydcb.fNull = FALSE;
-	mydcb.fRtsControl = RTS_CONTROL_DISABLE ;
-	mydcb.fAbortOnError = TRUE;
-	mydcb.ByteSize = 8;
-	mydcb.Parity = NOPARITY;
-	mydcb.StopBits = ONESTOPBIT;
-
-	if (!SetCommState(myconfig->hnd, &mydcb))
+	// Only set the serial parameters if we are using a serial port, since we can also communicate over named 
+	// pipes or suchlike.
+	if (myconfig->isSerialPort)
 	{
-		printf("Unable to setCommState? GLE returned 0x%lx\n", GetLastError());
-		CloseHandle(myconfig->hnd);
-		return FALSE ;
+		GetCommState(myconfig->hnd,&mydcb);
+		mydcb.BaudRate = 9600;
+		mydcb.fBinary = TRUE;
+		mydcb.fParity = FALSE;
+		mydcb.fOutxCtsFlow = FALSE;
+		mydcb.fOutxDsrFlow = FALSE;
+		mydcb.fDtrControl = DTR_CONTROL_DISABLE	;
+		mydcb.fDsrSensitivity = FALSE;
+		mydcb.fOutX = FALSE;
+		mydcb.fInX = FALSE;
+		mydcb.fNull = FALSE;
+		mydcb.fRtsControl = RTS_CONTROL_DISABLE ;
+		mydcb.fAbortOnError = TRUE;
+		mydcb.ByteSize = 8;
+		mydcb.Parity = NOPARITY;
+		mydcb.StopBits = ONESTOPBIT;
+
+		if (!SetCommState(myconfig->hnd, &mydcb))
+		{
+			printf("Unable to setCommState: GLE returned 0x%lx\n", GetLastError());
+			CloseHandle(myconfig->hnd);
+			return FALSE ;
+		}
 	}
 
-	sync(myconfig);
+	syncNetwork(myconfig);
 
 	return(TRUE);
 }
@@ -191,7 +196,7 @@ BOOL isPortOpen(appConfig_t* myappconfig)
 	return (!(INVALID_HANDLE_VALUE == myappconfig->hnd));
 }
 
-void sync(appConfig_t* myconfig)
+void syncNetwork(appConfig_t* myconfig)
 {
 	// sync up with the transmitter
 	if (!myconfig->assume_synced)
@@ -203,6 +208,11 @@ void sync(appConfig_t* myconfig)
 		char dummy=(char)0x8E;
 
 		if (myconfig->verbose>0) printf("syncing..");
+
+		// send an initial non-sync character
+		s = sendwithtimeout(myconfig, (char*)&".", 1, &timeout);
+		if (timeout) printf("packet timed out!..");
+		if (s==0) printf("packet send failed!..");
 
 		// Since we only synch to the transmitter, over a wire, we just send 8 0xAA characters.
 		while(syncbytes-->0)
