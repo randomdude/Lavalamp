@@ -15,7 +15,7 @@ namespace TestProjects.virtualNetworkTests
             pipeName = @"UnitTestNetworkPipe3_" + DateTime.Now.TimeOfDay.ToString().Replace(":", "_");
         }
 
-        protected void startNetworkInNewThread(virtualNetwork testVirtualNetwork)
+        protected void startNetworkInNewThread(virtualNetworkBase testVirtualNetwork)
         {
             testVirtualNetwork.run();
         }    

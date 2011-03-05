@@ -59,6 +59,7 @@
     </Compile>
     <Compile Include="initialChallengePacket.cs" />
     <Compile Include="initialChallengeResponsePacket.cs" />
+    <Compile Include="virtualNetworkBase.cs" />
     <Compile Include="virtualNetwork.cs" />
     <Compile Include="networkPacket.cs" />
     <Compile Include="pingResponsePacket.cs" />
@@ -86,6 +87,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="virtualNode.cs" />
+    <Compile Include="virtualNodeBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ruleEngine\ruleEngine.csproj">

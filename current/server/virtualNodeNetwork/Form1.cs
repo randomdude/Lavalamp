@@ -27,12 +27,11 @@ namespace virtualNodeNetwork
 
         private void networkThreadStart(object obj)
         {
-            virtualNetwork net = new virtualNetwork("vnet");
+            virtualNetworkBase net = new virtualNetwork("vnet");
 
             net.onLogString = appendLog;
 
-            virtualNode testNode = new virtualNode(1, "virtual node");
-            net.AddNode(testNode);
+            virtualNodeBase testNode = net.createNode(1, "virtual node");
 
             net.run();
         }

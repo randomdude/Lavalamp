@@ -1,137 +1,97 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO.Pipes;
 using System.Threading;
-using System.Windows.Forms;
 
 namespace virtualNodeNetwork
 {
-    public class virtualNetwork
+    public class virtualNetwork : virtualNetworkBase
     {
-        private string pipename;
-        private NamedPipeServerStream pipe;
+        // This simulated network runs via a named pipe. This is its name and the pipe itself.
+        private readonly string _pipename;
+
+        /// <summary>
+        /// The named pipe we use for comms
+        /// </summary>
+        private readonly NamedPipeServerStream _pipe;
 
         /// <summary>
         /// Lock on this object before accessing consecutiveSyncSymbols
         /// </summary>
-        private object syncSymbolLock = new object();
+        private readonly object _syncSymbolLock = new object();
 
         /// <summary>
         /// how many synch symbols we have seen since we saw something else
         /// </summary>
-        private int consecutiveSyncSymbols = 0;
+        private int _consecutiveSyncSymbols = 0;
 
         /// <summary>
         /// The synchronization symbol which can be repeated in order to reset to the start of a packet.
         /// </summary>
-        private const byte synchSymbol = 0xAA;
+        private const byte _synchSymbol = 0xAA;
 
         /// <summary>
         /// Nodes indexed by ID.
         /// </summary>
-        private Dictionary<int, virtualNode> nodes = new Dictionary<int, virtualNode>();
-
-        public static int controllerID = 0;
-
-// ReSharper disable MemberCanBePrivate.Global
-// ReSharper disable UnassignedField.Global
-        public Action<string> onLogString;
-        public Action onSyncPacket;
-        public Action onPacketSend;
-        public Action onCryptoError;
-        private IAsyncResult ar;
-// ReSharper restore UnassignedField.Global
-// ReSharper restore MemberCanBePrivate.Global
+        private readonly Dictionary<int, virtualNode> nodes = new Dictionary<int, virtualNode>();
 
         public virtualNetwork(string newPipeName)
         {
-            pipename = newPipeName;
+            _pipename = newPipeName;
 
-            pipe = new NamedPipeServerStream(pipename, PipeDirection.InOut, 10, PipeTransmissionMode.Byte,
+            _pipe = new NamedPipeServerStream(_pipename, PipeDirection.InOut, 10, PipeTransmissionMode.Byte,
                                             PipeOptions.Asynchronous);
         }
 
-        private void syncPacket()
-        {
-            log(logLevel.info, "Sync packet detected.");
-
-            if (onSyncPacket != null)
-                onSyncPacket.Invoke();
-        }
-
-        private void cryptoError(virtualNode sender)
-        {
-            log(logLevel.warn, "Crypto error detected.");
-
-            if (onCryptoError != null)
-                onCryptoError.Invoke();
-        }
-
-        private void sendPacket(networkPacket toSend)
-        {
-            log(logLevel.info, "Sending packet: " + toSend.ToString());
-
-            if (onPacketSend != null)
-                onPacketSend.Invoke();
-
-            lock (pipe)
-            {
-                toSend.writeToPipe(pipe);
-            }
-        }
-
-        private void nodeStateChange(virtualNode sender, nodeState newState)
-        {
-            log(logLevel.info, "Node state change on id " + sender.id + " to " + newState );
-        }
-
-        private void log(string toLog)
-        {
-            log(logLevel.info, toLog);
-        }
-
-        private void log(logLevel level, string toLog)
-        {
-            Debug.WriteLine(toLog);
-            if (onLogString == null)
-                return;
-
-            onLogString.Invoke(Enum.GetName(typeof (logLevel), level).ToString() + ": " + toLog);
-        }
-
-        public void run()
+        public override void run()
         {
             log("Virtual network awaiting connection");
-            ar = pipe.BeginWaitForConnection(handleConnection, null);
+            _pipe.BeginWaitForConnection(handleConnection, null);
         }
 
-        public void handleConnection(IAsyncResult foo)
+        /// <summary>
+        /// Called when a node on this network changes state.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="newState"></param>
+        private void nodeStateChange(virtualNodeBase sender, nodeState newState)
         {
-            //try
-            {
-                handleConnectionUnsafe(foo);
-            }
-            //catch (Exception)
-            //{
-                
-            //}
+            log(logLevel.info, "Node state change on id " + sender.id + " to " + newState);
         }
 
-        public void handleConnectionUnsafe(IAsyncResult foo)
+        /// <summary>
+        /// Called when we need to send a networkPacket to a child node.
+        /// </summary>
+        /// <param name="toSend"></param>
+        private new void sendPacket(networkPacket toSend)
+        {
+            base.sendPacket(toSend);
+
+            lock (_pipe)
+            {
+                toSend.writeToPipe(_pipe);
+            }
+        }
+
+        public override string getDriverConnectionPointName()
+        {
+            return "pipe\\" + _pipename;
+        }
+
+        private void handleConnection(IAsyncResult ar)
         {
             log("Client connected.");
 
-            lock (pipe)
+            lock (_pipe)
             {
-                pipe.EndWaitForConnection(foo);
+                _pipe.EndWaitForConnection(ar);
             }
 
             while (true)
             {
                 log("Awaiting commands.");
 
-                if (!pipe.IsConnected)
+                if (!_pipe.IsConnected)
                     return;
 
                 // Get an entire packet's worth of bytes. If we get a synchronization token, then we should keep
@@ -149,7 +109,7 @@ namespace virtualNodeNetwork
                     int bytesReadThisRead = 0;
                     try
                     {
-                        bytesReadThisRead = pipe.Read(rawPacketBytes, bytesReadThisPacket, 1);
+                        bytesReadThisRead = _pipe.Read(rawPacketBytes, bytesReadThisPacket, 1);
                     }
                     catch (ObjectDisposedException)
                     {
@@ -164,18 +124,18 @@ namespace virtualNodeNetwork
                     }
 
                     // We read a byte. Keep count of it, and if it was a sync symbol.
-                    if (rawPacketBytes[bytesReadThisPacket] == synchSymbol)
+                    if (rawPacketBytes[bytesReadThisPacket] == _synchSymbol)
                     {
-                        lock (syncSymbolLock)
+                        lock (_syncSymbolLock)
                         {
-                            consecutiveSyncSymbols++;
+                            _consecutiveSyncSymbols++;
 
-                            if (consecutiveSyncSymbols == networkPacket.lengthInBytes)
+                            if (_consecutiveSyncSymbols == networkPacket.lengthInBytes)
                             {
                                 // An entire packet of sync symbols! Discard this read.
                                 bytesReadThisPacket = 0;
                                 syncPacket();
-                                consecutiveSyncSymbols = 0;
+                                _consecutiveSyncSymbols = 0;
                             }
                             else
                             {
@@ -211,23 +171,22 @@ namespace virtualNodeNetwork
             }
         }
 
-        public void AddNode(virtualNode newNode)
+        public override virtualNodeBase createNode(int newId, string newName)
         {
+            virtualNode newNode = new virtualNode(newId, newName);
+
             newNode.onLog += log;
             newNode.onSendPacket += sendPacket;
             newNode.onStateChange += nodeStateChange;
             newNode.onCryptoError += cryptoError;
             nodes.Add(newNode.id, newNode);
+
+            return newNode;
         }
 
-        public void plzdie()
+        public override void Dispose()
         {
-            pipe.Close();
+            _pipe.Close();
         }
-    }
-
-    public enum logLevel
-    {
-        info, warn
     }
 }

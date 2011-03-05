@@ -2,46 +2,22 @@
 
 namespace virtualNodeNetwork
 {
-    public class virtualNode
+    public class virtualNode : virtualNodeBase
     {
-        public int id;
-        public string name;
-
-        public Action<logLevel, string> onLog;
-        public Action<networkPacket> onSendPacket;
-        public Action<virtualNode, nodeState> onStateChange;
-        public Action<virtualNode> onCryptoError;
-
-        public nodeState state;
-        private int p = 0x112233;
-
         public virtualNode(int newId, string newName)
         {
             id = newId;
             name = newName;
         }
 
-        protected void log(string toLog)
-        {
-            log(logLevel.info, toLog );
-        }
-
-        private void log(logLevel level, string toLog)
-        {
-            if (onLog != null)
-                onLog.Invoke(level, toLog);
-        }
-
-        protected void sendPacket(networkPacket toSend)
-        {
-            if (onSendPacket != null)
-                onSendPacket(toSend);
-        }
-
+        /// <summary>
+        /// Handle an incoming networkPacket
+        /// </summary>
+        /// <param name="packet"></param>
         public void processPacket(networkPacket packet)
         {
             if (packet.destinationNodeID != id)
-                throw new ArgumentException();
+                return;
 
             switch (state)
             {
@@ -120,31 +96,5 @@ namespace virtualNodeNetwork
 
             stateChange(nodeState.idle);
         }
-
-        private void stateChange( nodeState newState)
-        {
-            if (onStateChange != null)
-                onStateChange.Invoke(this, newState);
-
-            state = newState;
-        }
-
-        private void cryptoError()
-        {
-            if (onCryptoError != null)
-                onCryptoError.Invoke(this);
-        }
-    }
-
-    public enum nodeState
-    {
-        idle,                       // The node is idle.
-        firstHandshakeInProgress    // The node has sent its response to the first challenge packet, and is waiting for the controller to reply to it with a command.
-    }
-
-    public enum commandByte
-    {
-        unknown,
-        ping
     }
 }

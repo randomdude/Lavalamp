@@ -493,6 +493,8 @@ int main(int argc, char* argv[])
 		return FALSE;
 	}
 
+	syncNetwork(myappconfig);
+
 	// do whatever we need to do
 	switch(operation)
 	{

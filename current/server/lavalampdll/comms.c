@@ -157,7 +157,7 @@ BOOL __cdecl initPort(appConfig_t* myconfig)
 
 	// Only set the serial parameters if we are using a serial port, since we can also communicate over named 
 	// pipes or suchlike.
-	if (strnicmp(myconfig->portname, "pipe\\", 5) == 0)
+	if (_strnicmp(myconfig->portname, "pipe\\", 5) == 0)
 		myconfig->isSerialPort = FALSE;
 
 	if (myconfig->isSerialPort)
@@ -187,8 +187,6 @@ BOOL __cdecl initPort(appConfig_t* myconfig)
 		}
 	}
 
-	syncNetwork(myconfig);
-
 	return(TRUE);
 }
 BOOL isPortOpen(appConfig_t* myappconfig)
@@ -199,32 +197,33 @@ BOOL isPortOpen(appConfig_t* myappconfig)
 void syncNetwork(appConfig_t* myconfig)
 {
 	// sync up with the transmitter
-	if (!myconfig->assume_synced)
+
+	int syncbytes=8;
+	long s;
+	char pkt = (char)0xAA;
+	BOOL timeout=FALSE;
+	char dummy=(char)0x8E;
+
+	if (myconfig->assume_synced)
+		return;
+
+	if (myconfig->verbose>0) printf("syncing..");
+
+	// send an initial non-sync character
+	s = sendwithtimeout(myconfig, (char*)&".", 1, &timeout);
+	if (timeout) printf("packet timed out!..");
+	if (s==0) printf("packet send failed!..");
+
+	// Since we only synch to the transmitter, over a wire, we just send 8 0xAA characters.
+	while(syncbytes-->0)
 	{
-		int syncbytes=8;
-		long s;
-		char pkt = (char)0xAA;
-		BOOL timeout=FALSE;
-		char dummy=(char)0x8E;
-
-		if (myconfig->verbose>0) printf("syncing..");
-
-		// send an initial non-sync character
-		s = sendwithtimeout(myconfig, (char*)&".", 1, &timeout);
+		s = sendwithtimeout(myconfig, &pkt, 1, &timeout);
 		if (timeout) printf("packet timed out!..");
 		if (s==0) printf("packet send failed!..");
 
-		// Since we only synch to the transmitter, over a wire, we just send 8 0xAA characters.
-		while(syncbytes-->0)
-		{
-			s = sendwithtimeout(myconfig, &pkt, 1, &timeout);
-			if (timeout) printf("packet timed out!..");
-			if (s==0) printf("packet send failed!..");
-
-			if (myconfig->verbose>0) printf("%d..", syncbytes);
-		}
-		if (myconfig->verbose>0) printf("OK.\n");
-	}	
+		if (myconfig->verbose>0) printf("%d..", syncbytes);
+	}
+	if (myconfig->verbose>0) printf("OK.\n");
 }
 
 void closePort(appConfig_t* myappconfig)

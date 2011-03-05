@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using netbridge;
@@ -9,34 +6,33 @@ using virtualNodeNetwork;
 
 namespace TestProjects.virtualNetworkTests
 {
-    [TestClass]
-    public class commandTests : networkTest
+    public abstract class commandTests<networkTypeToTest> : networkTest
+        where networkTypeToTest : virtualNetwork
     {
-        [TestMethod]
-        public void verifyNodeIsPingable()
+        public abstract void verifyNodeIsPingable();
+        protected void _verifyNodeIsPingable() 
         {
             // Create a new virtual network and node. Ping the node and verify that we get a successful response.
             const int virtualNodeID = 0x01;
 
-            virtualNetwork testVirtualNetwork = new virtualNetwork(pipeName);
-            virtualNode testNode = new virtualNode(virtualNodeID, "Ping test node");
-            testVirtualNetwork.AddNode(testNode);
+            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+            {
+                virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Ping test node");
 
-            startNetworkInNewThread(testVirtualNetwork);
+                startNetworkInNewThread(testVirtualNetwork);
 
-            // Connect to this network with a new driver class
-            transmitterDriver driver = new transmitterDriver("pipe\\" + pipeName, false, null);
-            driver.doPing(virtualNodeID);
-            Thread.Sleep(1000);
+                // Connect to this network with a new driver class
+                transmitterDriver driver = new transmitterDriver(testVirtualNetwork.getDriverConnectionPointName(), false, null);
+                driver.doPing(virtualNodeID);
+                Thread.Sleep(1000);
 
-            if (testNode.state != nodeState.idle)
-                Assert.Fail("Node did not return to idle state after a successful ping");
-
-            testVirtualNetwork.plzdie();
+                if (testNode.state != nodeState.idle)
+                    Assert.Fail("Node did not return to idle state after a successful ping");
+            }
         }
 
-        [TestMethod]
-        public void verifyNodeNotPingableWithIncorrectAuthResponse()
+        public abstract void verifyNodeNotPingableWithIncorrectAuthResponse();
+        protected void _verifyNodeNotPingableWithIncorrectAuthResponse()
         {
             // Create a new virtual network and node. 
             // We should send the initial packet to the node, and when the node challenges us, we should deliberately
@@ -44,73 +40,71 @@ namespace TestProjects.virtualNetworkTests
             // verify that it has set its state to the initial 'idle', to check that it can recover correctly.
             const int virtualNodeID = 0x01;
 
-            virtualNetwork testVirtualNetwork = new virtualNetwork(pipeName);
-            virtualNode testNode = new virtualNode(virtualNodeID, "Ping test node");
-            testVirtualNetwork.AddNode(testNode);
-            startNetworkInNewThread(testVirtualNetwork);
-
-            // Connect to this network with a new driver class
-            transmitterDriver driver = new transmitterDriver("pipe\\" + pipeName, false, null);
-            driver.setInjectFaultInvalidResponse(true);
-
-            // We expect a commsTimeoutException from the controller, and an event onCryptoError on the node.
-            bool cryptoErrorAsExpected = false;
-            testNode.onCryptoError = new Action<virtualNode>((node) => cryptoErrorAsExpected = true);
-            bool exceptionAsExpected = false;
-            try
+            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
             {
-                driver.doPing(virtualNodeID);
-                Thread.Sleep(1000);
-            }
-            catch (commsTimeoutException)
-            {
-                exceptionAsExpected = true;
-            }
+                virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Ping test node");
+                startNetworkInNewThread(testVirtualNetwork);
 
-            if (!cryptoErrorAsExpected)
-                Assert.Fail("Node did not signal a crypto error");
-            if (testNode.state != nodeState.idle)
-                Assert.Fail("Node did not return to idle state after a bad crypto response");
-            if (!exceptionAsExpected)
-                Assert.Fail("Controller did not timeout when accessing a node with a bad crypto response");
+                // Connect to this network with a new driver class
+                transmitterDriver driver = new transmitterDriver(testVirtualNetwork.getDriverConnectionPointName(), false, null);
+                driver.setInjectFaultInvalidResponse(true);
 
-            testVirtualNetwork.plzdie();
+                // We expect a commsTimeoutException from the controller, and an event onCryptoError on the node.
+                bool cryptoErrorAsExpected = false;
+                testNode.onCryptoError = new Action<virtualNodeBase>((node) => cryptoErrorAsExpected = true);
+                bool exceptionAsExpected = false;
+                try
+                {
+                    driver.doPing(virtualNodeID);
+                    Thread.Sleep(1000);
+                }
+                catch (commsTimeoutException)
+                {
+                    exceptionAsExpected = true;
+                }
+
+                if (!cryptoErrorAsExpected)
+                    Assert.Fail("Node did not signal a crypto error");
+                if (testNode.state != nodeState.idle)
+                    Assert.Fail("Node did not return to idle state after a bad crypto response");
+                if (!exceptionAsExpected)
+                    Assert.Fail("Controller did not timeout when accessing a node with a bad crypto response");
+            }
         }
 
-        [TestMethod]
-        public void verifyNodeIgnoresPacketsAddressedToOthers()
+        public abstract void verifyNodeIgnoresPacketsAddressedToOthers();
+        protected void _verifyNodeIgnoresPacketsAddressedToOthers()
         {
             // Create a new virtual network and node. 
             // Send data to a different node on the network, which doesn't actually exist, and verify that the
             // first node does not process it.
             const int virtualNodeID = 0x01;
 
-            virtualNetwork testVirtualNetwork = new virtualNetwork(pipeName);
-            virtualNode testNode = new virtualNode(virtualNodeID, "Ping test node");
-            testVirtualNetwork.AddNode(testNode);
-            startNetworkInNewThread(testVirtualNetwork);
-
-            // Connect to this network with a new driver class
-            transmitterDriver driver = new transmitterDriver("pipe\\" + pipeName, false, null);
-            
-            // We expect a commsTimeoutException from the controller, and an event onCryptoError on the node.
-            bool exceptionAsExpected = false;
-            try
+            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName) )
             {
-                driver.doPing(virtualNodeID + 1);
-                Thread.Sleep(1000);
-            }
-            catch (commsTimeoutException)
-            {
-                exceptionAsExpected = true;
-            }
+                virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Ping test node");
+                startNetworkInNewThread(testVirtualNetwork);
 
-            if (!exceptionAsExpected)
-                Assert.Fail("Network did not timeout when a non-existent node was accessed");
-            if (testNode.state != nodeState.idle)
-                Assert.Fail("Node did not remain in idle state while something else on the network was accessed");
+                // Connect to this network with a new driver class
+                transmitterDriver driver = new transmitterDriver(testVirtualNetwork.getDriverConnectionPointName(), false, null);
 
-            testVirtualNetwork.plzdie();
+                // We expect a commsTimeoutException from the controller, and an event onCryptoError on the node.
+                bool exceptionAsExpected = false;
+                try
+                {
+                    driver.doPing(virtualNodeID + 1);
+                    Thread.Sleep(1000);
+                }
+                catch (commsTimeoutException)
+                {
+                    exceptionAsExpected = true;
+                }
+
+                if (!exceptionAsExpected)
+                    Assert.Fail("Network did not timeout when a non-existent node was accessed");
+                if (testNode.state != nodeState.idle)
+                    Assert.Fail("Node did not remain in idle state while something else on the network was accessed");
+            }
         }
     }
 }

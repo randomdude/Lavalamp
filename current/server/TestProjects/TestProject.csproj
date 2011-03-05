@@ -53,9 +53,12 @@
     <Compile Include="SerialisationTests.cs" />
     <Compile Include="pythonRuleItemTests.cs" />
     <Compile Include="virtualNetworkTests\basicTests.cs" />
+    <Compile Include="virtualNetworkTests\virtualNetwork\basicTests_virtualNetwork.cs" />
     <Compile Include="virtualNetworkTests\commandTests.cs" />
+    <Compile Include="virtualNetworkTests\virtualNetwork\commandTests_virtualNetwork.cs" />
     <Compile Include="virtualNetworkTests\networkTest.cs" />
     <Compile Include="virtualNetworkTests\threadParams.cs" />
+    <Compile Include="virtualNetworkTests\virtualNetworkCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\netbridge\netbridge.vcproj">
