@@ -6,8 +6,9 @@ using virtualNodeNetwork;
 
 namespace TestProjects.virtualNetworkTests
 {
+
     public abstract class commandTests<networkTypeToTest> : networkTest
-        where networkTypeToTest : virtualNetwork
+        where networkTypeToTest : virtualNetworkBase
     {
         public abstract void verifyNodeIsPingable();
         protected void _verifyNodeIsPingable() 

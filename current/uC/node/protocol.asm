@@ -89,9 +89,11 @@ sendpackethwuart:
 ; This crypts a packet,and sends a packet out through the hardware UART.
 	GLOBAL sendpackethwuart
 
+#ifndef TEST_TRANSMISSION
 	; Address to transmitter
 	movlw 0x22
 	movwf packet4
+#endif
 
 	; Now encrypt it	
 	movlw 0x40;		; 32 rounds

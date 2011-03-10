@@ -46,11 +46,41 @@ start
 	call init
 	;call dotests
 
-;foo
-;	movlw 0x01
-;	movwf packet0
-;	call sendpacket
-;	goto foo	
+#ifdef TEST_TRANSMISSION
+
+	bcf STATUS, RP0  ; page 0
+	bcf STATUS, RP0  ; page 0
+
+transmissionTest
+	movlw 'T'
+	movwf packet0
+	movlw 'E'
+	movwf packet1
+	movlw 'S'
+	movwf packet2
+	movlw 'T'
+	movwf packet3
+	movlw '-' 
+	movwf packet4
+	movlw 'O'
+	movwf packet5
+	movlw 'K'
+	movwf packet6
+	movlw ' '
+	movwf packet7
+	call sendpacket
+
+	; Now delay for a bit.
+	movlw 0x00
+	movwf tmp1
+delay
+	incf tmp1, f
+	btfss STATUS, Z
+	goto delay
+
+	goto transmissionTest
+
+#endif
 
 	; set state to 'waiting for first packet' as opposed to 'waiting for transciever to auth'
 	bcf state, STATUS_BIT_CRYPTOSTATE

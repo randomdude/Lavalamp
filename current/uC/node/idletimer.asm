@@ -19,8 +19,6 @@
 	; node will start observing packet start sequences, where they do
 	; not exist.
 
-	#define idletimerenabled
-
 idletimer:
 	global idletimer
 
@@ -40,7 +38,7 @@ idletimer:
 	goto dopwmsensors
 endpwmsensors:
 	global endpwmsensors
-	goto dotriacsensors
+;	goto dotriacsensors
 endtriacsensors:
 	global endtriacsensors
 

@@ -4,11 +4,7 @@ namespace virtualNodeNetwork
 {
     public class virtualNode : virtualNodeBase
     {
-        public virtualNode(int newId, string newName)
-        {
-            id = newId;
-            name = newName;
-        }
+        public virtualNode(int newId, string newName) : base(newId, newName) { }
 
         /// <summary>
         /// Handle an incoming networkPacket

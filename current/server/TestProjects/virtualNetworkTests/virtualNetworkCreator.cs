@@ -15,10 +15,12 @@ namespace TestProjects.virtualNetworkTests
         /// <param name="pipeName">Named pipe name parameter</param>
         /// <returns>new networkTypeToCreate(pipeName)</returns>
         public static virtualNetworkBase makeNew<networkTypeToCreate> ( string pipeName)
-            where networkTypeToCreate : virtualNetwork
+            where networkTypeToCreate : virtualNetworkBase
         {
             if (typeof(networkTypeToCreate) == typeof(virtualNetwork))
                 return new virtualNetwork(pipeName);
+            if (typeof(networkTypeToCreate) == typeof(gpSimNetwork))
+                return new gpSimNetwork(pipeName);
 
             throw new ArgumentException();
         }

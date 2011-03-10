@@ -11,6 +11,14 @@
 ; Use 32-round XTEA encryption?
 ; #define CRYPTO_XTEA
 
+; Select any 'debugging modes' you wish to build here.
+;
+; define this to transmit data continuously, in order to test
+; the communications link.
+ #define TEST_TRANSMISSION
+
+#define idletimerenabled
+
 #define KEY_0 0x00
 #define KEY_1 0x11
 #define KEY_2 0x22
@@ -30,7 +38,7 @@
 
 #define NODEID 0x01
 
-#define SENSOR_COUNT 3
+#define SENSOR_COUNT 1
 
 ; config for sensor 1
 #define SENSOR_1_PRESENT
@@ -38,21 +46,22 @@
 #define SENSOR_1_TRIS TRISB
 #define SENSOR_1_PIN 3
 #define SENSOR_1_TYPE SENSOR_ID_PWM_LED
+
 ;#define SENSOR_1_TYPE SENSOR_ID_TRIAC
 ;#define SENSOR_1_ZC_PORT PORTB
 ;#define SENSOR_1_ZC_TRIS TRISB
 ;#define SENSOR_1_ZC_PIN 0
 
 ; config for sensor 2
-#define SENSOR_2_PRESENT
-#define SENSOR_2_PORT PORTB
-#define SENSOR_2_TRIS TRISB
-#define SENSOR_2_PIN 4
-#define SENSOR_2_TYPE SENSOR_ID_PWM_LED
+;#define SENSOR_2_PRESENT
+;#define SENSOR_2_PORT PORTB
+;#define SENSOR_2_TRIS TRISB
+;#define SENSOR_2_PIN 4
+;#define SENSOR_2_TYPE SENSOR_ID_PWM_LED
 
 ; config for sensor 3
-#define SENSOR_3_PRESENT
-#define SENSOR_3_PORT PORTB
-#define SENSOR_3_TRIS TRISB
-#define SENSOR_3_PIN 5
-#define SENSOR_3_TYPE SENSOR_ID_PWM_LED
+;#define SENSOR_3_PRESENT
+;#define SENSOR_3_PORT PORTB
+;#define SENSOR_3_TRIS TRISB
+;#define SENSOR_3_PIN 5
+;#define SENSOR_3_TYPE SENSOR_ID_PWM_LED

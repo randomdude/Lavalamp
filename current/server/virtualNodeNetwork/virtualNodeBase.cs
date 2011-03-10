@@ -2,7 +2,7 @@
 
 namespace virtualNodeNetwork
 {
-    public class virtualNodeBase
+    public abstract class virtualNodeBase
     {
         public int id;
         public string name;
@@ -31,6 +31,12 @@ namespace virtualNodeNetwork
 
         public nodeState state;
         protected int p = 0x112233;
+
+        public virtualNodeBase(int newId, string newName)
+        {
+            id = newId;
+            name = newName;
+        }
 
         /// <summary>
         /// Log an event at the default log level

@@ -19,6 +19,13 @@ dopwmsensors:
 #ifdef SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_TYPE)
 
+
+	; omg hax
+	bcf STATUS, RP0 ; bank 0
+	bsf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PORT, SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PIN
+	bcf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PORT, SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PIN
+retnow(AUTOGEN_EVERY_SENSOR_ID):
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the

@@ -27,9 +27,9 @@ autogen_sensors_init:
 		bcf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_TRIS, SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PWM_SPEED
