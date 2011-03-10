@@ -55,6 +55,7 @@
     <Compile Include="virtualNetworkTests\basicTests.cs" />
     <Compile Include="virtualNetworkTests\virtualNetwork\basicTests_virtualNetwork.cs" />
     <Compile Include="virtualNetworkTests\commandTests.cs" />
+    <Compile Include="virtualNetworkTests\virtualNetwork\commandTests_gpSimNetwork.cs" />
     <Compile Include="virtualNetworkTests\virtualNetwork\commandTests_virtualNetwork.cs" />
     <Compile Include="virtualNetworkTests\networkTest.cs" />
     <Compile Include="virtualNetworkTests\threadParams.cs" />
