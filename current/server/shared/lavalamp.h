@@ -2,9 +2,21 @@
 #ifndef LAVALAMP_H
 #define LAVALAMP_H
 
+#ifdef WIN32
 #include <windows.h>
+#else
+#define HANDLE int
+#define BOOL int
+#define INVALID_HANDLE_VALUE -1
+#define FALSE 0
+#define TRUE (!FALSE)
+#endif
 
-// Force linkage as C 
+
+
+
+
+// Force linkage as C
 #ifdef __cplusplus
 extern "C"
 {
@@ -12,8 +24,11 @@ extern "C"
 
 #define CMDIDENTIFY_LONGEST_NODE_NAME 0x20
 
-#pragma pack(push)  
+#pragma pack(push)
 #pragma pack(1)     /* set alignment to 1 byte boundary */
+
+
+typedef unsigned char byte;
 
 typedef struct datapkt_t
 {
@@ -30,7 +45,7 @@ typedef struct datapkt_t
 // error codes below 0x20 are reserved for the low-level comms subsystem. Above is errors returned from the PIC
 // Note that errors returned from the PIC are command-dependant and thus need parsing at the PC-side, depending
 // which command they are returned from.
-enum errorcode_enum { errcode_none,errcode_timeout,errcode_crypto,errcode_internal,errcode_portstate, errcode_sensor_not_found=0x20, errcode_sensor_wrong_type };	
+enum errorcode_enum { errcode_none,errcode_timeout,errcode_crypto,errcode_internal,errcode_portstate, errcode_sensor_not_found=0x20, errcode_sensor_wrong_type };
 
 
 // Each cmd_* returns one of these.
@@ -98,7 +113,7 @@ void cmd_free(void* stuff);
 
 char* geterrormessage(int errorcode);
 
-// End force linkage as C 
+// End force linkage as C
 #ifdef __cplusplus
 }
 #endif

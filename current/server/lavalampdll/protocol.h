@@ -2,7 +2,6 @@
 #ifndef PROTOCOL_H
 #define PROTOCOL_H
 
-#include <windows.h>
 #include "../shared/lavalamp.h"
 
 typedef struct generic_packet_response
@@ -26,5 +25,4 @@ generic_packet_response_t* sendPacketTimed(appConfig_t* myconfig, datapkt_t tose
 long sendpacketwithtimeout( appConfig_t* myconfig, long* packet, long datalen, BOOL* didTimeout);
 long readpackettimeout( appConfig_t* myconfig, long* packet, long datalen, BOOL* didTimeout);
 
-
-#endif	
+#endif

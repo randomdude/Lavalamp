@@ -1,6 +1,4 @@
-﻿using netbridge;
-
-namespace netGui
+﻿namespace netGui
 {
     public class _transmitterDriver : transmitterDriver, ITransmitter
     {

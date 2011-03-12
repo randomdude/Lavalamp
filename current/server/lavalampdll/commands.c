@@ -1,10 +1,9 @@
 
 #include "commands.h"
-#include "protocol.h"
 #include <stdio.h>
 #include "../shared/lavalamp.h"
 
-// Place custom 'command' calls in here. 
+// Place custom 'command' calls in here.
 
 
 
@@ -16,9 +15,9 @@ cmdResponseGeneric_t*  cmdSetSensorFadeSpeed(appConfig_t* myconfig, unsigned cha
 
 	// sets the fade speed of a PWM sensor
 	// returns an error code, and time of roundtrip.
-	if (myconfig->verbose>1) 
+	if (myconfig->verbose>1)
 		printf("Executing CMD_SET_SENSOR_FADE asking for sensor %d\n", myconfig->sensorid);
-	else if (myconfig->verbose>0) 
+	else if (myconfig->verbose>0)
 		printf("Executing CMD_SET_SENSOR_FADE\n");
 
 	setrandomnewseq(&tosend);
@@ -46,9 +45,9 @@ cmdResponseGeneric_t*  cmdGetGenericDigitalSensor(appConfig_t* myconfig)
 
 	// gets the state of a GENERIC_DIGITAL sensor.
 	// returns state, any error code, and time of roundtrip.
-	if (myconfig->verbose>1) 
+	if (myconfig->verbose>1)
 		printf("Executing CMD_GET_SENSOR asking for sensor %d\n", myconfig->sensorid);
-	else if (myconfig->verbose>0) 
+	else if (myconfig->verbose>0)
 		printf("Executing CMD_GET_SENSOR\n");
 
 	setrandomnewseq(&tosend);
@@ -101,9 +100,9 @@ cmdResponseGeneric_t*  cmdSetGenericDigitalSensor(appConfig_t* myconfig, unsigne
 
 	// sets the state of a GENERIC_DIGITAL sensor.
 	// returns an error code, and time of roundtrip.
-	if (myconfig->verbose>1) 
+	if (myconfig->verbose>1)
 		printf("Executing CMD_SET_SENSOR asking for sensor %d\n", myconfig->sensorid);
-	else if (myconfig->verbose>0) 
+	else if (myconfig->verbose>0)
 		printf("Executing CMD_SET_SENSOR\n");
 
 	setrandomnewseq(&tosend);
@@ -146,11 +145,11 @@ cmdResponseGeneric_t*  cmdCountSensors(appConfig_t* myconfig)
 	datapkt_t tosend;
 	generic_packet_response_t* packetresponse;
 	cmdResponseGeneric_t* sensorcountresponse;
-	
+
 	// We send a CMD_GET_SENSOR to node 00
-	if (myconfig->verbose>1) 
+	if (myconfig->verbose>1)
 		printf("Executing CMD_GET_SENSOR asking for sensor 00\n");
-	else if (myconfig->verbose>0) 
+	else if (myconfig->verbose>0)
 		printf("Executing CMD_GET_SENSOR \n");
 
 	// Prepare our single packet
@@ -190,7 +189,7 @@ cmdResponseGeneric_t*  cmdPing(appConfig_t* myconfig)
 
 	// send
 	packetresponse = sendPacketTimed(myconfig, tosend);
-	
+
 	pingresponse->totaltime = packetresponse->totaltime;
 	pingresponse->errorcode = packetresponse->errorcode;
 	pingresponse->response = 0;
@@ -222,7 +221,7 @@ cmdResponseGeneric_t*  cmdSetNodeKeyByte(appConfig_t* myconfig, unsigned char in
 
 	// send
 	packetresponse = sendPacketTimed(myconfig, tosend);
-	
+
 	noderesponse->totaltime = packetresponse->totaltime;
 	noderesponse->errorcode = packetresponse->errorcode;
 	noderesponse->response = 0;
@@ -249,7 +248,7 @@ cmdResponseGeneric_t*  cmdReload(appConfig_t* myconfig)
 
 	// send
 	packetresponse = sendPacketTimed(myconfig, tosend);
-	
+
 	noderesponse->totaltime = packetresponse->totaltime;
 	noderesponse->errorcode = packetresponse->errorcode;
 	noderesponse->response = 0;
@@ -276,7 +275,7 @@ cmdResponseGeneric_t*  cmdSetNodeId(appConfig_t* myconfig, unsigned char tothis)
 
 	// send
 	packetresponse = sendPacketTimed(myconfig, tosend);
-	
+
 	noderesponse->totaltime = packetresponse->totaltime;
 	noderesponse->errorcode = packetresponse->errorcode;
 	noderesponse->response = 0;
@@ -310,7 +309,7 @@ cmdResponseGeneric_t*  cmdSetP(appConfig_t* myconfig, byte byte1, byte byte2, BO
 
 	// send
 	packetresponse = sendPacketTimed(myconfig, tosend);
-	
+
 	pingresponse->totaltime = packetresponse->totaltime;
 	pingresponse->errorcode = packetresponse->errorcode;
 	pingresponse->response = 0;
@@ -410,7 +409,7 @@ cmdResponseIdentify_t* cmdIdentify(appConfig_t* myconfig)
 
 		memcpy(&(identresponse->response[pktsgot*3]), &(packetresponse->response.byte6), 3);
 
-		if (packetresponse->response.byte6==00  || 
+		if (packetresponse->response.byte6==00  ||
 			packetresponse->response.byte7==00  ||		// we break on any nulls.
 			packetresponse->response.byte8==00    )
 			break;

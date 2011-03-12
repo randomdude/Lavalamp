@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -52,10 +53,12 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'clr|AnyCPU' ">
     <OutputPath>bin\clr\</OutputPath>
+    <DebugType>none</DebugType>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -64,6 +67,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="addNode.cs">
@@ -231,6 +235,7 @@
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="_transmitterDriver.cs" />
+    <Compile Include="transmitterDriver.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -254,10 +259,6 @@
     <None Include="Resources\Pause.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\netbridge\netbridge.vcproj">
-      <Project>{ADFA97F6-D7A7-489F-86AF-D7A835D18E51}</Project>
-      <Name>netbridge</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ruleEngine\ruleEngine.csproj">
       <Project>{04834DB5-4E91-48EA-9107-FD2246087122}</Project>
       <Name>ruleEngine</Name>
