@@ -186,8 +186,6 @@ BOOL __cdecl initPort(appConfig_t* myconfig)
 		}
 	}
 
-	sync(myconfig);
-
 	return(TRUE);
 }
 

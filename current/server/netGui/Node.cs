@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using netbridge;
+
 
 namespace netGui
 {
@@ -138,7 +138,7 @@ namespace netGui
                 safelyCloseFormWait(holdup);
             }
         }
-        public sensorType doGetSensorType(Int16 sensorId)
+        public transmitterDriver.sensorType doGetSensorType(Int16 sensorId)
         {
             frmWait holdup = SafelyMakeNewFrmWait();
 

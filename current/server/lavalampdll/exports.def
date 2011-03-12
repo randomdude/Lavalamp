@@ -17,3 +17,4 @@ EXPORTS
 	isPortOpen
 	geterrormessage
 	syncNetwork
+	getTestConfig

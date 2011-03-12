@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using netbridge;
+
 using netGui.sensorControls;
 
 namespace netGui
@@ -51,7 +51,7 @@ namespace netGui
                     newSensorForm.Visible = true;
                     childForms.Add(newSensorForm);
                 }
-                catch (commsException)
+                catch (transmitterDriver.commsException)
                 {
                     MessageBox.Show("An exception occured interrogating the node. Please retry.");
                 }

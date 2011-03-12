@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
-using netbridge;
 using netGui.sensorControls;
 
 namespace netGui
@@ -203,12 +202,12 @@ namespace netGui
                 this.node.setValue(this.targetSensorIndex, sendThis, true);
                 SafelySetStatus("last update OK");
             }
-            catch (sensorException )
+            catch (transmitterDriver.sensorException )
             {
                 SafelySetStatus ( "last update failed");
                 graphTarget.SetError("Not applicable");
             }
-            catch (commsPortStateException)
+            catch (transmitterDriver.commsPortStateException)
             {
                 SafelySetStatus("last update failed");
                 graphTarget.SetError("Port is no longer open");
@@ -272,15 +271,15 @@ namespace netGui
         private void ctlSensor_Load(object sender, EventArgs e)
         {
             // todo: make this work at design time
-            sensorTypeEnum thisSensorType = this.node.sensors[this.targetSensorIndex].type.enumeratedType;
+            transmitterDriver.sensorTypeEnum thisSensorType = this.node.sensors[this.targetSensorIndex].type.enumeratedType;
             
-            if (sensorTypeEnum.generic_digital_in == thisSensorType)
+            if (transmitterDriver.sensorTypeEnum.generic_digital_in == thisSensorType)
                 graphTarget = new ctlReadout();
-            else if (sensorTypeEnum.generic_digital_out == thisSensorType)
+            else if (transmitterDriver.sensorTypeEnum.generic_digital_out == thisSensorType)
                 graphTarget = new ctlOnOff();
-            else if (sensorTypeEnum.pwm_out == thisSensorType)
+            else if (transmitterDriver.sensorTypeEnum.pwm_out == thisSensorType)
                 graphTarget = new ctlPWM();
-            else if (sensorTypeEnum.triac_out == thisSensorType)
+            else if (transmitterDriver.sensorTypeEnum.triac_out == thisSensorType)
                 graphTarget = new ctlPWM();
             else
                 graphTarget = new ctlOnOff();       // just guess.
@@ -299,12 +298,12 @@ namespace netGui
                 graphTarget.UpdateValue(setToThis);
                 SafelySetStatus("last update OK");
             }
-            catch (sensorException )
+            catch (transmitterDriver.sensorException )
             {
                 SafelySetStatus ( "last update failed");
                 graphTarget.SetError("Not applicable");
             }
-            catch (commsPortStateException)
+            catch (transmitterDriver.commsPortStateException)
             {
                 SafelySetStatus("last update failed");
                 graphTarget.SetError("Port is no longer open");

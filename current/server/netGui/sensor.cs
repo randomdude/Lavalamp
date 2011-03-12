@@ -1,5 +1,5 @@
 ﻿using System;
-using netbridge;
+
 
 namespace netGui
 {
@@ -21,8 +21,8 @@ namespace netGui
         public Int16 id;
 
         // We cache the sensorType, as it's highly unlikely to change.
-        private sensorType cachedType = null;
-        public sensorType type
+        private transmitterDriver.sensorType cachedType = null;
+        public transmitterDriver.sensorType type
         {
             get
             {

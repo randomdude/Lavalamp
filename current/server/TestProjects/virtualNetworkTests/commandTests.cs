@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using netbridge;
+using netGui;
 using virtualNodeNetwork;
 
 namespace TestProjects.virtualNetworkTests
@@ -59,7 +59,7 @@ namespace TestProjects.virtualNetworkTests
                     driver.doPing(virtualNodeID);
                     Thread.Sleep(1000);
                 }
-                catch (commsTimeoutException)
+                catch (transmitterDriver.commsTimeoutException)
                 {
                     exceptionAsExpected = true;
                 }
@@ -96,7 +96,7 @@ namespace TestProjects.virtualNetworkTests
                     driver.doPing(virtualNodeID + 1);
                     Thread.Sleep(1000);
                 }
-                catch (commsTimeoutException)
+                catch (transmitterDriver.commsTimeoutException)
                 {
                     exceptionAsExpected = true;
                 }

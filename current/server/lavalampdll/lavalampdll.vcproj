@@ -268,11 +268,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\comms_win32.c"
+				>
+			</File>
+			<File
 				RelativePath=".\exports.def"
 				>
 			</File>
 			<File
 				RelativePath=".\protocol.c"
+				>
+			</File>
+			<File
+				RelativePath=".\testing.c"
 				>
 			</File>
 		</Filter>
@@ -291,6 +299,10 @@
 			</File>
 			<File
 				RelativePath=".\protocol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\testing.h"
 				>
 			</File>
 		</Filter>
