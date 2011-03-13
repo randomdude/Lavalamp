@@ -20,7 +20,7 @@ namespace netGui
                     MessageBox.Show("To do this, the transmitter must be connected. Connect to transmitter now?",
                                     "Connect to transmitter?", MessageBoxButtons.YesNo);
                 if ((response == DialogResult.No) || (response == DialogResult.None))
-                    throw new transmitterDriver.cantOpenPortException();
+                    throw new cantOpenPortException();
 
                 _mydriver = new _transmitterDriver(MyOptions.portname, MyOptions.useEncryption, MyOptions.myKey.keyArray);
                 generalToolStripMenuItem.Enabled = false;
@@ -46,12 +46,12 @@ namespace netGui
             {
                 setMyDriver(new _transmitterDriver(MyOptions.portname, MyOptions.useEncryption, MyOptions.myKey.keyArray));
             }
-            catch (transmitterDriver.badPortException)
+            catch (badPortException)
             {
                 MessageBox.Show("Bad port name");
                 return;
             }
-            catch (transmitterDriver.cantOpenPortException)
+            catch (cantOpenPortException)
             {
                 MessageBox.Show("Can't open port, please make sure it is valid and unused");
                 return;
@@ -68,7 +68,7 @@ namespace netGui
                 if (null == getMyDriver())
                     return;
             }
-            catch (transmitterDriver.cantOpenPortException)
+            catch (cantOpenPortException)
             {
                 return;
             }
@@ -122,27 +122,27 @@ namespace netGui
                 newNode.Mydriver = getMyDriver();
                 newNode.fillProperties();
             }
-            catch (transmitterDriver.badPortException)
+            catch (badPortException)
             {
                 MessageBox.Show("Bad port name");
                 return;
             }
-            catch (transmitterDriver.cantOpenPortException)
+            catch (cantOpenPortException)
             {
                 MessageBox.Show("Can't open port, please make sure it is valid and unused");
                 return;
             }
-            catch (transmitterDriver.commsCryptoException)
+            catch (commsCryptoException)
             {
                 MessageBox.Show("Crypto failure talking to node. Please retry, and ensure network keys are set correctly.");
                 return;
             }
-            catch (transmitterDriver.commsTimeoutException )
+            catch (commsTimeoutException )
             {
                 MessageBox.Show("Timeout attempting to talk to node. Check node power and operation, and network keys.");
                 return;
             }
-            catch (transmitterDriver.InternalErrorException )
+            catch (InternalErrorException )
             {
                 MessageBox.Show("An internal error occurred when attempting to talk to the node. Please retry.");
                 return;

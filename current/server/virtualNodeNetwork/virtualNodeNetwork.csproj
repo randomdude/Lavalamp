@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="challengeResponsePacket.cs" />
     <Compile Include="commandPacket.cs" />
+    <Compile Include="doIdentifyRequestPacket.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

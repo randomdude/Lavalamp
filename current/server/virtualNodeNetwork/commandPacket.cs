@@ -37,6 +37,8 @@ namespace virtualNodeNetwork
             {
                 case 0x01:
                     return virtualNodeNetwork.commandByte.ping;
+                case 0x02:
+                    return virtualNodeNetwork.commandByte.identify;
                 default:
                     return virtualNodeNetwork.commandByte.unknown;
             }

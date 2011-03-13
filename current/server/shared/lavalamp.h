@@ -22,7 +22,7 @@ extern "C"
 {
 #endif
 
-#define CMDIDENTIFY_LONGEST_NODE_NAME 0x20
+#define CMDIDENTIFY_LONGEST_NODE_NAME 0x21
 
 #pragma pack(push)
 #pragma pack(1)     /* set alignment to 1 byte boundary */
@@ -50,19 +50,21 @@ enum errorcode_enum { errcode_none,errcode_timeout,errcode_crypto,errcode_intern
 
 // Each cmd_* returns one of these.
 // * CAUTION *! There is technically nothing stopping the C compiler (used to compile the .dll) and the C++ compiler (used to compile the UI classes)
-//				from rearranging these structs! be very very careful! (and hunt wabbits)
+//				from rearranging these structs!
 typedef struct cmdResponseGeneric
 {
 	enum errorcode_enum errorcode;
 	long response;
 	long totaltime;
 }cmdResponseGeneric_t;
+
 typedef struct cmdResponseIdentify
 {
 	enum errorcode_enum errorcode;
 	char response[CMDIDENTIFY_LONGEST_NODE_NAME];
 	long totaltime;
 }cmdResponseIdentify_t;
+
 typedef struct cmdResponseGetSensorType
 {
 	enum errorcode_enum errorcode;

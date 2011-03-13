@@ -387,7 +387,7 @@ cmdResponseIdentify_t* cmdIdentify(appConfig_t* myconfig)
 	identresponse = (cmdResponseIdentify_t*)malloc(sizeof(cmdResponseIdentify_t));
 	identresponse->totaltime = 0;
 
-	for (pktsgot=0; pktsgot<CMDIDENTIFY_LONGEST_NODE_NAME /4; pktsgot++)
+	for (pktsgot=0; pktsgot<CMDIDENTIFY_LONGEST_NODE_NAME / 3; pktsgot++)
 	{
 		// assemble the request packet to send to the chip
 		setrandomnewseq(&tosend);

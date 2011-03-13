@@ -31,7 +31,8 @@ namespace virtualNodeNetwork
 
             net.onLogString = appendLog;
 
-            virtualNodeBase testNode = net.createNode(1, "virtual node");
+            //virtualNodeBase testNode = net.createNode(1, "virtual node");
+            virtualNodeBase testNode = net.createNode(1, "01234567890abcdef01234567890abcde");
 
             net.run();
         }

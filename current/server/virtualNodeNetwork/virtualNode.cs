@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace virtualNodeNetwork
 {
@@ -73,6 +74,9 @@ namespace virtualNodeNetwork
                 case commandByte.ping:
                     processPing(cmdPkt);
                     break;
+                case commandByte.identify:
+                    processIdentify(cmdPkt);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -92,5 +96,58 @@ namespace virtualNodeNetwork
 
             stateChange(nodeState.idle);
         }
+
+        private void processIdentify(commandPacket packet)
+        {
+            // OK, a ping. Respond to it.
+            doIdentifyRequestPacket identifyPacket = new doIdentifyRequestPacket(packet);
+
+            log("Packet is a name request packet. Decoded packet:");
+            log(identifyPacket.ToString());
+
+            // Verify some indicators of abnormality
+            if (identifyPacket.unused != 0x00)
+            {
+                log(logLevel.warn, "unused byte is set to non-null");
+                return;
+            }
+
+            doIdentifyResponsePacket resp = new doIdentifyResponsePacket(virtualNetwork.controllerID, packet.challengeResponse + 1);
+
+            // And send the packet with a part of our name string.
+            ASCIIEncoding enc = new ASCIIEncoding();
+            int startChar = identifyPacket.byteOffset * 3;
+            int byteIndex = 0;
+            for (int i = startChar; i < startChar + 3 ; i++)
+            {
+                byte toWrite = 0;
+                if (i > name.Length - 1)
+                {
+                    toWrite = 0;
+                }
+                else
+                {
+                    toWrite = enc.GetBytes(name.ToCharArray(), i, 1)[0];
+                }
+                switch (byteIndex++)
+                {
+                    case 0:
+                        resp.nameByte0 = toWrite;
+                        break;
+                    case 1:
+                        resp.nameByte1 = toWrite;
+                        break;
+                    case 2:
+                        resp.nameByte2 = toWrite;
+                        break;
+                }
+            }
+
+            log("Packet response: " + resp.ToString());
+            sendPacket(resp);
+
+            stateChange(nodeState.idle);
+        }
+    
     }
 }

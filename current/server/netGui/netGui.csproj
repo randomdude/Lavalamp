@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -234,8 +234,13 @@
       <DependentUpon>sensoFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="transmitterDriver\appConfig_t.cs" />
+    <Compile Include="transmitterDriver\cmdResponseGeneric_t.cs" />
+    <Compile Include="transmitterDriver\exceptions.cs" />
+    <Compile Include="transmitterDriver\pinvoke.cs" />
+    <Compile Include="transmitterDriver\pinvokeWrapper.cs" />
     <Compile Include="_transmitterDriver.cs" />
-    <Compile Include="transmitterDriver.cs" />
+    <Compile Include="transmitterDriver\transmitterDriver.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">

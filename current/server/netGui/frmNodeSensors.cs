@@ -51,7 +51,7 @@ namespace netGui
                     newSensorForm.Visible = true;
                     childForms.Add(newSensorForm);
                 }
-                catch (transmitterDriver.commsException)
+                catch (commsException)
                 {
                     MessageBox.Show("An exception occured interrogating the node. Please retry.");
                 }

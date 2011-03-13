@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using virtualNodeNetwork;
 
 namespace TestProjects.virtualNetworkTests
@@ -17,6 +18,12 @@ namespace TestProjects.virtualNetworkTests
         public override void verifyNodeNotPingableWithIncorrectAuthResponse()
         {
             base._verifyNodeNotPingableWithIncorrectAuthResponse();
+        }
+
+        [TestMethod]
+        public override void verifyNodeRespondsCorrectlyToDoIdentify()
+        {
+            base._verifyNodeRespondsCorrectlyToDoIdentify();
         }
 
         [TestMethod]

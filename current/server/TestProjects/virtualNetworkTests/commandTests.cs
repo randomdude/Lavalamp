@@ -59,7 +59,7 @@ namespace TestProjects.virtualNetworkTests
                     driver.doPing(virtualNodeID);
                     Thread.Sleep(1000);
                 }
-                catch (transmitterDriver.commsTimeoutException)
+                catch (commsTimeoutException)
                 {
                     exceptionAsExpected = true;
                 }
@@ -72,6 +72,36 @@ namespace TestProjects.virtualNetworkTests
                     Assert.Fail("Controller did not timeout when accessing a node with a bad crypto response");
             }
         }
+
+        public abstract void verifyNodeRespondsCorrectlyToDoIdentify();
+        protected void _verifyNodeRespondsCorrectlyToDoIdentify()
+        {
+            // Make a new node on a new network with a test name, and verify that that name can be read
+            // correctly.
+            const int virtualNodeID = 0x01;
+
+            // Do this repeatedly with various node names.
+            foreach (string testNodeName in new[] { "test node", "", "a", "01234567890abcdef01234567890abcde" })
+            {
+                using ( virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+                {
+                    virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, testNodeName);
+                    startNetworkInNewThread(testVirtualNetwork);
+
+                    // Connect to this network with a new driver class
+                    transmitterDriver driver = new transmitterDriver(testVirtualNetwork.getDriverConnectionPointName(),
+                                                                     false, null);
+
+                    string recievedName = driver.doIdentify(virtualNodeID);
+                    Thread.Sleep(1000);
+
+                    Assert.AreEqual(testNode.name, recievedName, "Node identified itself with an incorrect name");
+
+                    Assert.AreEqual(nodeState.idle, testNode.state, "Node did not return to idle state after doIdentify");
+                }
+            }
+        }
+        
 
         public abstract void verifyNodeIgnoresPacketsAddressedToOthers();
         protected void _verifyNodeIgnoresPacketsAddressedToOthers()
@@ -96,7 +126,7 @@ namespace TestProjects.virtualNetworkTests
                     driver.doPing(virtualNodeID + 1);
                     Thread.Sleep(1000);
                 }
-                catch (transmitterDriver.commsTimeoutException)
+                catch (commsTimeoutException)
                 {
                     exceptionAsExpected = true;
                 }

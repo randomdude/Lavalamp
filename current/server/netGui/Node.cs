@@ -138,7 +138,7 @@ namespace netGui
                 safelyCloseFormWait(holdup);
             }
         }
-        public transmitterDriver.sensorType doGetSensorType(Int16 sensorId)
+        public sensorType doGetSensorType(Int16 sensorId)
         {
             frmWait holdup = SafelyMakeNewFrmWait();
 

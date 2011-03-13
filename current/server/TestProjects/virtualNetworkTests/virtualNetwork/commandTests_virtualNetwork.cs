@@ -23,5 +23,11 @@ namespace TestProjects.virtualNetworkTests
         {
             base._verifyNodeIgnoresPacketsAddressedToOthers();
         }
+
+        [TestMethod]
+        public override void verifyNodeRespondsCorrectlyToDoIdentify()
+        {
+            base._verifyNodeRespondsCorrectlyToDoIdentify();
+        }
     }
 }

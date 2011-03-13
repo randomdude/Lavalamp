@@ -99,6 +99,7 @@ namespace virtualNodeNetwork
     public enum commandByte
     {
         unknown,
-        ping
+        ping = 0x01,
+        identify = 0x02
     }
 }

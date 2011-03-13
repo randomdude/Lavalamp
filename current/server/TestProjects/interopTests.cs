@@ -14,7 +14,7 @@ namespace TestProjects
         public void testConfig_tMarshalling()
         {
             // Get a test config from the other side of our interop boundary
-            transmitterDriver.appConfig_t testConfig = transmitterDriver.getTestConfig();
+            appConfig_t testConfig = transmitterDriver.getTestConfig();
 
             // Bytes
             Assert.AreEqual(0x01, testConfig.nodeid);

@@ -21,8 +21,8 @@ namespace netGui
         public Int16 id;
 
         // We cache the sensorType, as it's highly unlikely to change.
-        private transmitterDriver.sensorType cachedType = null;
-        public transmitterDriver.sensorType type
+        private sensorType cachedType = null;
+        public sensorType type
         {
             get
             {

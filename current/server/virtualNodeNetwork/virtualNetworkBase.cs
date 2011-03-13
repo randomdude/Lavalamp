@@ -6,7 +6,7 @@ namespace virtualNodeNetwork
     public abstract class virtualNetworkBase : IDisposable
     {
         public abstract void run();
-        public abstract virtualNodeBase createNode(int newId, string s);
+        public abstract virtualNodeBase createNode(int newId, string newName);
 
         /// <summary>
         /// Get the port we can pass to our transmitterDriver
