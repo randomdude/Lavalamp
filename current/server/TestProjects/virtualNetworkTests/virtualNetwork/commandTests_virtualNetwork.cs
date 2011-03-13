@@ -26,9 +26,9 @@ namespace TestProjects.virtualNetworkTests
         }
 
         [TestMethod]
-        public override void verifyNodeResturnsCorrectSensorCount()
+        public override void verifyNodeReturnsCorrectSensorCount()
         {
-            base._verifyNodeResturnsCorrectSensorCount();
+            base._verifyNodeReturnsCorrectSensorCount();
         }
 
         [TestMethod]

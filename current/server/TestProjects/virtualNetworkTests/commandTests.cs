@@ -138,8 +138,8 @@ namespace TestProjects.virtualNetworkTests
             }
         }
 
-        public abstract void verifyNodeResturnsCorrectSensorCount();
-        protected void _verifyNodeResturnsCorrectSensorCount()
+        public abstract void verifyNodeReturnsCorrectSensorCount();
+        protected void _verifyNodeReturnsCorrectSensorCount()
         {
             // Make a new node on a new network with a test name, add some sensors to it, and ensure that
             // the correct sensor count is returned.

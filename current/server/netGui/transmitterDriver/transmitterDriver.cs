@@ -171,6 +171,22 @@ namespace netGui
             }
         }
 
+        public sensorType doGetSensorType(short nodeId, short sensorId)
+        {
+            lock (serialLock)
+            {
+                myseshdata.nodeid = (byte)nodeId;
+
+                using (cmdResponseGetSensorType_t response = cmdGetSensorType(myseshdata))
+                {
+                    if (response.errorcode != errorcode_enum.errcode_none)
+                        throwerror(response.errorcode);
+
+                    return new sensorType(response.type);
+                }
+            }
+        }
+
 	    public object doGetValue(sensorType thisSensorType, short nodeId, short sensorId)
 	    {
 	        throw new NotImplementedException();
@@ -185,22 +201,6 @@ namespace netGui
 	    {
 	        throw new NotImplementedException();
 	    }
-
-	    public sensorType doGetSensorType(short nodeId, short sensorId)
-	    {
-            lock (serialLock)
-            {
-                myseshdata.nodeid = (byte)nodeId;
-
-                using (cmdResponseGetSensorType_t response = cmdGetSensorType(myseshdata))
-                {
-                    if (response.errorcode != errorcode_enum.errcode_none)
-                        throwerror(response.errorcode);
-
-                    return new sensorType( response.type );
-                }
-            }
-        }
 
 	    public void doSetPWMSpeed(short nodeId, short speed, short sensorId)
 	    {
