@@ -50,24 +50,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="challengeResponsePacket.cs" />
-    <Compile Include="commandPacket.cs" />
-    <Compile Include="doIdentifyRequestPacket.cs" />
+    <Compile Include="packetDefinitions\challengeResponsePacket.cs" />
+    <Compile Include="packetDefinitions\commandPacket.cs" />
+    <Compile Include="packetDefinitions\doIdentifyRequestPacket.cs" />
+    <Compile Include="packetDefinitions\doIdentifyResponsePacket.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="packetDefinitions\getSensorPacket.cs" />
+    <Compile Include="packetDefinitions\getSensorTypePacket.cs" />
+    <Compile Include="packetDefinitions\getSensorTypeResponsePacket.cs" />
     <Compile Include="gpSim.cs" />
     <Compile Include="gpSimNetwork.cs" />
     <Compile Include="gpSimNode.cs" />
-    <Compile Include="initialChallengePacket.cs" />
-    <Compile Include="initialChallengeResponsePacket.cs" />
+    <Compile Include="packetDefinitions\initialChallengePacket.cs" />
+    <Compile Include="packetDefinitions\initialChallengeResponsePacket.cs" />
     <Compile Include="virtualNetworkBase.cs" />
     <Compile Include="virtualNetwork.cs" />
-    <Compile Include="networkPacket.cs" />
-    <Compile Include="pingResponsePacket.cs" />
+    <Compile Include="packetDefinitions\networkPacket.cs" />
+    <Compile Include="packetDefinitions\pingResponsePacket.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

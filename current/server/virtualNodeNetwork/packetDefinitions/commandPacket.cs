@@ -39,6 +39,11 @@ namespace virtualNodeNetwork
                     return virtualNodeNetwork.commandByte.ping;
                 case 0x02:
                     return virtualNodeNetwork.commandByte.identify;
+                case 0x03:
+                    return virtualNodeNetwork.commandByte.getSensor;
+
+                case 0x05:
+                    return virtualNodeNetwork.commandByte.getSensorType;
                 default:
                     return virtualNodeNetwork.commandByte.unknown;
             }

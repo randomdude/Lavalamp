@@ -17,6 +17,11 @@ namespace netGui
             return new cmdResponseIdentify_t(pinvoke.cmdIdentify_unsafe(ref config));
         }
 
+        protected static cmdResponseGeneric_t cmdCountSensors(ref appConfig_t config)
+        {
+            return new cmdResponseGeneric_t(pinvoke.cmdCountSensors_unsafe(ref config));
+        }
+
         public static appConfig_t getTestConfig()
         {
             return (appConfig_t)Marshal.PtrToStructure(pinvoke.getTestConfig_Unsafe(), typeof(appConfig_t));

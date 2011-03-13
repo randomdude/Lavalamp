@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -31,8 +32,11 @@ namespace virtualNodeNetwork
 
             net.onLogString = appendLog;
 
-            //virtualNodeBase testNode = net.createNode(1, "virtual node");
-            virtualNodeBase testNode = net.createNode(1, "01234567890abcdef01234567890abcde");
+
+            List<virtualNodeSensor> sensorList = new List<virtualNodeSensor>();
+            sensorList.Add(new genericDigitalOutSensor() { id = 0x01} );
+
+            virtualNodeBase testNode = net.createNode(1, "virtual node", sensorList);
 
             net.run();
         }

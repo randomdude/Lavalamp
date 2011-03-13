@@ -27,6 +27,12 @@ namespace TestProjects.virtualNetworkTests
         }
 
         [TestMethod]
+        public override void verifyNodeResturnsCorrectSensorCount()
+        {
+            base._verifyNodeResturnsCorrectSensorCount();
+        }
+
+        [TestMethod]
         public override void verifyNodeIgnoresPacketsAddressedToOthers()
         {
             base._verifyNodeIgnoresPacketsAddressedToOthers();

@@ -141,11 +141,6 @@ namespace netGui
             }
 	    }
 
-	    public short doGetSensorCount(short nodeId)
-	    {
-	        throw new NotImplementedException();
-	    }
-
 	    public void doPing(short nodeId)
 	    {
             lock (serialLock)
@@ -159,6 +154,22 @@ namespace netGui
                 }
             }
 	    }
+
+        public short doGetSensorCount(short nodeId)
+        {
+            lock (serialLock)
+            {
+                myseshdata.nodeid = (byte)nodeId;
+
+                using (cmdResponseGeneric_t genericResponse = cmdCountSensors(ref myseshdata))
+                {
+                    if (genericResponse.errorcode != errorcode_enum.errcode_none)
+                        throwerror(genericResponse.errorcode);
+
+                    return (short) genericResponse.response;
+                }
+            }
+        }
 
 	    public object doGetValue(sensorType thisSensorType, short nodeId, short sensorId)
 	    {
@@ -175,15 +186,21 @@ namespace netGui
 	        throw new NotImplementedException();
 	    }
 
-	    sensorType ITransmitter.doGetSensorType(short nodeId, short sensorId)
-	    {
-	        return doGetSensorType(nodeId, sensorId);
-	    }
-
 	    public sensorType doGetSensorType(short nodeId, short sensorId)
 	    {
-	        throw new NotImplementedException();
-	    }
+            lock (serialLock)
+            {
+                myseshdata.nodeid = (byte)nodeId;
+
+                using (cmdResponseGetSensorType_t response = cmdGetSensorType(myseshdata))
+                {
+                    if (response.errorcode != errorcode_enum.errcode_none)
+                        throwerror(response.errorcode);
+
+                    return new sensorType( response.type );
+                }
+            }
+        }
 
 	    public void doSetPWMSpeed(short nodeId, short speed, short sensorId)
 	    {

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using virtualNodeNetwork;
 
 namespace TestProjects.virtualNetworkTests
@@ -22,6 +23,12 @@ namespace TestProjects.virtualNetworkTests
         public override void verifyNodeIgnoresPacketsAddressedToOthers()
         {
             base._verifyNodeIgnoresPacketsAddressedToOthers();
+        }
+
+        [TestMethod]
+        public override void verifyNodeResturnsCorrectSensorCount()
+        {
+            base._verifyNodeResturnsCorrectSensorCount();
         }
 
         [TestMethod]

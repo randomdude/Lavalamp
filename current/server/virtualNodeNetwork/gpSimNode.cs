@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -8,6 +9,11 @@ namespace virtualNodeNetwork
     {
         private gpSim simulator;
         private static string hexFile = @"C:\c0adz\lavalamp\current\uC\node\lavalamp";
+
+        public gpSimNode(int newId, string newName, IEnumerable<virtualNodeSensor> newSensors) : base(newId, newName, newSensors)
+        {
+            throw new NotImplementedException();
+        }
 
         public gpSimNode(int newId, string newName) :base(newId, newName)
         {

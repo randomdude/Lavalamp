@@ -171,17 +171,29 @@ namespace virtualNodeNetwork
             }
         }
 
+        public override virtualNodeBase createNode(int newId, string newName, IEnumerable<virtualNodeSensor> newSensors)
+        {
+            virtualNode newNode = new virtualNode(newId, newName, newSensors);
+            addEventsToNode(newNode);
+
+            return newNode;
+        }
+
         public override virtualNodeBase createNode(int newId, string newName)
         {
             virtualNode newNode = new virtualNode(newId, newName);
+            addEventsToNode(newNode);
 
+            return newNode;
+        }
+
+        private void addEventsToNode(virtualNode newNode)
+        {
             newNode.onLog += log;
             newNode.onSendPacket += sendPacket;
             newNode.onStateChange += nodeStateChange;
             newNode.onCryptoError += cryptoError;
             nodes.Add(newNode.id, newNode);
-
-            return newNode;
         }
 
         public override void Dispose()

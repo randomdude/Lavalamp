@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using netGui;
@@ -102,7 +103,6 @@ namespace TestProjects.virtualNetworkTests
             }
         }
         
-
         public abstract void verifyNodeIgnoresPacketsAddressedToOthers();
         protected void _verifyNodeIgnoresPacketsAddressedToOthers()
         {
@@ -135,6 +135,40 @@ namespace TestProjects.virtualNetworkTests
                     Assert.Fail("Network did not timeout when a non-existent node was accessed");
                 if (testNode.state != nodeState.idle)
                     Assert.Fail("Node did not remain in idle state while something else on the network was accessed");
+            }
+        }
+
+        public abstract void verifyNodeResturnsCorrectSensorCount();
+        protected void _verifyNodeResturnsCorrectSensorCount()
+        {
+            // Make a new node on a new network with a test name, add some sensors to it, and ensure that
+            // the correct sensor count is returned.
+            const int virtualNodeID = 0x01;
+
+            // Do this a number of times with different amounts of sensors.
+            foreach (int sensorsToAddCount in new[] { 0, 1, 10 })
+            {
+                using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+                {
+                    // Make a list of sensors to add to our node
+                    List<virtualNodeSensor> sensorsToAdd = new List<virtualNodeSensor>();
+                    for (int i = 0; i < sensorsToAddCount; i++ )
+                        sensorsToAdd.Add(new genericDigitalOutSensor() {id = i} );
+
+                    // make our node
+                    virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Sensor count node", sensorsToAdd);
+                    startNetworkInNewThread(testVirtualNetwork);
+
+                    // Connect to this network with a new driver class
+                    transmitterDriver driver = new transmitterDriver(testVirtualNetwork.getDriverConnectionPointName(), false, null);
+
+                    int recievedCount = driver.doGetSensorCount(virtualNodeID);
+                    Thread.Sleep(1000);
+
+                    Assert.AreEqual(sensorsToAddCount, recievedCount, "Node reported sensors present when none are");
+
+                    Assert.AreEqual(nodeState.idle, testNode.state, "Node did not return to idle state after doIdentify");
+                }
             }
         }
     }

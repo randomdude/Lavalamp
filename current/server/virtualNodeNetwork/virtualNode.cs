@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace virtualNodeNetwork
@@ -6,6 +7,7 @@ namespace virtualNodeNetwork
     public class virtualNode : virtualNodeBase
     {
         public virtualNode(int newId, string newName) : base(newId, newName) { }
+        public virtualNode(int newId, string newName, IEnumerable<virtualNodeSensor> newSensors) : base(newId, newName, newSensors) { }
 
         /// <summary>
         /// Handle an incoming networkPacket
@@ -76,6 +78,12 @@ namespace virtualNodeNetwork
                     break;
                 case commandByte.identify:
                     processIdentify(cmdPkt);
+                    break;
+                case commandByte.getSensor:
+                    processGetSensor(cmdPkt);
+                    break;
+                case commandByte.getSensorType:
+                    processGetSensorType(cmdPkt);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -148,6 +156,59 @@ namespace virtualNodeNetwork
 
             stateChange(nodeState.idle);
         }
-    
+
+        private void processGetSensor(commandPacket cmdPkt)
+        {
+            log("Packet is a GET_SENSOR command.");
+
+            getSensorPacket req = new getSensorPacket(cmdPkt);
+
+            challengeResponsePacket resp = new challengeResponsePacket(virtualNetwork.controllerID, cmdPkt.challengeResponse + 1);
+
+            if (req.isGetSensorCount)
+            {
+                log("Packet is requesting sensor count");
+                resp.payload = sensors.Count;
+            }
+            else
+            {
+                throw new NotImplementedException();
+                //resp.payload = sensors;
+            }
+
+            sendPacket(resp);
+            stateChange(nodeState.idle);
+        }
+
+        private void processGetSensorType(commandPacket cmdPkt)
+        {
+            log("Packet is a GET_SENSOR_TYPE command.");
+
+            getSensorTypePacket req = new getSensorTypePacket(cmdPkt);
+
+            getSensorTypeResponsePacket resp = new getSensorTypeResponsePacket(virtualNetwork.controllerID, cmdPkt.challengeResponse + 1);
+
+            if (!sensors.ContainsKey(req.sensorToInterrogate))
+            {
+                // Sensor to interrogate is not present. Signal this by setting the bottom bit of byte6
+                // and setting byte8 to an error code.
+                resp.isErrored = true;
+                resp.errorCode = (int) errorCodes.sensorNotFound;
+            }
+            else
+            {
+                resp.payload = sensors[req.sensorToInterrogate].typeIdNum;
+            }
+
+            sendPacket(resp);
+
+            stateChange(nodeState.idle);
+        }    
+
+    }
+
+    enum errorCodes
+    {
+        sensorNotFound = 0x01
     }
 }

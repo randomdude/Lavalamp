@@ -12,13 +12,13 @@ namespace netGui
 
         protected disposableCommand(IntPtr rawData)
         {
-            unmanagedPointer = rawData;            
+            unmanagedPointer = rawData;
         }
 
         public void Dispose()
         {
             cmd_free(unmanagedPointer);
-        }  
+        }
     }
 
     public class cmdResponseGeneric_t : disposableCommand, ICmdResponse
@@ -34,7 +34,7 @@ namespace netGui
             get { return responsePacket.totaltime; }
             set { responsePacket.totaltime = value; }
         }
-        
+
         public Int32 response
         {
             get { return responsePacket.response; }
@@ -76,7 +76,7 @@ namespace netGui
 
         public byte[] response
         {
-            get { return responsePacket.response;  }
+            get { return responsePacket.response; }
         }
 
         private cmdResponseIdentify_t_unsafe responsePacket;
@@ -94,10 +94,47 @@ namespace netGui
             public readonly errorcode_enum errorcode;
 
             // The driver limits this field to be a max of 0x21 bytes.
-            [MarshalAs(UnmanagedType.ByValArray, ArraySubType  = UnmanagedType.U1, SizeConst = 0x21)]
+            [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.U1, SizeConst = 0x21)]
             public readonly byte[] response;
 
             [MarshalAs(UnmanagedType.U4)]
+            public readonly Int32 totaltime;
+        }
+    }
+
+    public class cmdResponseGetSensorType_t : disposableCommand, ICmdResponse
+    {
+        public errorcode_enum errorcode
+        {
+            get { return responsePacket.errorcode; }
+        }
+
+        public Int32 totaltime
+        {
+            get { return responsePacket.totaltime; }
+        }
+
+        public sensorTypeEnum type
+        {
+            get { return responsePacket.type; }
+        }
+
+        private cmdResponseGetSensorType_t_unsafe responsePacket;
+
+        public cmdResponseGetSensorType_t(IntPtr rawResponse) : base(rawResponse)
+        {
+            responsePacket = (cmdResponseGetSensorType_t_unsafe)Marshal.PtrToStructure(rawResponse, typeof(cmdResponseGetSensorType_t_unsafe));
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct cmdResponseGetSensorType_t_unsafe
+        {
+            public readonly errorcode_enum errorcode;
+            public readonly sensorTypeEnum type;
+
+            // TODO: this is actually a char*
+            public readonly IntPtr FriendlyType;
+
             public readonly Int32 totaltime;
         }
     }
@@ -107,12 +144,4 @@ namespace netGui
         errorcode_enum errorcode { get; }
         Int32 totaltime { get; }
     }
-    
-    public struct cmdResponseGetSensorType_t
-    {
-        errorcode_enum errorcode;
-        Int32 type;
-        IntPtr FriendlyType;
-        Int32 totaltime;
-    };
 }

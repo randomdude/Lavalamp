@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace virtualNodeNetwork
@@ -7,6 +8,7 @@ namespace virtualNodeNetwork
     {
         public abstract void run();
         public abstract virtualNodeBase createNode(int newId, string newName);
+        public abstract virtualNodeBase createNode(int newId, string newName, IEnumerable<virtualNodeSensor> newSensors );
 
         /// <summary>
         /// Get the port we can pass to our transmitterDriver

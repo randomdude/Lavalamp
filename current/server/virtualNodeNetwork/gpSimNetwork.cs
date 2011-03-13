@@ -83,16 +83,27 @@ namespace virtualNodeNetwork
             return "pipe\\" + _pipename;
         }
 
+        public override virtualNodeBase createNode(int newId, string newName, IEnumerable<virtualNodeSensor> newSensors)
+        {
+            gpSimNode newNode = new gpSimNode(newId, newName, newSensors);
+            addEvents(newNode);
+            return newNode;
+        }
+
         public override virtualNodeBase createNode(int newId, string newName)
         {
             gpSimNode newNode = new gpSimNode(newId, newName);
+            addEvents(newNode);
+            return newNode;
+        }
 
+        private void addEvents(gpSimNode newNode)
+        {
             newNode.onLog += log;
             newNode.onSendPacket += sendPacket;
             newNode.onCryptoError += cryptoError;
             nodes.Add(newNode.id, newNode);
 
-            return newNode;
         }
 
         public override void Dispose()

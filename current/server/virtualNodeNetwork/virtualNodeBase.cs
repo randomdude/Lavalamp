@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace virtualNodeNetwork
 {
@@ -31,11 +32,30 @@ namespace virtualNodeNetwork
 
         public nodeState state;
         protected int p = 0x112233;
+        protected Dictionary<int, virtualNodeSensor> sensors = new Dictionary<int, virtualNodeSensor>();
 
         public virtualNodeBase(int newId, string newName)
         {
             id = newId;
             name = newName;
+        }
+
+        public virtualNodeBase(int newId, string newName, virtualNodeSensor newSensor)
+        {
+            id = newId;
+            name = newName;
+
+            sensors.Add(newSensor.id, newSensor);
+        }
+
+        public virtualNodeBase(int newId, string newName, IEnumerable<virtualNodeSensor> newSensors)
+        {
+            id = newId;
+            name = newName;
+
+            int n = 0;
+            foreach (virtualNodeSensor sensorToAdd in newSensors)
+                sensors.Add(sensorToAdd.id, sensorToAdd);
         }
 
         /// <summary>
@@ -90,6 +110,20 @@ namespace virtualNodeNetwork
         }
     }
 
+    public class genericDigitalOutSensor : virtualNodeSensor
+    {
+        public override int typeIdNum
+        {
+            get { return 0x01; }
+        }
+    }
+
+    public abstract class virtualNodeSensor
+    {
+        public int id = 1;
+        public abstract int typeIdNum { get; }
+    }
+
     public enum nodeState
     {
         idle,                       // The node is idle.
@@ -100,6 +134,8 @@ namespace virtualNodeNetwork
     {
         unknown,
         ping = 0x01,
-        identify = 0x02
+        identify = 0x02,
+        getSensor = 0x03,
+        getSensorType = 0x05
     }
 }

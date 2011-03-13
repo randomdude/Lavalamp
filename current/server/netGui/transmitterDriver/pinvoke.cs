@@ -34,7 +34,7 @@ namespace netGui
         protected static extern IntPtr cmdIdentify_unsafe(ref appConfig_t config);
 
         [DllImport("lavalampdll.dll", EntryPoint = "cmdCountSensors")]
-        protected static extern cmdResponseGeneric_t cmdCountSensors(appConfig_t config);
+        protected static extern IntPtr cmdCountSensors_unsafe(ref appConfig_t config);
 
         [DllImport("lavalampdll.dll", EntryPoint = "cmdGetGenericDigitalSensor")]
         protected static extern cmdResponseGeneric_t cmdGetGenericDigitalSensor(appConfig_t config);
@@ -92,7 +92,12 @@ namespace netGui
     public class sensorType
     {
         public String FriendlyType;
-        Int16 id;
         public sensorTypeEnum enumeratedType;
+
+        public sensorType(sensorTypeEnum type)
+        {
+            enumeratedType = type;
+            FriendlyType = Enum.GetName(typeof (sensorTypeEnum), enumeratedType);
+        }
     }
 }
