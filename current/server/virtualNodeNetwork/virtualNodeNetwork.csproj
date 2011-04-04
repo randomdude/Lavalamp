@@ -8,8 +8,8 @@
     <ProjectGuid>{C5253F17-CF0C-4966-86A9-D9CB95137735}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>virtualNetwork</RootNamespace>
-    <AssemblyName>virtualNetwork</AssemblyName>
+    <RootNamespace>virtualNodeNetwork</RootNamespace>
+    <AssemblyName>virtualNodeNetwork</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,11 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Design" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -50,6 +53,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ctlNodeSensor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctlNodeSensor.Designer.cs">
+      <DependentUpon>ctlNodeSensor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctlNodeSensorGenericDigitalOut.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctlNodeSensorGenericDigitalOut.Designer.cs">
+      <DependentUpon>ctlNodeSensorGenericDigitalOut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctlVirtualNode.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctlVirtualNode.Designer.cs">
+      <DependentUpon>ctlVirtualNode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="genericDigitalOutSensor.cs" />
     <Compile Include="packetDefinitions\challengeResponsePacket.cs" />
     <Compile Include="packetDefinitions\commandPacket.cs" />
     <Compile Include="packetDefinitions\doIdentifyRequestPacket.cs" />
@@ -74,6 +96,15 @@
     <Compile Include="packetDefinitions\pingResponsePacket.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ctlNodeSensor.resx">
+      <DependentUpon>ctlNodeSensor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctlNodeSensorGenericDigitalOut.resx">
+      <DependentUpon>ctlNodeSensorGenericDigitalOut.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctlVirtualNode.resx">
+      <DependentUpon>ctlVirtualNode.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -85,6 +116,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -97,8 +129,13 @@
     </Compile>
     <Compile Include="virtualNode.cs" />
     <Compile Include="virtualNodeBase.cs" />
+    <Compile Include="virtualNodeSensor.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\netGui\netGui.csproj">
+      <Project>{560BFC3D-3D57-46B5-B1C5-A3E01A88963C}</Project>
+      <Name>netGui</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ruleEngine\ruleEngine.csproj">
       <Project>{04834DB5-4E91-48EA-9107-FD2246087122}</Project>
       <Name>ruleEngine</Name>

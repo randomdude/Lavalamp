@@ -176,8 +176,9 @@ namespace netGui
             lock (serialLock)
             {
                 myseshdata.nodeid = (byte)nodeId;
+                myseshdata.sensorid = (byte) sensorId;
 
-                using (cmdResponseGetSensorType_t response = cmdGetSensorType(myseshdata))
+                using (cmdResponseGetSensorType_t response = cmdGetSensorType(ref myseshdata))
                 {
                     if (response.errorcode != errorcode_enum.errcode_none)
                         throwerror(response.errorcode);
@@ -187,20 +188,32 @@ namespace netGui
             }
         }
 
-	    public object doGetValue(sensorType thisSensorType, short nodeId, short sensorId)
-	    {
-	        throw new NotImplementedException();
-	    }
-
-	    public bool doGetGenericDigitalIn(short nodeId, short sensorId)
-	    {
-	        throw new NotImplementedException();
-	    }
-
 	    public void doSetGenericOut(short nodeId, short toThis, short sensorId)
 	    {
-	        throw new NotImplementedException();
+	        if (toThis > 0xFF)
+                throw new ArgumentException();
+
+	        lock (serialLock)
+	        {
+	            myseshdata.nodeid = (byte) nodeId;
+	            myseshdata.sensorid = (byte) sensorId;
+                using(cmdResponseGeneric_t resp = cmdSetGenericDigitalSensor(ref myseshdata, (byte) toThis))
+                {
+                    if (resp.errorcode != errorcode_enum.errcode_none)
+                        throwerror(resp.errorcode);
+                }
+	        }
 	    }
+
+        public object doGetValue(sensorType thisSensorType, short nodeId, short sensorId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool doGetGenericDigitalIn(short nodeId, short sensorId)
+        {
+            throw new NotImplementedException();
+        }
 
 	    public void doSetPWMSpeed(short nodeId, short speed, short sensorId)
 	    {

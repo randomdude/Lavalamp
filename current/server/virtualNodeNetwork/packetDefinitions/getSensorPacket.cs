@@ -14,4 +14,20 @@
             get { return (sensorToInterrogate == 0); }
         }
     }
+
+    public class setSensorPacket : commandPacket
+    {
+        public setSensorPacket(networkPacket packet) : base(packet) { }
+
+        public int sensorToInterrogate
+        {
+            get { return toInt(rawBytes[7]); }
+        }
+
+        public int newValue
+        {
+            get { return toInt(rawBytes[6]); }
+        }
+    }
+
 }

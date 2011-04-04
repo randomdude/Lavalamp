@@ -13,7 +13,7 @@ namespace virtualNodeNetwork
         /// <summary>
         /// The named pipe we use for comms
         /// </summary>
-        private readonly NamedPipeServerStream _pipe;
+        private NamedPipeServerStream _pipe;
 
         /// <summary>
         /// Lock on this object before accessing consecutiveSyncSymbols
@@ -35,18 +35,13 @@ namespace virtualNodeNetwork
         /// </summary>
         private readonly Dictionary<int, virtualNode> nodes = new Dictionary<int, virtualNode>();
 
+        private bool disposing = false;
+
         public virtualNetwork(string newPipeName)
         {
             _pipename = newPipeName;
 
-            _pipe = new NamedPipeServerStream(_pipename, PipeDirection.InOut, 10, PipeTransmissionMode.Byte,
-                                            PipeOptions.Asynchronous);
-        }
-
-        public override void run()
-        {
-            log("Virtual network awaiting connection");
-            _pipe.BeginWaitForConnection(handleConnection, null);
+            _pipe = new NamedPipeServerStream(_pipename, PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
         }
 
         /// <summary>
@@ -78,7 +73,32 @@ namespace virtualNodeNetwork
             return "pipe\\" + _pipename;
         }
 
+        public override void run()
+        {
+            log("Virtual network awaiting connection");
+            _pipe.BeginWaitForConnection(handleConnection, null);
+        }
+
         private void handleConnection(IAsyncResult ar)
+        {
+            _handleConnection(ar);
+            try
+            {
+                _pipe.Disconnect();
+                _pipe.Dispose();
+            }
+            catch (ObjectDisposedException)
+            {
+                // swallow it.
+            }
+            if (!disposing)
+            {
+                _pipe = new NamedPipeServerStream(_pipename, PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
+                _pipe.BeginWaitForConnection(handleConnection, null);
+            }
+        }
+
+        private void _handleConnection(IAsyncResult ar)
         {
             log("Client connected.");
 
@@ -106,6 +126,8 @@ namespace virtualNodeNetwork
                     // Packet 1: 00 AA AA AA AA AA AA AA
                     // Packet 2: AA .. 
                     // We will abort reading before we read the second packet of packet 2.
+                    if (!_pipe.IsConnected)
+                        return;
                     int bytesReadThisRead = 0;
                     try
                     {
@@ -199,6 +221,7 @@ namespace virtualNodeNetwork
         public override void Dispose()
         {
             _pipe.Close();
+            disposing = true;
         }
     }
 }

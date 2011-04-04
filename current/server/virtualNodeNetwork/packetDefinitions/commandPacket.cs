@@ -41,7 +41,8 @@ namespace virtualNodeNetwork
                     return virtualNodeNetwork.commandByte.identify;
                 case 0x03:
                     return virtualNodeNetwork.commandByte.getSensor;
-
+                case 0x04:
+                    return virtualNodeNetwork.commandByte.setSensor;
                 case 0x05:
                     return virtualNodeNetwork.commandByte.getSensorType;
                 default:

@@ -20,25 +20,26 @@ namespace virtualNodeNetwork
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ParameterizedThreadStart ts = new ParameterizedThreadStart(networkThreadStart);
-            networkThread = new Thread(ts);
-            networkThread.Name = "Network thread";
-            networkThread.Start();
-        }
-
-        private void networkThreadStart(object obj)
-        {
             virtualNetworkBase net = new virtualNetwork("vnet");
 
             net.onLogString = appendLog;
 
-
             List<virtualNodeSensor> sensorList = new List<virtualNodeSensor>();
-            sensorList.Add(new genericDigitalOutSensor() { id = 0x01} );
+            sensorList.Add(new genericDigitalOutSensor() { id = 0x01 });
 
-            virtualNodeBase testNode = net.createNode(1, "virtual node", sensorList);
+            virtualNodeBase ourNode = net.createNode(1, "virtual node", sensorList);
 
-            net.run();
+            ctlVirtualNode1.loadNode(ourNode);
+
+            ParameterizedThreadStart ts = new ParameterizedThreadStart(networkThreadStart);
+            networkThread = new Thread(ts);
+            networkThread.Name = "Network thread";
+            networkThread.Start(net);
+        }
+
+        private void networkThreadStart(object obj)
+        {
+            ((virtualNetworkBase)obj).run();
         }
 
         private void appendLog(string newLog)

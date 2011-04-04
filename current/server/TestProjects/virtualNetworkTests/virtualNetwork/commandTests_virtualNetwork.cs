@@ -32,9 +32,27 @@ namespace TestProjects.virtualNetworkTests
         }
 
         [TestMethod]
+        public override void verifyNodeReturnsCorrectSensorTypes()
+        {
+            base._verifyNodeReturnsCorrectSensorTypes();
+        }
+
+        [TestMethod]
+        public override void verifyNodeReturnsCorrectSensorTypesForSecondSensor()
+        {
+            base._verifyNodeReturnsCorrectSensorTypesForSecondSensor();
+        }
+
+        [TestMethod]
         public override void verifyNodeRespondsCorrectlyToDoIdentify()
         {
             base._verifyNodeRespondsCorrectlyToDoIdentify();
+        }
+
+        [TestMethod]
+        public override void verifyNodeCanSetGenericDigitalOutCorrectly()
+        {
+            base._verifyNodeCanSetGenericDigitalOutCorrectly();
         }
     }
 }

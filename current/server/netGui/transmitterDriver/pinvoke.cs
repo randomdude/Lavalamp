@@ -40,13 +40,13 @@ namespace netGui
         protected static extern cmdResponseGeneric_t cmdGetGenericDigitalSensor(appConfig_t config);
 
         [DllImport("lavalampdll.dll", EntryPoint = "cmdSetGenericDigitalSensor")]
-        protected static extern cmdResponseGeneric_t cmdSetGenericDigitalSensor(appConfig_t config, IntPtr tothis);
+        protected static extern IntPtr cmdSetGenericDigitalSensor_unsafe(ref appConfig_t config, Byte tothis);
 
         [DllImport("lavalampdll.dll", EntryPoint = "cmdSetSensorFadeSpeed")]
         protected static extern cmdResponseGeneric_t cmdSetSensorFadeSpeed(appConfig_t config, byte tothis);
 
         [DllImport("lavalampdll.dll", EntryPoint = "cmdGetSensorType")]
-        protected static extern cmdResponseGetSensorType_t cmdGetSensorType(appConfig_t config);
+        protected static extern IntPtr cmdGetSensorType_unsafe(ref appConfig_t config);
 
         [DllImport("lavalampdll.dll", EntryPoint = "cmdSetP")]
         protected static extern cmdResponseGeneric_t cmdSetP(appConfig_t config, byte byte1, byte byte2, bool isHigh);
@@ -70,7 +70,7 @@ namespace netGui
      */
     public enum errorcode_enum
     {
-        errcode_none, 
+        errcode_none = 0x00, 
         errcode_timeout, 
         errcode_crypto, 
         errcode_internal, 
@@ -80,9 +80,11 @@ namespace netGui
         errcode_sensor_wrong_type
     };
 
+    /// <summary>
+    /// Add any new sensor types to this enum, with the appropriate value.
+    /// </summary>
     public enum sensorTypeEnum
     {
-        unknown = 0x00,
         generic_digital_in = 0x01,
         generic_digital_out = 0x02,
         pwm_out = 0x03,

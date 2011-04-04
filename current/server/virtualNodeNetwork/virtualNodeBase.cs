@@ -28,11 +28,16 @@ namespace virtualNodeNetwork
         /// Fired when a challenge response is incorrect
         /// </summary>
         public Action<virtualNodeBase> onCryptoError;
+
+        /// <summary>
+        /// Fired when a sensor's output value is changed on this node
+        /// </summary>
+        public Action<virtualNodeBase, virtualNodeSensor, int> onChangeSensor;        
         #endregion
 
         public nodeState state;
         protected int p = 0x112233;
-        protected Dictionary<int, virtualNodeSensor> sensors = new Dictionary<int, virtualNodeSensor>();
+        public Dictionary<int, virtualNodeSensor> sensors = new Dictionary<int, virtualNodeSensor>();
 
         public virtualNodeBase(int newId, string newName)
         {
@@ -53,7 +58,6 @@ namespace virtualNodeNetwork
             id = newId;
             name = newName;
 
-            int n = 0;
             foreach (virtualNodeSensor sensorToAdd in newSensors)
                 sensors.Add(sensorToAdd.id, sensorToAdd);
         }
@@ -101,6 +105,17 @@ namespace virtualNodeNetwork
         }
 
         /// <summary>
+        /// Fire the onChangeSensor event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="newVal"></param>
+        protected void changeSensor(virtualNodeSensor sender, int newVal)
+        {
+            if (onChangeSensor != null)
+                onChangeSensor.Invoke(this, sender, newVal);
+        }
+
+        /// <summary>
         /// Fire the onCryptoError event
         /// </summary>
         protected void cryptoError()
@@ -108,20 +123,6 @@ namespace virtualNodeNetwork
             if (onCryptoError != null)
                 onCryptoError.Invoke(this);
         }
-    }
-
-    public class genericDigitalOutSensor : virtualNodeSensor
-    {
-        public override int typeIdNum
-        {
-            get { return 0x01; }
-        }
-    }
-
-    public abstract class virtualNodeSensor
-    {
-        public int id = 1;
-        public abstract int typeIdNum { get; }
     }
 
     public enum nodeState
@@ -136,6 +137,7 @@ namespace virtualNodeNetwork
         ping = 0x01,
         identify = 0x02,
         getSensor = 0x03,
-        getSensorType = 0x05
+        setSensor = 0x04,
+        getSensorType = 0x05,
     }
 }

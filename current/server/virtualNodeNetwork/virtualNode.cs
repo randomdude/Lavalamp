@@ -82,6 +82,9 @@ namespace virtualNodeNetwork
                 case commandByte.getSensor:
                     processGetSensor(cmdPkt);
                     break;
+                case commandByte.setSensor:
+                    processSetSensor(cmdPkt);
+                    break;
                 case commandByte.getSensorType:
                     processGetSensorType(cmdPkt);
                     break;
@@ -180,13 +183,46 @@ namespace virtualNodeNetwork
             stateChange(nodeState.idle);
         }
 
+        private void processSetSensor(commandPacket cmdPkt)
+        {
+            log("Packet is a SET_SENSOR command.");
+
+            setSensorPacket req = new setSensorPacket(cmdPkt);
+
+            if (req.sensorToInterrogate == 0 ||
+                req.sensorToInterrogate > sensors.Count )
+            {
+                // TODO: Respond with an error code, as the hardware should
+                throw new NotImplementedException();
+            }
+
+            // TODO: Check sensor types
+
+            virtualNodeSensor toChange = sensors[req.sensorToInterrogate];
+            changeSensor(toChange, req.newValue);
+            toChange.setValue(req.newValue);
+
+            challengeResponsePacket resp = new challengeResponsePacket(virtualNetwork.controllerID, cmdPkt.challengeResponse + 1);
+
+            sendPacket(resp);
+
+            stateChange(nodeState.idle);
+        }
+        
         private void processGetSensorType(commandPacket cmdPkt)
         {
             log("Packet is a GET_SENSOR_TYPE command.");
 
             getSensorTypePacket req = new getSensorTypePacket(cmdPkt);
 
-            getSensorTypeResponsePacket resp = new getSensorTypeResponsePacket(virtualNetwork.controllerID, cmdPkt.challengeResponse + 1);
+            getSensorTypeResponsePacket resp = new getSensorTypeResponsePacket(virtualNetwork.controllerID,
+                                                                               cmdPkt.challengeResponse + 1);
+
+            if (req.sensorToInterrogate == 0)
+            {
+                // This is illegal.
+                throw new NotImplementedException();
+            }
 
             if (!sensors.ContainsKey(req.sensorToInterrogate))
             {
@@ -197,7 +233,7 @@ namespace virtualNodeNetwork
             }
             else
             {
-                resp.payload = sensors[req.sensorToInterrogate].typeIdNum;
+                resp.payload = (int) sensors[req.sensorToInterrogate].type;
             }
 
             sendPacket(resp);

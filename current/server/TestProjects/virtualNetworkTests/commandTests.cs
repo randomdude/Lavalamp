@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using netGui;
@@ -12,7 +13,7 @@ namespace TestProjects.virtualNetworkTests
         where networkTypeToTest : virtualNetworkBase
     {
         public abstract void verifyNodeIsPingable();
-        protected void _verifyNodeIsPingable() 
+        protected void _verifyNodeIsPingable()
         {
             // Create a new virtual network and node. Ping the node and verify that we get a successful response.
             const int virtualNodeID = 0x01;
@@ -84,7 +85,7 @@ namespace TestProjects.virtualNetworkTests
             // Do this repeatedly with various node names.
             foreach (string testNodeName in new[] { "test node", "", "a", "01234567890abcdef01234567890abcde" })
             {
-                using ( virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+                using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
                 {
                     virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, testNodeName);
                     startNetworkInNewThread(testVirtualNetwork);
@@ -102,7 +103,7 @@ namespace TestProjects.virtualNetworkTests
                 }
             }
         }
-        
+
         public abstract void verifyNodeIgnoresPacketsAddressedToOthers();
         protected void _verifyNodeIgnoresPacketsAddressedToOthers()
         {
@@ -111,7 +112,7 @@ namespace TestProjects.virtualNetworkTests
             // first node does not process it.
             const int virtualNodeID = 0x01;
 
-            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName) )
+            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
             {
                 virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Ping test node");
                 startNetworkInNewThread(testVirtualNetwork);
@@ -141,7 +142,7 @@ namespace TestProjects.virtualNetworkTests
         public abstract void verifyNodeReturnsCorrectSensorCount();
         protected void _verifyNodeReturnsCorrectSensorCount()
         {
-            // Make a new node on a new network with a test name, add some sensors to it, and ensure that
+            // Make a new node on a new network, add some sensors to it, and ensure that
             // the correct sensor count is returned.
             const int virtualNodeID = 0x01;
 
@@ -152,8 +153,8 @@ namespace TestProjects.virtualNetworkTests
                 {
                     // Make a list of sensors to add to our node
                     List<virtualNodeSensor> sensorsToAdd = new List<virtualNodeSensor>();
-                    for (int i = 0; i < sensorsToAddCount; i++ )
-                        sensorsToAdd.Add(new genericDigitalOutSensor() {id = i} );
+                    for (int i = 0; i < sensorsToAddCount; i++)
+                        sensorsToAdd.Add(new genericDigitalOutSensor() { id = i });
 
                     // make our node
                     virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Sensor count node", sensorsToAdd);
@@ -165,11 +166,135 @@ namespace TestProjects.virtualNetworkTests
                     int recievedCount = driver.doGetSensorCount(virtualNodeID);
                     Thread.Sleep(1000);
 
-                    Assert.AreEqual(sensorsToAddCount, recievedCount, "Node reported sensors present when none are");
+                    Assert.AreEqual(sensorsToAddCount, recievedCount, "Node reported wrong sensor count");
 
                     Assert.AreEqual(nodeState.idle, testNode.state, "Node did not return to idle state after doIdentify");
                 }
             }
         }
+
+        public abstract void verifyNodeReturnsCorrectSensorTypes();
+        protected void _verifyNodeReturnsCorrectSensorTypes()
+        {
+            // Make a new node on a new network, add some sensors to it, and ensure that the correct sensor
+            // types are returned.
+            const int virtualNodeID = 0x01;
+
+            // Do this a number of times with different amounts of sensors.
+            foreach (sensorTypeEnum typeToTest in Enum.GetValues(typeof(sensorTypeEnum)))
+            {
+                using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+                {
+                    // Add a sensor of the given type to the node
+                    List<virtualNodeSensor> sensorsToAdd = new List<virtualNodeSensor>();
+                    sensorsToAdd.Add(virtualNodeSensor.makeSensor(typeToTest, 0x01));
+
+                    // make our node
+                    virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Sensor type node", sensorsToAdd);
+                    startNetworkInNewThread(testVirtualNetwork);
+
+                    // Connect to this network with a new driver class
+                    transmitterDriver driver = new transmitterDriver(testVirtualNetwork.getDriverConnectionPointName(), false, null);
+
+                    // Ask it for the type of the first sensor
+                    sensorType recievedType = driver.doGetSensorType(virtualNodeID, 1);
+                    Thread.Sleep(1000);
+
+                    // Verify that the correct sensor type is recieved
+                    Assert.AreEqual(typeToTest, recievedType.enumeratedType, "Node reported incorrect sensor type");
+
+                    Assert.AreEqual(nodeState.idle, testNode.state, "Node did not return to idle state after doIdentify");
+                }
+            }
+        }
+
+        public abstract void verifyNodeReturnsCorrectSensorTypesForSecondSensor();
+        protected void _verifyNodeReturnsCorrectSensorTypesForSecondSensor()
+        {
+            // Make a new node on a new network. Add a first sensor, then a second. verify that the second
+            // is identified correctly. This should pick up situations where the indexing is broken.
+            const int virtualNodeID = 0x01;
+
+            // Do this a number of times with different amounts of sensors.
+            foreach (sensorTypeEnum typeToTest in Enum.GetValues(typeof(sensorTypeEnum)))
+            {
+                using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+                {
+                    // Add a dummy sensor, then a sensor of the given type to the node
+                    List<virtualNodeSensor> sensorsToAdd = new List<virtualNodeSensor>();
+                    sensorsToAdd.Add(virtualNodeSensor.makeSensor(sensorTypeEnum.generic_digital_in, 1));
+                    sensorsToAdd.Add(virtualNodeSensor.makeSensor(typeToTest, 2));
+
+                    // make our node
+                    virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Sensor type node", sensorsToAdd);
+                    startNetworkInNewThread(testVirtualNetwork);
+
+                    // Connect to this network with a new driver class
+                    transmitterDriver driver = new transmitterDriver(testVirtualNetwork.getDriverConnectionPointName(), false, null);
+
+                    // Ask it for the type of the first 'dummy' sensor, which is always generic_digital_in
+                    sensorType recievedType = driver.doGetSensorType(virtualNodeID, 1);
+                    Thread.Sleep(1000);
+                    Assert.AreEqual(sensorTypeEnum.generic_digital_in, recievedType.enumeratedType, "Node reported incorrect sensor type");
+
+                    // And now check the type of the second sensor.
+                    recievedType = driver.doGetSensorType(virtualNodeID, 2);
+                    Thread.Sleep(1000);
+                    Assert.AreEqual(typeToTest, recievedType.enumeratedType, "Node reported incorrect sensor type");
+
+                    Assert.AreEqual(nodeState.idle, testNode.state, "Node did not return to idle state after doIdentify");
+                }
+            }
+        }
+
+        public abstract void verifyNodeCanSetGenericDigitalOutCorrectly();
+        protected void _verifyNodeCanSetGenericDigitalOutCorrectly()
+        {
+            // Create a new virtual network and node, with a single generic digital output sensor.
+            // Verify that the sensor fires the correct events when asked to set the output value.
+            const int virtualNodeID = 0x01;
+
+            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+            {
+                List<virtualNodeSensor> sensorsToAdd = new List<virtualNodeSensor>();
+                sensorsToAdd.Add(virtualNodeSensor.makeSensor(sensorTypeEnum.generic_digital_out, 1));
+
+                virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Digital output test node", sensorsToAdd);
+                startNetworkInNewThread(testVirtualNetwork);
+
+                // Connect to this network with a new driver class
+                transmitterDriver driver = new transmitterDriver(testVirtualNetwork.getDriverConnectionPointName(), false, null);
+
+                // apply a callback to signal when the sensor changes state
+                int sensorState = 0;
+                testNode.onChangeSensor = new Action<virtualNodeBase, virtualNodeSensor, int>(
+                    (node, sensor, newVal) =>
+                        {
+                            // Verify that the callback was called with the correct values
+                            Assert.AreEqual(virtualNodeID, node.id, "node state callback provided wrong node");
+                            Assert.AreEqual(1, sensor.id, "node state callback provided wrong sensor");
+
+                            // Store the new state. Don't bother locking since it is a straight write and
+                            // not a read-modify-write operation.
+                            sensorState = newVal;
+                        }
+                    );
+
+                // Now set the sensor, and observe the sensorState var get updated by the fired event.
+                // Loop through a few different values, verifying after each.
+                foreach (int stateToSetTo in new[] { 0, 1, 1, 0, 0, 1 })
+                {
+                    driver.doSetGenericOut(virtualNodeID, (short) stateToSetTo, 1);
+                    Thread.Sleep(500);
+
+                    Assert.AreEqual(stateToSetTo, sensorState, "Node did not set sensor output value to be correct");
+
+                    if (testNode.state != nodeState.idle)
+                        Assert.Fail("Node did not return to idle state after a bad crypto response");
+                }
+
+            }
+        }
+
     }
 }

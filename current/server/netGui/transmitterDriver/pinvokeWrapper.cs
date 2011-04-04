@@ -22,9 +22,20 @@ namespace netGui
             return new cmdResponseGeneric_t(pinvoke.cmdCountSensors_unsafe(ref config));
         }
 
+        protected static cmdResponseGetSensorType_t cmdGetSensorType(ref appConfig_t config)
+        {
+            return new cmdResponseGetSensorType_t(pinvoke.cmdGetSensorType_unsafe(ref config));
+        }
+
+        protected static cmdResponseGeneric_t cmdSetGenericDigitalSensor(ref appConfig_t config, byte toThis)
+        {
+            return new cmdResponseGeneric_t(pinvoke.cmdSetGenericDigitalSensor_unsafe(ref config, toThis));
+        }
+
         public static appConfig_t getTestConfig()
         {
             return (appConfig_t)Marshal.PtrToStructure(pinvoke.getTestConfig_Unsafe(), typeof(appConfig_t));
         }
+
     }
 }
