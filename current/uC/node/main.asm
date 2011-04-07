@@ -48,6 +48,9 @@ start
 
 #ifdef TEST_TRANSMISSION
 
+	bsf STATUS, RP0	 ; page 1
+	bcf TRISA, 0	 ; set our test pin to output
+
 	bcf STATUS, RP0  ; page 0
 	bcf STATUS, RP0  ; page 0
 
@@ -70,6 +73,8 @@ transmissionTest
 	movwf packet7
 	call sendpacket
 
+	bsf PORTA, 0
+
 	; Now delay for a bit.
 	movlw 0x00
 	movwf tmp1
@@ -77,6 +82,8 @@ delay
 	incf tmp1, f
 	btfss STATUS, Z
 	goto delay
+
+	bcf PORTA, 0
 
 	goto transmissionTest
 

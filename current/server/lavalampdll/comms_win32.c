@@ -142,6 +142,7 @@ long readwithtimeout( appConfig_t* myconfig, char* data, long datalen,  BOOL* di
 BOOL __cdecl initPort(appConfig_t* myconfig)
 {
 	DCB mydcb;
+	unsigned long toClear;
 
 	char* portpath = malloc(strlen(myconfig->portname) + 10);
 	wsprintf(portpath, "\\\\.\\%s", myconfig->portname);
@@ -158,10 +159,18 @@ BOOL __cdecl initPort(appConfig_t* myconfig)
 	// pipes or suchlike.
 	if (_strnicmp(myconfig->portname, "pipe\\", 5) == 0)
 		myconfig->isSerialPort = FALSE;
+	else
+		myconfig->isSerialPort = TRUE;
 
 	if (myconfig->isSerialPort)
 	{
-		GetCommState(myconfig->hnd,&mydcb);
+		if (!GetCommState(myconfig->hnd,&mydcb))
+		{
+			printf("Unable to getCommState: GLE returned 0x%lx\n", GetLastError());
+			CloseHandle(myconfig->hnd);
+			return FALSE ;
+		}		
+
 		mydcb.BaudRate = 9600;
 		mydcb.fBinary = TRUE;
 		mydcb.fParity = FALSE;
@@ -173,7 +182,7 @@ BOOL __cdecl initPort(appConfig_t* myconfig)
 		mydcb.fInX = FALSE;
 		mydcb.fNull = FALSE;
 		mydcb.fRtsControl = RTS_CONTROL_DISABLE ;
-		mydcb.fAbortOnError = TRUE;
+		mydcb.fAbortOnError = FALSE;
 		mydcb.ByteSize = 8;
 		mydcb.Parity = NOPARITY;
 		mydcb.StopBits = ONESTOPBIT;

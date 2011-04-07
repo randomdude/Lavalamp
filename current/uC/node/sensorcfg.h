@@ -15,7 +15,7 @@
 ;
 ; define this to transmit data continuously, in order to test
 ; the communications link.
- #define TEST_TRANSMISSION
+; #define TEST_TRANSMISSION
 
 #define idletimerenabled
 
@@ -38,14 +38,7 @@
 
 #define NODEID 0x01
 
-#define SENSOR_COUNT 1
-
-; config for sensor 1
-#define SENSOR_1_PRESENT
-#define SENSOR_1_PORT PORTB
-#define SENSOR_1_TRIS TRISB
-#define SENSOR_1_PIN 3
-#define SENSOR_1_TYPE SENSOR_ID_PWM_LED
+#define SENSOR_COUNT 5
 
 ;#define SENSOR_1_TYPE SENSOR_ID_TRIAC
 ;#define SENSOR_1_ZC_PORT PORTB
@@ -59,9 +52,38 @@
 ;#define SENSOR_2_PIN 4
 ;#define SENSOR_2_TYPE SENSOR_ID_PWM_LED
 
+
+; config for sensor 1
+#define SENSOR_1_PRESENT
+#define SENSOR_1_PORT PORTA
+#define SENSOR_1_TRIS TRISA
+#define SENSOR_1_PIN 0
+#define SENSOR_1_TYPE SENSOR_ID_GENERIC_DIGITAL_OUT
+
+; config for sensor 2
+#define SENSOR_2_PRESENT
+#define SENSOR_2_PORT PORTA
+#define SENSOR_2_TRIS TRISA
+#define SENSOR_2_PIN 1
+#define SENSOR_2_TYPE SENSOR_ID_GENERIC_DIGITAL_OUT
+
 ; config for sensor 3
-;#define SENSOR_3_PRESENT
-;#define SENSOR_3_PORT PORTB
-;#define SENSOR_3_TRIS TRISB
-;#define SENSOR_3_PIN 5
-;#define SENSOR_3_TYPE SENSOR_ID_PWM_LED
+#define SENSOR_3_PRESENT
+#define SENSOR_3_PORT PORTA
+#define SENSOR_3_TRIS TRISA
+#define SENSOR_3_PIN 2
+#define SENSOR_3_TYPE SENSOR_ID_GENERIC_DIGITAL_OUT
+
+; config for sensor 4
+#define SENSOR_4_PRESENT
+#define SENSOR_4_PORT PORTA
+#define SENSOR_4_TRIS TRISA
+#define SENSOR_4_PIN 3
+#define SENSOR_4_TYPE SENSOR_ID_GENERIC_DIGITAL_OUT
+
+; config for sensor 5
+#define SENSOR_5_PRESENT
+#define SENSOR_5_PORT PORTA
+#define SENSOR_5_TRIS TRISA
+#define SENSOR_5_PIN 4
+#define SENSOR_5_TYPE SENSOR_ID_GENERIC_DIGITAL_OUT
