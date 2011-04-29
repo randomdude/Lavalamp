@@ -1,0 +1,35 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|Mixed Platforms" ctype="Workspace" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="netGui/Options.cs" ctype="Workbench">
+    <Files>
+      <File FileName="ruleEngine/rule.cs" Line="1" Column="1" />
+      <File FileName="ruleEngine/app.config" Line="3" Column="3" />
+      <File FileName="Assembly Browser" />
+      <File FileName="virtualNodeNetwork/gpSimNode.cs" Line="4" Column="17" />
+      <File FileName="netGui/frmMain.cs" Line="42" Column="1" />
+      <File FileName="netGui/app.config" Line="7" Column="20" />
+      <File FileName="netGui/FrmGeneralOptions.cs" Line="32" Column="23" />
+      <File FileName="netGui/Options.cs" Line="10" Column="38" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="netGui-extras" expanded="True">
+            <Node name="ruleItems-winamp" expanded="True" />
+          </Node>
+          <Node name="netGui" expanded="True">
+            <Node name="Program.cs" selected="True" />
+          </Node>
+          <Node name="ruleEngine" expanded="True" />
+          <Node name="virtualNodeNetwork" expanded="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/home/katlyn/Programming/lavalamp/current/server/netGui/Options.cs" line="14" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches ctype="PinnedWatchStore" />
+</Properties>

@@ -11,8 +11,8 @@ namespace netGui
 
         public options()
         {
-            useEncryption = bool.Parse(Properties.Settings.Default["useEncryption"] as string);
-            portname = Properties.Settings.Default["portname"] as string;
+            useEncryption = bool.Parse(Properties.Settinzs.Default["useEncryption"] as string);
+            portname = Properties.Settings.Default["portName"] as string;
             try
             {
                 myKey.setKey(Properties.Settings.Default["key"] as string);
@@ -35,7 +35,7 @@ namespace netGui
         {
             Properties.Settings.Default["useEncryption"] = useEncryption.ToString();
             Properties.Settings.Default["rulesPath"] = rulesPath;
-            Properties.Settings.Default["portname"] = portname;
+            Properties.Settings.Default["portName"] = portname;
             Properties.Settings.Default["key"] = myKey.ToString();
             Properties.Settings.Default.Save();
         }
