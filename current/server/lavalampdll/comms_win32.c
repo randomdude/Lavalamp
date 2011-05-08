@@ -142,7 +142,6 @@ long readwithtimeout( appConfig_t* myconfig, char* data, long datalen,  BOOL* di
 BOOL __cdecl initPort(appConfig_t* myconfig)
 {
 	DCB mydcb;
-	unsigned long toClear;
 
 	char* portpath = malloc(strlen(myconfig->portname) + 10);
 	wsprintf(portpath, "\\\\.\\%s", myconfig->portname);
