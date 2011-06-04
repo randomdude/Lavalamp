@@ -12,7 +12,8 @@ namespace virtualNodeNetwork
 {
     public partial class ctlNodeSensor : UserControl
     {
-        private ctlNodeSensorGenericDigitalOut sensorVis = null;
+        private ctlNodeSensorWidget sensorVis = null;
+        private virtualNodeSensor parentSensor = null;
 
         public ctlNodeSensor()
         {
@@ -21,6 +22,7 @@ namespace virtualNodeNetwork
 
         public void loadSensor(virtualNodeSensor sensor)
         {
+            parentSensor = sensor;
             lblSensorID.Text = sensor.id.ToString();
             lblSensorType.Text = sensor.type.ToString();
 
@@ -29,9 +31,14 @@ namespace virtualNodeNetwork
                 case sensorTypeEnum.generic_digital_out:
                     sensorVis = new ctlNodeSensorGenericDigitalOut();
                     break;
+                case sensorTypeEnum.generic_digital_in:
+                    sensorVis = new ctlNodeSensorGenericDigitalIn();
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            sensorVis.onInputChanged += inputChanged;
 
             sensorVis.Top = lblSensorType.Top + lblSensorType.Height;
             Controls.Add(sensorVis);
@@ -40,6 +47,11 @@ namespace virtualNodeNetwork
         public void updateValue(int newValue)
         {
             sensorVis.updateValue(newValue);
+        }
+
+        private void inputChanged(int newValue)
+        {
+            parentSensor.setValue(newValue);
         }
     }
 }

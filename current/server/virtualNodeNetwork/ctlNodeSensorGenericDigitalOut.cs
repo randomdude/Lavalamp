@@ -5,11 +5,10 @@ using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 
 namespace virtualNodeNetwork
 {
-    public partial class ctlNodeSensorGenericDigitalOut : UserControl
+    public partial class ctlNodeSensorGenericDigitalOut : ctlNodeSensorWidget
     {
         public ctlNodeSensorGenericDigitalOut()
         {
@@ -18,7 +17,7 @@ namespace virtualNodeNetwork
             _updateValue(0);
         }
 
-        public void updateValue(int newValue)
+        public override void updateValue(int newValue)
         {
             this.Invoke(new Action(() => _updateValue(newValue)));
         }

@@ -32,6 +32,11 @@ namespace netGui
             return new cmdResponseGeneric_t(pinvoke.cmdSetGenericDigitalSensor_unsafe(ref config, toThis));
         }
 
+        protected static cmdResponseGeneric_t cmdGetGenericDigitalSensor(ref appConfig_t config)
+        {
+            return new cmdResponseGeneric_t(pinvoke.cmdGetGenericDigitalSensor_unsafe(ref config));
+        }
+
         public static appConfig_t getTestConfig()
         {
             return (appConfig_t)Marshal.PtrToStructure(pinvoke.getTestConfig_Unsafe(), typeof(appConfig_t));

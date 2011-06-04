@@ -55,5 +55,11 @@ namespace TestProjects.virtualNetworkTests
         {
             base._verifyNodeIgnoresPacketsAddressedToOthers();
         }
+
+        [TestMethod]
+        public override void verifyNodeCanGetGenericDigitalInCorrectly()
+        {
+            base._verifyNodeCanGetGenericDigitalInCorrectly();
+        }
     }
 }

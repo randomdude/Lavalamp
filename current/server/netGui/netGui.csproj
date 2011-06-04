@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -267,6 +267,18 @@
       <Project>{04834DB5-4E91-48EA-9107-FD2246087122}</Project>
       <Name>ruleEngine</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\0.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\_0.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\_1.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="RuleEngine\" />

@@ -175,8 +175,8 @@ namespace virtualNodeNetwork
             }
             else
             {
-                throw new NotImplementedException();
-                //resp.payload = sensors;
+                // Find the value we wish to send, and set it in our packet
+                resp.payload = sensors[req.sensorToInterrogate].getVal();
             }
 
             sendPacket(resp);

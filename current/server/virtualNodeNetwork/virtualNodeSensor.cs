@@ -44,6 +44,14 @@ namespace virtualNodeNetwork
             }
         }
 
-        public abstract void setValue(int newValue);
+        public virtual void setValue(int newValue)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual int getVal()
+        {
+            throw new NotSupportedException();
+        }
     }
 }

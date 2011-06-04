@@ -6,7 +6,7 @@
 
         public int sensorToInterrogate
         {
-            get { return toInt(rawBytes[6]); }
+            get { return toInt(rawBytes[7]); }
         }
 
         public bool isGetSensorCount

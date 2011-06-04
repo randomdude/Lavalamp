@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Reflection;
+using netGui.Properties;
 
 namespace netGui.sensorControls
 {
@@ -12,6 +13,13 @@ namespace netGui.sensorControls
         private readonly setlblReadoutTextDelegateType setlblReadoutTextDelegate;
         public delegate void setlblReadoutForeColorDelegateType(Color toThis);
         private readonly setlblReadoutForeColorDelegateType setlblReadoutForeColorDelegate;
+
+        public event Action<Icon> onSetIcon;
+        private void setIcon(Icon newIcon)
+        {
+            if (onSetIcon != null)
+                onSetIcon.Invoke(newIcon);
+        }
 
         public void setlblReadoutForeColour(Color toThis)
         {
@@ -49,17 +57,14 @@ namespace netGui.sensorControls
             // Since we've been passed a boolean, colour it accordingly
             if ((Boolean)toThis)
             {
-                iconStream = a.GetManifestResourceStream("_1");
+                setIcon(Properties.Resources._1);
                 newcol = Color.Green;
             }
             else
             {
-                iconStream = a.GetManifestResourceStream("_0");
+                setIcon(Properties.Resources._0);
                 newcol = Color.Red;
             }
-
-            // todo - rewrite to use Resources._1 etc
-            ((frmNodeSensors) this.ParentForm).setIcon(new Icon(iconStream));
 
             if (this.InvokeRequired)
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using netGui.sensorControls;
@@ -12,6 +13,8 @@ namespace netGui
 
         public readonly Node node;
         public readonly Int16 targetSensorIndex ;
+
+        public event Action<Icon> onSetIcon;
 
         private sensor targetSensor
         {
@@ -63,9 +66,19 @@ namespace netGui
                 setStatusMethod(toThis);
         }
 
+        /// <summary>
+        /// Pass the setIcon event up to our parent form
+        /// </summary>
+        /// <param name="newIcon"></param>
+        private void setIcon(Icon newIcon)
+        {
+            onSetIcon.Invoke(newIcon);
+        }
+
         private void initDelegates()
         {
             setStatusDelegate = new setStatusDelegateType(setStatusMethod);
+            onSetIcon = setIcon;
         }
         #endregion
 
@@ -281,9 +294,8 @@ namespace netGui
                 graphTarget = new ctlPWM();
             else if (sensorTypeEnum.triac_out == thisSensorType)
                 graphTarget = new ctlPWM();
-            else
-                graphTarget = new ctlOnOff();       // just guess.
-            
+            else 
+                throw new ArgumentOutOfRangeException();
         }
 
         public void doUpdateNow(object notUsed)

@@ -58,11 +58,20 @@
     <Compile Include="ctlNodeSensor.Designer.cs">
       <DependentUpon>ctlNodeSensor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ctlNodeSensorGenericDigitalIn.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctlNodeSensorGenericDigitalIn.Designer.cs">
+      <DependentUpon>ctlNodeSensorGenericDigitalIn.cs</DependentUpon>
+    </Compile>
     <Compile Include="ctlNodeSensorGenericDigitalOut.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ctlNodeSensorGenericDigitalOut.Designer.cs">
       <DependentUpon>ctlNodeSensorGenericDigitalOut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctlNodeSensorWidget.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ctlVirtualNode.cs">
       <SubType>UserControl</SubType>
@@ -97,6 +106,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ctlNodeSensor.resx">
       <DependentUpon>ctlNodeSensor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctlNodeSensorGenericDigitalIn.resx">
+      <DependentUpon>ctlNodeSensorGenericDigitalIn.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ctlNodeSensorGenericDigitalOut.resx">
       <DependentUpon>ctlNodeSensorGenericDigitalOut.cs</DependentUpon>

@@ -49,15 +49,16 @@ namespace netGui
                     formHeight = newSensorForm.Height + SystemInformation.Border3DSize.Height;
 
                     newSensorForm.Visible = true;
+                    newSensorForm.OnSetIcon += setIcon;
                     childForms.Add(newSensorForm);
                 }
                 catch (commsException)
                 {
-                    MessageBox.Show("An exception occured interrogating the node. Please retry.");
+                    MessageBox.Show("An exception occurred interrogating the node. Please retry.");
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("A serious, unhandled exception occured interrogating the node. This is bad.");
+                    MessageBox.Show("A serious, unhandled exception occurred interrogating the node. This is bad.");
                 }
 
                 n++;
@@ -132,7 +133,7 @@ namespace netGui
             this.Hide();
         }
 
-        public void setIcon(Icon setToThis)
+        private void setIcon(Icon setToThis)
         {
             this.notifyIcon1.Icon = setToThis;
         }

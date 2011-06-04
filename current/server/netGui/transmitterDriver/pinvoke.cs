@@ -36,11 +36,14 @@ namespace netGui
         [DllImport("lavalampdll.dll", EntryPoint = "cmdCountSensors")]
         protected static extern IntPtr cmdCountSensors_unsafe(ref appConfig_t config);
 
-        [DllImport("lavalampdll.dll", EntryPoint = "cmdGetGenericDigitalSensor")]
-        protected static extern cmdResponseGeneric_t cmdGetGenericDigitalSensor(appConfig_t config);
+        //[DllImport("lavalampdll.dll", EntryPoint = "cmdGetGenericDigitalSensor")]
+        //protected static extern cmdResponseGeneric_t cmdGetGenericDigitalSensor(appConfig_t config);
 
         [DllImport("lavalampdll.dll", EntryPoint = "cmdSetGenericDigitalSensor")]
         protected static extern IntPtr cmdSetGenericDigitalSensor_unsafe(ref appConfig_t config, Byte tothis);
+
+        [DllImport("lavalampdll.dll", EntryPoint = "cmdGetGenericDigitalSensor")]
+        protected static extern IntPtr cmdGetGenericDigitalSensor_unsafe(ref appConfig_t config);
 
         [DllImport("lavalampdll.dll", EntryPoint = "cmdSetSensorFadeSpeed")]
         protected static extern cmdResponseGeneric_t cmdSetSensorFadeSpeed(appConfig_t config, byte tothis);

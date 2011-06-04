@@ -54,5 +54,11 @@ namespace TestProjects.virtualNetworkTests
         {
             base._verifyNodeCanSetGenericDigitalOutCorrectly();
         }
+
+        [TestMethod]
+        public override void verifyNodeCanGetGenericDigitalInCorrectly()
+        {
+            base._verifyNodeCanGetGenericDigitalInCorrectly();
+        }
     }
 }

@@ -296,5 +296,38 @@ namespace TestProjects.virtualNetworkTests
             }
         }
 
+        public abstract void verifyNodeCanGetGenericDigitalInCorrectly();
+        protected void _verifyNodeCanGetGenericDigitalInCorrectly()
+        {
+            // Create a new virtual network and node, with a single generic digital output sensor.
+            // Verify that the sensor fires the correct events when asked to set the output value.
+            const int virtualNodeID = 0x01;
+
+            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+            {
+                List<virtualNodeSensor> sensorsToAdd = new List<virtualNodeSensor>();
+                genericDigitalInSensor sensorIn = new genericDigitalInSensor() {id = 1};
+                sensorsToAdd.Add(sensorIn);
+
+                virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Digital input test node", sensorsToAdd);
+                startNetworkInNewThread(testVirtualNetwork);
+
+                // Connect to this network with a new driver class
+                transmitterDriver driver = new transmitterDriver(testVirtualNetwork.getDriverConnectionPointName(), false, null);
+
+                // Check we can read the correct value...
+                Assert.AreEqual(false, driver.doGetGenericDigitalIn(virtualNodeID, 1), "Node did not read a default 'false'");
+
+                // Set to 1, and make sure we can read
+                sensorIn.setValue(1);
+                Assert.AreEqual(true, driver.doGetGenericDigitalIn(virtualNodeID, 1), "Node did not reflect a change to 'true'");
+
+                // Aaand flip back again.
+                sensorIn.setValue(0);
+                Assert.AreEqual(false, driver.doGetGenericDigitalIn(virtualNodeID, 1), "Node did not reflect a change to 'false'");
+
+            }
+        }
+
     }
 }

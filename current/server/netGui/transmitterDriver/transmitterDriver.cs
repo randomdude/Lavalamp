@@ -205,12 +205,22 @@ namespace netGui
 	        }
 	    }
 
-        public object doGetValue(sensorType thisSensorType, short nodeId, short sensorId)
+        public bool doGetGenericDigitalIn(short nodeId, short sensorId)
         {
-            throw new NotImplementedException();
+	        lock (serialLock)
+	        {
+	            myseshdata.nodeid = (byte) nodeId;
+	            myseshdata.sensorid = (byte) sensorId;
+                using(cmdResponseGeneric_t resp = cmdGetGenericDigitalSensor(ref myseshdata) )
+                {
+                    if (resp.errorcode != errorcode_enum.errcode_none)
+                        throwerror(resp.errorcode);
+                    return resp.response == 0 ? false : true;
+                }
+	        }
         }
 
-        public bool doGetGenericDigitalIn(short nodeId, short sensorId)
+        public object doGetValue(sensorType thisSensorType, short nodeId, short sensorId)
         {
             throw new NotImplementedException();
         }

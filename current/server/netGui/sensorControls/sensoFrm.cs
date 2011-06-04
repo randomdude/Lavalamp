@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace netGui.sensorControls
@@ -16,9 +17,16 @@ namespace netGui.sensorControls
 
             this.Controls.Remove(this.ctlSensor1);
             this.ctlSensor1 = new ctlSensor(target, newSensorIndex);
+            ctlSensor1.onSetIcon += setIcon;
             this.Controls.Add(this.ctlSensor1);
 
             this.Text = this.ctlSensor1.lblTitle.Text;
+        }
+
+        public event Action<Icon> OnSetIcon;
+        private void setIcon(Icon newIcon)
+        {
+            OnSetIcon(newIcon);
         }
 
         private void sensorFrm_Resize(object sender, EventArgs e)
@@ -31,12 +39,12 @@ namespace netGui.sensorControls
         {
             if (null != this.ParentForm && null != this.MdiParent)
             {
-                // otherwise we minimise the parent
+                // otherwise we minimize the parent
                 ((frmNodeSensors)this.ParentForm).minimiseToTray();
             }
             else
             {
-                // if we're not docked as MDI, we just minimise this sensor
+                // if we're not docked as MDI, we just minimize this sensor
                 this.notifyIcon1.ContextMenuStrip = this.ctlSensor1.contextMenuStrip1;
                 this.notifyIcon1.Icon = this.Icon;
                 this.notifyIcon1.Text = this.ctlSensor1.lblTitle.Text;
