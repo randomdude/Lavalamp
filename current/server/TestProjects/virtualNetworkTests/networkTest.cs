@@ -12,7 +12,7 @@ namespace TestProjects.virtualNetworkTests
         [TestInitialize]
         public void initialize()
         {
-            pipeName = @"UnitTestNetworkPipe3_" + DateTime.Now.TimeOfDay.ToString().Replace(":", "_");
+            pipeName = @"UnitTestNetworkPipe_" + Guid.NewGuid().ToString();
         }
 
         protected void startNetworkInNewThread(virtualNetworkBase testVirtualNetwork)
