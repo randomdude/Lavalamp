@@ -7,7 +7,7 @@ namespace TestProjects.virtualNetworkTests
 {
     public class networkTest
     {
-        protected string pipeName;
+        public string pipeName { get; private set; }
 
         [TestInitialize]
         public void initialize()
