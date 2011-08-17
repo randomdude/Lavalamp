@@ -215,6 +215,8 @@ namespace virtualNodeNetwork
 
         public override void Dispose()
         {
+            if (_pipe.IsConnected)
+                _pipe.Disconnect(); // racey!
             _pipe.Close();
             disposing = true;
         }
