@@ -220,11 +220,6 @@ namespace netGui
 	        }
         }
 
-        public object doGetValue(sensorType thisSensorType, short nodeId, short sensorId)
-        {
-            throw new NotImplementedException();
-        }
-
 	    public void doSetPWMSpeed(short nodeId, short speed, short sensorId)
 	    {
 	        throw new NotImplementedException();

@@ -8,7 +8,6 @@ namespace netGui
 		String doIdentify(Int16 nodeId);
         Int16 doGetSensorCount(Int16 nodeId);
 		void doPing(Int16 nodeId);
-		Object doGetValue(sensorType thisSensorType,  Int16 nodeId, Int16 sensorId);
         bool doGetGenericDigitalIn(Int16 nodeId, Int16 sensorId);
 		void doSetGenericOut(Int16 nodeId, Int16 toThis, Int16 sensorId);
 
