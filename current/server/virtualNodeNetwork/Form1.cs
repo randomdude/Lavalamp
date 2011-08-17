@@ -37,7 +37,7 @@ namespace virtualNodeNetwork
             networkThread.Name = "Network thread";
             networkThread.Start(net);
         }
-
+         
         private void networkThreadStart(object obj)
         {
             ((virtualNetworkBase)obj).run();
