@@ -36,7 +36,7 @@ error "Do not define both COMMLINK_HWUART and COMMLINK_SWMANCHESTER"
 	nop
 	nop
 	nop
-	goto idletimer
+;	goto idletimer
 
 PROG CODE
 
@@ -52,7 +52,7 @@ start
 	bcf TRISA, 0	 ; set our test pin to output
 
 	bcf STATUS, RP0  ; page 0
-	bcf STATUS, RP0  ; page 0
+	bcf STATUS, RP1  ; page 0
 
 transmissionTest
 	movlw 'T'
@@ -118,13 +118,19 @@ waitfordata
 	movwf halfroundcount
 	call decrypt
 
-	;call sendpacket
+	; Flash a pin when we recieve a packet OK
+;	bsf PORTA, 2
+;	bcf PORTA, 2
 
 	; Is the packet addressed to our node?
 	movfw packet4
 	xorwf nodeid, W
 	btfss STATUS, Z
 	goto waitfordata	; Nope, not us. Wait for the next pkt.
+
+	; Flash a pin if the packet is addressed to us
+;	bsf PORTA, 3
+;	bcf PORTA, 3
 
 	; We need to check what state the system is in. We either need
 	; to respond with [n+1 p] (see readme on auth) or verify p+1
@@ -217,11 +223,12 @@ processcmd:
 	; we save these values to eeprom after the command is processed
 	; to allow the command to modify them -ie, the command to set P
 
+	; save p to eeprom. Do this before we send any response so that
+	; we don't run any risk of a recieve overflow.
+	call savep
+
 	; Now, we can go about processing the command given.
 	call processpacketcmd;
-
-	; save p to eeprom
-	call savep
 
 	; OK, this command has finished processing. Finish up any crypto if neccesary, then
 	; wait for the next packet.
