@@ -44,7 +44,10 @@ namespace netGui
         {
             try
             {
-                setMyDriver(new _transmitterDriver(MyOptions.portname, MyOptions.useEncryption, MyOptions.myKey.keyArray));
+                using (_transmitterDriver theDriver = new _transmitterDriver(MyOptions.portname, MyOptions.useEncryption, MyOptions.myKey.keyArray))
+                {
+                    setMyDriver(theDriver);
+                }
             }
             catch (badPortException)
             {

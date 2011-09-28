@@ -52,7 +52,6 @@ namespace netGui.sensorControls
             Color newcol;
 
             Assembly a = Assembly.GetExecutingAssembly();
-            Stream iconStream; 
 
             // Since we've been passed a boolean, colour it accordingly
             if ((Boolean)toThis)

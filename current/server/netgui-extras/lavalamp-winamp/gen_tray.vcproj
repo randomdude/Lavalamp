@@ -106,7 +106,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;$(TargetPath)&quot; &quot;C:\Program Files (x86)\Winamp\Plugins&quot;"
+				CommandLine="copy &quot;$(TargetPath)&quot; &quot;C:\Program Files\Winamp\Plugins&quot;"
 			/>
 		</Configuration>
 		<Configuration
