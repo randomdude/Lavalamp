@@ -233,13 +233,7 @@
       <DependentUpon>sensoFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="transmitterDriver\appConfig_t.cs" />
-    <Compile Include="transmitterDriver\cmdResponseGeneric_t.cs" />
-    <Compile Include="transmitterDriver\exceptions.cs" />
-    <Compile Include="transmitterDriver\pinvoke.cs" />
-    <Compile Include="transmitterDriver\pinvokeWrapper.cs" />
-    <Compile Include="_transmitterDriver.cs" />
-    <Compile Include="transmitterDriver\transmitterDriver.cs" />
+    <Compile Include="_transmitter.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -266,6 +260,10 @@
     <ProjectReference Include="..\ruleEngine\ruleEngine.csproj">
       <Project>{04834DB5-4E91-48EA-9107-FD2246087122}</Project>
       <Name>ruleEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\transmitterDriver\transmitterDriver.csproj">
+      <Project>{00AAF76B-138C-4E79-960B-4540924D43C4}</Project>
+      <Name>transmitterDriver</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

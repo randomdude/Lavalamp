@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 using netGui.sensorControls;
+using transmitterDriver;
 
 namespace netGui
 {

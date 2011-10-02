@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace netGui
+namespace transmitterDriver
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct appConfig_t

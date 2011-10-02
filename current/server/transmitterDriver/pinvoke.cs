@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace netGui
+namespace transmitterDriver
 {
     /// <summary>
     /// The PInvoke stuff to the actual DLL. This is wrapped by the pinvokeWrapper class and usually used
@@ -18,8 +18,8 @@ namespace netGui
         [DllImport("lavalampdll.dll", EntryPoint = "closePort")]
         protected static extern void closePort(ref appConfig_t config);
 
-        [DllImport("lavalampdll.dll", EntryPoint = "closePort")]
-        protected static extern bool isPortOpen(appConfig_t config);
+        [DllImport("lavalampdll.dll", EntryPoint = "isPortOpen")]
+        protected static extern bool isPortOpen(ref appConfig_t config);
 
         [DllImport("lavalampdll.dll", EntryPoint = "syncNetwork")]
         protected static extern void syncNetwork(ref appConfig_t config);
@@ -28,7 +28,7 @@ namespace netGui
         protected static extern IntPtr cmdPing_unsafe(ref appConfig_t config);
 
         [DllImport("lavalampdll.dll", EntryPoint = "cmdReload")]
-        protected static extern cmdResponseGeneric_t cmdReload(appConfig_t config);
+        protected static extern cmdResponseGeneric_t cmdReload(ref appConfig_t config);
 
         [DllImport("lavalampdll.dll", EntryPoint = "cmdIdentify")]
         protected static extern IntPtr cmdIdentify_unsafe(ref appConfig_t config);
@@ -46,19 +46,19 @@ namespace netGui
         protected static extern IntPtr cmdGetGenericDigitalSensor_unsafe(ref appConfig_t config);
 
         [DllImport("lavalampdll.dll", EntryPoint = "cmdSetSensorFadeSpeed")]
-        protected static extern cmdResponseGeneric_t cmdSetSensorFadeSpeed(appConfig_t config, byte tothis);
+        protected static extern cmdResponseGeneric_t cmdSetSensorFadeSpeed(ref appConfig_t config, byte tothis);
 
         [DllImport("lavalampdll.dll", EntryPoint = "cmdGetSensorType")]
         protected static extern IntPtr cmdGetSensorType_unsafe(ref appConfig_t config);
 
         [DllImport("lavalampdll.dll", EntryPoint = "cmdSetP")]
-        protected static extern cmdResponseGeneric_t cmdSetP(appConfig_t config, byte byte1, byte byte2, bool isHigh);
+        protected static extern cmdResponseGeneric_t cmdSetP(ref appConfig_t config, byte byte1, byte byte2, bool isHigh);
 
         [DllImport("lavalampdll.dll", EntryPoint = "cmdSetNodeId")]
-        protected static extern cmdResponseGeneric_t cmdSetNodeId(appConfig_t config, byte tothis);
+        protected static extern cmdResponseGeneric_t cmdSetNodeId(ref appConfig_t config, byte tothis);
 
         [DllImport("lavalampdll.dll", EntryPoint = "cmdSetNodeKeyByte")]
-        protected static extern cmdResponseGeneric_t cmdSetNodeKeyByte(appConfig_t config, byte index, byte newVal);
+        protected static extern cmdResponseGeneric_t cmdSetNodeKeyByte(ref appConfig_t config, byte index, byte newVal);
 
         [DllImport("lavalampdll.dll", EntryPoint = "geterrormessage")]
         protected static extern IntPtr getErrorMessage(int errorcode);

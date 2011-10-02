@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace netGui
+namespace transmitterDriver
 {
     public class disposableCommand : pinvokeWrapper, IDisposable
     {

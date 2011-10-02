@@ -29,7 +29,7 @@ namespace TestProjects.virtualNetworkTests
                 startNetworkInNewThread(testVirtualNetwork);
 
                 //Connect to this network with a new driver class
-                transmitterDriver driver = new transmitterDriver("pipe\\" + pipeName, false, null);
+                transmitterDriver.transmitter driver = new transmitterDriver.transmitter("pipe\\" + pipeName, false, null);
 
                 // Make sure we get that onSync event
                 bool eventWasFiredOK = false;

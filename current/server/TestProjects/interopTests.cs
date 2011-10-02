@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using netGui;
+using transmitterDriver;
 
 namespace TestProjects
 {
@@ -14,7 +15,7 @@ namespace TestProjects
         public void testConfig_tMarshalling()
         {
             // Get a test config from the other side of our interop boundary
-            appConfig_t testConfig = transmitterDriver.getTestConfig();
+            appConfig_t testConfig = transmitterDriver.transmitter.getTestConfig();
 
             // Bytes
             Assert.AreEqual(0x01, testConfig.nodeid);

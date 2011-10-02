@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using netGui;
+using transmitterDriver;
 using virtualNodeNetwork;
 
 namespace TestProjects.virtualNetworkTests
@@ -25,7 +26,7 @@ namespace TestProjects.virtualNetworkTests
                 startNetworkInNewThread(testVirtualNetwork);
 
                 // Connect to this network with a new driver class
-                transmitterDriver driver = new transmitterDriver(testVirtualNetwork.getDriverConnectionPointName(), false, null);
+                transmitterDriver.transmitter driver = new transmitterDriver.transmitter(testVirtualNetwork.getDriverConnectionPointName(), false, null);
                 driver.doPing(virtualNodeID);
                 Thread.Sleep(1000);
 
@@ -49,7 +50,7 @@ namespace TestProjects.virtualNetworkTests
                 startNetworkInNewThread(testVirtualNetwork);
 
                 // Connect to this network with a new driver class
-                transmitterDriver driver = new transmitterDriver(testVirtualNetwork.getDriverConnectionPointName(), false, null);
+                transmitterDriver.transmitter driver = new transmitterDriver.transmitter(testVirtualNetwork.getDriverConnectionPointName(), false, null);
                 driver.setInjectFaultInvalidResponse(true);
 
                 // We expect a commsTimeoutException from the controller, and an event onCryptoError on the node.
@@ -91,7 +92,7 @@ namespace TestProjects.virtualNetworkTests
                     startNetworkInNewThread(testVirtualNetwork);
 
                     // Connect to this network with a new driver class
-                    transmitterDriver driver = new transmitterDriver(testVirtualNetwork.getDriverConnectionPointName(),
+                    transmitterDriver.transmitter driver = new transmitterDriver.transmitter(testVirtualNetwork.getDriverConnectionPointName(),
                                                                      false, null);
 
                     string recievedName = driver.doIdentify(virtualNodeID);
@@ -118,7 +119,7 @@ namespace TestProjects.virtualNetworkTests
                 startNetworkInNewThread(testVirtualNetwork);
 
                 // Connect to this network with a new driver class
-                transmitterDriver driver = new transmitterDriver(testVirtualNetwork.getDriverConnectionPointName(), false, null);
+                transmitterDriver.transmitter driver = new transmitterDriver.transmitter(testVirtualNetwork.getDriverConnectionPointName(), false, null);
 
                 // We expect a commsTimeoutException from the controller, and an event onCryptoError on the node.
                 bool exceptionAsExpected = false;
@@ -161,7 +162,7 @@ namespace TestProjects.virtualNetworkTests
                     startNetworkInNewThread(testVirtualNetwork);
 
                     // Connect to this network with a new driver class
-                    transmitterDriver driver = new transmitterDriver(testVirtualNetwork.getDriverConnectionPointName(), false, null);
+                    transmitterDriver.transmitter driver = new transmitterDriver.transmitter(testVirtualNetwork.getDriverConnectionPointName(), false, null);
 
                     int recievedCount = driver.doGetSensorCount(virtualNodeID);
                     Thread.Sleep(1000);
@@ -194,7 +195,7 @@ namespace TestProjects.virtualNetworkTests
                     startNetworkInNewThread(testVirtualNetwork);
 
                     // Connect to this network with a new driver class
-                    transmitterDriver driver = new transmitterDriver(testVirtualNetwork.getDriverConnectionPointName(), false, null);
+                    transmitterDriver.transmitter driver = new transmitterDriver.transmitter(testVirtualNetwork.getDriverConnectionPointName(), false, null);
 
                     // Ask it for the type of the first sensor
                     sensorType recievedType = driver.doGetSensorType(virtualNodeID, 1);
@@ -230,7 +231,7 @@ namespace TestProjects.virtualNetworkTests
                     startNetworkInNewThread(testVirtualNetwork);
 
                     // Connect to this network with a new driver class
-                    transmitterDriver driver = new transmitterDriver(testVirtualNetwork.getDriverConnectionPointName(), false, null);
+                    transmitterDriver.transmitter driver = new transmitterDriver.transmitter(testVirtualNetwork.getDriverConnectionPointName(), false, null);
 
                     // Ask it for the type of the first 'dummy' sensor, which is always generic_digital_in
                     sensorType recievedType = driver.doGetSensorType(virtualNodeID, 1);
@@ -263,7 +264,7 @@ namespace TestProjects.virtualNetworkTests
                 startNetworkInNewThread(testVirtualNetwork);
 
                 // Connect to this network with a new driver class
-                transmitterDriver driver = new transmitterDriver(testVirtualNetwork.getDriverConnectionPointName(), false, null);
+                transmitterDriver.transmitter driver = new transmitterDriver.transmitter(testVirtualNetwork.getDriverConnectionPointName(), false, null);
 
                 // apply a callback to signal when the sensor changes state
                 int sensorState = 0;
@@ -313,7 +314,7 @@ namespace TestProjects.virtualNetworkTests
                 startNetworkInNewThread(testVirtualNetwork);
 
                 // Connect to this network with a new driver class
-                transmitterDriver driver = new transmitterDriver(testVirtualNetwork.getDriverConnectionPointName(), false, null);
+                transmitterDriver.transmitter driver = new transmitterDriver.transmitter(testVirtualNetwork.getDriverConnectionPointName(), false, null);
 
                 // Check we can read the correct value...
                 Assert.AreEqual(false, driver.doGetGenericDigitalIn(virtualNodeID, 1), "Node did not read a default 'false'");

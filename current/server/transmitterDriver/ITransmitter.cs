@@ -1,7 +1,6 @@
 ﻿using System;
-using transmitterDriver;
 
-namespace netGui
+namespace transmitterDriver
 {
     public interface ITransmitter : IDisposable
     {

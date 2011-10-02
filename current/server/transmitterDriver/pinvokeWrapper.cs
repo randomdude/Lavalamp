@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace netGui
+namespace transmitterDriver
 {
     /// <summary>
     /// Wrappers to perform marshalling and fiddle about with type conversion

@@ -82,12 +82,17 @@ namespace virtualNodeNetwork
         private void handleConnection(IAsyncResult ar)
         {
             _handleConnection(ar);
-
-            if (!disposing)
+            try
             {
                 _pipe.Disconnect();
                 _pipe.Dispose();
-
+            }
+            catch (ObjectDisposedException)
+            {
+                // swallow it.
+            }
+            if (!disposing)
+            {
                 _pipe = new NamedPipeServerStream(_pipename, PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
                 _pipe.BeginWaitForConnection(handleConnection, null);
             }

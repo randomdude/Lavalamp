@@ -71,6 +71,10 @@
       <Project>{04834DB5-4E91-48EA-9107-FD2246087122}</Project>
       <Name>ruleEngine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\transmitterDriver\transmitterDriver.csproj">
+      <Project>{00AAF76B-138C-4E79-960B-4540924D43C4}</Project>
+      <Name>transmitterDriver</Name>
+    </ProjectReference>
     <ProjectReference Include="..\virtualNodeNetwork\virtualNodeNetwork.csproj">
       <Project>{C5253F17-CF0C-4966-86A9-D9CB95137735}</Project>
       <Name>virtualNodeNetwork</Name>

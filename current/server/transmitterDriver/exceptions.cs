@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace netGui
+namespace transmitterDriver
 {
     public class badPortException : Exception { }
     public class cantOpenPortException : Exception { }

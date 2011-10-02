@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using netGui.nodeEditForms;
 using ruleEngine;
+using transmitterDriver;
 
 namespace netGui
 {
@@ -22,7 +23,7 @@ namespace netGui
                 if ((response == DialogResult.No) || (response == DialogResult.None))
                     throw new cantOpenPortException();
 
-                _mydriver = new _transmitterDriver(MyOptions.portname, MyOptions.useEncryption, MyOptions.myKey.keyArray);
+                _mydriver = new _transmitter(MyOptions.portname, MyOptions.useEncryption, MyOptions.myKey.keyArray);
                 generalToolStripMenuItem.Enabled = false;
             } 
 
@@ -44,7 +45,7 @@ namespace netGui
         {
             try
             {
-                setMyDriver(new _transmitterDriver(MyOptions.portname, MyOptions.useEncryption, MyOptions.myKey.keyArray));
+                setMyDriver(new _transmitter(MyOptions.portname, MyOptions.useEncryption, MyOptions.myKey.keyArray));
             }
             catch (badPortException)
             {
