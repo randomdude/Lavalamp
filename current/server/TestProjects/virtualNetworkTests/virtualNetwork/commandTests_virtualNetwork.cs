@@ -4,6 +4,10 @@ using virtualNodeNetwork;
 
 namespace TestProjects.virtualNetworkTests
 {
+    /// <summary>
+    /// These tests are an implementation of commandTests which test the operation of a virtual network.
+    /// This verifies end-to-end operation using the c# driver code, independantly of any PIC configuration.
+    /// </summary>
     [TestClass]
     public class commandTests_virtualNetwork : commandTests<virtualNetwork>
     {
