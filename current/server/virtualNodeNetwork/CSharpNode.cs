@@ -4,10 +4,10 @@ using System.Text;
 
 namespace virtualNodeNetwork
 {
-    public class virtualNode : virtualNodeBase
+    public class CSharpNode : virtualNodeBase
     {
-        public virtualNode(int newId, string newName) : base(newId, newName) { }
-        public virtualNode(int newId, string newName, IEnumerable<virtualNodeSensor> newSensors) : base(newId, newName, newSensors) { }
+        public CSharpNode(int newId, string newName) : base(newId, newName) { }
+        public CSharpNode(int newId, string newName, IEnumerable<virtualNodeSensor> newSensors) : base(newId, newName, newSensors) { }
 
         /// <summary>
         /// Handle an incoming networkPacket
@@ -40,7 +40,7 @@ namespace virtualNodeNetwork
             log("Packet is initial challenge. Decoded packet:");
             log(chal.ToString());
 
-            initialChallengeResponsePacket resp = new initialChallengeResponsePacket(virtualNetwork.controllerID, chal.challenge + 1, p);
+            initialChallengeResponsePacket resp = new initialChallengeResponsePacket(CSharpNetwork.controllerID, chal.challenge + 1, p);
 
             log("Sending response:");
             log(resp.ToString());
@@ -98,7 +98,7 @@ namespace virtualNodeNetwork
             // OK, a ping. Respond to it.
             log("Packet is a ping command.");
 
-            pingResponsePacket resp = new pingResponsePacket(virtualNetwork.controllerID, packet.challengeResponse + 1);
+            pingResponsePacket resp = new pingResponsePacket(CSharpNetwork.controllerID, packet.challengeResponse + 1);
 
             // And send the packet with some test payload
             resp.payload = 0xefcdab;
@@ -123,7 +123,7 @@ namespace virtualNodeNetwork
                 return;
             }
 
-            doIdentifyResponsePacket resp = new doIdentifyResponsePacket(virtualNetwork.controllerID, packet.challengeResponse + 1);
+            doIdentifyResponsePacket resp = new doIdentifyResponsePacket(CSharpNetwork.controllerID, packet.challengeResponse + 1);
 
             // And send the packet with a part of our name string.
             ASCIIEncoding enc = new ASCIIEncoding();
@@ -166,7 +166,7 @@ namespace virtualNodeNetwork
 
             getSensorPacket req = new getSensorPacket(cmdPkt);
 
-            challengeResponsePacket resp = new challengeResponsePacket(virtualNetwork.controllerID, cmdPkt.challengeResponse + 1);
+            challengeResponsePacket resp = new challengeResponsePacket(CSharpNetwork.controllerID, cmdPkt.challengeResponse + 1);
 
             if (req.isGetSensorCount)
             {
@@ -202,7 +202,7 @@ namespace virtualNodeNetwork
             changeSensor(toChange, req.newValue);
             toChange.setValue(req.newValue);
 
-            challengeResponsePacket resp = new challengeResponsePacket(virtualNetwork.controllerID, cmdPkt.challengeResponse + 1);
+            challengeResponsePacket resp = new challengeResponsePacket(CSharpNetwork.controllerID, cmdPkt.challengeResponse + 1);
 
             sendPacket(resp);
 
@@ -215,7 +215,7 @@ namespace virtualNodeNetwork
 
             getSensorTypePacket req = new getSensorTypePacket(cmdPkt);
 
-            getSensorTypeResponsePacket resp = new getSensorTypeResponsePacket(virtualNetwork.controllerID,
+            getSensorTypeResponsePacket resp = new getSensorTypeResponsePacket(CSharpNetwork.controllerID,
                                                                                cmdPkt.challengeResponse + 1);
 
             if (req.sensorToInterrogate == 0)

@@ -94,12 +94,12 @@
     <Compile Include="packetDefinitions\getSensorTypePacket.cs" />
     <Compile Include="packetDefinitions\getSensorTypeResponsePacket.cs" />
     <Compile Include="gpSim.cs" />
-    <Compile Include="gpSimNetwork.cs" />
-    <Compile Include="gpSimNode.cs" />
+    <Compile Include="simulatedPICNetwork.cs" />
+    <Compile Include="simulatedPICNode.cs" />
     <Compile Include="packetDefinitions\initialChallengePacket.cs" />
     <Compile Include="packetDefinitions\initialChallengeResponsePacket.cs" />
     <Compile Include="virtualNetworkBase.cs" />
-    <Compile Include="virtualNetwork.cs" />
+    <Compile Include="CSharpNetwork.cs" />
     <Compile Include="packetDefinitions\networkPacket.cs" />
     <Compile Include="packetDefinitions\pingResponsePacket.cs" />
     <Compile Include="Program.cs" />
@@ -138,7 +138,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="virtualNode.cs" />
+    <Compile Include="CSharpNode.cs" />
     <Compile Include="virtualNodeBase.cs" />
     <Compile Include="virtualNodeSensor.cs" />
   </ItemGroup>

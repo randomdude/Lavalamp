@@ -4,9 +4,9 @@ namespace TestProjects.virtualNetworkTests
 {
     public class threadParams
     {
-        public virtualNetwork net;
+        public CSharpNetwork net;
 
-        public threadParams(virtualNetwork toTest)
+        public threadParams(CSharpNetwork toTest)
         {
             net = toTest;
         }

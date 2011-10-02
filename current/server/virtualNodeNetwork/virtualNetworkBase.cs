@@ -4,6 +4,9 @@ using System.Diagnostics;
 
 namespace virtualNodeNetwork
 {
+    /// <summary>
+    /// A simulated network. This may be implemented by C# or PIC-level node code.
+    /// </summary>
     public abstract class virtualNetworkBase : IDisposable
     {
         public abstract void run();

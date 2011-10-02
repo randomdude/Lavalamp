@@ -20,7 +20,7 @@ namespace virtualNodeNetwork
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            virtualNetworkBase net = new gpSimNetwork("vnet");
+            virtualNetworkBase net = new simulatedPICNetwork("vnet");
 
             net.onLogString = appendLog;
 

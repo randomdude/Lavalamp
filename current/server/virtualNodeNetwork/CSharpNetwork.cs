@@ -5,7 +5,10 @@ using System.Threading;
 
 namespace virtualNodeNetwork
 {
-    public class virtualNetwork : virtualNetworkBase
+    /// <summary>
+    /// A virtual network implemented entirely in C#, used for verifying the driver code.
+    /// </summary>
+    public class CSharpNetwork : virtualNetworkBase
     {
         // This simulated network runs via a named pipe. This is its name and the pipe itself.
         private readonly string _pipename;
@@ -33,11 +36,11 @@ namespace virtualNodeNetwork
         /// <summary>
         /// Nodes indexed by ID.
         /// </summary>
-        private readonly Dictionary<int, virtualNode> nodes = new Dictionary<int, virtualNode>();
+        private readonly Dictionary<int, CSharpNode> nodes = new Dictionary<int, CSharpNode>();
 
         private bool disposing = false;
 
-        public virtualNetwork(string newPipeName)
+        public CSharpNetwork(string newPipeName)
         {
             _pipename = newPipeName;
 
@@ -195,7 +198,7 @@ namespace virtualNodeNetwork
 
         public override virtualNodeBase createNode(int newId, string newName, IEnumerable<virtualNodeSensor> newSensors)
         {
-            virtualNode newNode = new virtualNode(newId, newName, newSensors);
+            CSharpNode newNode = new CSharpNode(newId, newName, newSensors);
             addEventsToNode(newNode);
 
             return newNode;
@@ -203,13 +206,13 @@ namespace virtualNodeNetwork
 
         public override virtualNodeBase createNode(int newId, string newName)
         {
-            virtualNode newNode = new virtualNode(newId, newName);
+            CSharpNode newNode = new CSharpNode(newId, newName);
             addEventsToNode(newNode);
 
             return newNode;
         }
 
-        private void addEventsToNode(virtualNode newNode)
+        private void addEventsToNode(CSharpNode newNode)
         {
             newNode.onLog += log;
             newNode.onSendPacket += sendPacket;

@@ -43,6 +43,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GPSimTests\gpSimTests.cs" />
     <Compile Include="interopTests.cs" />
     <Compile Include="loadSaveRuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

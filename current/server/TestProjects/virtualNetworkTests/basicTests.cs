@@ -12,7 +12,7 @@ namespace TestProjects.virtualNetworkTests
     /// methods in the base class, so that it is harder to forget to implement any here.
     /// </summary>
     public abstract class basicTests<networkTypeToTest> : networkTest
-        where networkTypeToTest : virtualNetwork
+        where networkTypeToTest : CSharpNetwork
     {
         public abstract void verifyNodeRecognisesSync();
 
@@ -22,7 +22,7 @@ namespace TestProjects.virtualNetworkTests
             // correct event.
             const int virtualNodeID = 0x01;
 
-            using (virtualNetworkBase testVirtualNetwork = new virtualNetwork(pipeName))
+            using (virtualNetworkBase testVirtualNetwork = new CSharpNetwork(pipeName))
             {
                 virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Sync test node");
 

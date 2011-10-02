@@ -11,7 +11,7 @@ namespace TestProjects.virtualNetworkTests
     /// </summary>
     [Ignore]
     [TestClass]
-    public class commandTests_gpSimNetwork : commandTests<gpSimNetwork>
+    public class commandTests_gpSimNetwork : commandTests<simulatedPICNetwork>
     {
         [TestMethod]
         public override void verifyNodeIsPingable()

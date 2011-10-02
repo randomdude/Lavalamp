@@ -9,7 +9,7 @@ namespace TestProjects.virtualNetworkTests
     /// This verifies end-to-end operation using the c# driver code, independantly of any PIC configuration.
     /// </summary>
     [TestClass]
-    public class commandTests_virtualNetwork : commandTests<virtualNetwork>
+    public class commandTests_virtualNetwork : commandTests<CSharpNetwork>
     {
         [TestMethod]
         public override void verifyNodeIsPingable()

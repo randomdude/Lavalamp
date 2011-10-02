@@ -10,7 +10,7 @@ namespace transmitterDriver
         appConfig_t myseshdata;
 
         /// <summary>
-        /// We lock on this before performing any interop.
+        /// We lock on this before performing any interop, since our native code is not threadsafe.
         /// </summary>
         private readonly object serialLock = new Object();
 

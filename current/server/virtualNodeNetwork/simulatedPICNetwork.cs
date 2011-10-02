@@ -5,7 +5,11 @@ using System.Threading;
 
 namespace virtualNodeNetwork
 {
-    public class gpSimNetwork : virtualNetworkBase
+    /// <summary>
+    /// A network of PIC-level simulated nodes. We use a third-party simulator to simulate operation of the
+    /// PIC chip which runs this network.
+    /// </summary>
+    public class simulatedPICNetwork : virtualNetworkBase
     {
         private readonly string _pipename;
         private readonly NamedPipeServerStream _pipe;
@@ -13,9 +17,9 @@ namespace virtualNodeNetwork
         /// <summary>
         /// Nodes indexed by ID.
         /// </summary>
-        private readonly Dictionary<int, gpSimNode> nodes = new Dictionary<int, gpSimNode>();
+        private readonly Dictionary<int, simulatedPICNode> nodes = new Dictionary<int, simulatedPICNode>();
 
-        public gpSimNetwork(string newPipeName)
+        public simulatedPICNetwork(string newPipeName)
         {
             _pipename = newPipeName;
 
@@ -31,7 +35,6 @@ namespace virtualNodeNetwork
 
         private void handleConnection(IAsyncResult ar)
         {
-
             log("Client connected.");
 
             lock (_pipe)
@@ -57,6 +60,7 @@ namespace virtualNodeNetwork
                     }
                     catch (ObjectDisposedException)
                     {
+                        // The pipe has been closed, so finish listening for any connection.
                         return;
                     }
 
@@ -71,7 +75,7 @@ namespace virtualNodeNetwork
 
                     lock (nodes)
                     {
-                        foreach (gpSimNode destNod in nodes.Values)
+                        foreach (simulatedPICNode destNod in nodes.Values)
                             destNod.processByte(byteRead);
                     }
                 }
@@ -85,25 +89,24 @@ namespace virtualNodeNetwork
 
         public override virtualNodeBase createNode(int newId, string newName, IEnumerable<virtualNodeSensor> newSensors)
         {
-            gpSimNode newNode = new gpSimNode(newId, newName, newSensors);
+            simulatedPICNode newNode = new simulatedPICNode(newId, newName, newSensors);
             addEvents(newNode);
             return newNode;
         }
 
         public override virtualNodeBase createNode(int newId, string newName)
         {
-            gpSimNode newNode = new gpSimNode(newId, newName);
+            simulatedPICNode newNode = new simulatedPICNode(newId, newName);
             addEvents(newNode);
             return newNode;
         }
 
-        private void addEvents(gpSimNode newNode)
+        private void addEvents(simulatedPICNode newNode)
         {
             newNode.onLog += log;
             newNode.onSendPacket += sendPacket;
             newNode.onCryptoError += cryptoError;
             nodes.Add(newNode.id, newNode);
-
         }
 
         public override void Dispose()

@@ -17,10 +17,10 @@ namespace TestProjects.virtualNetworkTests
         public static virtualNetworkBase makeNew<networkTypeToCreate> ( string pipeName)
             where networkTypeToCreate : virtualNetworkBase
         {
-            if (typeof(networkTypeToCreate) == typeof(virtualNetwork))
-                return new virtualNetwork(pipeName);
-            if (typeof(networkTypeToCreate) == typeof(gpSimNetwork))
-                return new gpSimNetwork(pipeName);
+            if (typeof(networkTypeToCreate) == typeof(CSharpNetwork))
+                return new CSharpNetwork(pipeName);
+            if (typeof(networkTypeToCreate) == typeof(simulatedPICNetwork))
+                return new simulatedPICNetwork(pipeName);
 
             throw new ArgumentException();
         }
