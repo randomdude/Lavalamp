@@ -1425,7 +1425,7 @@ notthissensor_98:
 notthissensor_99:  
 	; OK, skip to the next sensor.
 #endif
-	;<-- Note that code will never get to here! 
+	;<-- Note that control will never get to here! 
 
 returnOK:
 	clrf packet5

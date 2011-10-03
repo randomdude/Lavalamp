@@ -41,9 +41,11 @@ init:
 ;#ifdef IS_TRANSMITTER
 	call inituart
 ;#endif
+#ifdef COMMLINK_SWMANCHESTER
 	call initswuart
+#endif
 #ifndef IS_TRANSMITTER
-	call enableidetimer
+;	call enableidetimer
 #endif
 	return
 
@@ -51,9 +53,11 @@ disableperiphs:
 	; Here we disable any part-specific on-chip periphials which
 	; otherwise would stop us getting proper digital IO.
 
+IFDEF __16F627
 	bsf CMCON, CM0
 	bsf CMCON, CM1	; Kill comparators on my 16f627/8
 	bsf CMCON, CM2
+ENDIF
 
 	return
 

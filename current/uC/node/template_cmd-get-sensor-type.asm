@@ -51,7 +51,7 @@ notthissensor_(AUTOGEN_EVERY_SENSOR_ID):
 #endif
 (AUTOGEN_END_REPLICATING_BLOCK)
 
-	;<-- Note that code will never get to here! 
+	;<-- Note that control will never get to here! 
 
 returnOK:
 	clrf packet5

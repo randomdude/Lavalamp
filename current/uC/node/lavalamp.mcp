@@ -1,7 +1,7 @@
 [HEADER]
 magic_cookie={66E99B07-E706-4689-9E80-9B2582898A13}
 file_version=1.0
-device=PIC16F628
+device=PIC16F871
 [PATH_INFO]
 BuildDirPolicy=BuildDirIsProjectDir
 dir_src=
@@ -70,6 +70,7 @@ file_042=.
 file_043=.
 file_044=.
 file_045=.
+file_046=.
 [GENERATED_FILES]
 file_000=no
 file_001=no
@@ -117,6 +118,7 @@ file_042=no
 file_043=no
 file_044=no
 file_045=no
+file_046=no
 [OTHER_FILES]
 file_000=no
 file_001=no
@@ -156,7 +158,7 @@ file_034=no
 file_035=no
 file_036=no
 file_037=no
-file_038=yes
+file_038=no
 file_039=yes
 file_040=yes
 file_041=yes
@@ -164,6 +166,7 @@ file_042=yes
 file_043=yes
 file_044=yes
 file_045=yes
+file_046=yes
 [FILE_INFO]
 file_000=main.asm
 file_001=tea.asm
@@ -203,14 +206,15 @@ file_034=tests.h
 file_035=C:\c0adz\lavalamp\current\uC\shared\manchesteruart.h
 file_036=C:\c0adz\lavalamp\current\uC\shared\manchesteruart-lowlevel.h
 file_037=memoryplacement.h
-file_038=template_cmd-set-sensor.asm
-file_039=template_autogen_sensorcode_init.asm
-file_040=template_cmd-get-sensor.asm
-file_041=template_cmd-get-sensor-type.asm
-file_042=prebuild.bat
-file_043=template_cmd-fade-sensor.asm
-file_044=template_memoryplacement.h
-file_045=template_idle-pwm.asm
+file_038=idle-servo.h
+file_039=template_cmd-set-sensor.asm
+file_040=template_autogen_sensorcode_init.asm
+file_041=template_cmd-get-sensor.asm
+file_042=template_cmd-get-sensor-type.asm
+file_043=prebuild.bat
+file_044=template_cmd-fade-sensor.asm
+file_045=template_memoryplacement.h
+file_046=template_idle-pwm.asm
 [SUITE_INFO]
 suite_guid={6B3DAA78-59C1-46DD-B6AA-DBDAE4E06484}
 suite_state=
@@ -223,7 +227,7 @@ enable=0
 transport=0
 format=0
 [CUSTOM_BUILD]
-Pre-Build=C:\lavalamp\current\uC\node\prebuild.bat
+Pre-Build=C:\c0adz\lavalamp\current\uC\node\prebuild.bat
 Pre-BuildEnabled=1
 Post-Build=
 Post-BuildEnabled=1

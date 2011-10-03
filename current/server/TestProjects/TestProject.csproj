@@ -43,6 +43,12 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmBlank.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBlank.Designer.cs">
+      <DependentUpon>frmBlank.cs</DependentUpon>
+    </Compile>
     <Compile Include="GPSimTests\gpSimTests.cs" />
     <Compile Include="interopTests.cs" />
     <Compile Include="loadSaveRuleTests.cs" />
@@ -87,6 +93,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="frmBlank.resx">
+      <DependentUpon>frmBlank.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

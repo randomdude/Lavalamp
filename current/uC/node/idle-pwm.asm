@@ -23,6 +23,13 @@ dopwmsensors:
 #ifdef SENSOR_1_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_1_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_1_PORT, SENSOR_1_PIN
+;	bcf SENSOR_1_PORT, SENSOR_1_PIN
+;retnow1:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -91,6 +98,13 @@ retnow1:
 
 #ifdef SENSOR_2_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_2_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_2_PORT, SENSOR_2_PIN
+;	bcf SENSOR_2_PORT, SENSOR_2_PIN
+;retnow2:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -161,6 +175,13 @@ retnow2:
 #ifdef SENSOR_3_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_3_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_3_PORT, SENSOR_3_PIN
+;	bcf SENSOR_3_PORT, SENSOR_3_PIN
+;retnow3:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -229,6 +250,13 @@ retnow3:
 
 #ifdef SENSOR_4_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_4_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_4_PORT, SENSOR_4_PIN
+;	bcf SENSOR_4_PORT, SENSOR_4_PIN
+;retnow4:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -299,6 +327,13 @@ retnow4:
 #ifdef SENSOR_5_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_5_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_5_PORT, SENSOR_5_PIN
+;	bcf SENSOR_5_PORT, SENSOR_5_PIN
+;retnow5:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -367,6 +402,13 @@ retnow5:
 
 #ifdef SENSOR_6_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_6_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_6_PORT, SENSOR_6_PIN
+;	bcf SENSOR_6_PORT, SENSOR_6_PIN
+;retnow6:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -437,6 +479,13 @@ retnow6:
 #ifdef SENSOR_7_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_7_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_7_PORT, SENSOR_7_PIN
+;	bcf SENSOR_7_PORT, SENSOR_7_PIN
+;retnow7:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -505,6 +554,13 @@ retnow7:
 
 #ifdef SENSOR_8_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_8_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_8_PORT, SENSOR_8_PIN
+;	bcf SENSOR_8_PORT, SENSOR_8_PIN
+;retnow8:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -575,6 +631,13 @@ retnow8:
 #ifdef SENSOR_9_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_9_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_9_PORT, SENSOR_9_PIN
+;	bcf SENSOR_9_PORT, SENSOR_9_PIN
+;retnow9:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -643,6 +706,13 @@ retnow9:
 
 #ifdef SENSOR_10_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_10_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_10_PORT, SENSOR_10_PIN
+;	bcf SENSOR_10_PORT, SENSOR_10_PIN
+;retnow10:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -713,6 +783,13 @@ retnow10:
 #ifdef SENSOR_11_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_11_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_11_PORT, SENSOR_11_PIN
+;	bcf SENSOR_11_PORT, SENSOR_11_PIN
+;retnow11:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -781,6 +858,13 @@ retnow11:
 
 #ifdef SENSOR_12_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_12_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_12_PORT, SENSOR_12_PIN
+;	bcf SENSOR_12_PORT, SENSOR_12_PIN
+;retnow12:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -851,6 +935,13 @@ retnow12:
 #ifdef SENSOR_13_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_13_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_13_PORT, SENSOR_13_PIN
+;	bcf SENSOR_13_PORT, SENSOR_13_PIN
+;retnow13:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -919,6 +1010,13 @@ retnow13:
 
 #ifdef SENSOR_14_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_14_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_14_PORT, SENSOR_14_PIN
+;	bcf SENSOR_14_PORT, SENSOR_14_PIN
+;retnow14:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -989,6 +1087,13 @@ retnow14:
 #ifdef SENSOR_15_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_15_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_15_PORT, SENSOR_15_PIN
+;	bcf SENSOR_15_PORT, SENSOR_15_PIN
+;retnow15:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -1057,6 +1162,13 @@ retnow15:
 
 #ifdef SENSOR_16_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_16_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_16_PORT, SENSOR_16_PIN
+;	bcf SENSOR_16_PORT, SENSOR_16_PIN
+;retnow16:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -1127,6 +1239,13 @@ retnow16:
 #ifdef SENSOR_17_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_17_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_17_PORT, SENSOR_17_PIN
+;	bcf SENSOR_17_PORT, SENSOR_17_PIN
+;retnow17:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -1195,6 +1314,13 @@ retnow17:
 
 #ifdef SENSOR_18_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_18_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_18_PORT, SENSOR_18_PIN
+;	bcf SENSOR_18_PORT, SENSOR_18_PIN
+;retnow18:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -1265,6 +1391,13 @@ retnow18:
 #ifdef SENSOR_19_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_19_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_19_PORT, SENSOR_19_PIN
+;	bcf SENSOR_19_PORT, SENSOR_19_PIN
+;retnow19:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -1333,6 +1466,13 @@ retnow19:
 
 #ifdef SENSOR_20_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_20_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_20_PORT, SENSOR_20_PIN
+;	bcf SENSOR_20_PORT, SENSOR_20_PIN
+;retnow20:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -1403,6 +1543,13 @@ retnow20:
 #ifdef SENSOR_21_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_21_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_21_PORT, SENSOR_21_PIN
+;	bcf SENSOR_21_PORT, SENSOR_21_PIN
+;retnow21:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -1471,6 +1618,13 @@ retnow21:
 
 #ifdef SENSOR_22_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_22_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_22_PORT, SENSOR_22_PIN
+;	bcf SENSOR_22_PORT, SENSOR_22_PIN
+;retnow22:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -1541,6 +1695,13 @@ retnow22:
 #ifdef SENSOR_23_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_23_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_23_PORT, SENSOR_23_PIN
+;	bcf SENSOR_23_PORT, SENSOR_23_PIN
+;retnow23:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -1609,6 +1770,13 @@ retnow23:
 
 #ifdef SENSOR_24_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_24_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_24_PORT, SENSOR_24_PIN
+;	bcf SENSOR_24_PORT, SENSOR_24_PIN
+;retnow24:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -1679,6 +1847,13 @@ retnow24:
 #ifdef SENSOR_25_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_25_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_25_PORT, SENSOR_25_PIN
+;	bcf SENSOR_25_PORT, SENSOR_25_PIN
+;retnow25:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -1747,6 +1922,13 @@ retnow25:
 
 #ifdef SENSOR_26_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_26_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_26_PORT, SENSOR_26_PIN
+;	bcf SENSOR_26_PORT, SENSOR_26_PIN
+;retnow26:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -1817,6 +1999,13 @@ retnow26:
 #ifdef SENSOR_27_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_27_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_27_PORT, SENSOR_27_PIN
+;	bcf SENSOR_27_PORT, SENSOR_27_PIN
+;retnow27:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -1885,6 +2074,13 @@ retnow27:
 
 #ifdef SENSOR_28_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_28_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_28_PORT, SENSOR_28_PIN
+;	bcf SENSOR_28_PORT, SENSOR_28_PIN
+;retnow28:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -1955,6 +2151,13 @@ retnow28:
 #ifdef SENSOR_29_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_29_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_29_PORT, SENSOR_29_PIN
+;	bcf SENSOR_29_PORT, SENSOR_29_PIN
+;retnow29:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -2023,6 +2226,13 @@ retnow29:
 
 #ifdef SENSOR_30_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_30_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_30_PORT, SENSOR_30_PIN
+;	bcf SENSOR_30_PORT, SENSOR_30_PIN
+;retnow30:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -2093,6 +2303,13 @@ retnow30:
 #ifdef SENSOR_31_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_31_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_31_PORT, SENSOR_31_PIN
+;	bcf SENSOR_31_PORT, SENSOR_31_PIN
+;retnow31:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -2161,6 +2378,13 @@ retnow31:
 
 #ifdef SENSOR_32_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_32_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_32_PORT, SENSOR_32_PIN
+;	bcf SENSOR_32_PORT, SENSOR_32_PIN
+;retnow32:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -2231,6 +2455,13 @@ retnow32:
 #ifdef SENSOR_33_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_33_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_33_PORT, SENSOR_33_PIN
+;	bcf SENSOR_33_PORT, SENSOR_33_PIN
+;retnow33:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -2299,6 +2530,13 @@ retnow33:
 
 #ifdef SENSOR_34_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_34_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_34_PORT, SENSOR_34_PIN
+;	bcf SENSOR_34_PORT, SENSOR_34_PIN
+;retnow34:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -2369,6 +2607,13 @@ retnow34:
 #ifdef SENSOR_35_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_35_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_35_PORT, SENSOR_35_PIN
+;	bcf SENSOR_35_PORT, SENSOR_35_PIN
+;retnow35:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -2437,6 +2682,13 @@ retnow35:
 
 #ifdef SENSOR_36_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_36_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_36_PORT, SENSOR_36_PIN
+;	bcf SENSOR_36_PORT, SENSOR_36_PIN
+;retnow36:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -2507,6 +2759,13 @@ retnow36:
 #ifdef SENSOR_37_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_37_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_37_PORT, SENSOR_37_PIN
+;	bcf SENSOR_37_PORT, SENSOR_37_PIN
+;retnow37:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -2575,6 +2834,13 @@ retnow37:
 
 #ifdef SENSOR_38_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_38_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_38_PORT, SENSOR_38_PIN
+;	bcf SENSOR_38_PORT, SENSOR_38_PIN
+;retnow38:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -2645,6 +2911,13 @@ retnow38:
 #ifdef SENSOR_39_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_39_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_39_PORT, SENSOR_39_PIN
+;	bcf SENSOR_39_PORT, SENSOR_39_PIN
+;retnow39:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -2713,6 +2986,13 @@ retnow39:
 
 #ifdef SENSOR_40_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_40_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_40_PORT, SENSOR_40_PIN
+;	bcf SENSOR_40_PORT, SENSOR_40_PIN
+;retnow40:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -2783,6 +3063,13 @@ retnow40:
 #ifdef SENSOR_41_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_41_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_41_PORT, SENSOR_41_PIN
+;	bcf SENSOR_41_PORT, SENSOR_41_PIN
+;retnow41:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -2851,6 +3138,13 @@ retnow41:
 
 #ifdef SENSOR_42_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_42_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_42_PORT, SENSOR_42_PIN
+;	bcf SENSOR_42_PORT, SENSOR_42_PIN
+;retnow42:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -2921,6 +3215,13 @@ retnow42:
 #ifdef SENSOR_43_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_43_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_43_PORT, SENSOR_43_PIN
+;	bcf SENSOR_43_PORT, SENSOR_43_PIN
+;retnow43:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -2989,6 +3290,13 @@ retnow43:
 
 #ifdef SENSOR_44_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_44_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_44_PORT, SENSOR_44_PIN
+;	bcf SENSOR_44_PORT, SENSOR_44_PIN
+;retnow44:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -3059,6 +3367,13 @@ retnow44:
 #ifdef SENSOR_45_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_45_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_45_PORT, SENSOR_45_PIN
+;	bcf SENSOR_45_PORT, SENSOR_45_PIN
+;retnow45:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -3127,6 +3442,13 @@ retnow45:
 
 #ifdef SENSOR_46_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_46_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_46_PORT, SENSOR_46_PIN
+;	bcf SENSOR_46_PORT, SENSOR_46_PIN
+;retnow46:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -3197,6 +3519,13 @@ retnow46:
 #ifdef SENSOR_47_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_47_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_47_PORT, SENSOR_47_PIN
+;	bcf SENSOR_47_PORT, SENSOR_47_PIN
+;retnow47:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -3265,6 +3594,13 @@ retnow47:
 
 #ifdef SENSOR_48_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_48_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_48_PORT, SENSOR_48_PIN
+;	bcf SENSOR_48_PORT, SENSOR_48_PIN
+;retnow48:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -3335,6 +3671,13 @@ retnow48:
 #ifdef SENSOR_49_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_49_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_49_PORT, SENSOR_49_PIN
+;	bcf SENSOR_49_PORT, SENSOR_49_PIN
+;retnow49:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -3403,6 +3746,13 @@ retnow49:
 
 #ifdef SENSOR_50_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_50_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_50_PORT, SENSOR_50_PIN
+;	bcf SENSOR_50_PORT, SENSOR_50_PIN
+;retnow50:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -3473,6 +3823,13 @@ retnow50:
 #ifdef SENSOR_51_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_51_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_51_PORT, SENSOR_51_PIN
+;	bcf SENSOR_51_PORT, SENSOR_51_PIN
+;retnow51:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -3541,6 +3898,13 @@ retnow51:
 
 #ifdef SENSOR_52_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_52_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_52_PORT, SENSOR_52_PIN
+;	bcf SENSOR_52_PORT, SENSOR_52_PIN
+;retnow52:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -3611,6 +3975,13 @@ retnow52:
 #ifdef SENSOR_53_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_53_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_53_PORT, SENSOR_53_PIN
+;	bcf SENSOR_53_PORT, SENSOR_53_PIN
+;retnow53:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -3679,6 +4050,13 @@ retnow53:
 
 #ifdef SENSOR_54_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_54_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_54_PORT, SENSOR_54_PIN
+;	bcf SENSOR_54_PORT, SENSOR_54_PIN
+;retnow54:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -3749,6 +4127,13 @@ retnow54:
 #ifdef SENSOR_55_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_55_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_55_PORT, SENSOR_55_PIN
+;	bcf SENSOR_55_PORT, SENSOR_55_PIN
+;retnow55:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -3817,6 +4202,13 @@ retnow55:
 
 #ifdef SENSOR_56_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_56_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_56_PORT, SENSOR_56_PIN
+;	bcf SENSOR_56_PORT, SENSOR_56_PIN
+;retnow56:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -3887,6 +4279,13 @@ retnow56:
 #ifdef SENSOR_57_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_57_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_57_PORT, SENSOR_57_PIN
+;	bcf SENSOR_57_PORT, SENSOR_57_PIN
+;retnow57:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -3955,6 +4354,13 @@ retnow57:
 
 #ifdef SENSOR_58_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_58_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_58_PORT, SENSOR_58_PIN
+;	bcf SENSOR_58_PORT, SENSOR_58_PIN
+;retnow58:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -4025,6 +4431,13 @@ retnow58:
 #ifdef SENSOR_59_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_59_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_59_PORT, SENSOR_59_PIN
+;	bcf SENSOR_59_PORT, SENSOR_59_PIN
+;retnow59:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -4093,6 +4506,13 @@ retnow59:
 
 #ifdef SENSOR_60_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_60_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_60_PORT, SENSOR_60_PIN
+;	bcf SENSOR_60_PORT, SENSOR_60_PIN
+;retnow60:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -4163,6 +4583,13 @@ retnow60:
 #ifdef SENSOR_61_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_61_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_61_PORT, SENSOR_61_PIN
+;	bcf SENSOR_61_PORT, SENSOR_61_PIN
+;retnow61:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -4231,6 +4658,13 @@ retnow61:
 
 #ifdef SENSOR_62_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_62_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_62_PORT, SENSOR_62_PIN
+;	bcf SENSOR_62_PORT, SENSOR_62_PIN
+;retnow62:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -4301,6 +4735,13 @@ retnow62:
 #ifdef SENSOR_63_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_63_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_63_PORT, SENSOR_63_PIN
+;	bcf SENSOR_63_PORT, SENSOR_63_PIN
+;retnow63:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -4369,6 +4810,13 @@ retnow63:
 
 #ifdef SENSOR_64_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_64_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_64_PORT, SENSOR_64_PIN
+;	bcf SENSOR_64_PORT, SENSOR_64_PIN
+;retnow64:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -4439,6 +4887,13 @@ retnow64:
 #ifdef SENSOR_65_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_65_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_65_PORT, SENSOR_65_PIN
+;	bcf SENSOR_65_PORT, SENSOR_65_PIN
+;retnow65:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -4507,6 +4962,13 @@ retnow65:
 
 #ifdef SENSOR_66_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_66_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_66_PORT, SENSOR_66_PIN
+;	bcf SENSOR_66_PORT, SENSOR_66_PIN
+;retnow66:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -4577,6 +5039,13 @@ retnow66:
 #ifdef SENSOR_67_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_67_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_67_PORT, SENSOR_67_PIN
+;	bcf SENSOR_67_PORT, SENSOR_67_PIN
+;retnow67:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -4645,6 +5114,13 @@ retnow67:
 
 #ifdef SENSOR_68_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_68_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_68_PORT, SENSOR_68_PIN
+;	bcf SENSOR_68_PORT, SENSOR_68_PIN
+;retnow68:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -4715,6 +5191,13 @@ retnow68:
 #ifdef SENSOR_69_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_69_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_69_PORT, SENSOR_69_PIN
+;	bcf SENSOR_69_PORT, SENSOR_69_PIN
+;retnow69:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -4783,6 +5266,13 @@ retnow69:
 
 #ifdef SENSOR_70_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_70_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_70_PORT, SENSOR_70_PIN
+;	bcf SENSOR_70_PORT, SENSOR_70_PIN
+;retnow70:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -4853,6 +5343,13 @@ retnow70:
 #ifdef SENSOR_71_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_71_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_71_PORT, SENSOR_71_PIN
+;	bcf SENSOR_71_PORT, SENSOR_71_PIN
+;retnow71:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -4921,6 +5418,13 @@ retnow71:
 
 #ifdef SENSOR_72_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_72_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_72_PORT, SENSOR_72_PIN
+;	bcf SENSOR_72_PORT, SENSOR_72_PIN
+;retnow72:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -4991,6 +5495,13 @@ retnow72:
 #ifdef SENSOR_73_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_73_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_73_PORT, SENSOR_73_PIN
+;	bcf SENSOR_73_PORT, SENSOR_73_PIN
+;retnow73:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -5059,6 +5570,13 @@ retnow73:
 
 #ifdef SENSOR_74_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_74_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_74_PORT, SENSOR_74_PIN
+;	bcf SENSOR_74_PORT, SENSOR_74_PIN
+;retnow74:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -5129,6 +5647,13 @@ retnow74:
 #ifdef SENSOR_75_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_75_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_75_PORT, SENSOR_75_PIN
+;	bcf SENSOR_75_PORT, SENSOR_75_PIN
+;retnow75:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -5197,6 +5722,13 @@ retnow75:
 
 #ifdef SENSOR_76_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_76_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_76_PORT, SENSOR_76_PIN
+;	bcf SENSOR_76_PORT, SENSOR_76_PIN
+;retnow76:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -5267,6 +5799,13 @@ retnow76:
 #ifdef SENSOR_77_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_77_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_77_PORT, SENSOR_77_PIN
+;	bcf SENSOR_77_PORT, SENSOR_77_PIN
+;retnow77:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -5335,6 +5874,13 @@ retnow77:
 
 #ifdef SENSOR_78_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_78_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_78_PORT, SENSOR_78_PIN
+;	bcf SENSOR_78_PORT, SENSOR_78_PIN
+;retnow78:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -5405,6 +5951,13 @@ retnow78:
 #ifdef SENSOR_79_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_79_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_79_PORT, SENSOR_79_PIN
+;	bcf SENSOR_79_PORT, SENSOR_79_PIN
+;retnow79:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -5473,6 +6026,13 @@ retnow79:
 
 #ifdef SENSOR_80_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_80_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_80_PORT, SENSOR_80_PIN
+;	bcf SENSOR_80_PORT, SENSOR_80_PIN
+;retnow80:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -5543,6 +6103,13 @@ retnow80:
 #ifdef SENSOR_81_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_81_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_81_PORT, SENSOR_81_PIN
+;	bcf SENSOR_81_PORT, SENSOR_81_PIN
+;retnow81:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -5611,6 +6178,13 @@ retnow81:
 
 #ifdef SENSOR_82_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_82_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_82_PORT, SENSOR_82_PIN
+;	bcf SENSOR_82_PORT, SENSOR_82_PIN
+;retnow82:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -5681,6 +6255,13 @@ retnow82:
 #ifdef SENSOR_83_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_83_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_83_PORT, SENSOR_83_PIN
+;	bcf SENSOR_83_PORT, SENSOR_83_PIN
+;retnow83:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -5749,6 +6330,13 @@ retnow83:
 
 #ifdef SENSOR_84_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_84_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_84_PORT, SENSOR_84_PIN
+;	bcf SENSOR_84_PORT, SENSOR_84_PIN
+;retnow84:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -5819,6 +6407,13 @@ retnow84:
 #ifdef SENSOR_85_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_85_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_85_PORT, SENSOR_85_PIN
+;	bcf SENSOR_85_PORT, SENSOR_85_PIN
+;retnow85:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -5887,6 +6482,13 @@ retnow85:
 
 #ifdef SENSOR_86_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_86_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_86_PORT, SENSOR_86_PIN
+;	bcf SENSOR_86_PORT, SENSOR_86_PIN
+;retnow86:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -5957,6 +6559,13 @@ retnow86:
 #ifdef SENSOR_87_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_87_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_87_PORT, SENSOR_87_PIN
+;	bcf SENSOR_87_PORT, SENSOR_87_PIN
+;retnow87:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -6025,6 +6634,13 @@ retnow87:
 
 #ifdef SENSOR_88_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_88_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_88_PORT, SENSOR_88_PIN
+;	bcf SENSOR_88_PORT, SENSOR_88_PIN
+;retnow88:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -6095,6 +6711,13 @@ retnow88:
 #ifdef SENSOR_89_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_89_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_89_PORT, SENSOR_89_PIN
+;	bcf SENSOR_89_PORT, SENSOR_89_PIN
+;retnow89:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -6163,6 +6786,13 @@ retnow89:
 
 #ifdef SENSOR_90_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_90_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_90_PORT, SENSOR_90_PIN
+;	bcf SENSOR_90_PORT, SENSOR_90_PIN
+;retnow90:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -6233,6 +6863,13 @@ retnow90:
 #ifdef SENSOR_91_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_91_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_91_PORT, SENSOR_91_PIN
+;	bcf SENSOR_91_PORT, SENSOR_91_PIN
+;retnow91:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -6301,6 +6938,13 @@ retnow91:
 
 #ifdef SENSOR_92_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_92_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_92_PORT, SENSOR_92_PIN
+;	bcf SENSOR_92_PORT, SENSOR_92_PIN
+;retnow92:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -6371,6 +7015,13 @@ retnow92:
 #ifdef SENSOR_93_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_93_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_93_PORT, SENSOR_93_PIN
+;	bcf SENSOR_93_PORT, SENSOR_93_PIN
+;retnow93:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -6439,6 +7090,13 @@ retnow93:
 
 #ifdef SENSOR_94_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_94_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_94_PORT, SENSOR_94_PIN
+;	bcf SENSOR_94_PORT, SENSOR_94_PIN
+;retnow94:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -6509,6 +7167,13 @@ retnow94:
 #ifdef SENSOR_95_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_95_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_95_PORT, SENSOR_95_PIN
+;	bcf SENSOR_95_PORT, SENSOR_95_PIN
+;retnow95:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -6577,6 +7242,13 @@ retnow95:
 
 #ifdef SENSOR_96_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_96_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_96_PORT, SENSOR_96_PIN
+;	bcf SENSOR_96_PORT, SENSOR_96_PIN
+;retnow96:
 
 	bsf STATUS, RP0 ; bank 1
 
@@ -6647,6 +7319,13 @@ retnow96:
 #ifdef SENSOR_97_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_97_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_97_PORT, SENSOR_97_PIN
+;	bcf SENSOR_97_PORT, SENSOR_97_PIN
+;retnow97:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -6716,6 +7395,13 @@ retnow97:
 #ifdef SENSOR_98_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_98_TYPE)
 
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_98_PORT, SENSOR_98_PIN
+;	bcf SENSOR_98_PORT, SENSOR_98_PIN
+;retnow98:
+
 	bsf STATUS, RP0 ; bank 1
 
 	; Inc timer_low. this is the value which is used to toggle the
@@ -6784,6 +7470,13 @@ retnow98:
 
 #ifdef SENSOR_99_PRESENT
 	#if (SENSOR_ID_PWM_LED == SENSOR_99_TYPE)
+
+
+;	; omg hax
+;	bcf STATUS, RP0 ; bank 0
+;	bsf SENSOR_99_PORT, SENSOR_99_PIN
+;	bcf SENSOR_99_PORT, SENSOR_99_PIN
+;retnow99:
 
 	bsf STATUS, RP0 ; bank 1
 

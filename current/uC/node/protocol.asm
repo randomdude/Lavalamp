@@ -117,6 +117,11 @@ sendpackethwuart:
 	movfw packet7
 	call sendbytehwuart
 	
+	; Flash a pin so our testbench knows that IO is over.
+
+;	bsf PORTA, 2
+;	bcf PORTA, 2
+
 	return
 
 sendbytehwuart:
@@ -211,8 +216,18 @@ waitforpackethwuart:
 	return
 
 waitforbytehwuart:
-	btfss PIR1, RCIF		; data waiting?
+	btfsc PIR1, RCIF		; data waiting?
+	goto okgotbyte
+
+	; Check for terrible things
+;	btfsc RCSTA, FERR
+;	goto ohshit
+	btfsc RCSTA, OERR
+	goto ohshit
+
 	goto waitforbytehwuart
+
+okgotbyte:
 	movfw RCREG	
 
 	; If it's a sync byte, dec our sync counter (which starts at 8).
@@ -244,6 +259,11 @@ isSyncByte:
 	xorlw 0xAA
 
 	return
+
+ohshit:
+;	bsf PORTA, 1
+;	bcf PORTA, 1
+	goto ohshit
 
 #endif
 	end

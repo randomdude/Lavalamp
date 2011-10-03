@@ -1,5 +1,5 @@
 
-	#include "p16f628.inc"
+	#include "p16f871.inc"
 
 key1 EQU	H'20' ; key bytes
 key2 EQU	H'21'
@@ -121,7 +121,9 @@ STATUS_TEMP EQU H'69'
 #define STATUS_BIT_NEEDRELOAD   1
 
 ; Speed of idletimer, if used. 
-#define IDLETIMER_SPEED 0xA0
+;#define IDLETIMER_SPEED 0xA0 ; 40usec, good for LEDs
+#define IDLETIMER_SPEED 0xFF ; 
+;#define IDLETIMER_SPEED 0x00
 
 ; These debug #defines are intended to be used in conjunction with
 ; the associated stimulus files. Enable one and attatch said stim.

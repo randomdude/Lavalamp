@@ -31,9 +31,9 @@ autogen_sensors_init:
 		bcf SENSOR_1_TRIS, SENSOR_1_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_1_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_1_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_1_PWM_SPEED
@@ -63,9 +63,9 @@ autogen_sensors_init:
 		bcf SENSOR_2_TRIS, SENSOR_2_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_2_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_2_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_2_PWM_SPEED
@@ -95,9 +95,9 @@ autogen_sensors_init:
 		bcf SENSOR_3_TRIS, SENSOR_3_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_3_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_3_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_3_PWM_SPEED
@@ -127,9 +127,9 @@ autogen_sensors_init:
 		bcf SENSOR_4_TRIS, SENSOR_4_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_4_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_4_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_4_PWM_SPEED
@@ -159,9 +159,9 @@ autogen_sensors_init:
 		bcf SENSOR_5_TRIS, SENSOR_5_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_5_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_5_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_5_PWM_SPEED
@@ -191,9 +191,9 @@ autogen_sensors_init:
 		bcf SENSOR_6_TRIS, SENSOR_6_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_6_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_6_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_6_PWM_SPEED
@@ -223,9 +223,9 @@ autogen_sensors_init:
 		bcf SENSOR_7_TRIS, SENSOR_7_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_7_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_7_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_7_PWM_SPEED
@@ -255,9 +255,9 @@ autogen_sensors_init:
 		bcf SENSOR_8_TRIS, SENSOR_8_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_8_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_8_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_8_PWM_SPEED
@@ -287,9 +287,9 @@ autogen_sensors_init:
 		bcf SENSOR_9_TRIS, SENSOR_9_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_9_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_9_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_9_PWM_SPEED
@@ -319,9 +319,9 @@ autogen_sensors_init:
 		bcf SENSOR_10_TRIS, SENSOR_10_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_10_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_10_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_10_PWM_SPEED
@@ -351,9 +351,9 @@ autogen_sensors_init:
 		bcf SENSOR_11_TRIS, SENSOR_11_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_11_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_11_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_11_PWM_SPEED
@@ -383,9 +383,9 @@ autogen_sensors_init:
 		bcf SENSOR_12_TRIS, SENSOR_12_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_12_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_12_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_12_PWM_SPEED
@@ -415,9 +415,9 @@ autogen_sensors_init:
 		bcf SENSOR_13_TRIS, SENSOR_13_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_13_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_13_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_13_PWM_SPEED
@@ -447,9 +447,9 @@ autogen_sensors_init:
 		bcf SENSOR_14_TRIS, SENSOR_14_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_14_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_14_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_14_PWM_SPEED
@@ -479,9 +479,9 @@ autogen_sensors_init:
 		bcf SENSOR_15_TRIS, SENSOR_15_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_15_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_15_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_15_PWM_SPEED
@@ -511,9 +511,9 @@ autogen_sensors_init:
 		bcf SENSOR_16_TRIS, SENSOR_16_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_16_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_16_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_16_PWM_SPEED
@@ -543,9 +543,9 @@ autogen_sensors_init:
 		bcf SENSOR_17_TRIS, SENSOR_17_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_17_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_17_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_17_PWM_SPEED
@@ -575,9 +575,9 @@ autogen_sensors_init:
 		bcf SENSOR_18_TRIS, SENSOR_18_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_18_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_18_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_18_PWM_SPEED
@@ -607,9 +607,9 @@ autogen_sensors_init:
 		bcf SENSOR_19_TRIS, SENSOR_19_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_19_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_19_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_19_PWM_SPEED
@@ -639,9 +639,9 @@ autogen_sensors_init:
 		bcf SENSOR_20_TRIS, SENSOR_20_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_20_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_20_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_20_PWM_SPEED
@@ -671,9 +671,9 @@ autogen_sensors_init:
 		bcf SENSOR_21_TRIS, SENSOR_21_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_21_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_21_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_21_PWM_SPEED
@@ -703,9 +703,9 @@ autogen_sensors_init:
 		bcf SENSOR_22_TRIS, SENSOR_22_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_22_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_22_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_22_PWM_SPEED
@@ -735,9 +735,9 @@ autogen_sensors_init:
 		bcf SENSOR_23_TRIS, SENSOR_23_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_23_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_23_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_23_PWM_SPEED
@@ -767,9 +767,9 @@ autogen_sensors_init:
 		bcf SENSOR_24_TRIS, SENSOR_24_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_24_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_24_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_24_PWM_SPEED
@@ -799,9 +799,9 @@ autogen_sensors_init:
 		bcf SENSOR_25_TRIS, SENSOR_25_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_25_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_25_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_25_PWM_SPEED
@@ -831,9 +831,9 @@ autogen_sensors_init:
 		bcf SENSOR_26_TRIS, SENSOR_26_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_26_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_26_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_26_PWM_SPEED
@@ -863,9 +863,9 @@ autogen_sensors_init:
 		bcf SENSOR_27_TRIS, SENSOR_27_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_27_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_27_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_27_PWM_SPEED
@@ -895,9 +895,9 @@ autogen_sensors_init:
 		bcf SENSOR_28_TRIS, SENSOR_28_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_28_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_28_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_28_PWM_SPEED
@@ -927,9 +927,9 @@ autogen_sensors_init:
 		bcf SENSOR_29_TRIS, SENSOR_29_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_29_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_29_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_29_PWM_SPEED
@@ -959,9 +959,9 @@ autogen_sensors_init:
 		bcf SENSOR_30_TRIS, SENSOR_30_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_30_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_30_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_30_PWM_SPEED
@@ -991,9 +991,9 @@ autogen_sensors_init:
 		bcf SENSOR_31_TRIS, SENSOR_31_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_31_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_31_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_31_PWM_SPEED
@@ -1023,9 +1023,9 @@ autogen_sensors_init:
 		bcf SENSOR_32_TRIS, SENSOR_32_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_32_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_32_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_32_PWM_SPEED
@@ -1055,9 +1055,9 @@ autogen_sensors_init:
 		bcf SENSOR_33_TRIS, SENSOR_33_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_33_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_33_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_33_PWM_SPEED
@@ -1087,9 +1087,9 @@ autogen_sensors_init:
 		bcf SENSOR_34_TRIS, SENSOR_34_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_34_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_34_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_34_PWM_SPEED
@@ -1119,9 +1119,9 @@ autogen_sensors_init:
 		bcf SENSOR_35_TRIS, SENSOR_35_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_35_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_35_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_35_PWM_SPEED
@@ -1151,9 +1151,9 @@ autogen_sensors_init:
 		bcf SENSOR_36_TRIS, SENSOR_36_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_36_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_36_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_36_PWM_SPEED
@@ -1183,9 +1183,9 @@ autogen_sensors_init:
 		bcf SENSOR_37_TRIS, SENSOR_37_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_37_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_37_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_37_PWM_SPEED
@@ -1215,9 +1215,9 @@ autogen_sensors_init:
 		bcf SENSOR_38_TRIS, SENSOR_38_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_38_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_38_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_38_PWM_SPEED
@@ -1247,9 +1247,9 @@ autogen_sensors_init:
 		bcf SENSOR_39_TRIS, SENSOR_39_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_39_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_39_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_39_PWM_SPEED
@@ -1279,9 +1279,9 @@ autogen_sensors_init:
 		bcf SENSOR_40_TRIS, SENSOR_40_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_40_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_40_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_40_PWM_SPEED
@@ -1311,9 +1311,9 @@ autogen_sensors_init:
 		bcf SENSOR_41_TRIS, SENSOR_41_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_41_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_41_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_41_PWM_SPEED
@@ -1343,9 +1343,9 @@ autogen_sensors_init:
 		bcf SENSOR_42_TRIS, SENSOR_42_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_42_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_42_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_42_PWM_SPEED
@@ -1375,9 +1375,9 @@ autogen_sensors_init:
 		bcf SENSOR_43_TRIS, SENSOR_43_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_43_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_43_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_43_PWM_SPEED
@@ -1407,9 +1407,9 @@ autogen_sensors_init:
 		bcf SENSOR_44_TRIS, SENSOR_44_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_44_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_44_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_44_PWM_SPEED
@@ -1439,9 +1439,9 @@ autogen_sensors_init:
 		bcf SENSOR_45_TRIS, SENSOR_45_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_45_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_45_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_45_PWM_SPEED
@@ -1471,9 +1471,9 @@ autogen_sensors_init:
 		bcf SENSOR_46_TRIS, SENSOR_46_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_46_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_46_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_46_PWM_SPEED
@@ -1503,9 +1503,9 @@ autogen_sensors_init:
 		bcf SENSOR_47_TRIS, SENSOR_47_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_47_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_47_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_47_PWM_SPEED
@@ -1535,9 +1535,9 @@ autogen_sensors_init:
 		bcf SENSOR_48_TRIS, SENSOR_48_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_48_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_48_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_48_PWM_SPEED
@@ -1567,9 +1567,9 @@ autogen_sensors_init:
 		bcf SENSOR_49_TRIS, SENSOR_49_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_49_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_49_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_49_PWM_SPEED
@@ -1599,9 +1599,9 @@ autogen_sensors_init:
 		bcf SENSOR_50_TRIS, SENSOR_50_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_50_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_50_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_50_PWM_SPEED
@@ -1631,9 +1631,9 @@ autogen_sensors_init:
 		bcf SENSOR_51_TRIS, SENSOR_51_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_51_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_51_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_51_PWM_SPEED
@@ -1663,9 +1663,9 @@ autogen_sensors_init:
 		bcf SENSOR_52_TRIS, SENSOR_52_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_52_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_52_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_52_PWM_SPEED
@@ -1695,9 +1695,9 @@ autogen_sensors_init:
 		bcf SENSOR_53_TRIS, SENSOR_53_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_53_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_53_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_53_PWM_SPEED
@@ -1727,9 +1727,9 @@ autogen_sensors_init:
 		bcf SENSOR_54_TRIS, SENSOR_54_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_54_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_54_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_54_PWM_SPEED
@@ -1759,9 +1759,9 @@ autogen_sensors_init:
 		bcf SENSOR_55_TRIS, SENSOR_55_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_55_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_55_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_55_PWM_SPEED
@@ -1791,9 +1791,9 @@ autogen_sensors_init:
 		bcf SENSOR_56_TRIS, SENSOR_56_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_56_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_56_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_56_PWM_SPEED
@@ -1823,9 +1823,9 @@ autogen_sensors_init:
 		bcf SENSOR_57_TRIS, SENSOR_57_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_57_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_57_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_57_PWM_SPEED
@@ -1855,9 +1855,9 @@ autogen_sensors_init:
 		bcf SENSOR_58_TRIS, SENSOR_58_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_58_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_58_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_58_PWM_SPEED
@@ -1887,9 +1887,9 @@ autogen_sensors_init:
 		bcf SENSOR_59_TRIS, SENSOR_59_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_59_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_59_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_59_PWM_SPEED
@@ -1919,9 +1919,9 @@ autogen_sensors_init:
 		bcf SENSOR_60_TRIS, SENSOR_60_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_60_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_60_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_60_PWM_SPEED
@@ -1951,9 +1951,9 @@ autogen_sensors_init:
 		bcf SENSOR_61_TRIS, SENSOR_61_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_61_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_61_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_61_PWM_SPEED
@@ -1983,9 +1983,9 @@ autogen_sensors_init:
 		bcf SENSOR_62_TRIS, SENSOR_62_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_62_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_62_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_62_PWM_SPEED
@@ -2015,9 +2015,9 @@ autogen_sensors_init:
 		bcf SENSOR_63_TRIS, SENSOR_63_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_63_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_63_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_63_PWM_SPEED
@@ -2047,9 +2047,9 @@ autogen_sensors_init:
 		bcf SENSOR_64_TRIS, SENSOR_64_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_64_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_64_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_64_PWM_SPEED
@@ -2079,9 +2079,9 @@ autogen_sensors_init:
 		bcf SENSOR_65_TRIS, SENSOR_65_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_65_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_65_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_65_PWM_SPEED
@@ -2111,9 +2111,9 @@ autogen_sensors_init:
 		bcf SENSOR_66_TRIS, SENSOR_66_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_66_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_66_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_66_PWM_SPEED
@@ -2143,9 +2143,9 @@ autogen_sensors_init:
 		bcf SENSOR_67_TRIS, SENSOR_67_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_67_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_67_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_67_PWM_SPEED
@@ -2175,9 +2175,9 @@ autogen_sensors_init:
 		bcf SENSOR_68_TRIS, SENSOR_68_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_68_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_68_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_68_PWM_SPEED
@@ -2207,9 +2207,9 @@ autogen_sensors_init:
 		bcf SENSOR_69_TRIS, SENSOR_69_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_69_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_69_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_69_PWM_SPEED
@@ -2239,9 +2239,9 @@ autogen_sensors_init:
 		bcf SENSOR_70_TRIS, SENSOR_70_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_70_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_70_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_70_PWM_SPEED
@@ -2271,9 +2271,9 @@ autogen_sensors_init:
 		bcf SENSOR_71_TRIS, SENSOR_71_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_71_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_71_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_71_PWM_SPEED
@@ -2303,9 +2303,9 @@ autogen_sensors_init:
 		bcf SENSOR_72_TRIS, SENSOR_72_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_72_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_72_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_72_PWM_SPEED
@@ -2335,9 +2335,9 @@ autogen_sensors_init:
 		bcf SENSOR_73_TRIS, SENSOR_73_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_73_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_73_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_73_PWM_SPEED
@@ -2367,9 +2367,9 @@ autogen_sensors_init:
 		bcf SENSOR_74_TRIS, SENSOR_74_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_74_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_74_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_74_PWM_SPEED
@@ -2399,9 +2399,9 @@ autogen_sensors_init:
 		bcf SENSOR_75_TRIS, SENSOR_75_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_75_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_75_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_75_PWM_SPEED
@@ -2431,9 +2431,9 @@ autogen_sensors_init:
 		bcf SENSOR_76_TRIS, SENSOR_76_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_76_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_76_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_76_PWM_SPEED
@@ -2463,9 +2463,9 @@ autogen_sensors_init:
 		bcf SENSOR_77_TRIS, SENSOR_77_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_77_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_77_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_77_PWM_SPEED
@@ -2495,9 +2495,9 @@ autogen_sensors_init:
 		bcf SENSOR_78_TRIS, SENSOR_78_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_78_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_78_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_78_PWM_SPEED
@@ -2527,9 +2527,9 @@ autogen_sensors_init:
 		bcf SENSOR_79_TRIS, SENSOR_79_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_79_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_79_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_79_PWM_SPEED
@@ -2559,9 +2559,9 @@ autogen_sensors_init:
 		bcf SENSOR_80_TRIS, SENSOR_80_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_80_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_80_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_80_PWM_SPEED
@@ -2591,9 +2591,9 @@ autogen_sensors_init:
 		bcf SENSOR_81_TRIS, SENSOR_81_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_81_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_81_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_81_PWM_SPEED
@@ -2623,9 +2623,9 @@ autogen_sensors_init:
 		bcf SENSOR_82_TRIS, SENSOR_82_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_82_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_82_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_82_PWM_SPEED
@@ -2655,9 +2655,9 @@ autogen_sensors_init:
 		bcf SENSOR_83_TRIS, SENSOR_83_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_83_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_83_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_83_PWM_SPEED
@@ -2687,9 +2687,9 @@ autogen_sensors_init:
 		bcf SENSOR_84_TRIS, SENSOR_84_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_84_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_84_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_84_PWM_SPEED
@@ -2719,9 +2719,9 @@ autogen_sensors_init:
 		bcf SENSOR_85_TRIS, SENSOR_85_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_85_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_85_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_85_PWM_SPEED
@@ -2751,9 +2751,9 @@ autogen_sensors_init:
 		bcf SENSOR_86_TRIS, SENSOR_86_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_86_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_86_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_86_PWM_SPEED
@@ -2783,9 +2783,9 @@ autogen_sensors_init:
 		bcf SENSOR_87_TRIS, SENSOR_87_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_87_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_87_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_87_PWM_SPEED
@@ -2815,9 +2815,9 @@ autogen_sensors_init:
 		bcf SENSOR_88_TRIS, SENSOR_88_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_88_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_88_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_88_PWM_SPEED
@@ -2847,9 +2847,9 @@ autogen_sensors_init:
 		bcf SENSOR_89_TRIS, SENSOR_89_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_89_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_89_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_89_PWM_SPEED
@@ -2879,9 +2879,9 @@ autogen_sensors_init:
 		bcf SENSOR_90_TRIS, SENSOR_90_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_90_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_90_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_90_PWM_SPEED
@@ -2911,9 +2911,9 @@ autogen_sensors_init:
 		bcf SENSOR_91_TRIS, SENSOR_91_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_91_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_91_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_91_PWM_SPEED
@@ -2943,9 +2943,9 @@ autogen_sensors_init:
 		bcf SENSOR_92_TRIS, SENSOR_92_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_92_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_92_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_92_PWM_SPEED
@@ -2975,9 +2975,9 @@ autogen_sensors_init:
 		bcf SENSOR_93_TRIS, SENSOR_93_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_93_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_93_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_93_PWM_SPEED
@@ -3007,9 +3007,9 @@ autogen_sensors_init:
 		bcf SENSOR_94_TRIS, SENSOR_94_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_94_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_94_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_94_PWM_SPEED
@@ -3039,9 +3039,9 @@ autogen_sensors_init:
 		bcf SENSOR_95_TRIS, SENSOR_95_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_95_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_95_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_95_PWM_SPEED
@@ -3071,9 +3071,9 @@ autogen_sensors_init:
 		bcf SENSOR_96_TRIS, SENSOR_96_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_96_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_96_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_96_PWM_SPEED
@@ -3103,9 +3103,9 @@ autogen_sensors_init:
 		bcf SENSOR_97_TRIS, SENSOR_97_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_97_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_97_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_97_PWM_SPEED
@@ -3135,9 +3135,9 @@ autogen_sensors_init:
 		bcf SENSOR_98_TRIS, SENSOR_98_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_98_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_98_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_98_PWM_SPEED
@@ -3167,9 +3167,9 @@ autogen_sensors_init:
 		bcf SENSOR_99_TRIS, SENSOR_99_PIN	
 
 		; Stay in bank 1
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_99_PWM_VOLUME
-		movlw 0x01
+		movlw 0x80
 		movwf SENSOR_99_PWM_TARGET
 		movlw 0x01
 		movwf SENSOR_99_PWM_SPEED

@@ -172,7 +172,8 @@ namespace virtualNodeNetwork
 
         public simulatedPICNode(int newId, string newName) :base(newId, newName)
         {
-            simulator = new gpSim(hexFile);
+            throw new NotImplementedException();
+            simulator = new gpSim(hexFile, null);
             lock (simulator)
             {
                 simulator.addWriteBreakpoint(sfrTXREG.name, onByteWritten);

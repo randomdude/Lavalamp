@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using virtualNodeNetwork;
 
@@ -18,13 +19,42 @@ namespace TestProjects.GPSimTests
         private const chipType knownGoodPICType = chipType.p16f628;
         private static readonly string _knownGoodHexFile = Properties.Settings.Default.testDataPath + "\\knownGood\\knownGood";
 
+        private readonly frmBlank _handerForm = new frmBlank();
+
+        [TestInitialize]
+        public void init()
+        {
+            Thread foo = new Thread(handlerFormThreadStart);
+            foo.Name = "GPSim form thread";
+            foo.Start();
+
+            while (!_handerForm.IsHandleCreated)
+            {
+                Thread.Sleep(1000);
+            }
+        }
+
+        private void handlerFormThreadStart()
+        {
+            Application.Run(_handerForm);            
+        }
+
+        [TestCleanup]
+        public void tearDown()
+        {
+            //_handerForm.Close();
+            //_handerForm.Dispose();
+            Application.Exit();
+            Application.DoEvents();
+        }
+
         [TestMethod]
         public void testGPSimConstruction()
         {
             gpSim uut = null;
             try
             {
-                uut = new gpSim(_knownGoodHexFile);
+                uut = new gpSim(_knownGoodHexFile, _handerForm);
             }
             finally
             {
@@ -40,7 +70,7 @@ namespace TestProjects.GPSimTests
             gpSim uut = null;
             try
             {
-                uut = new gpSim(_knownGoodHexFile);
+                uut = new gpSim(_knownGoodHexFile, _handerForm);
 
                 Assert.AreEqual(knownGoodPICType, uut.chipType);
             }
@@ -58,9 +88,9 @@ namespace TestProjects.GPSimTests
             gpSim uut = null;
             try
             {
-                uut = new gpSim(_knownGoodHexFile);
+                uut = new gpSim(_knownGoodHexFile, _handerForm);
 
-                // Add a breakpoint on PORTA.
+                // Add a breakpoint on PORTB.
                 uut.addWriteBreakpoint("portb", handler);
 
                 // and then run the node.
@@ -70,7 +100,7 @@ namespace TestProjects.GPSimTests
                 int timeout = 10;
                 while(!handlerCalled)
                 {
-                    Thread.Sleep(5000);
+                    Thread.Sleep(1000);
                     timeout--;
 
                     if (timeout == 0)

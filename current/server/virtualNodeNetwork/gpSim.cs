@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
@@ -26,8 +27,16 @@ namespace virtualNodeNetwork
         private const string cmdProcessor = @"processor";
         private const string breakpointCannotBeSetOnString = @"break cannot be set on";
         private const string bpHitString = @"message:";
+        private const string runningString = "running...\r\n";
         // The keystroke we use to pause PIC execution
         private static readonly string breakIn = ((char)0x03).ToString();
+
+        /// <summary>
+        /// Was a 'run' command the last issued?
+        /// </summary>
+        private bool isRunning;
+
+        public bool exitTime;
 
         /// <summary>
         /// Our instance of GPSim
@@ -71,8 +80,15 @@ namespace virtualNodeNetwork
         /// </summary>
         private readonly Dictionary<int, breakpoint> breakpoints = new Dictionary<int, breakpoint>();
 
-        public gpSim(string filename)
+        /// <summary>
+        /// Fire our Event on this thread.
+        /// </summary>
+        private readonly ISynchronizeInvoke _eventHandler;
+
+        public gpSim(string filename, ISynchronizeInvoke newEventHandler)
         {
+            _eventHandler = newEventHandler;
+
             // Start up the executable. 
             ProcessStartInfo info = new ProcessStartInfo(gpSimBinary);
             info.Arguments = " -i ";    // command-line mode
@@ -97,6 +113,9 @@ namespace virtualNodeNetwork
             load(filename + ".cod");
         }
 
+        private int consumeNextPrompt;
+
+        private StringBuilder promptNommer = new StringBuilder();
         /// <summary>
         /// Process a raw line of output from our child process, adding it to our string so that the main thread
         /// can process it.
@@ -112,11 +131,41 @@ namespace virtualNodeNetwork
 
                 lock (stdOutLock)
                 {
-                    stdoutsofar.Append((char)charInBuf[0]);
+
+                    if (stdoutsofar.ToString().ToLower().Contains(runningString))
+                    {
+                        isRunning = true;
+                    }
 
                     // If we see a 'Message:...' line, this indicates that a breakpoint was hit. 
-                    if (stdoutsofar.ToString().ToLower().Contains(bpHitString) )
-                        handleBreakpointStop(stdoutsofar);
+                    if (stdoutsofar.ToString().ToLower().Contains(bpHitString) && isRunning)
+                    {
+                        //lock (this)
+                        {
+                            if (handleBreakpointStop(stdoutsofar))
+                            {
+                                isRunning = false;
+                                consumeNextPrompt = 0;
+                                promptNommer = new StringBuilder();
+                            }
+                        }
+                    }
+                    
+                    if (consumeNextPrompt > 0)
+                    {
+                        promptNommer.Append((char)charInBuf[0]);
+                        if (promptNommer.ToString().ToLower().EndsWith(promptString))
+                        {
+                            consumeNextPrompt--;
+                            promptNommer = new StringBuilder();
+                            stdoutsofar = new StringBuilder();
+                            stdoutProcessedCount = 0;
+                        }
+                    }
+                    else
+                    {
+                        stdoutsofar.Append((char) charInBuf[0]);
+                    }
                 }
 
                 // eek stack overflow here eventually?!
@@ -155,7 +204,7 @@ namespace virtualNodeNetwork
                     if (soFar.Contains(toWaitFor.ToLower()))
                     {
                         string trimmed = soFar.Substring( soFar.LastIndexOf(toWaitFor.ToLower()) + toWaitFor.Length );
-                        stdoutProcessedCount = trimmed.Length;
+                        stdoutProcessedCount = 0;
                         stdoutsofar = new StringBuilder(trimmed);
 
                         return;
@@ -172,11 +221,10 @@ namespace virtualNodeNetwork
         {
             while (true)
             {
-                waitForNewData();
-
                 lock (stdOutLock)
                 {
                     string stdOut = stdoutsofar.ToString();
+                    stdoutProcessedCount = stdOut.Length;
                     // Since more than one line may have been returned, we need to split the line and make
                     // sure we only nom up the first.
                     if (stdOut.Contains("\n"))
@@ -184,14 +232,17 @@ namespace virtualNodeNetwork
                         string[] lines = stdOut.Split(new [] {'\n'}, StringSplitOptions.RemoveEmptyEntries);
 
                         if (lines.Length == 0)
-                            stdoutsofar = new StringBuilder();
-                        else
-                            stdoutsofar = new StringBuilder( stdoutsofar.ToString().Substring( lines[0].Length ) );
+                            continue;
+
+                        string foo = stdoutsofar.ToString().Substring(lines[0].Length + 1);
+                        stdoutsofar = new StringBuilder( foo );
 
                         stdoutProcessedCount = 0;
                         return lines[0].TrimEnd(new [] {'\r', '\n' } );
                     }
                 }
+
+                waitForNewData();
             }
         }
         
@@ -209,6 +260,8 @@ namespace virtualNodeNetwork
                         return;
                     }
                 }
+                if (exitTime)
+                    return;
                 Thread.Sleep(0);
             }
         }
@@ -255,6 +308,8 @@ namespace virtualNodeNetwork
 
         private void writeLine(string toWrite)
         {
+            Thread.Sleep(10);
+            gpSimProcess.StandardInput.Flush();
             gpSimProcess.StandardInput.Write(toWrite);
             gpSimProcess.StandardInput.Write("\n");
             gpSimProcess.StandardInput.Flush();
@@ -270,35 +325,60 @@ namespace virtualNodeNetwork
             }
         }
 
-        private void handleBreakpointStop(StringBuilder linesSoFar)
+        private bool handleBreakpointStop(StringBuilder linesSoFar)
         {
+            bool handledBreakpoint = false;
             // We should see one or more 'Message:...' lines, which indicate which breakpoint 
             // was hit, as they return the 'message' we set when we made the breakpoint - so 
             // that'll be our breakpoint ID.
             // We are not guaranteed to have a line ending in \r\n, so omit any partial lines.
             string withoutPartials = linesSoFar.ToString().Substring(0, linesSoFar.ToString().LastIndexOf('\n'));
+            if (withoutPartials.Length <= stdoutProcessedCount)
+                return false;
+            withoutPartials = withoutPartials.Substring(stdoutProcessedCount);
             int n = 0;
+            breakpoint toCall = null;
             foreach (string line in withoutPartials.Split('\n'))
             {
                 string lineIn = line.ToLower().Trim(new[] { '\r', '\n', ' ', '\t' });
 
                 if (lineIn.StartsWith("message:"))
                 {
-                    int id = Convert.ToInt32(lineIn.Split(':')[1]);
+                    string idStr = lineIn.Split(':')[1];
+                    int id = Convert.ToInt32(idStr);
+
+                    int start = linesSoFar.ToString().ToLower().IndexOf(bpHitString) + bpHitString.Length + 2 + idStr.Length;
+                    string foo = linesSoFar.ToString().Substring(start);
+
+                    lock (stdOutLock)   // fuck, too late, should've done this earlier!
+                    {
+                        if (stdoutsofar.ToString() != linesSoFar.ToString())
+                            throw new Exception();
+                        stdoutsofar = new StringBuilder(foo);
+                        stdoutProcessedCount = 0;
+                    }
 
                     if (breakpoints.ContainsKey(id))
-                        doBreakpointHit(breakpoints[id]);
-
-                    stdoutProcessedCount = n + line.Length;
+                        toCall = breakpoints[id];
+                    break;
                 }
 
                 n += line.Length + 1;
             }
+
+            if (toCall != null)
+            {
+                doBreakpointHit(toCall);
+
+                return true;
+            }
+
+            return false;
         }
 
         private void doBreakpointHit(breakpoint hitBP)
         {
-            breakpoints[hitBP.id].callback.Invoke(this, hitBP);            
+            _eventHandler.BeginInvoke(breakpoints[hitBP.id].callback, new object[] {this, hitBP} );
         }
 
         public void doBreakin()
@@ -322,14 +402,19 @@ namespace virtualNodeNetwork
                 //   **gpsim> pir1
                 //   pir1 = 0x10
 
+                int n = 0;
+                string[] foo= new string[10];
+
                 while (true)
                 {
-                    string lineIn = gpSimProcess.StandardOutput.ReadLine();
+                    string lineIn = getNextLine();
                     if (lineIn == null)
                         continue;
 
+                    foo[n++] = lineIn;
+
                     // The prompt, as our string is echoed back to us
-                    if (lineIn.StartsWith(promptString))
+                    if (lineIn.Contains(promptString))
                         continue;
 
                     // OK, this should be our line.
@@ -368,12 +453,11 @@ namespace virtualNodeNetwork
         {
             try
             {
-                writeLine("quit");
-
+                exitTime = true;
                 gpSimProcess.Close();
                 if (!gpSimProcess.HasExited)
                     gpSimProcess.Kill();
-                gpSimProcess.WaitForExit();
+                gpSimProcess.WaitForExit(2000);
             }
             catch (InvalidOperationException)
             {
