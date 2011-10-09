@@ -12,4 +12,14 @@ namespace TestProjects.virtualNetworkTests
             base._verifyNodeRecognisesSync();
         }
     }
+
+    [TestClass]
+    public class basicTests_picNetwork : basicTests<simulatedPICNetwork>
+    {
+        [TestMethod]
+        public override void verifyNodeRecognisesSync()
+        {
+            base._verifyNodeRecognisesSync();
+        }
+    }
 }

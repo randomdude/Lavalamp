@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Windows.Forms;
 using virtualNodeNetwork.PICStuff;
 
 namespace virtualNodeNetwork.PICStuff
@@ -161,8 +162,7 @@ namespace virtualNodeNetwork
     /// </summary>
     public class simulatedPICNode : virtualNodeBase
     {
-        private gpSim simulator;
-        private static string hexFile = @"C:\c0adz\lavalamp\current\uC\node\lavalamp";
+        private readonly gpSim simulator;
 
         public simulatedPICNode(int newId, string newName, IEnumerable<virtualNodeSensor> newSensors) 
             : base(newId, newName, newSensors)
@@ -170,36 +170,24 @@ namespace virtualNodeNetwork
             throw new NotImplementedException();
         }
 
-        public simulatedPICNode(int newId, string newName) :base(newId, newName)
+        public simulatedPICNode(int newId, string newName, Form eventForm, string objectFile) :base(newId, newName)
         {
-            throw new NotImplementedException();
-            simulator = new gpSim(hexFile, null);
+            simulator = new gpSim(objectFile, eventForm);
             lock (simulator)
             {
                 simulator.addWriteBreakpoint(sfrTXREG.name, onByteWritten);
-
-                ParameterizedThreadStart nodeThreadStart = simulatorRunner;
-                Thread nodeThread = new Thread(nodeThreadStart);
-                nodeThread.Name = "GPSimNode thread, node id " + newId + " name '" + newName + "'";
-                nodeThread.Start();
+                simulator.run();
             }
         }
 
         private int packetCount = 0;
-        private byte[] packet = new byte[networkPacket.lengthInBytes];
+        private readonly byte[] packet = new byte[networkPacket.lengthInBytes];
         private void onByteWritten(gpSim sender, breakpoint hit)
         {
-            throw new NotImplementedException();
-
-            //packet[packetCount++] = hit.value;
+            packet[packetCount++] = (byte) sender.readMemory( hit.location );
 
             if (packetCount > networkPacket.lengthInBytes)
                 onSendPacket(new networkPacket(packet));
-        }
-
-        private void simulatorRunner(object obj)
-        {
-            simulator.run();
         }
 
         public void processByte(byte[] byteRead)
@@ -232,7 +220,6 @@ namespace virtualNodeNetwork
                     sfrPIE1 pie1 = simulator.readMemory<sfrPIE1>(sfrPIE1.name);
                     if (pie1.hasBit(sfrPIE1Bits.RCIE))
                         throw new NotSupportedException();
-
                 }
             }
         }
@@ -252,11 +239,6 @@ namespace virtualNodeNetwork
     }
 
     public class GPSimException : Exception {}
-
-    public enum bpHitType
-    {
-        read, write
-    }
 
     public enum chipType
     {

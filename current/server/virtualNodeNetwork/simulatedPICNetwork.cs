@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO.Pipes;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace virtualNodeNetwork
 {
@@ -13,6 +14,7 @@ namespace virtualNodeNetwork
     {
         private readonly string _pipename;
         private readonly NamedPipeServerStream _pipe;
+        private Form frmEventForm;
 
         /// <summary>
         /// Nodes indexed by ID.
@@ -25,6 +27,23 @@ namespace virtualNodeNetwork
 
             _pipe = new NamedPipeServerStream(_pipename, PipeDirection.InOut, 10, PipeTransmissionMode.Byte,
                                               PipeOptions.Asynchronous);
+
+            frmEventForm = new Form();
+            Thread foo = new Thread(eventFormThread);
+            foo.Name = "PIC network form";
+            foo.Start();
+
+            while (!frmEventForm.IsHandleCreated)
+            {
+                Thread.Sleep(100);
+            }
+        }
+
+// ReSharper disable MemberCanBeMadeStatic.Local
+        private void eventFormThread(object foo)
+// ReSharper restore MemberCanBeMadeStatic.Local
+        {
+            Application.Run(frmEventForm);
         }
 
         public override void run()
@@ -96,7 +115,7 @@ namespace virtualNodeNetwork
 
         public override virtualNodeBase createNode(int newId, string newName)
         {
-            simulatedPICNode newNode = new simulatedPICNode(newId, newName);
+            simulatedPICNode newNode = new simulatedPICNode(newId, newName, frmEventForm, Properties.Settings.Default.lavalampPICObject);
             addEvents(newNode);
             return newNode;
         }

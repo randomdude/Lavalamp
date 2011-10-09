@@ -50,6 +50,7 @@ namespace ruleEngine
                     Type targetRuleItemType;
                     try
                     {
+                        // Pull type out of myAss
                         targetRuleItemType = myAss.GetType(targetRuleItemTypeString);
                     }
                     catch (ArgumentException)

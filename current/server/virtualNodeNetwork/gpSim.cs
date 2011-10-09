@@ -15,10 +15,7 @@ namespace virtualNodeNetwork
     /// </summary>
     public class gpSim : IDisposable
     {
-        /// <summary>
-        /// FIXME: Eeeeek, hardcoding is baaad!
-        /// </summary>
-        private const string gpSimBinary = @"C:\Program Files (x86)\gpsim\bin\gpsim.exe";
+        private static readonly string gpSimBinary = Properties.Settings.Default.gpSimExecutable;
 
         // Strings which are sent to or recieved from gpSim
         private const string promptString = @"**gpsim> ";

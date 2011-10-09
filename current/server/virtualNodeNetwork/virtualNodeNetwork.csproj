@@ -79,6 +79,12 @@
     <Compile Include="ctlVirtualNode.Designer.cs">
       <DependentUpon>ctlVirtualNode.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmBlank.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBlank.Designer.cs">
+      <DependentUpon>frmBlank.cs</DependentUpon>
+    </Compile>
     <Compile Include="genericDigitalOutSensor.cs" />
     <Compile Include="packetDefinitions\challengeResponsePacket.cs" />
     <Compile Include="packetDefinitions\commandPacket.cs" />
@@ -119,6 +125,9 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmBlank.resx">
+      <DependentUpon>frmBlank.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -129,6 +138,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
