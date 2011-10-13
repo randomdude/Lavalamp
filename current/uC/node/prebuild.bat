@@ -7,5 +7,4 @@ perl regen.pl template_cmd-fade-sensor.asm > cmd-fade-sensor.asm
 perl regen.pl template_cmd-get-sensor-type.asm > cmd-get-sensor-type.asm
 perl regen.pl template_memoryplacement.h > memoryplacement.h
 perl regen.pl template_idle-pwm.asm > idle-pwm.asm
-perl regen.pl template_idle-servo.asm > idle-servo.asm
 REM perl regen.pl template_idle-triac.asm > idle-triac.asm
