@@ -1,0 +1,59 @@
+MP2COD 4.40, COFF to COD File Converter
+Copyright (c) 1998-2011 Microchip Technology Inc.
+Listing File Generated: Thu Oct 13 08:48:55 2011
+
+
+Address  Value    Disassembly              Source                                                                           File
+-------  -------  -----------------------  -------------------------------------------------------------------------------  -----
+                                           	                                                                                C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                           	; Don't warn about case sensitivity                                             C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                           	errorlevel  -302                                                                C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                                                                                                            C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                           	#include "p16f628.inc"                                                          C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                                   LIST                                                                     C:\Program Files (x86)\Microchip\MPASM Suite\p16f628.inc
+                                                                                                                            C:\Program Files (x86)\Microchip\MPASM Suite\p16f628.inc
+                                           ;==========================================================================      C:\Program Files (x86)\Microchip\MPASM Suite\p16f628.inc
+                                           ;  MPASM PIC16F628 processor include                                             C:\Program Files (x86)\Microchip\MPASM Suite\p16f628.inc
+                                           ;                                                                                C:\Program Files (x86)\Microchip\MPASM Suite\p16f628.inc
+                                           ;  (c) Copyright 1999-2011 Microchip Technology, All rights reserved             C:\Program Files (x86)\Microchip\MPASM Suite\p16f628.inc
+                                           ;==========================================================================      C:\Program Files (x86)\Microchip\MPASM Suite\p16f628.inc
+                                                                                                                            C:\Program Files (x86)\Microchip\MPASM Suite\p16f628.inc
+                                                   LIST                                                                     C:\Program Files (x86)\Microchip\MPASM Suite\p16f628.inc
+                                                                                                                            C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                           	; Set our config word                                                           C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                           	__CONFIG _CP_OFF & _WDT_OFF & _HS_OSC & _LVP_OFF & _BODEN_OFF                   C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                                                                                                            C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                           ;code                                                                            C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                                                                                                            C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                           ;org 0                                                                           C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                                                                                                            C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+000000   2805     GOTO      0x5            	goto start                                                                      C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+000001   0000     NOP                      	nop                                                                             C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+000002   0000     NOP                      	nop                                                                             C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+000003   0000     NOP                      	nop                                                                             C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+000004   0000     NOP                      	nop                                                                             C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                                                                                                            C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                           ; And here's where it all begins.                                                C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                           start                                                                            C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                                                                                                            C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                           ; Set pin 0 of porta to output, and emit a square wave from it.                  C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                                                                                                            C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+000005   1303     BCF       0x3,0x6        	bcf STATUS, RP1	                                                                C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+000006   1683     BSF       0x3,0x5        	bsf STATUS, RP0  	; page 1                                                      C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                                                                                                            C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+000007   0186     CLRF      0x6            	clrf TRISB			; Set tristate                                                     C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                                                                                                            C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+000008   1283     BCF       0x3,0x5        	bcf STATUS, RP0		; Bank 0                                                       C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                                                                                                            C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                           flashLoop                                                                        C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                                                                                                            C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                           	; Do not use bcf/bsf here, since we want our simulator to                       C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                           	; report a single write, not a read-modify-write combo.                         C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+000009   3001     MOVLW     0x1            	movlw 0x01                                                                      C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+00000a   0086     MOVWF     0x6            	movwf PORTB                                                                     C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+00000b   0186     CLRF      0x6            	clrf PORTB                                                                      C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                                                                                                            C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+00000c   2809     GOTO      0x9            	goto flashLoop                                                                  C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                                                                                                            C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+                                                                                                                            C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm
+002007   3f2a     ADDLW     0x2a           end                                                                              C:\c0adz\lavalamp\current\server\testData\knownGood\knownGood.asm

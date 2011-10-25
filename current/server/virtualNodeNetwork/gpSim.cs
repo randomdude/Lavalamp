@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Text;
 using System.Threading;
 using virtualNodeNetwork.PICStuff;
@@ -15,50 +16,50 @@ namespace virtualNodeNetwork
     /// </summary>
     public class gpSim : IDisposable
     {
-        private static readonly string gpSimBinary = Properties.Settings.Default.gpSimExecutable;
+        private static readonly string _gpSimBinary = Properties.Settings.Default.gpSimExecutable;
 
         // Strings which are sent to or recieved from gpSim
-        private const string promptString = @"**gpsim> ";
-        private const string errorString = @"***error: ";
-        private const string processorListStart = "Processor List\r\n";
-        private const string cmdProcessor = @"processor";
-        private const string breakpointCannotBeSetOnString = @"break cannot be set on";
-        private const string bpHitString = @"message:";
-        private const string runningString = "running...\r\n";
+        private const string _promptString = @"**gpsim> ";
+        private const string _errorString = @"***error: ";
+        private const string _processorListStart = "Processor List\r\n";
+        private const string _cmdProcessor = @"processor";
+        private const string _breakpointCannotBeSetOnString = @"break cannot be set on";
+        private const string _bpHitString = @"message:";
+        private const string _runCommandString = "run\r\n";
+        private const string _runningString = "running...";
+        private const string _emptyProcessorListString = "(empty)";
         // The keystroke we use to pause PIC execution
-        private static readonly string breakIn = ((char)0x03).ToString();
+        private static readonly string _breakIn = ((char)0x03).ToString();
 
         /// <summary>
         /// Was a 'run' command the last issued?
         /// </summary>
-        private bool isRunning;
-
-        public bool exitTime;
+        private bool _isRunning;
 
         /// <summary>
         /// Our instance of GPSim
         /// </summary>
-        private readonly Process gpSimProcess;
+        private readonly Process _gpSimProcess;
 
         /// <summary>
         /// Data is placed in this StringBuilder asynch by another thread.
         /// </summary>
-        private StringBuilder stdoutsofar = new StringBuilder();
+        private StringBuilder _stdoutsofar = new StringBuilder();
 
         /// <summary>
         /// The amount of stdout our main thread has processed
         /// </summary>
-        private int stdoutProcessedCount = 0;
+        private int _stdoutProcessedCount = 0;
 
         /// <summary>
         /// Lock this before using the stdoutsofar
         /// </summary>
-        private readonly object stdOutLock = new object();
+        private readonly object _stdOutLock = new object();
 
         /// <summary>
         /// Used for the asynch read only
         /// </summary>
-        private readonly byte[] charInBuf = new byte[1];
+        private readonly byte[] _charInBuf = new byte[1];
 
         /// <summary>
         /// The type of PIC we should simulate
@@ -75,7 +76,7 @@ namespace virtualNodeNetwork
         /// <summary>
         /// Our breakpoints, keyed by id
         /// </summary>
-        private readonly Dictionary<int, breakpoint> breakpoints = new Dictionary<int, breakpoint>();
+        private readonly Dictionary<int, breakpoint> _breakpoints = new Dictionary<int, breakpoint>();
 
         /// <summary>
         /// Fire our Event on this thread.
@@ -87,86 +88,68 @@ namespace virtualNodeNetwork
             _eventHandler = newEventHandler;
 
             // Start up the executable. 
-            ProcessStartInfo info = new ProcessStartInfo(gpSimBinary);
-            info.Arguments = " -i ";    // command-line mode
-            info.RedirectStandardOutput = true;
-            info.RedirectStandardInput = true;
-            info.UseShellExecute = false;
-            gpSimProcess = new Process();
-            gpSimProcess.StartInfo = info;
-            gpSimProcess.Start();
+            ProcessStartInfo info = new ProcessStartInfo(_gpSimBinary)
+                                        {
+                                            Arguments = " -i ",
+                                            RedirectStandardOutput = true,
+                                            RedirectStandardInput = true,
+                                            UseShellExecute = false
+                                        };
+            _gpSimProcess = new Process();
+            _gpSimProcess.StartInfo = info;
+            _gpSimProcess.Start();
             //
             // Because we need to read non-line-buffered output, we dcannot use the OutputDataReceived event
             // of the Process (really). Because of this, we instead perform async reads on the base Stream
             // instead
             //
             // FIXME - won't we miss data from gpsim if it's scheduled to run before our read?
-            gpSimProcess.StandardOutput.BaseStream.BeginRead(charInBuf, 0, 1, gpSimOutputDataRecieved, this);
+            _gpSimProcess.StandardOutput.BaseStream.BeginRead(_charInBuf, 0, 1, gpSimOutputDataRecieved, this);
 
             // Wait for our initial prompt to be returned.
             waitForPrompt();
 
-            // and then load the code file.
-            load(filename + ".cod");
+            // And then load the code file.
+            load(filename);
         }
 
-        private int consumeNextPrompt;
-
-        private StringBuilder promptNommer = new StringBuilder();
         /// <summary>
         /// Process a raw line of output from our child process, adding it to our string so that the main thread
         /// can process it.
         /// </summary>
-        /// <param name="sender"></param>
         /// <param name="ar"></param>
         private void gpSimOutputDataRecieved(IAsyncResult ar)
         {
             try
             {
-                if (gpSimProcess.StandardOutput.BaseStream.EndRead(ar) == 0)
+                if (_gpSimProcess.StandardOutput.BaseStream.EndRead(ar) == 0)
                     return;
 
-                lock (stdOutLock)
+                lock (_stdOutLock)
                 {
 
-                    if (stdoutsofar.ToString().ToLower().Contains(runningString))
+                    if (_stdoutsofar.ToString().ToLower().Contains(_runningString))
                     {
-                        isRunning = true;
+                        _isRunning = true;
                     }
 
                     // If we see a 'Message:...' line, this indicates that a breakpoint was hit. 
-                    if (stdoutsofar.ToString().ToLower().Contains(bpHitString) && isRunning)
+                    if (_stdoutsofar.ToString().ToLower().Contains(_bpHitString) && _isRunning)
                     {
                         //lock (this)
                         {
-                            if (handleBreakpointStop(stdoutsofar))
+                            if (handleBreakpointStop(_stdoutsofar))
                             {
-                                isRunning = false;
-                                consumeNextPrompt = 0;
-                                promptNommer = new StringBuilder();
+                                _isRunning = false;
                             }
                         }
                     }
-                    
-                    if (consumeNextPrompt > 0)
-                    {
-                        promptNommer.Append((char)charInBuf[0]);
-                        if (promptNommer.ToString().ToLower().EndsWith(promptString))
-                        {
-                            consumeNextPrompt--;
-                            promptNommer = new StringBuilder();
-                            stdoutsofar = new StringBuilder();
-                            stdoutProcessedCount = 0;
-                        }
-                    }
-                    else
-                    {
-                        stdoutsofar.Append((char) charInBuf[0]);
-                    }
+
+                    _stdoutsofar.Append((char) _charInBuf[0]);
                 }
 
                 // eek stack overflow here eventually?!
-                gpSimProcess.StandardOutput.BaseStream.BeginRead(charInBuf, 0, 1, gpSimOutputDataRecieved, this);
+                _gpSimProcess.StandardOutput.BaseStream.BeginRead(_charInBuf, 0, 1, gpSimOutputDataRecieved, this);
             }
             catch (InvalidOperationException)
             {
@@ -177,32 +160,32 @@ namespace virtualNodeNetwork
 
         private void waitForPrompt()
         {
-            waitForSpecified(promptString.ToLower());
+            waitForSpecified(_promptString.ToLower());
         }
 
         private void waitForSpecified(string toWaitFor)
         {
             while (true)
             {
-                lock (stdOutLock)
+                lock (_stdOutLock)
                 {
-                    string soFar = stdoutsofar.ToString().ToLower();
-                    stdoutProcessedCount = soFar.Length;
+                    string soFar = _stdoutsofar.ToString().ToLower();
+                    _stdoutProcessedCount = soFar.Length;
 
                     // Since we are waiting for our prompt, error out on any errors or unexpected
                     // occurances.
-                    if (soFar.Contains(errorString.ToLower()))
+                    if (soFar.Contains(_errorString.ToLower()))
                         throw new GPSimException();
 
-                    if (soFar.Contains(breakpointCannotBeSetOnString.ToLower()))
+                    if (soFar.Contains(_breakpointCannotBeSetOnString.ToLower()))
                         throw new GPSimException();
 
                     // Otherwise, we should truncate the output and return
                     if (soFar.Contains(toWaitFor.ToLower()))
                     {
                         string trimmed = soFar.Substring( soFar.LastIndexOf(toWaitFor.ToLower()) + toWaitFor.Length );
-                        stdoutProcessedCount = 0;
-                        stdoutsofar = new StringBuilder(trimmed);
+                        _stdoutProcessedCount = 0;
+                        _stdoutsofar = new StringBuilder(trimmed);
 
                         return;
                     }
@@ -218,10 +201,10 @@ namespace virtualNodeNetwork
         {
             while (true)
             {
-                lock (stdOutLock)
+                lock (_stdOutLock)
                 {
-                    string stdOut = stdoutsofar.ToString();
-                    stdoutProcessedCount = stdOut.Length;
+                    string stdOut = _stdoutsofar.ToString();
+                    _stdoutProcessedCount = stdOut.Length;
                     // Since more than one line may have been returned, we need to split the line and make
                     // sure we only nom up the first.
                     if (stdOut.Contains("\n"))
@@ -231,10 +214,10 @@ namespace virtualNodeNetwork
                         if (lines.Length == 0)
                             continue;
 
-                        string foo = stdoutsofar.ToString().Substring(lines[0].Length + 1);
-                        stdoutsofar = new StringBuilder( foo );
+                        string foo = _stdoutsofar.ToString().Substring(lines[0].Length + 1);
+                        _stdoutsofar = new StringBuilder( foo );
 
-                        stdoutProcessedCount = 0;
+                        _stdoutProcessedCount = 0;
                         return lines[0].TrimEnd(new [] {'\r', '\n' } );
                     }
                 }
@@ -249,16 +232,15 @@ namespace virtualNodeNetwork
             // sure we don't miss any by updating out start pos arg with the same value.
             while (true)
             {
-                lock (stdOutLock)
+                lock (_stdOutLock)
                 {
-                    if (stdoutsofar.Length > stdoutProcessedCount)
+                    if (_stdoutsofar.Length > _stdoutProcessedCount)
                     {
-                        stdoutProcessedCount = stdoutsofar.Length;
+                        _stdoutProcessedCount = _stdoutsofar.Length;
                         return;
                     }
                 }
-                if (exitTime)
-                    return;
+
                 Thread.Sleep(0);
             }
         }
@@ -276,7 +258,7 @@ namespace virtualNodeNetwork
                 writeLine("br w " + locationSymbol + ", \"" + newBP.id + "\"");
                 waitForPrompt();
 
-                breakpoints.Add(newBP.id, newBP);
+                _breakpoints.Add(newBP.id, newBP);
             }
         }
 
@@ -287,38 +269,43 @@ namespace virtualNodeNetwork
         /// <param name="filename"></param>
         private void load(string filename)
         {
-            string lineToExec = String.Format("load \"{0}\"", filename );
+            if (!File.Exists(filename + ".cod") || !File.Exists(filename + ".lst") )
+                throw new GPSimException("File not found");
+
+            string lineToExec = String.Format("load \"{0}.cod\"", filename );
             writeLine(lineToExec);
             waitForPrompt();
 
             // Now, ask gpsim for the processor list, and read our processor type from it. If the load
-            // fails, gpsim will not report this (!), but the processor list will then be empty.
-            writeLine(cmdProcessor);
+            // fails, gpsim will not report this (!), but the processor list will then be "(empty)".
+            writeLine(_cmdProcessor);
 
-            waitForSpecified(processorListStart);
+            waitForSpecified(_processorListStart);
             // Now get the first element of our processor list.
             string processorLine = getNextLine();
             waitForPrompt();
 
-            chipType = (chipType) Enum.Parse(typeof(chipType), processorLine);
+            if (processorLine == _emptyProcessorListString)
+                throw new GPSimException("GPSim failed to load file");
+
+            chipType = chipType.parse(processorLine);
         }
 
         private void writeLine(string toWrite)
         {
             Thread.Sleep(10);
-            gpSimProcess.StandardInput.Flush();
-            gpSimProcess.StandardInput.Write(toWrite);
-            gpSimProcess.StandardInput.Write("\n");
-            gpSimProcess.StandardInput.Flush();
+            _gpSimProcess.StandardInput.Flush();
+            _gpSimProcess.StandardInput.Write(toWrite);
+            _gpSimProcess.StandardInput.Write("\n");
+            _gpSimProcess.StandardInput.Flush();
         }
 
         public void run()
         {
             lock (this)
             {
-                writeLine("run");
-                //writeLine("stfu");
-                waitForSpecified("running...\r\n");
+                writeLine(_runCommandString);
+                waitForSpecified(_runningString);
             }
         }
 
@@ -330,9 +317,9 @@ namespace virtualNodeNetwork
             // that'll be our breakpoint ID.
             // We are not guaranteed to have a line ending in \r\n, so omit any partial lines.
             string withoutPartials = linesSoFar.ToString().Substring(0, linesSoFar.ToString().LastIndexOf('\n'));
-            if (withoutPartials.Length <= stdoutProcessedCount)
+            if (withoutPartials.Length <= _stdoutProcessedCount)
                 return false;
-            withoutPartials = withoutPartials.Substring(stdoutProcessedCount);
+            withoutPartials = withoutPartials.Substring(_stdoutProcessedCount);
             int n = 0;
             breakpoint toCall = null;
             foreach (string line in withoutPartials.Split('\n'))
@@ -344,19 +331,19 @@ namespace virtualNodeNetwork
                     string idStr = lineIn.Split(':')[1];
                     int id = Convert.ToInt32(idStr);
 
-                    int start = linesSoFar.ToString().ToLower().IndexOf(bpHitString) + bpHitString.Length + 2 + idStr.Length;
+                    int start = linesSoFar.ToString().ToLower().IndexOf(_bpHitString) + _bpHitString.Length + 2 + idStr.Length;
                     string foo = linesSoFar.ToString().Substring(start);
 
-                    lock (stdOutLock)   // fuck, too late, should've done this earlier!
+                    lock (_stdOutLock)   // fuck, too late, should've done this earlier!
                     {
-                        if (stdoutsofar.ToString() != linesSoFar.ToString())
+                        if (_stdoutsofar.ToString() != linesSoFar.ToString())
                             throw new Exception();
-                        stdoutsofar = new StringBuilder(foo);
-                        stdoutProcessedCount = 0;
+                        _stdoutsofar = new StringBuilder(foo);
+                        _stdoutProcessedCount = 0;
                     }
 
-                    if (breakpoints.ContainsKey(id))
-                        toCall = breakpoints[id];
+                    if (_breakpoints.ContainsKey(id))
+                        toCall = _breakpoints[id];
                     break;
                 }
 
@@ -375,15 +362,15 @@ namespace virtualNodeNetwork
 
         private void doBreakpointHit(breakpoint hitBP)
         {
-            _eventHandler.BeginInvoke(breakpoints[hitBP.id].callback, new object[] {this, hitBP} );
+            _eventHandler.BeginInvoke(_breakpoints[hitBP.id].callback, new object[] {this, hitBP} );
         }
 
         public void doBreakin()
         {
             lock (this)
             {
-                //writeLine(breakIn);
-                waitForSpecified(promptString.ToLower() + "\r\n" + promptString.ToLower());
+                writeLine(_breakIn);
+                waitForSpecified(_promptString.ToLower() + "\r\n" + _promptString.ToLower());
             }
         }
 
@@ -391,6 +378,9 @@ namespace virtualNodeNetwork
         {
             lock (this)
             {
+                if (_isRunning)
+                    throw new GPSimException();
+
                 // Simply write the symbol name here
                 // (in before injection of some form!)
                 writeLine(symToRead);
@@ -411,7 +401,7 @@ namespace virtualNodeNetwork
                     foo[n++] = lineIn;
 
                     // The prompt, as our string is echoed back to us
-                    if (lineIn.Contains(promptString))
+                    if (lineIn.Contains(_promptString))
                         continue;
 
                     // OK, this should be our line.
@@ -432,35 +422,73 @@ namespace virtualNodeNetwork
             }
         }
 
-        public TypeToReturn readMemory<TypeToReturn>(string symToRead)
-            where TypeToReturn : sfr, new()
+        public TTypeToReturn readMemory<TTypeToReturn>(string symToRead)
+            where TTypeToReturn : sfr, new()
         {
             lock (this)
             {
                 int rawToRetrun = readMemory(symToRead);
 
-                sfr toRet = new TypeToReturn();
+                sfr toRet = new TTypeToReturn();
                 toRet.setUnderlyingValue(rawToRetrun);
 
-                return (TypeToReturn)toRet;
+                return (TTypeToReturn)toRet;
             }
+        }
+
+        public void writeMemory(string symbolName, byte newVal)
+        {
+            lock (this)
+            {
+                if (_isRunning)
+                    throw new GPSimException();
+
+                // Write the new value via GPSim.
+                string lineToSend = String.Format("{0} = {1}", symbolName, newVal);
+                writeLine(lineToSend);
+                waitForPrompt();
+
+                // Read back to verify this worked.
+                if (readMemory(symbolName) != newVal)
+                    throw new GPSimException();
+            }
+        }
+
+        public void writeMemory(string symbolName, int bitToChange, int newBitVal)
+        {
+            if (newBitVal != 0 && newBitVal != 1)
+                throw new ArgumentException();
+
+            // Do a read-modify-write of the specified byte.
+            int oldVal = readMemory(symbolName);
+            if (newBitVal == 1)
+                oldVal |= bitToChange;
+            else
+                oldVal &= ~bitToChange;
+
+            writeMemory(symbolName, (byte) oldVal);
         }
 
         public void Dispose()
         {
             try
             {
-                exitTime = true;
-                gpSimProcess.Close();
-                if (!gpSimProcess.HasExited)
-                    gpSimProcess.Kill();
-                gpSimProcess.WaitForExit(2000);
+                try
+                {
+                    if (!_gpSimProcess.HasExited)
+                    {
+                        _gpSimProcess.Kill();
+                        _gpSimProcess.WaitForExit(1000);
+                    }
+                }
+                catch (InvalidOperationException)
+                {
+                    // Swallow these. Throwing on the GC thread is much worse than leaking.
+                }
+
+                _gpSimProcess.Dispose();
             }
-            catch (InvalidOperationException)
-            {
-                // Swallow these - they may happen if the process exists before we finish our try.
-            }
-            gpSimProcess.Dispose();
+            catch (ObjectDisposedException) { }
         }
     }
 }

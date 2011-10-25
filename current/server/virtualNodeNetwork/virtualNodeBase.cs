@@ -32,7 +32,13 @@ namespace virtualNodeNetwork
         /// <summary>
         /// Fired when a sensor's output value is changed on this node
         /// </summary>
-        public Action<virtualNodeBase, virtualNodeSensor, int> onChangeSensor;        
+        public Action<virtualNodeBase, virtualNodeSensor, int> onChangeSensor;
+
+        /// <summary>
+        /// Fired when a sync packet is detected
+        /// </summary>
+        public Action<virtualNodeBase> onSyncPacket;
+        
         #endregion
 
         public nodeState state;
@@ -102,6 +108,15 @@ namespace virtualNodeNetwork
                 onStateChange.Invoke(this, newState);
 
             state = newState;
+        }
+
+        /// <summary>
+        /// Fire the onSyncPacket event
+        /// </summary>
+        protected void syncPacket()
+        {
+            if (onSyncPacket != null)
+                onSyncPacket.Invoke(this);
         }
 
         /// <summary>

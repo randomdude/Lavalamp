@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -16,7 +17,7 @@ namespace TestProjects.GPSimTests
     [TestClass]
     public class gpSimTests
     {
-        private const chipType knownGoodPICType = chipType.p16f628;
+        private static readonly chipType _knownGoodPICType = new chipType(chipType.underlyingType_t.pic16f628);
         private static readonly string _knownGoodHexFile = Properties.Settings.Default.testDataPath + "\\knownGood\\knownGood";
 
         private readonly frmBlank _handerForm = new frmBlank();
@@ -24,6 +25,10 @@ namespace TestProjects.GPSimTests
         [TestInitialize]
         public void init()
         {
+            if (!File.Exists(_knownGoodHexFile + ".cod") || 
+                !File.Exists(_knownGoodHexFile + ".lst") )
+                Assert.Inconclusive("Neccesary file not found");
+
             Thread foo = new Thread(handlerFormThreadStart);
             foo.Name = "GPSim form thread";
             foo.Start();
@@ -42,8 +47,6 @@ namespace TestProjects.GPSimTests
         [TestCleanup]
         public void tearDown()
         {
-            //_handerForm.Close();
-            //_handerForm.Dispose();
             Application.Exit();
             Application.DoEvents();
         }
@@ -72,7 +75,7 @@ namespace TestProjects.GPSimTests
             {
                 uut = new gpSim(_knownGoodHexFile, _handerForm);
 
-                Assert.AreEqual(knownGoodPICType, uut.chipType);
+                Assert.AreEqual(_knownGoodPICType, uut.chipType);
             }
             finally
             {

@@ -8,7 +8,20 @@ namespace virtualNodeNetwork.PICStuff
 {
     public abstract class sfr
     {
-        public abstract void setUnderlyingValue(int raw);
+        public int rawVal;
+
+        public bool hasBit(int toCheckIndex)
+        {
+            return ((rawVal) | ((int)(toCheckIndex))) != 0;
+        }
+
+        public virtual void setUnderlyingValue(int raw)
+        {
+            if (raw > 0xFF)
+                throw new ArgumentException();
+
+            rawVal = raw;
+        }
     }
 
     public class sfrPIR1 : sfr
@@ -19,6 +32,7 @@ namespace virtualNodeNetwork.PICStuff
 
         public override void setUnderlyingValue(int raw)
         {
+            rawVal = raw;
             val = (sfrPIR1Bits) raw;
         }
 
@@ -36,6 +50,7 @@ namespace virtualNodeNetwork.PICStuff
 
         public override void setUnderlyingValue(int raw)
         {
+            rawVal = raw;
             val = (sfrTXSTABits)raw;
         }
 
@@ -61,6 +76,7 @@ namespace virtualNodeNetwork.PICStuff
 
         public override void setUnderlyingValue(int raw)
         {
+            rawVal = raw;
             val = (sfrRCSTABits)raw;
         }
 
@@ -78,6 +94,7 @@ namespace virtualNodeNetwork.PICStuff
 
         public override void setUnderlyingValue(int raw)
         {
+            rawVal = raw;
             val = (sfrPIE1Bits)raw;
         }
 
@@ -87,20 +104,9 @@ namespace virtualNodeNetwork.PICStuff
         }
     }
 
-    public class sfrTXREG : sfr
-    {
-        public static string name = "txreg";
-
-        public byte val;
-
-        public override void setUnderlyingValue(int raw)
-        {
-            if (raw > 0xFF)
-                throw new ArgumentException();
-
-            val = (byte) raw;
-        }
-    }
+    public class sfrTXREG : sfr { public static string name = "txreg"; }
+    public class sfrRCREG : sfr { public static string name = "rcreg"; }
+    public class sfrPORTB : sfr { public static string name = "portb"; }
 
     public enum sfrPIR1Bits
     {
@@ -162,7 +168,7 @@ namespace virtualNodeNetwork
     /// </summary>
     public class simulatedPICNode : virtualNodeBase
     {
-        private readonly gpSim simulator;
+        private readonly gpSim _simulator;
 
         public simulatedPICNode(int newId, string newName, IEnumerable<virtualNodeSensor> newSensors) 
             : base(newId, newName, newSensors)
@@ -172,22 +178,38 @@ namespace virtualNodeNetwork
 
         public simulatedPICNode(int newId, string newName, Form eventForm, string objectFile) :base(newId, newName)
         {
-            simulator = new gpSim(objectFile, eventForm);
-            lock (simulator)
+            // Make our new simulator..
+            _simulator = new gpSim(objectFile, eventForm );
+
+            // And add breakpoints on things which are important - rs232 IO, and the debug pins.
+            lock (_simulator)
             {
-                simulator.addWriteBreakpoint(sfrTXREG.name, onByteWritten);
-                simulator.run();
+                _simulator.addWriteBreakpoint(sfrTXREG.name, onByteWritten);
+                _simulator.addWriteBreakpoint(sfrPORTB.name, onPortBChange);
+                _simulator.run();
             }
         }
 
-        private int packetCount = 0;
-        private readonly byte[] packet = new byte[networkPacket.lengthInBytes];
+        private void onPortBChange(gpSim sender, breakpoint hit)
+        {
+            // OK, a pin has changed in PORTB. We should examine portb and discover if any interesting bits
+            // are now set.
+            sfrPORTB portb = sender.readMemory<sfrPORTB>(sfrPORTB.name);
+            if (portb.hasBit(0))
+            {
+                // A sync packet is being reported by the debug interface. Fire the appropriate event.
+                syncPacket();
+            }
+        }
+
+        private int _packetCount = 0;
+        private readonly byte[] _packet = new byte[networkPacket.lengthInBytes];
         private void onByteWritten(gpSim sender, breakpoint hit)
         {
-            packet[packetCount++] = (byte) sender.readMemory( hit.location );
+            _packet[_packetCount++] = (byte) sender.readMemory( hit.location );
 
-            if (packetCount > networkPacket.lengthInBytes)
-                onSendPacket(new networkPacket(packet));
+            if (_packetCount > networkPacket.lengthInBytes)
+                onSendPacket(new networkPacket(_packet));
         }
 
         public void processByte(byte[] byteRead)
@@ -196,12 +218,12 @@ namespace virtualNodeNetwork
             int n = 0;
             while (n < byteRead.Length )
             {
-                lock (simulator)
+                lock (_simulator)
                 {
-                    simulator.doBreakin();
+                    _simulator.doBreakin();
 
                     // Check that the PIC has enabled the UART
-                    sfrRCSTA rcsta = simulator.readMemory<sfrRCSTA>(sfrRCSTA.name);
+                    sfrRCSTA rcsta = _simulator.readMemory<sfrRCSTA>(sfrRCSTA.name);
                     if (!rcsta.hasBit(sfrRCSTABits.SPEN))
                     {
                         // The UART is disabled. We could drop bytes, but since we should never
@@ -214,13 +236,20 @@ namespace virtualNodeNetwork
                     {
                         throw new NotSupportedException();
                     }
-                    sfrTXSTA txsta = simulator.readMemory<sfrTXSTA>(sfrTXSTA.name);
+                    sfrTXSTA txsta = _simulator.readMemory<sfrTXSTA>(sfrTXSTA.name);
                     if (txsta.hasBit(sfrTXSTABits.SYNC))
                         throw new NotSupportedException();
-                    sfrPIE1 pie1 = simulator.readMemory<sfrPIE1>(sfrPIE1.name);
+                    sfrPIE1 pie1 = _simulator.readMemory<sfrPIE1>(sfrPIE1.name);
                     if (pie1.hasBit(sfrPIE1Bits.RCIE))
                         throw new NotSupportedException();
+
+                    // Otherwise, it's all good. We simulate reception thus:
+                    // 1: Set RCREG to the incoming byte
+                    // 2: Set PIR1.RCIF.
+                    _simulator.writeMemory(sfrRCREG.name, byteRead[n]);
+                    _simulator.writeMemory(sfrPIR1.name, (int) sfrPIR1Bits.TXIF, 1);
                 }
+                n++;
             }
         }
     }
@@ -229,20 +258,93 @@ namespace virtualNodeNetwork
     {
         public string location;
         public readonly int id;
-        private static int count = 0;
+        private static int _count = 0;
         public gpSim.breakpointHandler callback;
 
         public breakpoint()
         {
-            id = (count++);
+            id = (_count++);
         }
     }
 
-    public class GPSimException : Exception {}
+    public class GPSimException : Exception {
+        public GPSimException() { }
+        public GPSimException(string whyso) : base(whyso) { }
+    }
 
-    public enum chipType
+    /// <summary>
+    /// This class translates between a range of almost-but-not-quite-the-same PIC names.
+    /// </summary>
+    public class chipType
     {
-        p16f628
+        public underlyingType_t underlyingType;
+
+        public chipType(underlyingType_t newType)
+        {
+            underlyingType = newType;
+        }
+
+        public enum underlyingType_t
+        {
+            pic16f628
+        }
+
+        /// <summary>
+        /// Return, eg, "p16f628".
+        /// </summary>
+        public string toGPSimStyle
+        {
+            get
+            {
+                switch(underlyingType)
+                {
+                    case underlyingType_t.pic16f628:
+                        return "p16f628";
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
+        public static chipType parse(string processorLine)
+        {
+            // We parse the input under a variety of different sources, returning when one seems
+            // to match. We just use a large switch() for now. It may be better to parse this
+            // algorithmically in the future.
+            switch(processorLine)
+            {
+                case "16f628":
+                case "p16f628":
+                case "pic16f628":
+                    return new chipType(underlyingType_t.pic16f628);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public override string ToString()
+        {
+            return underlyingType.ToString();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals((chipType)obj);
+        }
+
+// ReSharper disable InconsistentNaming
+        private bool Equals(chipType other)
+// ReSharper restore InconsistentNaming
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other.underlyingType, underlyingType);
+        }
+
+        public override int GetHashCode()
+        {
+            return underlyingType.GetHashCode();
+        }
     }
 
 }

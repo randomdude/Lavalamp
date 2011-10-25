@@ -16,6 +16,13 @@
 ; define this to transmit data continuously, in order to test
 ; the communications link.
 ; #define TEST_TRANSMISSION
+;
+; define these to set pins to singal various events which are
+; useful. These will not impair the rest of the code.
+#define DEBUG_PULSE_ON_SYNC
+#define DEBUG_PULSE_ON_SYNC_PORT PORTB
+#define DEBUG_PULSE_ON_SYNC_TRIS TRISB
+#define DEBUG_PULSE_ON_SYNC_PIN 0
 
 #define idletimerenabled
 
@@ -40,26 +47,14 @@
 
 #define SENSOR_COUNT 5
 
-;#define SENSOR_1_TYPE SENSOR_ID_TRIAC
-;#define SENSOR_1_ZC_PORT PORTB
-;#define SENSOR_1_ZC_TRIS TRISB
-;#define SENSOR_1_ZC_PIN 0
-
-; config for sensor 2
-;#define SENSOR_2_PRESENT
-;#define SENSOR_2_PORT PORTB
-;#define SENSOR_2_TRIS TRISB
-;#define SENSOR_2_PIN 4
-;#define SENSOR_2_TYPE SENSOR_ID_PWM_LED
-
-
 ; config for sensor 1
+;
 #define SENSOR_1_PRESENT
 #define SENSOR_1_PORT PORTA
 #define SENSOR_1_TRIS TRISA
 #define SENSOR_1_PIN 0
 #define SENSOR_1_TYPE SENSOR_ID_PWM_LED
-;#define SENSOR_1_PWM_PRESCALER 0x02
+#define SENSOR_1_PWM_PRESCALER 0xC4
 
 ; config for sensor 2
 #define SENSOR_2_PRESENT

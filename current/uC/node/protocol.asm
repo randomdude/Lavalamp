@@ -168,52 +168,62 @@ waitforpackethwuart:
 	movwf packet0
 
 	movf syncbytes, f
-	btfsc STATUS, Z								; have we seen enough sync bytes?
-	goto resetsyncbytesandwaitforpackethwuart	; Yup. loop up.
+	btfsc STATUS, Z			; have we seen enough sync bytes?
+	goto onSyncPacket		; Yup. loop up.
 
 	call waitforbytehwuart
 	movwf packet1
 	movf syncbytes, f
-	btfsc STATUS, Z								; have we seen enough sync bytes?
-	goto resetsyncbytesandwaitforpackethwuart	; Yup. loop up.
+	btfsc STATUS, Z			; have we seen enough sync bytes?
+	goto onSyncPacket		; Yup. loop up.
 
 	call waitforbytehwuart
 	movwf packet2
 	movf syncbytes, f
-	btfsc STATUS, Z								; have we seen enough sync bytes?
-	goto resetsyncbytesandwaitforpackethwuart	; Yup. loop up.
+	btfsc STATUS, Z			; have we seen enough sync bytes?
+	goto onSyncPacket		; Yup. loop up.
 
 	call waitforbytehwuart
 	movwf packet3
 	movf syncbytes, f
-	btfsc STATUS, Z								; have we seen enough sync bytes?
-	goto resetsyncbytesandwaitforpackethwuart	; Yup. loop up.
+	btfsc STATUS, Z			; have we seen enough sync bytes?
+	goto onSyncPacket		; Yup. loop up.
 
 	call waitforbytehwuart
 	movwf packet4
 	movf syncbytes, f
-	btfsc STATUS, Z								; have we seen enough sync bytes?
-	goto resetsyncbytesandwaitforpackethwuart	; Yup. loop up.
+	btfsc STATUS, Z			; have we seen enough sync bytes?
+	goto onSyncPacket		; Yup. loop up.
 
 	call waitforbytehwuart
 	movwf packet5
 	movf syncbytes, f
-	btfsc STATUS, Z								; have we seen enough sync bytes?
-	goto resetsyncbytesandwaitforpackethwuart	; Yup. loop up.
+	btfsc STATUS, Z			; have we seen enough sync bytes?
+	goto onSyncPacket		; Yup. loop up.
 
 	call waitforbytehwuart
 	movwf packet6
 	movf syncbytes, f
-	btfsc STATUS, Z								; have we seen enough sync bytes?
-	goto resetsyncbytesandwaitforpackethwuart	; Yup. loop up.
+	btfsc STATUS, Z			; have we seen enough sync bytes?
+	goto onSyncPacket		; Yup. loop up.
 
 	call waitforbytehwuart
 	movwf packet7
 	movf syncbytes, f
-	btfsc STATUS, Z								; have we seen enough sync bytes?
-	goto resetsyncbytesandwaitforpackethwuart	; Yup. loop up.
+	btfsc STATUS, Z			; have we seen enough sync bytes?
+	goto onSyncPacket		; Yup. loop up.
 
 	return
+
+onSyncPacket:
+	; Eight consecutive sync bytes have been recieved. We should
+	; restart our read, and pulse the debug pin if one is set.
+#ifdef DEBUG_PULSE_ON_SYNC
+	bsf DEBUG_PULSE_ON_SYNC_PORT, DEBUG_PULSE_ON_SYNC_PIN
+	bcf DEBUG_PULSE_ON_SYNC_PORT, DEBUG_PULSE_ON_SYNC_PIN
+#endif
+
+	goto resetsyncbytesandwaitforpackethwuart
 
 waitforbytehwuart:
 	btfsc PIR1, RCIF		; data waiting?

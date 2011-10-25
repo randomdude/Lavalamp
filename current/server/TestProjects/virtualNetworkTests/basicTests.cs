@@ -33,7 +33,7 @@ namespace TestProjects.virtualNetworkTests
 
                 // Make sure we get that onSync event
                 bool eventWasFiredOK = false;
-                testVirtualNetwork.onSyncPacket = () => eventWasFiredOK = true;
+                testNode.onSyncPacket = (sender) => eventWasFiredOK = true;
 
                 driver.doSyncNetwork();
                 Thread.Sleep(1000);

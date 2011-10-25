@@ -15,10 +15,6 @@
 #ifndef IS_TRANSMITTER
 	#include "eeprom.h"
 	#include "autogen_sensorcode.h"
-	; Define some symbols that we don't actually use.. silly 
-	; linker.
-;inituart:
-;	global inituart
 #else
 	; Define some symbols that we don't actually use.. silly 
 	; linker.
@@ -32,15 +28,14 @@ init:
 	global init
 
 	call disableperiphs
+	call initDebug
 #ifndef IS_TRANSMITTER
 	; If we're a device node, we have EEPROM config and sensors to init.
 	call init_from_eeprom
 	call initsensors
 #endif
 
-;#ifdef IS_TRANSMITTER
 	call inituart
-;#endif
 #ifdef COMMLINK_SWMANCHESTER
 	call initswuart
 #endif
@@ -53,11 +48,11 @@ disableperiphs:
 	; Here we disable any part-specific on-chip periphials which
 	; otherwise would stop us getting proper digital IO.
 
-IFDEF __16F627
+#IFDEF __16F627
 	bsf CMCON, CM0
 	bsf CMCON, CM1	; Kill comparators on my 16f627/8
 	bsf CMCON, CM2
-ENDIF
+#ENDIF
 
 	return
 
@@ -104,4 +99,15 @@ inituart:
 
 	return
 ;#endif
+
+initDebug:
+	; Set tristsates so that our debug pins can be pulsed.
+
+#ifdef DEBUG_PULSE_ON_SYNC
+	bsf STATUS, RP0	 ; page 1
+	bcf DEBUG_PULSE_ON_SYNC_TRIS, DEBUG_PULSE_ON_SYNC_PIN
+	bcf STATUS, RP0	 ; page 0
+#endif
+	return
+
 	end

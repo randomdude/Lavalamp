@@ -14,12 +14,12 @@ namespace virtualNodeNetwork
     {
         private readonly string _pipename;
         private readonly NamedPipeServerStream _pipe;
-        private Form frmEventForm;
+        private readonly Form _frmEventForm;
 
         /// <summary>
         /// Nodes indexed by ID.
         /// </summary>
-        private readonly Dictionary<int, simulatedPICNode> nodes = new Dictionary<int, simulatedPICNode>();
+        private readonly Dictionary<int, simulatedPICNode> _nodes = new Dictionary<int, simulatedPICNode>();
 
         public simulatedPICNetwork(string newPipeName)
         {
@@ -28,12 +28,12 @@ namespace virtualNodeNetwork
             _pipe = new NamedPipeServerStream(_pipename, PipeDirection.InOut, 10, PipeTransmissionMode.Byte,
                                               PipeOptions.Asynchronous);
 
-            frmEventForm = new Form();
+            _frmEventForm = new Form();
             Thread foo = new Thread(eventFormThread);
             foo.Name = "PIC network form";
             foo.Start();
 
-            while (!frmEventForm.IsHandleCreated)
+            while (!_frmEventForm.IsHandleCreated)
             {
                 Thread.Sleep(100);
             }
@@ -43,7 +43,7 @@ namespace virtualNodeNetwork
         private void eventFormThread(object foo)
 // ReSharper restore MemberCanBeMadeStatic.Local
         {
-            Application.Run(frmEventForm);
+            Application.Run(_frmEventForm);
         }
 
         public override void run()
@@ -92,9 +92,9 @@ namespace virtualNodeNetwork
 
                     log("Byte received.");
 
-                    lock (nodes)
+                    lock (_nodes)
                     {
-                        foreach (simulatedPICNode destNod in nodes.Values)
+                        foreach (simulatedPICNode destNod in _nodes.Values)
                             destNod.processByte(byteRead);
                     }
                 }
@@ -115,7 +115,7 @@ namespace virtualNodeNetwork
 
         public override virtualNodeBase createNode(int newId, string newName)
         {
-            simulatedPICNode newNode = new simulatedPICNode(newId, newName, frmEventForm, Properties.Settings.Default.lavalampPICObject);
+            simulatedPICNode newNode = new simulatedPICNode(newId, newName, _frmEventForm, Properties.Settings.Default.lavalampPICObject);
             addEvents(newNode);
             return newNode;
         }
@@ -125,7 +125,7 @@ namespace virtualNodeNetwork
             newNode.onLog += log;
             newNode.onSendPacket += sendPacket;
             newNode.onCryptoError += cryptoError;
-            nodes.Add(newNode.id, newNode);
+            _nodes.Add(newNode.id, newNode);
         }
 
         public override void Dispose()
