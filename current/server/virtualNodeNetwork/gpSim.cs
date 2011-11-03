@@ -114,6 +114,18 @@ namespace virtualNodeNetwork
         }
 
         /// <summary>
+        /// Return a bool indicating if the class can be used - ie, if required binaries are available
+        /// </summary>
+        /// <returns></returns>
+        public static bool isConfiguredCorrectly()
+        {
+            if (!File.Exists(_gpSimBinary))
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
         /// Process a raw line of output from our child process, adding it to our string so that the main thread
         /// can process it.
         /// </summary>

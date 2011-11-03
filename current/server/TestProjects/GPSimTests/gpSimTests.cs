@@ -27,7 +27,10 @@ namespace TestProjects.GPSimTests
         {
             if (!File.Exists(_knownGoodHexFile + ".cod") || 
                 !File.Exists(_knownGoodHexFile + ".lst") )
-                Assert.Inconclusive("Neccesary file not found");
+                Assert.Inconclusive("Known-good .cod or .lst file not found");
+
+            if (!gpSim.isConfiguredCorrectly())
+                Assert.Inconclusive("GPSim is unable to run due to a configuration issue");
 
             Thread foo = new Thread(handlerFormThreadStart);
             foo.Name = "GPSim form thread";
