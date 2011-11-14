@@ -41,6 +41,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "virtualNodeNetwork", "virtualNodeNetwork\virtualNodeNetwork.csproj", "{C5253F17-CF0C-4966-86A9-D9CB95137735}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "transmitterDriver", "transmitterDriver\transmitterDriver.csproj", "{00AAF76B-138C-4E79-960B-4540924D43C4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B71E2089-C4C8-46E7-81F7-E5BC0806A08B} = {B71E2089-C4C8-46E7-81F7-E5BC0806A08B}
+	EndProjectSection
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "winamp-lavalamp-plugin-setup", "netgui-extras\winamp-lavalamp-plugin-setup\winamp-lavalamp-plugin-setup.vdproj", "{21CF31F6-674D-41D9-B996-744AE11B4839}"
 EndProject
