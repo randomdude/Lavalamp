@@ -20,15 +20,15 @@ namespace virtualNodeNetwork
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            virtualNetworkBase net = new simulatedPICNetwork("vnet");
+            virtualNetworkBase net = new CSharpNetwork("vnet");
 
             net.onLogString = appendLog;
 
-            //List<virtualNodeSensor> sensorList = new List<virtualNodeSensor>();
-            //sensorList.Add(new genericDigitalOutSensor() { id = 0x01 });
-            //sensorList.Add(new genericDigitalInSensor() { id = 0x02 });
+            List<virtualNodeSensor> sensorList = new List<virtualNodeSensor>();
+            sensorList.Add(new genericDigitalOutSensor() { id = 0x01 });
+            sensorList.Add(new genericDigitalInSensor() { id = 0x02 });
 
-            virtualNodeBase ourNode = net.createNode(1, "virtual node");
+            virtualNodeBase ourNode = net.createNode(1, "virtual node", sensorList);
 
             ctlVirtualNode1.loadNode(ourNode);
 
