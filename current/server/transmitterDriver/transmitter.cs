@@ -89,6 +89,19 @@ namespace transmitterDriver
             }
         }
 
+        /// <summary>
+        /// Cause the underlying network to become out of synchronisation with the driver
+        /// </summary>
+        public void injectFaultDesync()
+        {
+            lock (serialLock)
+            {
+                bool s = injectFaultDesync(ref myseshdata);
+                if (s == false)
+                    throw new InternalErrorException();
+            }
+        }
+
         public void doSyncNetwork()
         {
             lock (serialLock)
@@ -246,6 +259,7 @@ namespace transmitterDriver
         {
             throw new NotImplementedException();
         }
+
     }
 
 }

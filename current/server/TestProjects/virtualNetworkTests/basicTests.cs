@@ -43,5 +43,37 @@ namespace TestProjects.virtualNetworkTests
             }
         }
 
+        public abstract void verifyNodeRecognisesSyncWhileDesynced();
+
+        protected void _verifyNodeRecognisesSyncWhileDesynced()
+        {
+            // Create a new virtual network and node. 
+            // Cause the network to be out of sync, and then send a sync
+            // packet and verify that the node recovers, successfully firing the correct event.
+            const int virtualNodeID = 0x01;
+
+            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+            {
+                virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Sync test node");
+
+                startNetworkInNewThread(testVirtualNetwork);
+
+                // Connect to this network with a new driver class
+                transmitterDriver.transmitter driver = new transmitterDriver.transmitter("pipe\\" + pipeName, false, null);
+
+                // Place network in to desynchronised state
+                driver.injectFaultDesync();
+
+                // Make sure we get that onSync event
+                bool eventWasFiredOK = false;
+                testNode.onSyncPacket = (sender) => eventWasFiredOK = true;
+
+                driver.doSyncNetwork();
+                Thread.Sleep(1000);
+
+                if (!eventWasFiredOK)
+                    throw new AssertFailedException("Synchronization packet was not detected");
+            }
+        }
     }
 }

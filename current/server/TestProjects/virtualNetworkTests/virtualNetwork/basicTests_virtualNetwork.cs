@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using virtualNodeNetwork;
 
 namespace TestProjects.virtualNetworkTests
@@ -11,8 +12,15 @@ namespace TestProjects.virtualNetworkTests
         {
             base._verifyNodeRecognisesSync();
         }
+
+        [TestMethod]
+        public override void verifyNodeRecognisesSyncWhileDesynced()
+        {
+            base._verifyNodeRecognisesSyncWhileDesynced();            
+        }
     }
 
+    [Ignore]
     [TestClass]
     public class basicTests_picNetwork : basicTests<simulatedPICNetwork>
     {
@@ -20,6 +28,12 @@ namespace TestProjects.virtualNetworkTests
         public override void verifyNodeRecognisesSync()
         {
             base._verifyNodeRecognisesSync();
+        }
+
+        [TestMethod]
+        public override void verifyNodeRecognisesSyncWhileDesynced()
+        {
+            base._verifyNodeRecognisesSyncWhileDesynced();
         }
     }
 }

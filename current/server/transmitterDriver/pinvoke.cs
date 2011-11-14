@@ -65,6 +65,9 @@ namespace transmitterDriver
 
         [DllImport("lavalampdll.dll", EntryPoint = "cmd_free")]
         protected static extern void cmd_free(IntPtr stuff);
+
+        [DllImport("lavalampdll.dll", EntryPoint = "injectFaultDesync")]
+        protected static extern bool injectFaultDesync(ref appConfig_t config);
     }
 
     /* 	error codes below 0x20 are reserved for the low-level comms subsystem. Above is errors returned from the PIC

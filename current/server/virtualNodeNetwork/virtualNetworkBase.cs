@@ -33,11 +33,6 @@ namespace virtualNodeNetwork
         public Action<string> onLogString;
 
         /// <summary>
-        /// Fired when a sync frame is detected
-        /// </summary>
-        public Action onSyncPacket;
-
-        /// <summary>
         /// Fired when this controller sends a packet to a node
         /// </summary>
         public Action onSendPacket;
@@ -68,17 +63,6 @@ namespace virtualNodeNetwork
                 return;
 
             onLogString.Invoke(Enum.GetName(typeof(logLevel), level).ToString() + ": " + toLog);
-        }
-
-        /// <summary>
-        /// Fire the onSyncPacket event
-        /// </summary>
-        protected void syncPacket()
-        {
-            log(logLevel.info, "Sync packet detected.");
-
-            if (onSyncPacket != null)
-                onSyncPacket.Invoke();
         }
 
         /// <summary>

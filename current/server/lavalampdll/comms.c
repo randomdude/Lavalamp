@@ -27,8 +27,10 @@ void syncNetwork(appConfig_t* myconfig)
 
 	// send an initial non-sync character
 	s = sendwithtimeout(myconfig, (char*)&".", 1, &timeout);
-	if (timeout) printf("packet timed out!..");
-	if (s==0) printf("packet send failed!..");
+	if (timeout) 
+		printf("packet timed out!..");
+	if (s==0) 
+		printf("packet send failed!..");
 
 	// Since we only synch to the transmitter, over a wire, we just send 8 0xAA characters.
 	while(syncbytes-->0)

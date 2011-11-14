@@ -9,11 +9,61 @@ namespace virtualNodeNetwork
         public CSharpNode(int newId, string newName) : base(newId, newName) { }
         public CSharpNode(int newId, string newName, IEnumerable<virtualNodeSensor> newSensors) : base(newId, newName, newSensors) { }
 
+        private readonly byte[] _currentPacket = new byte[networkPacket.lengthInBytes];
+        private int _currentPacketPos = 0;
+        private int _consecutiveSyncBytes = 0;
+
+        /// <summary>
+        /// The synchronization symbol which can be repeated in order to reset to the start of a packet.
+        /// </summary>
+        private const byte _synchSymbol = 0xAA;
+        
+        /// <summary>
+        /// Handle an incoming byte, adding it to any in-progress Packet
+        /// </summary>
+        /// <param name="byteIn">The byte to process</param>
+        public void processByte(byte byteIn)
+        {
+            _currentPacket[_currentPacketPos] = byteIn;
+            _currentPacketPos++;
+
+            // We need to keep count of how many consecutive sync bytes we have seen, since if we
+            // are out of sync they will not appear to be in the same packet.
+            // For example, with a sync token of 0xAA:
+            // Packet 1: 00 AA AA AA AA AA AA AA
+            // Packet 2: AA ..             
+            if (byteIn == _synchSymbol)
+            {
+                // OK, We've got another sync byte..
+                _consecutiveSyncBytes++;
+
+                // If we have an entire sync symbol then we need to rewind to the start of our packet
+                // buffer, ready to accept new bytes form the start of the packet.
+                _currentPacketPos = 0;
+                syncPacket();
+            }
+            else
+            {
+                _consecutiveSyncBytes = 0;
+
+                // If we have read an entire packet, then we need to parse the packet and process it.
+                if (_currentPacketPos == networkPacket.lengthInBytes)
+                {
+                    networkPacket packet = new networkPacket(_currentPacket);
+                    processPacket(packet);
+
+                    _currentPacketPos = 0;
+                }
+
+            }
+
+        }
+        
         /// <summary>
         /// Handle an incoming networkPacket
         /// </summary>
         /// <param name="packet"></param>
-        public void processPacket(networkPacket packet)
+        private void processPacket(networkPacket packet)
         {
             if (packet.destinationNodeID != id)
                 return;

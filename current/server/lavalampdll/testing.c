@@ -2,6 +2,8 @@
 #include "comms.h"
 #include "commands.h"
 
+#include <stdio.h>
+
 // Create a new appConfig_t and fill it wtih some test values. This can be called from the other side of our
 // p/invoke to verify that the p/invoke is operating correctly.
 appConfig_t* getTestConfig()
@@ -28,4 +30,20 @@ appConfig_t* getTestConfig()
 	toRet->injectFaultInvalidResponse = TRUE;
 
 	return toRet;
+}
+
+// Cause the network to be out of sync with the transmitter by sending a few garbage bytes.
+// return TRUE on success.
+BOOL injectFaultDesync(appConfig_t* myConfig)
+{
+	BOOL timeout;
+	long s = sendwithtimeout(myConfig, (char*)&".", 1, &timeout);
+
+	if (s == 0 || timeout)
+	{
+		printf("failed to desync network..");
+		return FALSE;
+	}
+
+	return TRUE;
 }
