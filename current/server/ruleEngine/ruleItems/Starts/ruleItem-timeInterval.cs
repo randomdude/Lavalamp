@@ -68,10 +68,10 @@ namespace ruleEngine.ruleItems.Starts
         
         private void timerCallbackSet(object state)
         {
-            this.pinInfo["IntervalIsNow"].value.setData(true);
+            this.pinInfo["IntervalIsNow"].value.data = true;
             // pass the change over to the ctlTimeInterval so it can flash for the user
             System.Threading.Thread.Sleep(timerHigh);
-            this.pinInfo["IntervalIsNow"].value.setData(false);
+            this.pinInfo["IntervalIsNow"].value.data = false;
             timer.setTo(false);
         }
 

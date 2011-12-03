@@ -16,7 +16,7 @@ namespace ruleEngine.ruleItems
 
         public delegate void executeItNowDelegate();    // this is used by the control, when the user asks to 'test' configuration by running the target
 
-        private tristate lastState;
+        private bool lastState;
         private ctlRunFile controlwidget = null;
 
         public override System.Drawing.Image background()
@@ -28,16 +28,16 @@ namespace ruleEngine.ruleItems
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
 
-            pinList.Add("input1", new pin { name = "input1", description = "trigger to start program", direction = pinDirection.input, valueType = typeof (pinDataTristate) });
+            pinList.Add("input1", new pin { name = "input1", description = "trigger to start program", direction = pinDirection.input });
 
             return pinList;
         }
 
         public override void evaluate()
         {
-            tristate newState = (tristate)pinInfo["input1"].value.getData();
+            bool newState = pinInfo["input1"].value.asBoolean();
 
-            if (newState != lastState && newState == tristate.yes)
+            if (newState != lastState && newState)
                 executeIt();
 
             lastState = newState;

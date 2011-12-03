@@ -40,14 +40,14 @@ namespace ruleEngine.ruleItems
 
         public override void evaluate()
         {
-            bool thisState = (bool) pinInfo["checkNow"].value.getData();
+            bool thisState = pinInfo["checkNow"].value.asBoolean();
 
             imapChecker mychecker = new imapChecker(widget.options);
 
             if ((lastState != thisState ) && (thisState == true))
             {
-                if (mychecker.newMail != (bool)pinInfo["newEmail"].value.getData())
-                    pinInfo["newEmail"].value.setData(mychecker.newMail);
+                if (mychecker.newMail != pinInfo["newEmail"].value.asBoolean())
+                    pinInfo["newEmail"].value.data = mychecker.newMail;
             }
             lastState = thisState;
         }

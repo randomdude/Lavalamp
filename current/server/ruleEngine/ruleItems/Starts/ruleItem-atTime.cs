@@ -103,11 +103,11 @@ namespace ruleEngine.ruleItems.Starts
 
             if (doit == true)
             {
-                this.pinInfo["timeIsNow"].value.setData(true);
+                this.pinInfo["timeIsNow"].value.data = true;
             }
             else
             {
-                this.pinInfo["timeIsNow"].value.setData(false);
+                this.pinInfo["timeIsNow"].value.data = false ;
             }
 
             lastHours = now.Hour;

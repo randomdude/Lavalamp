@@ -29,7 +29,7 @@ namespace ruleEngine
         /// <summary>
         /// The data which is present on the pin
         /// </summary>
-        public pinData value;
+        public IpinData value;
 
         /// <summary>
         /// Delegates which are fired when this pin changes. TODO: Move to proper Event style.
@@ -46,7 +46,7 @@ namespace ruleEngine
             ConstructorInfo pinValueTypeConstructor = valueType.GetConstructor(new Type[] { typeof(ruleItems.ruleItemBase), typeof(pin) });
 
             // Call the constructor, storing the new object.
-            value = (pinData) pinValueTypeConstructor.Invoke(new object[] {parentRuleItem, this});
+            value = (IpinData) pinValueTypeConstructor.Invoke(new object[] {parentRuleItem, this});
         }
 
         /// <summary>
@@ -163,6 +163,11 @@ namespace ruleEngine
         }
 
         #endregion
+
+        public bool isPriority()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public enum pinDirection { input, output }

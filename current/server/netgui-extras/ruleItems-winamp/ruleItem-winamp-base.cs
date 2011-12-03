@@ -37,7 +37,7 @@ namespace ruleItems_winamp
         {
             try
             {
-                if ((bool)pinInfo["trigger"].value.getData() == true && lastInput != pinInfo["trigger"].value.getData())
+                if ((bool)pinInfo["trigger"].value.data && lastInput != pinInfo["trigger"].value.data)
                 {
                     myPipe = new NamedPipeClientStream(".", "lavalamp winamp control", PipeDirection.InOut,
                                                        PipeOptions.None);

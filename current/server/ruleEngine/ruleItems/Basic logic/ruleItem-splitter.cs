@@ -28,13 +28,12 @@ namespace ruleEngine.ruleItems
 
         public override void evaluate()
         {
-            bool input1 = (bool)pinInfo["input1"].value.getData();
-
-            // only set the outputs if necessary! constantly setting the output will result in a stack overflow.
-            if ((bool)pinInfo["output1"].value.getData() != input1)
-                pinInfo["output1"].value.setData(input1);
-            if ((bool)pinInfo["output2"].value.getData() != input1)
-                pinInfo["output2"].value.setData(input1);
+            var input1 = (bool) pinInfo["input1"].value.data;
+            foreach (var pin in pinInfo)
+            {
+                if (pin.Value.direction == pinDirection.output)
+                    pin.Value.value.data = input1;
+            }
         }
     }
 }

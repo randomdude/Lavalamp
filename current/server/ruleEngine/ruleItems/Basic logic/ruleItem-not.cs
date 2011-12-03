@@ -24,27 +24,11 @@ namespace ruleEngine.ruleItems
 
         public override void evaluate()
         {
-            tristate input1 = (tristate)pinInfo["input1"].value.getData();
-            tristate newOutput;
-
-            switch (input1)
-            {
-                case tristate.noValue:
-                    newOutput = tristate.noValue;
-                    break;
-                case tristate.yes:
-                    newOutput = tristate.no;
-                    break;
-                case tristate.no:
-                    newOutput = tristate.yes;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            var newOutput = pinInfo["input1"].value.not() ;
 
             // only set the output if necessary! constantly setting the output will result in a stack overflow.
-                if ((tristate)pinInfo["output1"].value.getData() != newOutput)
-                    pinInfo["output1"].value.setData(newOutput);
+            if (pinInfo["output1"].value.data != newOutput.data)
+                 pinInfo["output1"].value.data = newOutput;
         }
     }
 }

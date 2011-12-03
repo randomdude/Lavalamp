@@ -66,26 +66,26 @@ namespace TestProjects
 
             testItem.parameters["clampToZero"] = "NO U";
 
-            testItem.pinInfo["myInputPin"].value.setData(true);
+            testItem.pinInfo["myInputPin"].value.data = true;
             testItem.evaluate();
-            Assert.IsTrue((bool)testItem.pinInfo["myOutputPin"].value.getData());
+            Assert.IsTrue(testItem.pinInfo["myOutputPin"].value.asBoolean());
 
             testItem.parameters["clampToZero"] = "yes";
             testItem.evaluate();
-            Assert.IsFalse((bool)testItem.pinInfo["myOutputPin"].value.getData());
+            Assert.IsFalse(testItem.pinInfo["myOutputPin"].value.asBoolean());
         }
 
         [TestMethod]
         public void testFunctionalityOfPythonRuleItem()
         {
             ruleItem_script testItem = new ruleItem_script(Properties.Settings.Default.testDataPath + filename);
-            testItem.pinInfo["myInputPin"].value.setData(false);
+            testItem.pinInfo["myInputPin"].value.data = false;
             testItem.evaluate();
-            Assert.IsTrue(((bool)testItem.pinInfo["myOutputPin"].value.getData()) == false);
+            Assert.IsTrue((testItem.pinInfo["myOutputPin"].value.asBoolean()) == false);
 
-            testItem.pinInfo["myInputPin"].value.setData(true);
+            testItem.pinInfo["myInputPin"].value.data = true;
             testItem.evaluate();
-            Assert.IsTrue(((bool)testItem.pinInfo["myOutputPin"].value.getData()) == true);
+            Assert.IsTrue((testItem.pinInfo["myOutputPin"].value.asBoolean()) == true);
         }
 
 
@@ -95,8 +95,8 @@ namespace TestProjects
         {
             ruleItem_Email testItem = new ruleItem_Email();
 
-            testItem.pinInfo["checkNow"].value.setData(false);
-            testItem.pinInfo["checkNow"].value.setData(true);
+            testItem.pinInfo["checkNow"].value.data = false;
+            testItem.pinInfo["checkNow"].value.data = true;
         }   
     }
 }

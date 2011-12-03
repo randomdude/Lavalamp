@@ -22,6 +22,7 @@ namespace ruleEngine.ruleItems
         public desktopMessageOptions myOptions = new desktopMessageOptions();
 
         private bool lastState;
+        private string _lastMessage;
 
         // Every ruleItem requires a parameterless constructor. It is used by the toolbox
         // routines via reflection.
@@ -38,16 +39,23 @@ namespace ruleEngine.ruleItems
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
 
-            pinList.Add("trigger", new pin { name = "trigger", description = "trigger to show notifier", direction = pinDirection.input });
+            pinList.Add("trigger", new pin { name = "trigger", description = "trigger to show notifier", direction = pinDirection.input, valueType = typeof(pinDataString) });
 
             return pinList;
         }
 
         public override void evaluate()
         {
-            bool newState = (bool)pinInfo["trigger"].value.getData();
+            IpinData inputData = pinInfo["trigger"].value;
+            bool newState = inputData.asBoolean();
 
-            if ( (newState != lastState) && (newState == true) )
+            // if we have a message swap out the placeholder with the new message.
+            if (inputData.getDataType() == typeof(string))
+            {
+                myOptions.message = myOptions.message.Replace("$message", pinInfo["trigger"].value.ToString());
+                _lastMessage = myOptions.message;
+            }
+            if ( (newState != lastState || myOptions.message != _lastMessage) && (newState == true))
                 showIt();
 
             lastState = newState;

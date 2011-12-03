@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ruleEngine;
+using ruleEngine.ruleItems.windows;
 
 namespace ruleEngine.ruleItems
 {
@@ -28,19 +29,13 @@ namespace ruleEngine.ruleItems
 
         public override void evaluate()
         {
-            bool input1 = (bool)pinInfo["input1"].value.getData();
-            bool input2 = (bool)pinInfo["input2"].value.getData();
+            IpinData input1 = pinInfo["input1"].value;
+            IpinData input2 = pinInfo["input2"].value;
 
-            bool newState;
-
-            if (input1 && input2)
-                newState = true;
-            else
-                newState = false;
-
-            // only set the output if necessary! constantly setting the output will result in a stack overflow.
-            if ((bool)pinInfo["output1"].value.getData() != newState)
-                pinInfo["output1"].value.setData(newState);
+            //selects the pin state to use based on the priority of the pin(s).
+            var newState = pinInfo["input1"].isPriority() ? input1.and(input2) : input2.and(input1);
+            
+            pinInfo["output1"].value.data = newState.data;
         }
     }
 }

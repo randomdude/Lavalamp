@@ -33,7 +33,7 @@ namespace ruleEngine.ruleItems.windows
 
         public override void evaluate()
         {
-            bool input1 = (bool)pinInfo["input1"].value.getData();
+            bool input1 = (bool)pinInfo["input1"].value.asBoolean();
 
             if (input1 && !lastInput)
                 killProcess();

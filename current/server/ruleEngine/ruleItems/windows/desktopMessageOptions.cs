@@ -12,7 +12,7 @@ namespace ruleEngine.ruleItems
         public int fadeInSpeed = 2;
         public int holdSpeed = 40;
         public int fadeOutSpeed = 5;
-        public string message = "Something happened!";
+        public string message = "$message happened!";
         public Color background = Color.DarkViolet;
         public Color foreground = Color.White;
 

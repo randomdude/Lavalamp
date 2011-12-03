@@ -178,7 +178,7 @@ namespace ruleEngine.ruleItems
             foreach (OldInstance thisPinObject in pinsObject)
             {
                 string propname = (string) _engine.Operations.GetMember(thisPinObject, magicName);
-                object newValue = _pinList[propname].value.getData();
+                object newValue = _pinList[propname].value.data;
                 _engine.Operations.SetMember(thisPinObject, magicState, newValue);
             }
         }
@@ -192,7 +192,7 @@ namespace ruleEngine.ruleItems
                 string propname = (string)_engine.Operations.GetMember(thisPinObject, magicName);
                 object newValue = _engine.Operations.GetMember(thisPinObject, magicState);
 
-                _pinList[propname].value.setData(newValue);
+                _pinList[propname].value.data = newValue;
             }
         }
 

@@ -99,7 +99,7 @@ namespace ruleEngine
                 pin source = myDelegates.GetPinFromGuid(sourcePin);
                 ruleItemBase sourceItem = myDelegates.GetRuleItemFromGuid(source.parentRuleItem);
 
-                destItem.pinInfo[dest.name].value.setData( sourceItem.pinInfo[source.name].value.getData() );
+                destItem.pinInfo[dest.name].value.data = sourceItem.pinInfo[source.name].value.data;
             }
         }
     }

@@ -1,6 +1,6 @@
 ﻿namespace ruleEngine.ruleItems.windows
 {
-    internal enum tristate
+    public enum tristate
     {
         noValue, yes, no
     }

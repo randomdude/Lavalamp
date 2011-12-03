@@ -51,7 +51,7 @@ namespace ruleEngine.ruleItems.windows
  
         public override void evaluate()
         {
-            bool trigger = (bool)pinInfo["trigger"].value.getData();
+            bool trigger = (bool)pinInfo["trigger"].value.asBoolean();
 
             if (!trigger || (lastState == trigger))
             {
@@ -70,8 +70,7 @@ namespace ruleEngine.ruleItems.windows
                 }
             }
 
-            if ((tristate)pinInfo["output1"].value.getData() != newState)
-                pinInfo["output1"].value.setData(newState);
+            pinInfo["output1"].value.data = newState;
         }
 
     }

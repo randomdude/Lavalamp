@@ -71,7 +71,7 @@ namespace ruleEngine.ruleItems.Starts
 
         public override void evaluate()
         {
-            bool input1 = (bool)pinInfo["shutdownNow"].value.getData();
+            bool input1 = pinInfo["shutdownNow"].value.asBoolean();
 
             if (input1 && !lastInput)
             {
