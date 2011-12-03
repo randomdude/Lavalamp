@@ -1,9 +1,7 @@
 using System;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using netGui.RuleEngine;
 using netGui.nodeEditForms;
 using ruleEngine;
 using transmitterDriver;
