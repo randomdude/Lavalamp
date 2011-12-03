@@ -25,7 +25,11 @@ namespace ruleEngine
         public readonly ctlRuleItemWidgetGuid serial = new ctlRuleItemWidgetGuid() { id = Guid.NewGuid() };
         private ToolStripMenuItem showDebugInfoToolStripMenuItem;
 
-        private delegatePack myDelegates;
+        public delegate void ruleItemMoved(object sender,ItemMovedArgs args);
+        /// <summary>
+        /// fired when the item is moved
+        /// </summary>
+        public event ruleItemMoved OnRuleItemMoved;
 
         #region serialisation
 
@@ -77,7 +81,7 @@ namespace ruleEngine
 
         #region IO marker stuff
 
-        private void loadRuleItem(ruleItemBase newRuleItem, bool justBeenDeserialised, IEnumerable<pin> pins)
+        private void loadRuleItem(ruleItemBase newRuleItem, bool justBeenDeserialised, IDictionary<string,pin> pins)
         {
             targetRuleItem = newRuleItem;
 
@@ -88,7 +92,7 @@ namespace ruleEngine
                 addIcon(thisPin);
                 // If we've just been deserialised, the pin will already be in the global pin collection
                 if ( !justBeenDeserialised )
-                    myDelegates.AddPinToGlobalPool(thisPin);
+                    pins.Add(thisPin.serial.ToString(),thisPin);
                 // Note down pin as belonging to this ruleItem.
                 thisPin.parentRuleItem = targetRuleItem.serial;
             }
@@ -278,9 +282,9 @@ namespace ruleEngine
 #endif
         }
 
-        public ctlRuleItemWidget(ruleItemBase newRuleItemBase, delegatePack newDelegates, ctlRule.setTsStatusDlg newSetToolbarText, bool justBeenDeserialised, IEnumerable<pin> pinList)
+        public ctlRuleItemWidget(ruleItemBase newRuleItemBase, ctlRule.setTsStatusDlg newSetToolbarText, bool justBeenDeserialised, Dictionary<string,pin> pinList)
         {
-            myDelegates = newDelegates;
+
             setToolbarText = newSetToolbarText;
 
             commonConstructorStuff();
@@ -359,16 +363,14 @@ namespace ruleEngine
                     else
                         iconEdge -= 3;
 
-                    if (thisPin.parentLineChain.id != Guid.Empty ) // this shoud never happen.. I think?
-                    {
-                        lineChain myParent = myDelegates.GetLineChainFromGuid(thisPin.parentLineChain);
-                        if ((!myParent.isdrawnbackwards && thisPin.direction == pinDirection.input) ||
-                            (myParent.isdrawnbackwards && thisPin.direction == pinDirection.output))
-                            myParent.end = new Point(iconEdge, midIcon);
-                        if ((!myParent.isdrawnbackwards && thisPin.direction == pinDirection.output) ||
-                            (myParent.isdrawnbackwards && thisPin.direction == pinDirection.input))
-                            myParent.start = new Point(iconEdge, midIcon);
-                    }
+                        if (OnRuleItemMoved != null)
+                        {
+                            ItemMovedArgs arg = new ItemMovedArgs();
+                            arg.point = new Point(iconEdge, midIcon);
+                            arg.pinDirection = thisPin.direction;
+                 
+                            OnRuleItemMoved.Invoke(this, arg);
+                        }
                 }
             }
 

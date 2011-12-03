@@ -91,8 +91,8 @@
     <Compile Include="ctlRuleItemWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="delegatePack.cs" />
     <Compile Include="Exceptions.cs" />
+    <Compile Include="ItemMovedArgs.cs" />
     <Compile Include="frmQuestion.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -151,14 +151,13 @@ namespace ruleEngine.ruleItems
         /// After deserialisation, we have no pins, and they are in the global pins()
         /// list. This function claims them.
         /// </summary>
-        /// <param name="myDelegates"></param>
-        /// <param name="pins">Global list of pins</param>
-        public void claimPinsPostDeSer(delegatePack myDelegates, IEnumerable<pin> pins)
+        /// <param name="pins">Global dictionary of pins</param>
+        public void claimPinsPostDeSer(Dictionary<string,pin> pins )
         {
             // Since we've just been deserialised, we need to initialise the pins that the ruleItem uses.
             // We do this by going through each pin, checking if it's one of ours, and if it is, adding
             // an entry in pinInfo.
-            foreach (pin thisPin in pins)
+            foreach (pin thisPin in pins.Values)
             {
                 if (thisPin.parentRuleItem.ToString() == serial.ToString())
                 {
@@ -168,8 +167,8 @@ namespace ruleEngine.ruleItems
                     // Wire up the pin to do stuff when activated, if necessary.
                     if (thisPin.isConnected)
                     {
-                        lineChain dest = myDelegates.GetLineChainFromGuid(thisPin.parentLineChain);
-                        thisPin.addChangeHandler(dest.handleStateChange);
+                        pin dest = pins[thisPin.linkedTo.id.ToString()];
+                        thisPin.OnPinChange += dest.StateChanged;
                     }
                 }
             }

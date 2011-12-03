@@ -150,10 +150,6 @@ namespace ruleEngine
             throw new pinNotFoundException();
         }
         #endregion
-        public delegatePack generateDelegates()
-        {
-            return new delegatePack(GetLineChainFromGuid, GetRuleItemFromGuid, GetPinFromGuid, AddLineChainToGlobalPool, AddRuleItemToGlobalPool, AddPinToGlobalPool, AddctlRuleItemWidgetToGlobalPool, GetPinFromName, GetctlRuleItemWidgetFromGuid);
-        }
 
         /// <summary>
         /// Write a new XML file describing the rule to disk.
@@ -238,7 +234,7 @@ namespace ruleEngine
             // FIXME: It's kind of messy that we have to do this here.
             newRuleItem.initPins();
 
-            generateDelegates().AddRuleItemToGlobalPool(newRuleItem);
+            AddRuleItemToGlobalPool(newRuleItem);
             return newRuleItem;
         }
 

@@ -8,7 +8,7 @@ namespace ruleEngine.ruleItems.windows
     {
         protected T _data;
         protected readonly ruleItemBase _parentRuleItem;
-        private readonly pin _parentPin;
+        protected readonly pin _parentPin;
 
         protected pinData(pinData<T> cpy)
         {

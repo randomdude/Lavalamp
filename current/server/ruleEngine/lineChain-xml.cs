@@ -58,16 +58,6 @@ namespace ruleEngine
                 {
                     isdrawnbackwards = bool.Parse(reader.GetAttribute("value"));
                 }
-                if (xmlName == "sourcepin" && reader.NodeType == XmlNodeType.Element)
-                {
-                    sourcePin = new pinGuid(reader.ReadElementContentAsString());
-                    inhibitNextRead = true;
-                }
-                if (xmlName == "destpin" && reader.NodeType == XmlNodeType.Element)
-                {
-                    destPin = new pinGuid(reader.ReadElementContentAsString());
-                    inhibitNextRead = true;
-                }
 
                 if (keepGoing && !inhibitNextRead)
                     keepGoing = reader.Read();
@@ -78,8 +68,6 @@ namespace ruleEngine
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteGuid("id", serial.id);
-            writer.WriteGuid("destPin", destPin.id);
-            writer.WriteGuid("sourcePin", sourcePin.id);
             writer.WritePoint("start", start);
             writer.WritePoint("end", end);
             writer.WriteColor("col", col);

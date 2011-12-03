@@ -77,8 +77,6 @@ namespace TestProjects
             targetRule.lineChains[newChain.serial.id.ToString()].isdrawnbackwards = true;
             targetRule.lineChains[newChain.serial.id.ToString()].midPoints = new List<Point>();
             targetRule.lineChains[newChain.serial.id.ToString()].midPoints.Add(new Point(33, 44));
-            targetRule.lineChains[newChain.serial.id.ToString()].destPin = new pinGuid();
-            targetRule.lineChains[newChain.serial.id.ToString()].sourcePin = new pinGuid();
 
             // serialise it
             String serialised = ruleControl.serialiseRule();
@@ -94,11 +92,16 @@ namespace TestProjects
             foreach (string indexer in deSerRuleControl.getRule().lineChains.Keys)
                 chainGuid = indexer;
 
+            Assert.IsNotNull(chainGuid);
+
             string ruleGuid = null;
             foreach (string indexer in deSerRuleControl.getRule().ruleItems.Keys)
                 ruleGuid = indexer;
 
+            Assert.IsNotNull(ruleGuid);
+
             rule deserialisedRule = deSerRuleControl.getRule();
+
             Assert.IsInstanceOfType(deserialisedRule.ruleItems[ruleGuid], targetType, "Deserialised rule did not preserve type of its ruleItem");
             Assert.IsTrue(deserialisedRule.lineChains[chainGuid].start.X == 10);
             Assert.IsTrue(deserialisedRule.lineChains[chainGuid].start.Y == 20);
@@ -112,9 +115,7 @@ namespace TestProjects
             Assert.IsTrue(deserialisedRule.lineChains[chainGuid].midPoints.Count == 1);
             Assert.IsTrue(deserialisedRule.lineChains[chainGuid].midPoints[0].X == 33);
             Assert.IsTrue(deserialisedRule.lineChains[chainGuid].midPoints[0].Y == 44);
-            Assert.IsTrue(deserialisedRule.lineChains[chainGuid].destPin.id.ToString() == ruleControl.getRule().lineChains[newChain.serial.id.ToString()].destPin.id.ToString());
-            Assert.IsTrue(deserialisedRule.lineChains[chainGuid].sourcePin.id.ToString() == ruleControl.getRule().lineChains[newChain.serial.id.ToString()].sourcePin.id.ToString());
-        }
+         }
         /*
         [TestMethod]
         public void testSerialisationOfRuleWithOneRuleItemWithPinsConnected()

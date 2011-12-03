@@ -35,7 +35,6 @@ namespace ruleEngine
         public void ReadXml(XmlReader reader)
         {
             String parentTag = reader.Name.ToLower();
-            delegatePack myDelegates = generateDelegates();
 
             bool inhibitNextRead = false;
             bool keepGoing = true;
@@ -58,17 +57,17 @@ namespace ruleEngine
                 }
                 if (xmlName == "linechains" && reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
                 {
-                    readLineChainDictionary(reader, myDelegates);
+                    readLineChainDictionary(reader);
                     inhibitNextRead = true;
                 }
                 if (xmlName == "pins" && reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
                 {
-                    readPinDictionaryInToRule(reader, myDelegates);
+                    readPinDictionaryInToRule(reader);
                     inhibitNextRead = true;
                 }
                 if (xmlName == "ruleitems" && reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
                 {
-                    readRuleItemDictionary(reader, myDelegates);
+                    readRuleItemDictionary(reader);
                     inhibitNextRead = true;
                 }
 
@@ -82,8 +81,11 @@ namespace ruleEngine
 
         public void claimPinsPostDeSer()
         {
+
             foreach (ruleItemBase thisRuleItem in ruleItems.Values)
-                thisRuleItem.claimPinsPostDeSer(generateDelegates(), pins.Values);
+            {
+                thisRuleItem.claimPinsPostDeSer(pins);
+            }
         }
 
         public void WriteXml(XmlWriter writer)
@@ -98,9 +100,8 @@ namespace ruleEngine
 
         #endregion
 
-        // And now a squillion helper methods which use our insipid delegatePack. :/
-
-        private void readLineChainDictionary(XmlReader reader, delegatePack delegates)
+        // And now a squillion helper methods
+        private void readLineChainDictionary(XmlReader reader)
         {
             String parentTag = reader.Name.ToLower();
 
@@ -115,7 +116,7 @@ namespace ruleEngine
 
                 if (xmlName == "linechain" && reader.NodeType == XmlNodeType.Element)
                 {
-                    readAndAddLineChain(reader, delegates);
+                    readAndAddLineChain(reader);
                     inhibitNextRead = true;
                 }
 
@@ -125,18 +126,17 @@ namespace ruleEngine
             }
         }
 
-        private void readAndAddLineChain(XmlReader reader, delegatePack delegates)
+        private void readAndAddLineChain(XmlReader reader)
         {
-            lineChain toRet = new lineChain(delegates);
+            lineChain toRet = new lineChain();
             toRet.ReadXml(reader);
-            delegates.AddLineChainToGlobalPool(toRet);
+            AddLineChainToGlobalPool(toRet);
         }
 
-        private void readRuleItemDictionary(XmlReader reader, delegatePack delegates)
+        private void readRuleItemDictionary(XmlReader reader)
         {
             String parentTag = reader.Name.ToLower();
 
-            bool inhibitNextRead = false;
             bool keepGoing = true;
             while (keepGoing)
             {
@@ -147,13 +147,12 @@ namespace ruleEngine
 
                 if (xmlName == "ruleitems" && reader.NodeType == XmlNodeType.Element)
                 {
-                    readRuleItems(reader, delegates);
+                    readRuleItems(reader);
                     keepGoing = false;
                 }
 
-                if (keepGoing && !inhibitNextRead)
+                if (keepGoing)
                     keepGoing = reader.Read();
-                inhibitNextRead = false;
             }
         }
 
@@ -175,7 +174,7 @@ namespace ruleEngine
             return newRuleItem;
         }
 
-        private void readRuleItems(XmlReader reader, delegatePack delegates)
+        private void readRuleItems(XmlReader reader)
         {
             String parentTag = reader.Name.ToLower();
             String thisSerial = null;
@@ -242,7 +241,7 @@ namespace ruleEngine
                     // Propogate the stuff we've read in to it
                     newRuleItem.serial = new ruleItemGuid(thisSerial);
                     newRuleItem.location = location;
-                    delegates.AddRuleItemToGlobalPool(newRuleItem);
+                    AddRuleItemToGlobalPool(newRuleItem);
 
                     thisSerial = null;
 
@@ -253,7 +252,7 @@ namespace ruleEngine
             }
         }
 
-        private void readPinDictionaryInToRule(XmlReader reader, delegatePack delegates)
+        private void readPinDictionaryInToRule(XmlReader reader)
         {
             String parentTag = reader.Name.ToLower();
 
@@ -306,7 +305,7 @@ namespace ruleEngine
                 }
                 if (xmlName == "pin" && reader.NodeType == XmlNodeType.EndElement)
                 {
-                    delegates.AddPinToGlobalPool(thisPin);
+                    AddPinToGlobalPool(thisPin);
                     thisPin = new pin();
                 }
 

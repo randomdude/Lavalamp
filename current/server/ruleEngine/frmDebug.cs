@@ -16,6 +16,7 @@ namespace ruleEngine
                 this.lblDebugInfo.Text += "ID is null!" + Environment.NewLine;
             this.lblDebugInfo.Text += "Color = " + debugThis.col.ToString() + Environment.NewLine;
             this.lblDebugInfo.Text += "Deleted = " + debugThis.deleted.ToString() + Environment.NewLine;
+            /*
             if (debugThis.sourcePin!= null)
                 this.lblDebugInfo.Text += "Src.  Pin name = " + debugThis.sourcePin.ToString() + Environment.NewLine;
             else
@@ -25,6 +26,7 @@ namespace ruleEngine
                 this.lblDebugInfo.Text += "Dst.  pin id = " + debugThis.destPin.ToString() + Environment.NewLine;
             else
                 this.lblDebugInfo.Text += "Dst.  pin id is null!" + Environment.NewLine;
+             * */
         }
 
         public frmDebug(ruleItemBase debugThis)

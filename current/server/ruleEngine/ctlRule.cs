@@ -25,7 +25,7 @@ namespace ruleEngine
 
         void commonConstructorStuff()
         {
-            currentLine = new lineChain(_rule.generateDelegates());
+            currentLine = new lineChain();
 #if DEBUG
             showDebugInfoToolStripMenuItem.Visible = true;
 #endif
@@ -58,9 +58,8 @@ namespace ruleEngine
             ruleItemBase newRuleItem = _rule.addRuleItem(info);
 
             // add a visual widget for it, and then add it to the visible controls
-            delegatePack myDelegates = _rule.generateDelegates();
-            ctlRuleItemWidget newCtl = new ctlRuleItemWidget(newRuleItem, myDelegates, this.setTsStatus, false, _rule.getPins());
-            myDelegates.AddctlRuleItemWidgetToGlobalPool(newCtl);
+            ctlRuleItemWidget newCtl = new ctlRuleItemWidget(newRuleItem, this.setTsStatus, false, _rule.pins);
+            _rule.AddctlRuleItemWidgetToGlobalPool(newCtl);
             this.Controls.Add(newCtl);
             newCtl.BringToFront();
         }
@@ -71,15 +70,20 @@ namespace ruleEngine
         public void addRuleItemControlsAfterDeserialisation()
         {
             IEnumerable<ruleItemBase> childRuleItems = _rule.getRuleItems();
-            delegatePack myDelegates = _rule.generateDelegates();
 
             foreach (ruleItemBase thisRule in childRuleItems)
             {
                 //if (thisRule.pinInfo.Count == 0)
                 //    thisRule.claimPinsPostDeSer(myDelegates, _runner.getPins());
 
-                ctlRuleItemWidget newCtl = new ctlRuleItemWidget(thisRule, myDelegates, setTsStatus, true, _rule.getPins());
-                myDelegates.AddctlRuleItemWidgetToGlobalPool(newCtl);
+                ctlRuleItemWidget newCtl = new ctlRuleItemWidget(thisRule, setTsStatus, true, _rule.pins);
+                //hook up line moved events for deserialized control.
+                foreach (var pins in newCtl.conPins)
+                {
+                    lineChain line = _rule.GetLineChainFromGuid(pins.Key.parentLineChain);
+                    newCtl.OnRuleItemMoved += line.LineMoved;
+                }
+                _rule.AddctlRuleItemWidgetToGlobalPool(newCtl);
                 Controls.Add(newCtl);
                 newCtl.BringToFront();
             }
@@ -126,7 +130,7 @@ namespace ruleEngine
 
             currentlyConnecting = from;
             currentlyConnecting.BackColor = connectingPinColour;
-            currentLine = new lineChain( _rule.generateDelegates() );
+            currentLine = new lineChain();
             currentLine.start = PointToClient(Control.MousePosition);
             // set temporarily, so the line doesn't stretch to the origin until the first mouseMove
             currentLine.end = PointToClient(Control.MousePosition);             
@@ -179,27 +183,30 @@ namespace ruleEngine
 
             if(errored)
             {
-                currentLine = new lineChain(_rule.generateDelegates());
+                currentLine = new lineChain();
                 source.parentLineChain.id = Guid.Empty;
                 currentlyConnecting = null;
                 return;
             }
             
             // Hook pins up
-            dest.connectTo(currentLine.serial, source.serial);
-            source.connectTo(currentLine.serial, dest.serial);
+            currentLine.OnLineDeleted += source.Disconnected;
+            currentLine.OnLineDeleted += dest.Disconnected;
+            dest.connectTo(currentLine.serial, source);
+            source.connectTo(currentLine.serial, dest);
+            
+            // hook ruleitem events up to the line
+            ctlRuleItemWidget ruleEnd = ((ctlRuleItemWidget) endTarget.Parent);
+            ctlRuleItemWidget ruleStart = ((ctlRuleItemWidget) currentlyConnecting.Parent);
+            ruleEnd.OnRuleItemMoved += currentLine.LineMoved;
+            ruleStart.OnRuleItemMoved += currentLine.LineMoved;
 
-            currentLine.destPin = dest.serial;
-            currentLine.sourcePin = source.serial;
-            sourceItemWidget.targetRuleItem.pinInfo[source.name].addChangeHandler(currentLine.handleStateChange);
+            _rule.AddLineChainToGlobalPool(currentLine);
+            
+            currentLine = new lineChain();
 
-            delegatePack myDelegates = _rule.generateDelegates();
- 
-            myDelegates.AddLineChainToGlobalPool(currentLine);            
-            currentLine = new lineChain(myDelegates);
-
-            ((ctlRuleItemWidget)endTarget.Parent).alignWires();
-            ((ctlRuleItemWidget)currentlyConnecting.Parent).alignWires();
+            ruleEnd.alignWires();
+            ruleStart.alignWires();
 
             currentlyConnecting = null;
         }

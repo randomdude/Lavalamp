@@ -31,10 +31,12 @@ namespace ruleEngine
         /// </summary>
         public IpinData value;
 
+        public delegate void pinChanged(pin changed, EventArgs e); 
+
         /// <summary>
-        /// Delegates which are fired when this pin changes. TODO: Move to proper Event style.
+        /// Event which fires when the pin changes
         /// </summary>
-        private readonly List<ruleItems.ruleItemBase.changeNotifyDelegate> changeHandlers = new List<ruleItems.ruleItemBase.changeNotifyDelegate>();
+        public event pinChanged OnPinChange; 
 
         public void createValue(ruleItems.ruleItemBase parentRuleItem)
         {
@@ -54,20 +56,8 @@ namespace ruleEngine
         /// </summary>
         public void invokeChangeHandlers()
         {
-            foreach (ruleItems.ruleItemBase.changeNotifyDelegate thisDelegate in changeHandlers)
-            {
-                thisDelegate.Invoke();
-            }
-        }
-
-        public void addChangeHandler(ruleItems.ruleItemBase.changeNotifyDelegate target)
-        {
-            changeHandlers.Add(target);
-        }
-
-        public void removeAllPinHandlers()
-        {
-            changeHandlers.Clear();
+            if (OnPinChange != null)
+                OnPinChange.Invoke(this,null);
         }
 
         public bool isConnected
@@ -83,16 +73,23 @@ namespace ruleEngine
             }
         }
 
-        public void disconnect()
+        public void Disconnected(object sender,EventArgs e)
         {
             linkedTo.id = Guid.Empty;
             linkedTo.id = Guid.Empty;
+            OnPinChange = null;
         }
 
-        public void connectTo(lineChainGuid newTargetChain, pinGuid newTargetPin)
+        public void connectTo(lineChainGuid newTargetChain, pin newTargetPin)
         {
             parentLineChain.id = newTargetChain.id;
-            linkedTo.id = newTargetPin.id;
+            linkedTo.id = newTargetPin.serial.id;
+            OnPinChange += newTargetPin.StateChanged;
+        }
+
+        public void StateChanged(pin changed, EventArgs e)
+        {
+            value.data = changed.value.data;
         }
 
         // todo - this should be on an onUIUpdate event or suchlike.

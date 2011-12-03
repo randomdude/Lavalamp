@@ -73,7 +73,7 @@ namespace ruleEngine.ruleItems.windows
             else
             {
                 myTimer.Dispose();
-                if (this.InvokeRequired)
+                if (this.InvokeRequired && !this.IsDisposed)
                     Invoke(new Action(delegate { this.Close(); }));
             }
         }

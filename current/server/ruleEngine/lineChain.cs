@@ -10,21 +10,16 @@ namespace ruleEngine
         public Point start;
         public Point end;
         public Color col;
-        public pinGuid sourcePin;
-        public pinGuid destPin;
         public bool deleted = false;
-
         public const int handleSize = 7;
         public bool isdrawnbackwards;   // was the line drawn from destination to source?
         public lineChainGuid serial = new lineChainGuid();
-
         public List<Point> midPoints;
 
-        private readonly delegatePack myDelegates;
+        public delegate void DeletedDelegate(object line,EventArgs args);
+        public event DeletedDelegate OnLineDeleted;
 
-        public lineChain() {}
-
-        public lineChain(delegatePack newDelegates)
+        public lineChain()
         {
             midPoints = new List<Point>();
             start = new Point(0, 0);
@@ -32,8 +27,6 @@ namespace ruleEngine
 
             Random rngGen = new Random( DateTime.Now.Millisecond );
             col = Color.FromArgb( 255 , rngGen.Next(255), rngGen.Next(255), rngGen.Next(255) );
-
-            myDelegates = newDelegates;
         }
 
         #region rendering
@@ -71,36 +64,21 @@ namespace ruleEngine
 
         public void deleteSelf()
         {
-            // Find both involved pins and disconnect them if necessary
-            pin source = myDelegates.GetPinFromGuid(sourcePin);
-            pin dest = myDelegates.GetPinFromGuid(destPin);
-
-            if (source.isConnected)
-                source.disconnect();
-            if (dest.isConnected)
-                dest.disconnect();
-
-            // remove any changeHandler delegates currently hooked up
-            source.removeAllPinHandlers();
-            dest.removeAllPinHandlers();
+            if (OnLineDeleted != null)
+                OnLineDeleted.Invoke(this,null);
 
             // goodbye cruel world
             deleted = true;
         }
 
-        public void handleStateChange()
+        public void LineMoved(object sender, ItemMovedArgs args)
         {
-            // coax signal from start of wire to end, which will fire off the appropriate events at the destination end.
-            if (!deleted)
-            {
-                pin dest = myDelegates.GetPinFromGuid(destPin);
-                ruleItemBase destItem = myDelegates.GetRuleItemFromGuid(dest.parentRuleItem);
-
-                pin source = myDelegates.GetPinFromGuid(sourcePin);
-                ruleItemBase sourceItem = myDelegates.GetRuleItemFromGuid(source.parentRuleItem);
-
-                destItem.pinInfo[dest.name].value.data = sourceItem.pinInfo[source.name].value.data;
-            }
+            if ((!isdrawnbackwards && args.pinDirection == pinDirection.input) ||
+                (isdrawnbackwards && args.pinDirection == pinDirection.output))
+                end = args.point;
+           if ((!isdrawnbackwards && args.pinDirection == pinDirection.output) ||
+               (isdrawnbackwards && args.pinDirection == pinDirection.input))
+                start = args.point;
         }
     }
 }
