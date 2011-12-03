@@ -122,9 +122,8 @@ namespace ruleEngine.ruleItems.Starts
         private bool presentSetTimeDialog()
         {
             frmQuestion askyform = new frmQuestion("New time (HH:MM):", hours + ":" + minutes);   // TODO: format number in a more pretty manner
-            askyform.ShowDialog();
 
-            while (askyform.cancelled)
+            while (askyform.ShowDialog() == DialogResult.Cancel)
                 return true;
 
             int newhours = 0;

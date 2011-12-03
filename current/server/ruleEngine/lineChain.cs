@@ -73,9 +73,12 @@ namespace ruleEngine
 
         public void LineMoved(object sender, ItemMovedArgs args)
         {
+            if (args.lineAffected.id != serial.id)
+                return;
             if ((!isdrawnbackwards && args.pinDirection == pinDirection.input) ||
                 (isdrawnbackwards && args.pinDirection == pinDirection.output))
                 end = args.point;
+
            if ((!isdrawnbackwards && args.pinDirection == pinDirection.output) ||
                (isdrawnbackwards && args.pinDirection == pinDirection.input))
                 start = args.point;

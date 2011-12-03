@@ -47,9 +47,6 @@ namespace ruleEngine.ruleItems
         public delegate void evaluateDelegate() ;
         public delegate void errorDelegate(Exception ex);
 
-        [XmlIgnore] private Dictionary<String, changeNotifyDelegate> pinChangeHandlers =
-            new Dictionary<String, changeNotifyDelegate>();
-
         [XmlIgnore] public bool isDeleted = false;
 
         protected ruleItemBase()

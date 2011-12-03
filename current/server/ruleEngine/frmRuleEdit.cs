@@ -176,6 +176,7 @@ namespace ruleEngine
         private void saveRule()
         {
             stopRule();
+
             if (saveCallback == null)
             {
                 MessageBox.Show("Unable to save rule!");

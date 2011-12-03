@@ -58,9 +58,8 @@ namespace ruleEngine.ruleItems.itemControls
         private bool promptForNewInterval()
         {
             frmQuestion askyform = new frmQuestion("New time interval (ms):", getInterval().ToString() );
-            askyform.ShowDialog(this);
 
-            if (askyform.cancelled)
+            if (askyform.ShowDialog(this) == DialogResult.Cancel)
                 return true;
 
             String result = askyform.result;

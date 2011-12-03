@@ -6,6 +6,8 @@ namespace ruleEngine
     {
         public pinDirection pinDirection { get;set;}
 
-        public Point point{get; set;}
+        public Point point {get; set;}
+
+        public lineChainGuid lineAffected {get; set; }
     }
 }

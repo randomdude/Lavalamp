@@ -6,7 +6,6 @@ namespace ruleEngine
     public partial class frmQuestion : Form
     {
         public String result;
-        public bool cancelled;
 
         public frmQuestion()
         {
@@ -29,17 +28,13 @@ namespace ruleEngine
         public void commonConstructorStuff()
         {
             InitializeComponent();
+            DialogResult = DialogResult.Cancel;
         }
 
         private void cmdOK_Click(object sender, EventArgs e)
         {
             result = this.textBox1.Text;
-            cancelled = false;
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            cancelled = true;
+            DialogResult = DialogResult.OK;
         }
     }
 }

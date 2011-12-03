@@ -66,6 +66,7 @@ namespace ruleEngine
                 writer.WriteElementString("name", toSerialise[thisKey].name);
                 writer.WriteElementString("parentLineChain", toSerialise[thisKey].parentLineChain.id.ToString());
                 writer.WriteElementString("parentRuleItem", toSerialise[thisKey].parentRuleItem.id.ToString());
+                writer.WriteElementString("datatype",toSerialise[thisKey].valueType.FullName);
                 writer.WriteEndElement();
             }
 

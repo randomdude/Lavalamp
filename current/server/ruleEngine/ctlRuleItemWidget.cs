@@ -365,10 +365,12 @@ namespace ruleEngine
 
                         if (OnRuleItemMoved != null)
                         {
-                            ItemMovedArgs arg = new ItemMovedArgs();
-                            arg.point = new Point(iconEdge, midIcon);
-                            arg.pinDirection = thisPin.direction;
-                 
+                            ItemMovedArgs arg = new ItemMovedArgs
+                                                    {
+                                                        point = new Point(iconEdge, midIcon),
+                                                        pinDirection = thisPin.direction,
+                                                        lineAffected = thisPin.parentLineChain
+                                                    };
                             OnRuleItemMoved.Invoke(this, arg);
                         }
                 }

@@ -136,12 +136,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.statusStrip);
+            this.DoubleBuffered = true;
             this.Name = "ctlRule";
             this.Size = new System.Drawing.Size(496, 424);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.FrmRule_Paint);
+            this.SizeChanged += new System.EventHandler(this.ctlRule_SizeChanged);
             this.Click += new System.EventHandler(this.FrmRule_Click);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FrmRule_MouseMove);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.FrmRule_Paint);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FrmRule_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FrmRule_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FrmRule_MouseUp);
             this.mnuStripHandles.ResumeLayout(false);
             this.statusStrip.ResumeLayout(false);

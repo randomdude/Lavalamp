@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using ruleEngine.ruleItems;
 
@@ -45,6 +47,7 @@ namespace ruleEngine
 
         private readonly Color connectingPinColour = Color.Cyan;
         private Color normalPinColour = Color.Transparent;
+        private Bitmap _backBuffer;
 
         #region rule manipulation
 
@@ -77,11 +80,12 @@ namespace ruleEngine
                 //    thisRule.claimPinsPostDeSer(myDelegates, _runner.getPins());
 
                 ctlRuleItemWidget newCtl = new ctlRuleItemWidget(thisRule, setTsStatus, true, _rule.pins);
-                //hook up line moved events for deserialized control.
+                //hook up line events for deserialized control.
                 foreach (var pins in newCtl.conPins)
                 {
                     lineChain line = _rule.GetLineChainFromGuid(pins.Key.parentLineChain);
                     newCtl.OnRuleItemMoved += line.LineMoved;
+                    line.OnLineDeleted += pins.Key.Disconnected;
                 }
                 _rule.AddctlRuleItemWidgetToGlobalPool(newCtl);
                 Controls.Add(newCtl);
@@ -352,12 +356,23 @@ namespace ruleEngine
 
         private void FrmRule_Paint(object sender, PaintEventArgs e)
         {
-            IEnumerable<lineChain> lines = _rule.getNonDeletedLineChains();
-            foreach (lineChain aLine in lines)
-                aLine.draw( Graphics.FromHwnd(this.Handle)  );
+            if (_backBuffer == null)
+            {
+                _backBuffer = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
+            }
+            using(Graphics graphics = Graphics.FromImage(_backBuffer))
+            {
+                graphics.Clear(Color.LightGray);
+                graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                IEnumerable<lineChain> lines = _rule.getNonDeletedLineChains();
+                foreach (lineChain aLine in lines)
+                    aLine.draw(graphics);
 
-            if (currentlyConnecting != null)
-                currentLine.draw(Graphics.FromHwnd(this.Handle));
+                if (currentlyConnecting != null)
+                    currentLine.draw(graphics);
+            }
+            e.Graphics.DrawImageUnscaled(_backBuffer,0,0);
+
         }
 
         private void FrmRule_Click(object sender, EventArgs e)
@@ -550,6 +565,16 @@ namespace ruleEngine
             _rule = toLoad;
 
             addRuleItemControlsAfterDeserialisation();
+        }
+
+        private void ctlRule_SizeChanged(object sender, EventArgs e)
+        {
+            if(_backBuffer != null)
+            {
+                _backBuffer.Dispose();
+                _backBuffer = null;
+            }
+         //   base.OnSizeChanged(e);
         }
     }
 }

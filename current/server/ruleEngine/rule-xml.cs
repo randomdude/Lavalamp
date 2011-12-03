@@ -303,6 +303,11 @@ namespace ruleEngine
                     thisPin.direction = (pinDirection)Enum.Parse(typeof(pinDirection), reader.ReadElementContentAsString(), true);
                     inhibitNextRead = true;
                 }
+                if (xmlName == "datatype" && reader.NodeType == XmlNodeType.Element)
+                {
+                    thisPin.valueType = Type.GetType(reader.ReadElementContentAsString());
+                    inhibitNextRead = true;
+                }
                 if (xmlName == "pin" && reader.NodeType == XmlNodeType.EndElement)
                 {
                     AddPinToGlobalPool(thisPin);

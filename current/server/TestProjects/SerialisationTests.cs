@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
+using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ruleEngine;
 using ruleEngine.ruleItems;
+using ruleEngine.ruleItems.windows;
 
 namespace TestProjects
 {
@@ -101,7 +103,6 @@ namespace TestProjects
             Assert.IsNotNull(ruleGuid);
 
             rule deserialisedRule = deSerRuleControl.getRule();
-
             Assert.IsInstanceOfType(deserialisedRule.ruleItems[ruleGuid], targetType, "Deserialised rule did not preserve type of its ruleItem");
             Assert.IsTrue(deserialisedRule.lineChains[chainGuid].start.X == 10);
             Assert.IsTrue(deserialisedRule.lineChains[chainGuid].start.Y == 20);
@@ -116,55 +117,58 @@ namespace TestProjects
             Assert.IsTrue(deserialisedRule.lineChains[chainGuid].midPoints[0].X == 33);
             Assert.IsTrue(deserialisedRule.lineChains[chainGuid].midPoints[0].Y == 44);
          }
-        /*
+
         [TestMethod]
-        public void testSerialisationOfRuleWithOneRuleItemWithPinsConnected()
+        public void testSerialisationOfRuleWithTwoRuleItemWithPinsConnected()
         {
             ctlRule ruleControl = new ctlRule();
 
+            rule rule = new rule("test");
+            lineChain line = new lineChain();
+            
+
             ruleItemInfo myInfo = new ruleItemInfo();
             myInfo.itemType = ruleItemType.RuleItem;
-
             myInfo.ruleItemBaseType = typeof(ruleItem_and);
+            ruleItemBase andItem = rule.addRuleItem(myInfo);
+            ruleItemGuid andGuid = andItem.serial;
 
-            ruleControl.addRuleItem(myInfo);
+            ruleItemInfo myInfo2 = new ruleItemInfo();
+            myInfo2.itemType = ruleItemType.RuleItem;
+            myInfo2.ruleItemBaseType = typeof(ruleItem_desktopMessage);
+            ruleItemBase messageItem = rule.addRuleItem(myInfo2);
+            ruleItemGuid messageGuid = messageItem.serial;
 
-            Dictionary<String, pin> pinInfo = ((ruleItem_and) ruleControl.targetRule.ruleItems[0].targetRuleItem).getPinInfo();
+            messageItem.pinInfo["trigger"].parentRuleItem = messageGuid;
+            messageItem.pinInfo["trigger"].connectTo(line.serial,andItem.pinInfo["output1"]);
+            andItem.pinInfo["output1"].connectTo(line.serial, messageItem.pinInfo["trigger"]);
+            andItem.pinInfo["output1"].parentRuleItem = andGuid;
+            rule.AddPinToGlobalPool(messageItem.pinInfo["trigger"]);
+            rule.AddPinToGlobalPool(andItem.pinInfo["output1"]);
+            rule.AddLineChainToGlobalPool(line);
 
-            PictureBox input1Box = pinInfo["input1"].imageBox;
-            PictureBox output1Box = pinInfo["output1"].imageBox;
+            String serialised = rule.serialise();
 
-            // connect the input1 pin to the output1 pin
-            ruleControl.startOrFinishLine(input1Box);
-            ruleControl.startOrFinishLine(output1Box);
+            rule = rule.deserialise(serialised);
 
-            ruleControl.targetRule.lineChains.Add(new lineChain());
-            ruleControl.targetRule.lineChains[0].start.X = 10;
-            ruleControl.targetRule.lineChains[0].start.Y = 20;
-            ruleControl.targetRule.lineChains[0].end.X = 11;
-            ruleControl.targetRule.lineChains[0].end.Y = 22;
-            ruleControl.targetRule.lineChains[0].col = Color.CornflowerBlue;
-            ruleControl.targetRule.lineChains[0].deleted = true;
-            ruleControl.targetRule.lineChains[0].isdrawnbackwards = true;
-            ruleControl.targetRule.lineChains[0].points.Add(new Point(33, 44));
+            Assert.AreEqual("test", rule.name);
+            Assert.AreEqual(1, rule.lineChains.Count);
+            Assert.AreEqual(2, rule.ruleItems.Count);
+            andItem = rule.ruleItems[andGuid.id.ToString()];
+            messageItem = rule.ruleItems[messageGuid.id.ToString()];
+            Assert.IsInstanceOfType(andItem, typeof(ruleItem_and));
+            Assert.IsInstanceOfType(messageItem, typeof(ruleItem_desktopMessage));
+            Assert.AreEqual(1, messageItem.pinInfo.Count);
+            Assert.AreEqual(1, andItem.pinInfo.Count);
+            Assert.AreEqual(line.serial.id.ToString(), messageItem.pinInfo["trigger"].parentLineChain.id.ToString());
+            Assert.AreEqual(line.serial.id.ToString(), andItem.pinInfo["output1"].parentLineChain.id.ToString());
+            Assert.AreEqual(andItem.pinInfo["output1"].serial.id.ToString(), messageItem.pinInfo["trigger"].linkedTo.id.ToString());
+            Assert.AreEqual(messageItem.pinInfo["trigger"].serial.id.ToString(), andItem.pinInfo["output1"].linkedTo.id.ToString());
+            Assert.AreEqual(typeof(pinDataBool), andItem.pinInfo["output1"].valueType);
+            Assert.AreEqual(typeof(pinDataString), messageItem.pinInfo["trigger"].valueType) ;
+            
 
-            String serialised = ruleControl.SerialiseRule();
-
-            ctlRule deSerRuleControl = new ctlRule(serialised);
-
-            Assert.IsInstanceOfType(deSerRuleControl.targetRule.ruleItems[0].targetRuleItem, typeof(ruleItem_and));
-            Assert.IsTrue(deSerRuleControl.targetRule.lineChains[0].start.X == 10);
-            Assert.IsTrue(deSerRuleControl.targetRule.lineChains[0].start.Y == 20);
-            Assert.IsTrue(deSerRuleControl.targetRule.lineChains[0].end.X == 11);
-            Assert.IsTrue(deSerRuleControl.targetRule.lineChains[0].end.Y == 22);
-            Assert.IsTrue(deSerRuleControl.targetRule.lineChains[0].col.R == Color.CornflowerBlue.R);
-            Assert.IsTrue(deSerRuleControl.targetRule.lineChains[0].col.G == Color.CornflowerBlue.G);
-            Assert.IsTrue(deSerRuleControl.targetRule.lineChains[0].col.B == Color.CornflowerBlue.B);
-            Assert.IsTrue(deSerRuleControl.targetRule.lineChains[0].deleted);
-            Assert.IsTrue(deSerRuleControl.targetRule.lineChains[0].isdrawnbackwards);
-            Assert.IsTrue(deSerRuleControl.targetRule.lineChains[0].points[0].X == 33);
-            Assert.IsTrue(deSerRuleControl.targetRule.lineChains[0].points[0].Y == 44);
         }    
-        */
+
     }
 }

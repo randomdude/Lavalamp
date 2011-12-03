@@ -33,9 +33,8 @@ namespace ruleEngine.ruleItems.windows
         {
             frmQuestion question = new frmQuestion("Name of process to check for:", processName);
 
-            question.ShowDialog();
 
-            if (question.cancelled)
+            if (question.ShowDialog() == DialogResult.Cancel)
                 return;
 
             this.lbl.Text = "Is process '" + question.result + "' running?";

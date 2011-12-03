@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml.Serialization;
+using netGui.RuleEngine;
 using netGui.nodeEditForms;
 using ruleEngine;
 using transmitterDriver;
@@ -240,7 +242,7 @@ namespace netGui
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Dispose();
+            Close();
         }
 
         private void lstNodes_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -313,9 +315,8 @@ namespace netGui
         private void newRuleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmQuestion newname = new frmQuestion("New rule name", "UnnamedRule");
-            newname.ShowDialog(this);
 
-            if (newname.cancelled)
+            if ( newname.ShowDialog(this) == DialogResult.Cancel)
                 return;
 
             if ( findRuleItem( newname.result ) != null)
@@ -345,11 +346,16 @@ namespace netGui
 
         private void deleteRuleToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (lstRules.SelectedItems.Count < 1)
+                return;
             ListViewItem toRemove = lstRules.SelectedItems[0];
-            DialogResult sureness = MessageBox.Show("Are you sure you want to delete rule '" + toRemove.Text + "'?", "Confirm delete", MessageBoxButtons.YesNo);
+            rule r = (rule) toRemove.Tag;
+            DialogResult sureness = MessageBox.Show("Are you sure you want to delete rule '" + r.name + "'?", "Confirm delete", MessageBoxButtons.YesNo);
 
             if (sureness == System.Windows.Forms.DialogResult.Yes)
                 lstRules.Items.Remove(toRemove);
+            if(File.Exists(MyOptions.rulesPath + @"\" + r.name + ".rule"))
+                File.Delete(MyOptions.rulesPath + @"\" + r.name + ".rule");
         }
 
         private void lstRules_ItemActivate(object sender, EventArgs e)
@@ -402,7 +408,14 @@ namespace netGui
             ListViewItem ruleItem = findRuleItem(saveThis);
             if (ruleItem == null)
             {
-                MessageBox.Show("Unable to save rule - can't find it in listView control");
+                frmQuestion fm = new frmQuestion("New Rule");
+                if(fm.ShowDialog(this) != DialogResult.OK)
+                    MessageBox.Show("Unable to save rule");
+                else
+                {
+                    saveThis.name = fm.result;
+                    addNewRule(saveThis);
+                }
                 return;
             }
 
@@ -471,30 +484,7 @@ namespace netGui
 
         private void saveAllRulesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Check we can get to the output path, to avoid throwing a messageBox for each failed file if we can't
-            DirectoryInfo rulesDir;
-            try
-            {
-                rulesDir = new DirectoryInfo(MyOptions.rulesPath);
-                rulesDir.GetFiles();
-            }
-            catch
-            {
-                MessageBox.Show("Unable to read rule files from " + MyOptions.rulesPath);
-                return;
-            }
-
-            // Now save each rule in turn.
-            foreach (ListViewItem thisItem in lstRules.Items )
-            {
-                try
-                {
-                    rule thisRule = (rule)thisItem.Tag;
-                    thisRule.saveToDisk(MyOptions.rulesPath + @"\" + thisItem.Text);
-                } catch {
-                    MessageBox.Show("Unable to save rule file '" + thisItem.Text + "'");
-                }
-            }
+            saveAllRules();
         }
 
         private void loadAllRulesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -521,14 +511,11 @@ namespace netGui
                 try
                 {
                     StreamReader thisFileReader;
+                    XmlSerializer mySer = new XmlSerializer(typeof(rule));
                     using (thisFileReader = new StreamReader(thisFile.FullName))
                     {
-                        // fixme/todo: fix this bodge! We shouldn't need to make a new rule editor form just to deserialise a rule!
-                        frmRuleEdit newEditor = new frmRuleEdit();
-                        newEditor.loadRule(thisFileReader.ReadToEnd());
-
-                        // Add our new rule name to our listView, with a .tag() set to the rule object itself.
-                        addNewRule(newEditor.ctlRule1.getRule());
+                        // Add our  rule name to our listView, with a .tag() set to the rule object itself.
+                         addNewRule((rule)mySer.Deserialize(thisFileReader));
                     }
                 } catch {
                     MessageBox.Show("Unable to read rule file '" + thisFile.FullName + "'" );
@@ -580,18 +567,34 @@ namespace netGui
         }
 
         public void saveAllRules()
-        {
-            StringBuilder myBuilder = new StringBuilder();
+        {     
+            // Check we can get to the output path, to avoid throwing a messageBox for each failed file if we can't
+            DirectoryInfo rulesDir;
+            try
+            {
+                rulesDir = new DirectoryInfo(MyOptions.rulesPath);
+                rulesDir.GetFiles();
+            }
+            catch
+            {
+                MessageBox.Show("Unable to read rule files from " + MyOptions.rulesPath);
+                return;
+            }
 
-            // Save all rules to the Application settings file.
+            // Now save each rule in turn.
             foreach (ListViewItem thisItem in lstRules.Items)
             {
-                rule thisRule = (rule)thisItem.Tag;
-
-                myBuilder.Append(thisRule.serialise());
+                try
+                {
+                    rule thisRule = (rule)thisItem.Tag;
+                    thisRule.saveToDisk(MyOptions.rulesPath + @"\" + thisRule.name + ".rule");
+                }
+                catch
+                {
+                    MessageBox.Show("Unable to save rule file '" + thisItem.Text + "'");
+                }
             }
-            Properties.Settings.Default["serialisedRules"] = myBuilder.ToString();
-            Properties.Settings.Default.Save();
+            
         }
 
         private void FrmMain_Load(object sender, EventArgs e)
