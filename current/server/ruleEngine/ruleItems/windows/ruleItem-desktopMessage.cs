@@ -94,7 +94,6 @@ namespace ruleEngine.ruleItems
             // Kick up a message loop and show the form.
             Application.DoEvents();
             Application.Run(messageForm);
-            messageForm.Visible = true;
         }
 
         public override void stop()
