@@ -29,7 +29,7 @@ namespace ruleEngine.ruleItems
 
             // only set the output if necessary! constantly setting the output will result in a stack overflow.
             if (pinInfo["output"].value.data != newOutput.data)
-                 pinInfo["output"].value.data = newOutput;
+                 pinInfo["output"].value.data = newOutput.data;
         }
     }
 }
