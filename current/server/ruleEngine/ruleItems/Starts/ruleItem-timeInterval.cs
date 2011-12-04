@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using ruleEngine;
+using ruleEngine.pinDataTypes;
 using Timer = System.Threading.Timer;
 
 namespace ruleEngine.ruleItems.Starts
@@ -11,15 +12,13 @@ namespace ruleEngine.ruleItems.Starts
     [ToolboxRuleCategory("Start items")]
     public class ruleItem_timeInterval : ruleItemBase
     {
-        private Timer intervalCountdown;
-        ruleItems.itemControls.ctlTimeInterval timer =
-            new ruleItems.itemControls.ctlTimeInterval();
+        private Timer _intervalCountdown;
+        itemControls.ctlTimeInterval _timer = new itemControls.ctlTimeInterval();
 
-        private int timerHigh = 100;
         [XmlElement("timer")] public int timerLow = 5000;
 
         // This delegate type should be used to set the interval which the timer fires at.
-        public delegate void setIntervalDelegate(int low, int high);
+        public delegate void setIntervalDelegate(int low);
         // And this to get it.
         public delegate int getIntervalDelegate();
 
@@ -27,12 +26,17 @@ namespace ruleEngine.ruleItems.Starts
 
         public ruleItem_timeInterval()
         {
-            timer.Visible = true;
-            timer.setInterval = new setIntervalDelegate(handleSetTimerInterval);
-            timer.getInterval = new getIntervalDelegate(handleGetTimerInterval);
+            _timer.Visible = true;
+            _timer.getInterval = new getIntervalDelegate(handleGetTimerInterval);
+            _timer.setInterval = new setIntervalDelegate(handleSetTimerInterval);
 
-            this.controls.Add(timer);
-            timer.setTimeCaption(timerLow);
+            controls.Add(_timer);
+        }
+
+        public override void onAfterLoad()
+        {
+            // Set this here since we need to have finished loading the object - we need the timerLow
+            _timer.setTimeCaption(timerLow);
         }
 
         private int handleGetTimerInterval()
@@ -40,45 +44,48 @@ namespace ruleEngine.ruleItems.Starts
             return timerLow;
         }
 
-        private void handleSetTimerInterval(int newLow, int newHigh)
+        private void handleSetTimerInterval(int newLow)
         {
             timerLow = newLow;
-            timerHigh = newHigh;
         }
 
         public override ContextMenuStrip addMenus(ContextMenuStrip mnuParent)
         {
             ContextMenuStrip menus = base.addMenus(mnuParent);
-            return timer.addMenus(menus);
+            return _timer.addMenus(menus);
         }
 
         public override void onResize(Control parent)
         {
-            timer.Left = (parent.Width / 2) - (timer.Width / 2);
-            timer.Top  = (parent.Height/ 2) - (timer.Height / 2);
+            _timer.Left = (parent.Width / 2) - (_timer.Width / 2);
+            _timer.Top  = (parent.Height/ 2) - (_timer.Height / 2);
         }
 
         public override void start()
         {
-            if (intervalCountdown != null)
-                intervalCountdown.Dispose();
-            intervalCountdown = new Timer(timerCallbackSet, null, timerLow, timerLow);
-            timer.setTo(false);
+            if (_intervalCountdown != null)
+                _intervalCountdown.Dispose();
+            _intervalCountdown = new Timer(timerCallbackSet, null, timerLow, timerLow);
+            _timer.setTo(false);
         }
         
         private void timerCallbackSet(object state)
         {
-            this.pinInfo["IntervalIsNow"].value.data = true;
-            // pass the change over to the ctlTimeInterval so it can flash for the user
-            System.Threading.Thread.Sleep(timerHigh);
-            this.pinInfo["IntervalIsNow"].value.data = false;
-            timer.setTo(false);
+            timelineEventArgs args = new timelineEventArgs();
+            args.newValue = new pinDataBool(true, this, pinInfo["IntervalIsNow"]);
+            onRequestNewTimelineEvent(args);
+
+            timelineEventArgs cancelArgs = new timelineEventArgs();
+            cancelArgs.newValue = new pinDataBool(false, this, pinInfo["IntervalIsNow"]);
+            onRequestNewTimelineEventInFuture(cancelArgs, 2);
+
+            _timer.setTo(false);
         }
 
         public override void stop()
         {
-            intervalCountdown.Dispose();
-            timer.setTo(false);
+            _intervalCountdown.Dispose();
+            _timer.setTo(false);
         }
 
         public override System.Drawing.Image background()
@@ -88,6 +95,8 @@ namespace ruleEngine.ruleItems.Starts
 
         public override Dictionary<String, pin> getPinInfo()
         {
+            _timer.setTimeCaption(timerLow);
+
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
             pinList.Add("IntervalIsNow", new pin { name = "IntervalIsNow", description = "time has elapsed", direction = pinDirection.output });
 

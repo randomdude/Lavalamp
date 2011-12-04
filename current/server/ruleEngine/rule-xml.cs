@@ -244,6 +244,8 @@ namespace ruleEngine
 
                     thisSerial = null;
 
+                    // Notify the ruleItem that we have finished loading it
+                    newRuleItem.onAfterLoad();
                 }
 
                 if (keepGoing && !inhibitNextRead)

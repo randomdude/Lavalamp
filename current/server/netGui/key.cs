@@ -74,13 +74,13 @@ namespace netGui
             foreach (char thisChar in parseThis.ToCharArray())
             {
                 if (thisChar < '0')
-                    throw new FormatException();
+                    return null;
                 if (thisChar > '9' && thisChar < 'A')
-                    throw new FormatException();
+                    throw null;
                 if (thisChar > 'Z' && thisChar < 'a')
-                    throw new FormatException();
+                    throw null;
                 if (thisChar > 'z')
-                    throw new FormatException();
+                    throw null;
             }
 
             int charPos = 0;
@@ -101,9 +101,11 @@ namespace netGui
             String toParse = parseThis.Trim();
 
             if (toParse.Length != 32)
-                throw new FormatException();
+                return;
 
-            this.keyArray = parseKey(parseThis);
+            byte[] parsed = parseKey(parseThis);
+            if (parsed != null)
+                this.keyArray = parsed;
         }
     }
 }

@@ -312,18 +312,24 @@ namespace netGui
 
         private void newRuleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmQuestion newname = new frmQuestion("New rule name", "UnnamedRule");
-
-            if ( newname.ShowDialog(this) == DialogResult.Cancel)
-                return;
-
-            if ( findRuleItem( newname.result ) != null)
+            while (true)
             {
-                MessageBox.Show("A rule with that name already exists");
-                return;
+                frmQuestion newname = new frmQuestion("New rule name", "UnnamedRule");
+
+                if (newname.ShowDialog(this) == DialogResult.Cancel)
+                    return;
+
+                if (findRuleItem(newname.result) != null)
+                {
+                    MessageBox.Show("A rule with that name already exists");
+                }
+                else
+                {
+                    addNewRule(new rule(newname.result));
+                    return;
+                }
             }
 
-            addNewRule(new rule(newname.result));
         }
 
         private void addNewRule(rule toAdd)

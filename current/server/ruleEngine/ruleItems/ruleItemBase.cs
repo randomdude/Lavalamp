@@ -44,6 +44,8 @@ namespace ruleEngine.ruleItems
         public virtual void onResize(Control parent) { }
         public virtual string caption() { return null; }
 
+        public virtual void onAfterLoad() { }
+
         public delegate void changeNotifyDelegate();
         public delegate void evaluateDelegate() ;
         public delegate void errorDelegate(Exception ex);

@@ -40,15 +40,19 @@
             this.btnSaveClose = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.snapToGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.alwaysSnapToGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ctlRule1 = new ruleEngine.ctlRule();
-            this.button1 = new System.Windows.Forms.Button();
             this.ctxMnuToolbox.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tvToolbox
             // 
             this.tvToolbox.ContextMenuStrip = this.ctxMnuToolbox;
-            this.tvToolbox.Location = new System.Drawing.Point(12, 28);
+            this.tvToolbox.Location = new System.Drawing.Point(11, 43);
             this.tvToolbox.Name = "tvToolbox";
             this.tvToolbox.Size = new System.Drawing.Size(135, 318);
             this.tvToolbox.TabIndex = 5;
@@ -73,7 +77,7 @@
             this.btnStop.Enabled = false;
             this.btnStop.Image = ((System.Drawing.Image)(resources.GetObject("btnStop.Image")));
             this.btnStop.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnStop.Location = new System.Drawing.Point(591, 352);
+            this.btnStop.Location = new System.Drawing.Point(590, 367);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(84, 55);
             this.btnStop.TabIndex = 6;
@@ -86,7 +90,7 @@
             // 
             this.btnRun.Image = ((System.Drawing.Image)(resources.GetObject("btnRun.Image")));
             this.btnRun.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnRun.Location = new System.Drawing.Point(681, 352);
+            this.btnRun.Location = new System.Drawing.Point(680, 367);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(84, 55);
             this.btnRun.TabIndex = 7;
@@ -103,7 +107,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 12);
+            this.label1.Location = new System.Drawing.Point(11, 27);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(48, 13);
             this.label1.TabIndex = 8;
@@ -113,7 +117,7 @@
             // 
             this.btnSaveClose.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveClose.Image")));
             this.btnSaveClose.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnSaveClose.Location = new System.Drawing.Point(242, 352);
+            this.btnSaveClose.Location = new System.Drawing.Point(241, 367);
             this.btnSaveClose.Name = "btnSaveClose";
             this.btnSaveClose.Size = new System.Drawing.Size(84, 55);
             this.btnSaveClose.TabIndex = 9;
@@ -127,7 +131,7 @@
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Image = ((System.Drawing.Image)(resources.GetObject("btnCancel.Image")));
             this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnCancel.Location = new System.Drawing.Point(152, 352);
+            this.btnCancel.Location = new System.Drawing.Point(151, 367);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(84, 55);
             this.btnCancel.TabIndex = 10;
@@ -140,7 +144,7 @@
             // 
             this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnSave.Location = new System.Drawing.Point(332, 353);
+            this.btnSave.Location = new System.Drawing.Point(331, 368);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(84, 55);
             this.btnSave.TabIndex = 11;
@@ -149,23 +153,46 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.gridToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(777, 24);
+            this.menuStrip1.TabIndex = 14;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // gridToolStripMenuItem
+            // 
+            this.gridToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.snapToGridToolStripMenuItem,
+            this.alwaysSnapToGridToolStripMenuItem});
+            this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
+            this.gridToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.gridToolStripMenuItem.Text = "&Rule";
+            // 
+            // snapToGridToolStripMenuItem
+            // 
+            this.snapToGridToolStripMenuItem.Name = "snapToGridToolStripMenuItem";
+            this.snapToGridToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.snapToGridToolStripMenuItem.Text = "&Snap to grid";
+            this.snapToGridToolStripMenuItem.Click += new System.EventHandler(this.snapToGridToolStripMenuItem_Click_1);
+            // 
+            // alwaysSnapToGridToolStripMenuItem
+            // 
+            this.alwaysSnapToGridToolStripMenuItem.Name = "alwaysSnapToGridToolStripMenuItem";
+            this.alwaysSnapToGridToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.alwaysSnapToGridToolStripMenuItem.Text = "Always snap to grid";
+            this.alwaysSnapToGridToolStripMenuItem.Click += new System.EventHandler(this.alwaysSnapToGridToolStripMenuItem_Click);
+            // 
             // ctlRule1
             // 
             this.ctlRule1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.ctlRule1.Location = new System.Drawing.Point(153, 12);
+            this.ctlRule1.Location = new System.Drawing.Point(152, 27);
             this.ctlRule1.Name = "ctlRule1";
             this.ctlRule1.Size = new System.Drawing.Size(613, 334);
             this.ctlRule1.TabIndex = 4;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(510, 353);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // frmRuleEdit
             // 
@@ -173,16 +200,17 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(777, 420);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(777, 429);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.ctlRule1);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tvToolbox);
             this.Controls.Add(this.btnRun);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnSaveClose);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnSave);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmRuleEdit";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Rule editor";
@@ -191,6 +219,8 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRuleEdit_FormClosing);
             this.ResizeEnd += new System.EventHandler(this.frmRuleEdit_ResizeEnd);
             this.ctxMnuToolbox.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -209,6 +239,9 @@
         private System.Windows.Forms.Button btnSaveClose;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem gridToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem snapToGridToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem alwaysSnapToGridToolStripMenuItem;
     }
 }

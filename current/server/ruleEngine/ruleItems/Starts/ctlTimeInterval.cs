@@ -70,15 +70,12 @@ namespace ruleEngine.ruleItems.itemControls
                 try
                 {
                     newInterval = int.Parse(result);
-                    if (newInterval  < 100)
+                    if (newInterval  < 500)
                     {
-                        if (
-                        MessageBox.Show(
-                            "That value is rather small - are you sure you want to use such a low value? Making your system run too fast can cause problems.", "Are you sure?", MessageBoxButtons.YesNo)
-                            == DialogResult.No)
+                        if ( MessageBox.Show( "That value is rather small - are you sure you want to use such a low value? Making your system run too fast can cause problems.", "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.No)
                             return false;
                     }
-                    setInterval(newInterval, 100);
+                    setInterval(newInterval);
                     setTimeCaption(newInterval);
                     return true;
                 }

@@ -24,12 +24,13 @@ namespace ruleEngine
         private Point? mouseDownAt = null;
         public readonly ctlRuleItemWidgetGuid serial = new ctlRuleItemWidgetGuid() { id = Guid.NewGuid() };
         private ToolStripMenuItem showDebugInfoToolStripMenuItem;
+        public bool snapToGrid;
 
-        public delegate void ruleItemMoved(object sender,ItemMovedArgs args);
         /// <summary>
         /// fired when the item is moved
         /// </summary>
         public event ruleItemMoved OnRuleItemMoved;
+        public delegate void ruleItemMoved(object sender, ItemMovedArgs args);
 
         public ctlRuleItemWidget(ruleItemBase newRuleItemBase, ctlRule.setTsStatusDlg newSetToolbarText)
         {
@@ -286,6 +287,19 @@ namespace ruleEngine
                     Point newPos = new Point();
                     newPos.X = mousePos.X - mouseDownAt.Value.X;
                     newPos.Y = mousePos.Y - mouseDownAt.Value.Y;
+
+                    // snap to grid if necessary
+                    if (snapToGrid)
+                    {
+                        double roundedX = newPos.X / 10D;
+                        double roundedY = newPos.Y / 10D;
+
+                        roundedX = Math.Round(roundedX, 0) * 10;
+                        roundedY = Math.Round(roundedY, 0) * 10;
+
+                        newPos = new Point((int) roundedX, (int) roundedY);
+                    }
+
                     this.Location = newPos;
                     this.targetRuleItem.location = newPos;
 

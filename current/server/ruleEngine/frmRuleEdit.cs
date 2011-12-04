@@ -254,6 +254,8 @@ namespace ruleEngine
             if (ctlRule1 != null)
                 closeCallback.Invoke(ctlRule1.getRule());
 
+            stopRule();
+
             isClosing = true;
             Close();
         }
@@ -283,7 +285,6 @@ namespace ruleEngine
                 e.Cancel = true;
                 return;
             }
-
 
             if (response == DialogResult.Yes)
                 saveRule();
@@ -326,6 +327,18 @@ namespace ruleEngine
         private void button1_Click(object sender, EventArgs e)
         {
             ctlRule1.advanceDelta();
+        }
+
+        private void snapToGridToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            ctlRule1.snapAllToGrid();
+        }
+
+        private void alwaysSnapToGridToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            alwaysSnapToGridToolStripMenuItem.Checked = !alwaysSnapToGridToolStripMenuItem.Checked;
+
+            ctlRule1.setGridSnapping(alwaysSnapToGridToolStripMenuItem.Checked);
         }
 
     }

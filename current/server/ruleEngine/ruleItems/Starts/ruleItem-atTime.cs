@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using ruleEngine.pinDataTypes;
 using ruleEngine.Properties;
 using Timer = System.Threading.Timer;
 
@@ -86,8 +87,8 @@ namespace ruleEngine.ruleItems.Starts
             if (!running)
             {
                 // This is the first time we have been called. Set the last time and return
-                lastHours = now.Hour ;
-                lastMinutes = now.Minute ;
+                lastHours = now.Hour;
+                lastMinutes = now.Minute;
                 running = true;
                 return;
             }
@@ -103,11 +104,13 @@ namespace ruleEngine.ruleItems.Starts
 
             if (doit == true)
             {
-                this.pinInfo["timeIsNow"].value.data = true;
-            }
-            else
-            {
-                this.pinInfo["timeIsNow"].value.data = false ;
+                timelineEventArgs startArgs = new timelineEventArgs();
+                startArgs.newValue = new pinDataBool(true, this, pinInfo["timeIsNow"]); ;
+                onRequestNewTimelineEvent(startArgs);
+
+                timelineEventArgs cancelArgs = new timelineEventArgs();
+                cancelArgs.newValue = new pinDataBool(false, this, pinInfo["timeIsNow"]); ;
+                onRequestNewTimelineEventInFuture(cancelArgs, 2);
             }
 
             lastHours = now.Hour;

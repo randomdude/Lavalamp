@@ -11,28 +11,6 @@ namespace ruleEngine
     [Serializable]
     public partial class ctlRule : UserControl
     {
-        public ctlRule()
-        {
-            InitializeComponent();
-            _rule = new rule();
-            commonConstructorStuff();
-        }
-
-        public ctlRule(rule ruleToDisplay)
-        {
-            InitializeComponent();
-            _rule = ruleToDisplay;
-            commonConstructorStuff();
-        }
-
-        void commonConstructorStuff()
-        {
-            currentLine = new lineChain();
-#if DEBUG
-            showDebugInfoToolStripMenuItem.Visible = true;
-#endif
-        }
-
         private rule _rule;
 
         // These two hold the pictureBox and (partial-)lineChain which we are currently wiring up
@@ -48,6 +26,23 @@ namespace ruleEngine
         private readonly Color connectingPinColour = Color.Cyan;
         private Color normalPinColour = Color.Transparent;
         private Bitmap _backBuffer;
+
+        private bool snapWidgetsToGrid;
+
+        /// <summary>
+        /// A List of all clild ctlRuleItems
+        /// </summary>
+        List<ctlRuleItemWidget> itemWidgets = new List<ctlRuleItemWidget>();
+
+        public ctlRule()
+        {
+            InitializeComponent();
+            _rule = new rule();
+            currentLine = new lineChain();
+#if DEBUG
+            showDebugInfoToolStripMenuItem.Visible = true;
+#endif
+        }
 
         #region rule manipulation
 
@@ -69,8 +64,10 @@ namespace ruleEngine
             // add a visual widget for it, and then add it to the visible controls
             ctlRuleItemWidget newCtl = new ctlRuleItemWidget(newRuleItem, setTsStatus);
             _rule.AddctlRuleItemWidgetToGlobalPool(newCtl);
+            newCtl.snapToGrid = snapWidgetsToGrid;
             Controls.Add(newCtl);
             newCtl.BringToFront();
+            itemWidgets.Add(newCtl);
         }
 
         /// <summary>
@@ -92,8 +89,10 @@ namespace ruleEngine
                     line.onLineDeleted += pins.Key.Disconnected;
                 }
                 _rule.AddctlRuleItemWidgetToGlobalPool(newCtl);
+                newCtl.snapToGrid = snapWidgetsToGrid;
                 Controls.Add(newCtl);
                 newCtl.BringToFront();
+                itemWidgets.Add(newCtl);
             }
         }
 
@@ -538,6 +537,7 @@ namespace ruleEngine
                 toolStripProgressBar.Visible = false;
 
                 _rule.stop();
+                tmrStep.Stop();
             }
         }
 
@@ -550,6 +550,7 @@ namespace ruleEngine
                 toolStripProgressBar.Visible = true;
 
                 _rule.start();
+                tmrStep.Start();
             }
         }
 
@@ -584,6 +585,53 @@ namespace ruleEngine
         public void advanceDelta()
         {
             _rule.advanceDelta();
+        }
+
+        public void snapAllToGrid()
+        {
+            foreach (lineChain thisLC in _rule.getLineChains())
+            {
+                for (int n = 0; n < thisLC.midPoints.Count; n++ )
+                {
+                    Point midPoint = thisLC.midPoints[n];
+
+                    double roundedX = midPoint.X / 10D;
+                    double roundedY = midPoint.Y / 10D;
+
+                    roundedX = Math.Round(roundedX, 0) * 10 ;
+                    roundedY = Math.Round(roundedY, 0) * 10 ;
+
+                    thisLC.midPoints[n] = new Point((int) roundedX, (int) roundedY);
+                }
+            }
+
+            foreach (ctlRuleItemWidget thisWidget in itemWidgets)
+            {
+                double roundedX = thisWidget.Location.X / 10D;
+                double roundedY = thisWidget.Location.Y / 10D;
+
+                roundedX = Math.Round(roundedX, 0) * 10 ;
+                roundedY = Math.Round(roundedY, 0) * 10 ;
+
+                thisWidget.Location = new Point((int) roundedX, (int) roundedY);
+                thisWidget.alignWires();
+            } 
+
+            this.Invalidate();
+        }
+
+        public void setGridSnapping(bool newVal)
+        {
+            foreach (ctlRuleItemWidget widget in itemWidgets)
+            {
+                widget.snapToGrid = newVal;
+                snapWidgetsToGrid = newVal;
+            } 
+        }
+
+        private void tmrStep_Tick(object sender, EventArgs e)
+        {
+            advanceDelta();
         }
     }
 }
