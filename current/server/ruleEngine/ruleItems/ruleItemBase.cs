@@ -165,7 +165,7 @@ namespace ruleEngine.ruleItems
                     pinInfo.Add(thisPin.name, thisPin);
 
                     // Wire up the pin to do stuff when activated, if necessary.
-                    if (thisPin.isConnected && thisPin.direction == pinDirection.input)
+                    if (thisPin.isConnected && thisPin.direction == pinDirection.output)
                     {
                         pin dest = pins[thisPin.linkedTo.id.ToString()];
                         thisPin.OnPinChange += dest.stateChanged;

@@ -187,8 +187,6 @@ namespace TestProjects
             Assert.AreEqual(messageItem.pinInfo["trigger"].serial.id.ToString(), andItem.pinInfo["output1"].linkedTo.id.ToString());
             Assert.AreEqual(typeof(pinDataBool), andItem.pinInfo["output1"].valueType);
             Assert.AreEqual(typeof(pinDataString), messageItem.pinInfo["trigger"].valueType) ;
-            
-
         }    
 
     }

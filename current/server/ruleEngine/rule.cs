@@ -63,8 +63,8 @@ namespace ruleEngine
 
         private timeline _timeline = new timeline();
 
-        public double lineChainCount { get { return lineChains.Count; } }
-        public double ruleItemCount  { get { return ruleItems.Count; } }
+        public int lineChainCount { get { return lineChains.Count; } }
+        public int ruleItemCount { get { return ruleItems.Count; } }
 
         public rule()
         {

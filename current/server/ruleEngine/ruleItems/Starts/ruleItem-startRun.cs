@@ -27,7 +27,6 @@ namespace ruleEngine.ruleItems.Starts
             lblCaption.Text = "At start of run";
             lblCaption.Visible = true;
             controls.Add(lblCaption);
-
         }
 
         public override void start()
