@@ -10,20 +10,28 @@ namespace ruleEngine
         public Point start;
         public Point end;
         public Color col;
-        public bool deleted = false;
+
+        /// <summary>
+        /// Has this pin been marked as 'deleted'?
+        /// </summary>
+        public bool isDeleted { get; protected set; }
+
         public const int handleSize = 7;
         public bool isdrawnbackwards;   // was the line drawn from destination to source?
         public lineChainGuid serial = new lineChainGuid();
         public List<Point> midPoints;
 
-        public delegate void DeletedDelegate(object line,EventArgs args);
-        public event DeletedDelegate OnLineDeleted;
+        /// <summary>
+        /// Fired when the lineChain is being deleted
+        /// </summary>
+        public event EventHandler onLineDeleted;
 
         public lineChain()
         {
             midPoints = new List<Point>();
             start = new Point(0, 0);
             end = new Point(0, 0);
+            isDeleted = false;
 
             Random rngGen = new Random( DateTime.Now.Millisecond );
             col = Color.FromArgb( 255 , rngGen.Next(255), rngGen.Next(255), rngGen.Next(255) );
@@ -62,13 +70,16 @@ namespace ruleEngine
 
         #endregion
 
-        public void deleteSelf()
+        public void requestDelete()
         {
-            if (OnLineDeleted != null)
-                OnLineDeleted.Invoke(this,null);
+            if (isDeleted)
+                return;
+
+            if (onLineDeleted != null)
+                onLineDeleted.Invoke(this, null);
 
             // goodbye cruel world
-            deleted = true;
+            isDeleted = true;
         }
 
         public void LineMoved(object sender, ItemMovedArgs args)

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using ruleEngine;
+using ruleEngine.pinDataTypes;
+using ruleEngine.ruleItems.windows;
 using Timer = System.Threading.Timer;
 
 namespace ruleEngine.ruleItems.Starts
@@ -10,7 +12,6 @@ namespace ruleEngine.ruleItems.Starts
     [ToolboxRuleCategory("Start items")]
     public class ruleItem_startRun : ruleItemBase
     {
-        private Timer cancelTimer;
         private Label lblCaption;
 
         public override string ruleName() { return "At start of run"; }
@@ -31,28 +32,16 @@ namespace ruleEngine.ruleItems.Starts
 
         public override void start()
         {
-            // We don't fire at the start of simulation, per se, because this ruleItem may be start'ed before the others (since you can't start them all at exactly
-            // the same time). Instead, we use a one-shot 200ms timer. 
-            // FIXME: Think of a better way to do this.
-            cancelTimer = new Timer(setOutput, null, 200, System.Threading.Timeout.Infinite );
+            timelineEventArgs args = new timelineEventArgs();
+            args.newValue = new pinDataBool(true, this, pinInfo["StartOfSim"]);
+            onRequestNewTimelineEvent( args );
+
+            timelineEventArgs cancelArgs = new timelineEventArgs();
+            cancelArgs.newValue = new pinDataBool(false, this, pinInfo["StartOfSim"]);
+            onRequestNewTimelineEventInFuture(cancelArgs, 2);
         }
 
-        private void setOutput(object state)
-        {
-            pinInfo["StartOfSim"].value.data = true;
-            cancelTimer = new Timer(cancelOutput, null, 100, System.Threading.Timeout.Infinite);
-        }
-
-        private void cancelOutput(object state)
-        {
-            pinInfo["StartOfSim"].value.data  = false;
-        }
-
-        public override void stop()
-        {
-            if (cancelTimer != null)
-                cancelTimer.Dispose();
-        }
+        public override void stop() { }
 
         public override System.Drawing.Image background()
         {

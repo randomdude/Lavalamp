@@ -2,10 +2,12 @@
 using System.Diagnostics.Contracts;
 using System.Drawing;
 using Microsoft.Scripting;
+using ruleEngine.ruleItems;
+using ruleEngine.ruleItems.windows;
 
-namespace ruleEngine.ruleItems.windows
+namespace ruleEngine.pinDataTypes
 {
-    public class pinDataBool : pinData<bool>
+    public class pinDataBool : pinDataBase<bool>
     {
         public pinDataBool(ruleItemBase parentRuleItem, pin newParentPin) : base(false, parentRuleItem, newParentPin) {}
         public pinDataBool(bool initalVal, ruleItemBase parentRuleItem, pin newParentPin) : base(initalVal,parentRuleItem, newParentPin) { }
@@ -13,8 +15,8 @@ namespace ruleEngine.ruleItems.windows
         /// <summary>
         /// Copy constructor
         /// </summary>
-        /// <param name="pinData"></param>
-        protected pinDataBool(pinDataBool pinData) : base(pinData) { }
+        /// <param name="pinDataBase"></param>
+        protected pinDataBool(pinDataBool pinDataBase) : base(pinDataBase) { }
 
         public override void setToDefault()
         {
@@ -22,6 +24,7 @@ namespace ruleEngine.ruleItems.windows
             if (_parentRuleItem.isEnabled)
                 reevaluate();
         }
+
         public override String ToString()
         {
             return data.ToString();
@@ -37,8 +40,7 @@ namespace ruleEngine.ruleItems.windows
             return _data;
         }
 
-
-        public override IpinData not()
+        public override IPinData not()
         {
             return new pinDataBool(this) {data = !_data};
         }

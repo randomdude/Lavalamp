@@ -37,7 +37,7 @@ namespace ruleEngine
 
         // These two hold the pictureBox and (partial-)lineChain which we are currently wiring up
         private PictureBox currentlyConnecting;
-        public lineChain currentLine;
+        private lineChain currentLine;
 
         private lineChain currentlyDraggingLine = null;         // These two are indexes to the lineChain/point that we are dragging when we drag a handle
         private int currentlyDraggingPoint = -1;
@@ -60,32 +60,36 @@ namespace ruleEngine
             // Create our rule item
             ruleItemBase newRuleItem = _rule.addRuleItem(info);
 
+            // We need to notify the rule that the new pins on our new rule item have beeen created.
+            foreach (pin thisPin in newRuleItem.pinInfo.Values)
+            {
+                _rule.afterNewPinCreated(thisPin);
+            }
+
             // add a visual widget for it, and then add it to the visible controls
-            ctlRuleItemWidget newCtl = new ctlRuleItemWidget(newRuleItem, this.setTsStatus, false, _rule.pins);
+            ctlRuleItemWidget newCtl = new ctlRuleItemWidget(newRuleItem, setTsStatus);
             _rule.AddctlRuleItemWidgetToGlobalPool(newCtl);
-            this.Controls.Add(newCtl);
+            Controls.Add(newCtl);
             newCtl.BringToFront();
         }
 
         /// <summary>
         /// Make rule item controls for every rule item present in our rule.
         /// </summary>
-        public void addRuleItemControlsAfterDeserialisation()
+        private void addRuleItemControlsAfterDeserialisation()
         {
             IEnumerable<ruleItemBase> childRuleItems = _rule.getRuleItems();
 
             foreach (ruleItemBase thisRule in childRuleItems)
             {
-                //if (thisRule.pinInfo.Count == 0)
-                //    thisRule.claimPinsPostDeSer(myDelegates, _runner.getPins());
+                ctlRuleItemWidget newCtl = new ctlRuleItemWidget(thisRule, setTsStatus);
 
-                ctlRuleItemWidget newCtl = new ctlRuleItemWidget(thisRule, setTsStatus, true, _rule.pins);
                 //hook up line events for deserialized control.
                 foreach (var pins in newCtl.conPins)
                 {
                     lineChain line = _rule.GetLineChainFromGuid(pins.Key.parentLineChain);
                     newCtl.OnRuleItemMoved += line.LineMoved;
-                    line.OnLineDeleted += pins.Key.Disconnected;
+                    line.onLineDeleted += pins.Key.Disconnected;
                 }
                 _rule.AddctlRuleItemWidgetToGlobalPool(newCtl);
                 Controls.Add(newCtl);
@@ -194,8 +198,8 @@ namespace ruleEngine
             }
             
             // Hook pins up
-            currentLine.OnLineDeleted += source.Disconnected;
-            currentLine.OnLineDeleted += dest.Disconnected;
+            currentLine.onLineDeleted += source.Disconnected;
+            currentLine.onLineDeleted += dest.Disconnected;
             dest.connectTo(currentLine.serial, source);
             source.connectTo(currentLine.serial, dest);
             
@@ -519,7 +523,7 @@ namespace ruleEngine
 
         private void mnuItemDelLine_Click(object sender, EventArgs e)
         {
-            currentlyConextedLine.deleteSelf();
+            currentlyConextedLine.requestDelete();
             this.Invalidate();
         }
 
@@ -575,6 +579,11 @@ namespace ruleEngine
                 _backBuffer = null;
             }
          //   base.OnSizeChanged(e);
+        }
+
+        public void advanceDelta()
+        {
+            _rule.advanceDelta();
         }
     }
 }

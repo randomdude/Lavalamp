@@ -1,9 +1,9 @@
 using System;
 using System.Drawing;
 
-namespace ruleEngine.ruleItems.windows
+namespace ruleEngine
 {
-    public interface IpinData
+    public interface IPinData
     {
         void setToDefault();
         string ToString();
@@ -11,10 +11,12 @@ namespace ruleEngine.ruleItems.windows
         object data { get; set; }
         object noValue { get; }
         bool asBoolean();
-        IpinData and(IpinData data);
-        IpinData or(IpinData data);
-        IpinData xor(IpinData data);
-        IpinData not();
+        IPinData and(IPinData data);
+        IPinData or(IPinData data);
+        IPinData xor(IPinData data);
+        IPinData not();
         Type getDataType();
+        void performUpdate();
+        void reevaluate();
     }
 }

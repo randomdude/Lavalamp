@@ -52,7 +52,7 @@ namespace ruleEngine
                 }
                 if (xmlName == "deleted" && reader.NodeType == XmlNodeType.Element)
                 {
-                    deleted = bool.Parse(reader.GetAttribute("value"));
+                    isDeleted = bool.Parse(reader.GetAttribute("value"));
                 }
                 if (xmlName == "isdrawnbackwards" && reader.NodeType == XmlNodeType.Element)
                 {
@@ -71,7 +71,7 @@ namespace ruleEngine
             writer.WritePoint("start", start);
             writer.WritePoint("end", end);
             writer.WriteColor("col", col);
-            writer.WriteBool("deleted", deleted);
+            writer.WriteBool("deleted", isDeleted);
             writer.WriteBool("isdrawnbackwards", isdrawnbackwards);
             writer.WriteStartElement("points");
             foreach (Point thisPoint in midPoints)

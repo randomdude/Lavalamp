@@ -103,7 +103,7 @@ namespace TestProjects.GPSimTests
                 uut.run();
 
                 // Now wait for our handler to be called.
-                int timeout = 10;
+                int timeout = 1000;
                 while(!handlerCalled)
                 {
                     Thread.Sleep(1000);

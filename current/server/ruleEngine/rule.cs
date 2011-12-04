@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Serialization;
 using ruleEngine.ruleItems;
+using ruleEngine.ruleItems.windows;
 
 namespace ruleEngine
 {
@@ -33,61 +35,71 @@ namespace ruleEngine
             }
         }
 
-
         /// <summary>
         /// RuleItems are items in the rule - ie, the blocks that discretely do things. 'at start of run' etc.
         /// </summary>
-        public Dictionary<String, ruleItems.ruleItemBase> ruleItems = new Dictionary<string, ruleItemBase>();
+        public Dictionary<String, ruleItemBase> ruleItems = new Dictionary<string, ruleItemBase>();
 
         /// <summary>
         /// Each ruleItem has a control which represents it in the UI.
         /// </summary>
-        public Dictionary<String, ctlRuleItemWidget> ctlRuleItems = new Dictionary<string, ctlRuleItemWidget>();
+        private Dictionary<String, ctlRuleItemWidget> ctlRuleItems = new Dictionary<string, ctlRuleItemWidget>();
 
         /// <summary>
         /// The 'wires' that connect ruleItems
         /// </summary>
-        public Dictionary<String, lineChain> lineChains = new Dictionary<string, lineChain>();
+        private Dictionary<String, lineChain> lineChains = new Dictionary<string, lineChain>();
 
         /// <summary>
         /// The input or output ports attached to ruleItems
         /// </summary>
-        public Dictionary<String, pin> pins = new Dictionary<string, pin>();
+        private Dictionary<String, pin> pins = new Dictionary<string, pin>();
 
         /// <summary>
-        /// This delegate gets called on updates to the rule's status. Obviously.
+        /// This delegate gets called on updates to the rule's status.
         /// </summary>
         public onStatusUpdateDelegate onStatusUpdate = null;
         public delegate void onStatusUpdateDelegate(rule updating);
 
+        private timeline _timeline = new timeline();
 
-        // See comments at definition of these. They're an abomination to OO.
-        public delegate lineChain GetLineChainFromGuidDelegate(lineChainGuid connection);
-        public delegate ruleItems.ruleItemBase GetRuleItemFromGuidDelegate(ruleItemGuid connection);
-        public delegate pin PinFromGuidDelegate(pinGuid connection);
-        public delegate ctlRuleItemWidget GetctlRuleItemWidgetFromGuidDelegate(ctlRuleItemWidgetGuid connection);
-        public delegate void AddLineChainToGlobalPoolDelegate(lineChain connection);
-        public delegate void AddRuleItemToGlobalPoolDelegate(ruleItemBase addThis);
-        public delegate void AddPinToGlobalPoolDelegate(pin addThis);
-        public delegate void AddctlRuleItemWidgetToGlobalPoolDelegate(ctlRuleItemWidget addThis);
-        public delegate List<lineChain> GetAllWiresDelegate();
-        public delegate pin GetPinFromNameDelegate(string pinName);
+        public double lineChainCount { get { return lineChains.Count; } }
+        public double ruleItemCount  { get { return ruleItems.Count; } }
 
         public rule()
         {
             name = "New rule";
             this._state = ruleState.stopped;
+
+            _timeline.eventOccuring += handleTimelineEvent;
+            _timeline.timelineAdvance += handleTimelineAdvance;
         }
 
         public rule(String newName)
         {
             this.name = newName;
             this._state = ruleState.stopped;
+
+            _timeline.eventOccuring += handleTimelineEvent;
+            _timeline.timelineAdvance += handleTimelineAdvance;
         }
 
         new public String ToString()
         {
             return name;
+        }
+
+        private void handleTimelineEvent(timeline sender, timelineEvent e)
+        {
+            e.pinValue.performUpdate();
+        }
+
+        private void handleTimelineAdvance(timeline sender)
+        {
+            foreach (ruleItemBase thisRuleItem in ruleItems.Values)
+            {
+                thisRuleItem.evaluate();
+            }
         }
 
         #region "global pool stuff"
@@ -103,12 +115,24 @@ namespace ruleEngine
             lineChains.Add(addThis.serial.id.ToString(), addThis);
         }
 
-        public void AddRuleItemToGlobalPool(ruleItems.ruleItemBase addThis)
+        public void AddRuleItemToGlobalPool(ruleItemBase addThis)
         {
+            addThis.requestNewTimelineEvent += serviceNewTimelineEventRequest;
+            addThis.requestNewTimelineEventInFuture += serviceNewTimelineEventRequestInFuture;
             ruleItems.Add(addThis.serial.id.ToString(), addThis);            
         }
 
-        public void AddPinToGlobalPool(pin addThis)
+        private void serviceNewTimelineEventRequestInFuture(ruleItemBase sender, timelineEventArgs e, int timebeforeevent)
+        {
+            _timeline.addEventAtDelta(e, timebeforeevent);
+        }
+
+        private void serviceNewTimelineEventRequest(ruleItemBase sender, timelineEventArgs e)
+        {
+            _timeline.addEventAtNextDelta(e);
+        }
+
+        public void afterNewPinCreated(pin addThis)
         {
             if (!pins.ContainsKey(addThis.serial.id.ToString()))
                 pins.Add(addThis.serial.id.ToString(), addThis);
@@ -119,35 +143,14 @@ namespace ruleEngine
             ctlRuleItems.Add(addThis.serial.id.ToString() , addThis);
         }
 
-        public ctlRuleItemWidget GetctlRuleItemWidgetFromGuid(ctlRuleItemWidgetGuid connection)
-        {
-            return ctlRuleItems[connection.id.ToString()];
-        }
-
         public lineChain GetLineChainFromGuid(lineChainGuid connection)
         {
             return (lineChains[connection.id.ToString()]);
         }
 
-        public ruleItems.ruleItemBase GetRuleItemFromGuid(ruleItemGuid connection)
+        public ruleItemBase GetRuleItemFromGuid(ruleItemGuid connection)
         {
-            return ruleItems[connection.id.ToString()];
-        }
-
-        public pin GetPinFromGuid(pinGuid connection)
-        {
-            return pins[connection.id.ToString()];
-        }
-
-        public pin GetPinFromName(string pinName)
-        {
-            // sloowww
-            foreach (pin thisPin in pins.Values)
-            {
-                if (thisPin.name == pinName)
-                    return thisPin;
-            }
-            throw new pinNotFoundException();
+            return (ruleItems[connection.id.ToString()]);
         }
         #endregion
 
@@ -168,6 +171,9 @@ namespace ruleEngine
         /// </summary>
         public void start()
         {
+            // Reset the timeline
+            _timeline.reset();
+
             // mark this as running..
             state = ruleState.running;
 
@@ -201,6 +207,14 @@ namespace ruleEngine
                     thisPin.updateUI();
                 }
             }
+        }
+
+        /// <summary>
+        /// Move one delta step forward
+        /// </summary>
+        public void advanceDelta()
+        {
+            _timeline.advanceDelta();
         }
 
         public bool isRunning
@@ -250,7 +264,7 @@ namespace ruleEngine
         public IEnumerable<lineChain> getNonDeletedLineChains()
         {
             IEnumerable<lineChain> lineChains = getLineChains();
-            return lineChains.Where(lineChain => !lineChain.deleted).ToList();
+            return lineChains.Where(lineChain => !lineChain.isDeleted).ToList();
         }
 
         public IEnumerable<lineChain> getLineChains()
@@ -275,7 +289,7 @@ namespace ruleEngine
                 if (thisPin.isConnected)
                 {
                     lineChain tonuke = GetLineChainFromGuid(thisPin.parentLineChain);
-                    tonuke.deleteSelf();
+                    tonuke.requestDelete();
                 }
             }
 

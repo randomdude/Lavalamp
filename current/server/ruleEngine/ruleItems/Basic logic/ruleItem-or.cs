@@ -29,8 +29,8 @@ namespace ruleEngine.ruleItems
 
         public override void evaluate()
         {
-            IpinData input1 = pinInfo["input1"].value;
-            IpinData input2 = pinInfo["input2"].value;
+            IPinData input1 = pinInfo["input1"].value;
+            IPinData input2 = pinInfo["input2"].value;
 
             var newState = pinInfo["input1"].isPriority() ? input1.or(input2) : input2.or(input1);
 

@@ -15,7 +15,7 @@ namespace ruleEngine
             else
                 this.lblDebugInfo.Text += "ID is null!" + Environment.NewLine;
             this.lblDebugInfo.Text += "Color = " + debugThis.col.ToString() + Environment.NewLine;
-            this.lblDebugInfo.Text += "Deleted = " + debugThis.deleted.ToString() + Environment.NewLine;
+            this.lblDebugInfo.Text += "Deleted = " + debugThis.isDeleted.ToString() + Environment.NewLine;
             /*
             if (debugThis.sourcePin!= null)
                 this.lblDebugInfo.Text += "Src.  Pin name = " + debugThis.sourcePin.ToString() + Environment.NewLine;

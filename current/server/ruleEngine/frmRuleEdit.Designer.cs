@@ -40,7 +40,8 @@
             this.btnSaveClose = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.ctlRule1 = new ctlRule();
+            this.ctlRule1 = new ruleEngine.ctlRule();
+            this.button1 = new System.Windows.Forms.Button();
             this.ctxMnuToolbox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -156,6 +157,16 @@
             this.ctlRule1.Size = new System.Drawing.Size(613, 334);
             this.ctlRule1.TabIndex = 4;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(510, 353);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frmRuleEdit
             // 
             this.AcceptButton = this.btnRun;
@@ -163,6 +174,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(777, 420);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.ctlRule1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tvToolbox);
@@ -197,5 +209,6 @@
         private System.Windows.Forms.Button btnSaveClose;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button button1;
     }
 }

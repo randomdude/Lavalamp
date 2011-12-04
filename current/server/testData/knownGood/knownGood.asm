@@ -7,10 +7,6 @@
 	; Set our config word
 	__CONFIG _CP_OFF & _WDT_OFF & _HS_OSC & _LVP_OFF & _BODEN_OFF 
 
-;code
-
-;org 0
-
 	goto start
 	nop
 	nop

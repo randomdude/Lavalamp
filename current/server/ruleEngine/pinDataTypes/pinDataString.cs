@@ -2,10 +2,12 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Drawing;
 using Microsoft.Scripting;
+using ruleEngine.ruleItems;
+using ruleEngine.ruleItems.windows;
 
-namespace ruleEngine.ruleItems.windows
+namespace ruleEngine.pinDataTypes
 {
-    public class pinDataString : pinData<string>
+    public class pinDataString : pinDataBase<string>
     {
         public pinDataString(ruleItemBase newParentRuleItem, pin newParentPin) : base("", newParentRuleItem, newParentPin) { }
         public pinDataString(string defaultVal, ruleItemBase newParentRuleItem, pin newParentPin) : base(defaultVal, newParentRuleItem, newParentPin) {}
@@ -30,7 +32,7 @@ namespace ruleEngine.ruleItems.windows
             return !String.IsNullOrEmpty(_data);
         }
 
-        public override IpinData not()
+        public override IPinData not()
         {
             throw new NotImplementedException();
         }

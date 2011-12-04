@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using ruleEngine.pinDataTypes;
 using ruleEngine.ruleItems.windows;
 
 namespace ruleEngine
@@ -29,7 +30,7 @@ namespace ruleEngine
         /// <summary>
         /// The data which is present on the pin
         /// </summary>
-        public IpinData value;
+        public IPinData value;
 
         public delegate void pinChanged(pin changed, EventArgs e); 
 
@@ -48,7 +49,7 @@ namespace ruleEngine
             ConstructorInfo pinValueTypeConstructor = valueType.GetConstructor(new Type[] { typeof(ruleItems.ruleItemBase), typeof(pin) });
 
             // Call the constructor, storing the new object.
-            value = (IpinData) pinValueTypeConstructor.Invoke(new object[] {parentRuleItem, this});
+            value = (IPinData) pinValueTypeConstructor.Invoke(new object[] {parentRuleItem, this});
         }
 
         /// <summary>
@@ -84,12 +85,16 @@ namespace ruleEngine
         {
             parentLineChain.id = newTargetChain.id;
             linkedTo.id = newTargetPin.serial.id;
-            OnPinChange += newTargetPin.StateChanged;
+
+            // Only wire up events on input pins, since data progresses from outputs to inputs.
+            if (newTargetPin.direction == pinDirection.input)
+                OnPinChange += newTargetPin.stateChanged;
         }
 
-        public void StateChanged(pin changed, EventArgs e)
+        public void stateChanged(pin changed, EventArgs e)
         {
             value.data = changed.value.data;
+            value.reevaluate();
         }
 
         // todo - this should be on an onUIUpdate event or suchlike.
@@ -166,6 +171,4 @@ namespace ruleEngine
             throw new NotImplementedException();
         }
     }
-
-    public enum pinDirection { input, output }
 }

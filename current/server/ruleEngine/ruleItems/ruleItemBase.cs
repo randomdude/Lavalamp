@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using ruleEngine.ruleItems.windows;
 
 namespace ruleEngine.ruleItems
 {
     [XmlRoot("config" )]
-    public abstract class ruleItemBase 
+    public abstract class ruleItemBase : ruleItemEvents
     {
         [XmlIgnore] public ruleItemGuid serial = new ruleItemGuid() { id = Guid.NewGuid() };
         [XmlIgnore] private PictureBox _errorIcon = new PictureBox();
@@ -162,29 +163,48 @@ namespace ruleEngine.ruleItems
                     pinInfo.Add(thisPin.name, thisPin);
 
                     // Wire up the pin to do stuff when activated, if necessary.
-                    if (thisPin.isConnected)
+                    if (thisPin.isConnected && thisPin.direction == pinDirection.input)
                     {
                         pin dest = pins[thisPin.linkedTo.id.ToString()];
-                        thisPin.OnPinChange += dest.StateChanged;
+                        thisPin.OnPinChange += dest.stateChanged;
                     }
                 }
             }
         }
     }
 
-}
-
-namespace ruleEngine
-{
-    public class ToolboxRule : Attribute { }
-
-    public class ToolboxRuleCategoryAttribute : Attribute
+    public class ruleItemEvents
     {
-        internal readonly string name;
+        /// <summary>
+        /// Fired when we are inserting a new timeline event to the next delta
+        /// </summary>
+        public event timelineEventHandlerDelegate requestNewTimelineEvent;
+        public delegate void timelineEventHandlerDelegate(ruleItemBase sender, timelineEventArgs e);
 
-        public ToolboxRuleCategoryAttribute(string newName)
+        protected void onRequestNewTimelineEvent(timelineEventArgs e)
         {
-            name = newName;
+            if (requestNewTimelineEvent != null)
+            {
+                requestNewTimelineEvent.Invoke((ruleItemBase) this, e);
+            }
         }
+
+        public event requestNewTimelineEventInFutureDelegate requestNewTimelineEventInFuture;
+        public delegate void requestNewTimelineEventInFutureDelegate(ruleItemBase sender, timelineEventArgs e, int timeBeforeEvent);
+
+        protected void onRequestNewTimelineEventInFuture(timelineEventArgs e, int timeBeforeEvent)
+        {
+            if (requestNewTimelineEventInFuture != null)
+            {
+                requestNewTimelineEventInFuture.Invoke((ruleItemBase)this, e, timeBeforeEvent);
+            }
+        }
+        
+    }
+
+    public class timelineEventArgs : EventArgs
+    {
+        public IPinData newValue;
     }
 }
+

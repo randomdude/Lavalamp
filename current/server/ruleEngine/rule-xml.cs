@@ -26,7 +26,7 @@ namespace ruleEngine
             return myWriter.ToString();
         }
 
-        #region ISerializable methods
+        #region IXmlSerializable methods
         public XmlSchema GetSchema()
         {
             throw new NotImplementedException();
@@ -81,7 +81,6 @@ namespace ruleEngine
 
         public void claimPinsPostDeSer()
         {
-
             foreach (ruleItemBase thisRuleItem in ruleItems.Values)
             {
                 thisRuleItem.claimPinsPostDeSer(pins);
@@ -310,7 +309,7 @@ namespace ruleEngine
                 }
                 if (xmlName == "pin" && reader.NodeType == XmlNodeType.EndElement)
                 {
-                    AddPinToGlobalPool(thisPin);
+                    afterNewPinCreated(thisPin);
                     thisPin = new pin();
                 }
 

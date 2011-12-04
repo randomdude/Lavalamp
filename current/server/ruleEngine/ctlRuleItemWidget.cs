@@ -14,7 +14,7 @@ namespace ruleEngine
     public class ctlRuleItemWidget : UserControl 
     {
         public readonly Dictionary<pin, PictureBox> conPins = new Dictionary<pin, PictureBox>();
-        public ruleItems.ruleItemBase targetRuleItem;
+        public ruleItemBase targetRuleItem;
 
         private ContextMenuStrip contextMenuStrip1;
         private System.ComponentModel.IContainer components;
@@ -30,6 +30,41 @@ namespace ruleEngine
         /// fired when the item is moved
         /// </summary>
         public event ruleItemMoved OnRuleItemMoved;
+
+        public ctlRuleItemWidget(ruleItemBase newRuleItemBase, ctlRule.setTsStatusDlg newSetToolbarText)
+        {
+            setToolbarText = newSetToolbarText;
+
+            commonConstructorStuff();
+            loadRuleItem(newRuleItemBase);
+            try
+            {
+                ContextMenuStrip = newRuleItemBase.addMenus(contextMenuStrip1);
+            }
+            catch (NotImplementedException)
+            {
+                // Fair enough, it has no menus to add.
+            }
+        }
+
+        private void commonConstructorStuff()
+        {
+            InitializeComponent();
+
+            foreach (Control thisCtl in Controls)
+            {
+                thisCtl.MouseDown += item_MouseDown;
+                thisCtl.MouseMove += item_MouseMove;
+                thisCtl.MouseUp += item_MouseUp;
+            }
+            MouseDown += item_MouseDown;
+            MouseMove += item_MouseMove;
+            MouseUp += item_MouseUp;
+
+#if DEBUG
+            showDebugInfoToolStripMenuItem.Visible = true;
+#endif
+        }
 
         #region serialisation
 
@@ -81,7 +116,7 @@ namespace ruleEngine
 
         #region IO marker stuff
 
-        private void loadRuleItem(ruleItemBase newRuleItem, bool justBeenDeserialised, IDictionary<string,pin> pins)
+        private void loadRuleItem(ruleItemBase newRuleItem)
         {
             targetRuleItem = newRuleItem;
 
@@ -90,9 +125,7 @@ namespace ruleEngine
             foreach (pin thisPin in targetRuleItem.pinInfo.Values)
             {
                 addIcon(thisPin);
-                // If we've just been deserialised, the pin will already be in the global pin collection
-                if ( !justBeenDeserialised )
-                    pins.Add(thisPin.serial.ToString(),thisPin);
+
                 // Note down pin as belonging to this ruleItem.
                 thisPin.parentRuleItem = targetRuleItem.serial;
             }
@@ -262,41 +295,6 @@ namespace ruleEngine
             }
         }
         #endregion
-
-        private void commonConstructorStuff()
-        {
-            InitializeComponent();
-
-            foreach (Control thisCtl in Controls)
-            {
-                thisCtl.MouseDown += item_MouseDown;
-                thisCtl.MouseMove += item_MouseMove;
-                thisCtl.MouseUp += item_MouseUp;
-            }
-            MouseDown += item_MouseDown;
-            MouseMove += item_MouseMove;
-            MouseUp += item_MouseUp;
-
-#if DEBUG
-            showDebugInfoToolStripMenuItem.Visible = true;
-#endif
-        }
-
-        public ctlRuleItemWidget(ruleItemBase newRuleItemBase, ctlRule.setTsStatusDlg newSetToolbarText, bool justBeenDeserialised, Dictionary<string,pin> pinList)
-        {
-
-            setToolbarText = newSetToolbarText;
-
-            commonConstructorStuff();
-            this.loadRuleItem(newRuleItemBase, justBeenDeserialised, pinList);
-            try
-            {
-                this.ContextMenuStrip = newRuleItemBase.addMenus(this.contextMenuStrip1);
-            } catch (NotImplementedException)
-            {
-                // Fair enough, it has no menus to add.
-            }
-        }
 
         private void InitializeComponent()
         {

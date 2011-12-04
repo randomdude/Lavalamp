@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using ruleEngine;
+using ruleEngine.pinDataTypes;
 using ruleEngine.ruleItems.windows;
 
 namespace ruleEngine.ruleItems
@@ -46,7 +47,7 @@ namespace ruleEngine.ruleItems
 
         public override void evaluate()
         {
-            IpinData inputData = pinInfo["trigger"].value;
+            IPinData inputData = pinInfo["trigger"].value;
             bool newState = inputData.asBoolean();
 
             // if we have a message swap out the placeholder with the new message.

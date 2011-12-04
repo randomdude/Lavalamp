@@ -2,15 +2,17 @@
 using System.Diagnostics.Contracts;
 using System.Drawing;
 using Microsoft.Scripting;
+using ruleEngine.ruleItems;
+using ruleEngine.ruleItems.windows;
 
-namespace ruleEngine.ruleItems.windows
+namespace ruleEngine.pinDataTypes
 {
-    public class pinDataTristate : pinData<tristate>
+    public class pinDataTristate : pinDataBase<tristate>
     {
         public pinDataTristate(ruleItemBase parentRuleItem, pin newParentPin) : base(tristate.noValue,parentRuleItem, newParentPin) {}
         public pinDataTristate(tristate initialVal, ruleItemBase parentRuleItem, pin newParentPin) : base(initialVal, parentRuleItem, newParentPin) { }
 
-        private pinDataTristate(pinData<tristate> parentRuleItem) : base(parentRuleItem) {}
+        private pinDataTristate(pinDataBase<tristate> parentRuleItem) : base(parentRuleItem) {}
 
         public override void setToDefault()
         {
@@ -44,7 +46,7 @@ namespace ruleEngine.ruleItems.windows
             return _data == tristate.yes;
         }
 
-        public override IpinData not()
+        public override IPinData not()
         {
 
            if (_data == tristate.yes)

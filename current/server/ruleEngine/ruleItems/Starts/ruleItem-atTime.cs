@@ -11,7 +11,7 @@ namespace ruleEngine.ruleItems.Starts
     [ToolboxRuleCategory("Start items")]
     public class ruleItem_atTime : ruleItemBase
     {
-        [XmlElement("timer")] public Timer checkTimer;
+        public Timer checkTimer;
         private long _hours;
         private long _minutes;
         private bool running = false;

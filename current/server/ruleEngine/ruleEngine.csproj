@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{04834DB5-4E91-48EA-9107-FD2246087122}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -127,15 +127,16 @@
     <Compile Include="guidTypes\lineChainGuid.cs" />
     <Compile Include="guidTypes\pinGuid.cs" />
     <Compile Include="guidTypes\ruleItemGuid.cs" />
-    <Compile Include="ruleItems\windows\IpinData.cs" />
-    <Compile Include="ruleItems\windows\pinDataString.cs" />
+    <Compile Include="IpinData.cs" />
+    <Compile Include="pinDataTypes\pinDataString.cs" />
+    <Compile Include="pinDirection.cs" />
     <Compile Include="ruleItems\IScriptEngine.cs" />
     <Compile Include="lineChain-xml.cs" />
     <Compile Include="lineChain.cs" />
-    <Compile Include="ruleItems\windows\pin.cs" />
-    <Compile Include="ruleItems\windows\pinData.cs" />
-    <Compile Include="ruleItems\windows\pinDataBool.cs" />
-    <Compile Include="ruleItems\windows\pinDataTristate.cs" />
+    <Compile Include="pin.cs" />
+    <Compile Include="pinDataTypes\pinDataBase.cs" />
+    <Compile Include="pinDataTypes\pinDataBool.cs" />
+    <Compile Include="pinDataTypes\pinDataTristate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -176,6 +177,7 @@
     <Compile Include="ruleItems\Starts\ruleItem-atTime.cs" />
     <Compile Include="ruleItems\Starts\ruleItem-startRun.cs" />
     <Compile Include="ruleItems\Starts\ruleItem-timeInterval.cs" />
+    <Compile Include="ruleItems\ToolboxRuleCategoryAttribute.cs" />
     <Compile Include="ruleItems\windows\ctlIsProcRunning.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -218,7 +220,11 @@
     <Compile Include="ruleItems\windows\ruleItem-killProcess.cs" />
     <Compile Include="ruleItems\windows\ruleItem-runexe.cs" />
     <Compile Include="ruleItems\windows\ruleItem-shutdown.cs" />
-    <Compile Include="ruleItems\windows\tristate.cs" />
+    <Compile Include="timeline.cs" />
+    <Compile Include="timelineBucket.cs" />
+    <Compile Include="timelineEvent.cs" />
+    <Compile Include="timelineEvents.cs" />
+    <Compile Include="tristate.cs" />
     <Compile Include="ruleState.cs" />
     <Compile Include="XmlReaderExtender.cs" />
     <Compile Include="XmlWriterExtender.cs" />

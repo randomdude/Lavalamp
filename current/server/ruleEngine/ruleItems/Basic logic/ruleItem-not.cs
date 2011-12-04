@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ruleEngine.pinDataTypes;
 using ruleEngine.ruleItems.windows;
 
 namespace ruleEngine.ruleItems

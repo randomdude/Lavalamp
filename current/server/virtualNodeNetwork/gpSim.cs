@@ -150,10 +150,7 @@ namespace virtualNodeNetwork
                     {
                         //lock (this)
                         {
-                            if (handleBreakpointStop(_stdoutsofar))
-                            {
-                                _isRunning = false;
-                            }
+                            handleBreakpointStop(_stdoutsofar);
                         }
                     }
 
@@ -321,16 +318,15 @@ namespace virtualNodeNetwork
             }
         }
 
-        private bool handleBreakpointStop(StringBuilder linesSoFar)
+        private void handleBreakpointStop(StringBuilder linesSoFar)
         {
-            bool handledBreakpoint = false;
             // We should see one or more 'Message:...' lines, which indicate which breakpoint 
             // was hit, as they return the 'message' we set when we made the breakpoint - so 
             // that'll be our breakpoint ID.
             // We are not guaranteed to have a line ending in \r\n, so omit any partial lines.
             string withoutPartials = linesSoFar.ToString().Substring(0, linesSoFar.ToString().LastIndexOf('\n'));
             if (withoutPartials.Length <= _stdoutProcessedCount)
-                return false;
+                return;
             withoutPartials = withoutPartials.Substring(_stdoutProcessedCount);
             int n = 0;
             breakpoint toCall = null;
@@ -364,15 +360,12 @@ namespace virtualNodeNetwork
 
             if (toCall != null)
             {
-                doBreakpointHit(toCall);
-
-                return true;
+                _isRunning = false;
+                callBPHooks(toCall);
             }
-
-            return false;
         }
 
-        private void doBreakpointHit(breakpoint hitBP)
+        private void callBPHooks(breakpoint hitBP)
         {
             _eventHandler.BeginInvoke(_breakpoints[hitBP.id].callback, new object[] {this, hitBP} );
         }

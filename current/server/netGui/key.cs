@@ -60,7 +60,6 @@ namespace netGui
         {
             StringBuilder toReturn = new StringBuilder();
 
-            ASCIIEncoding myEncoding = new ASCIIEncoding();
             foreach (byte thisByte in keyArray)
                 toReturn.Append(thisByte.ToString("X2"));
 

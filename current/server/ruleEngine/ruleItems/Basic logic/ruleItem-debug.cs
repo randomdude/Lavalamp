@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using ruleEngine.pinDataTypes;
 using ruleEngine.ruleItems.windows;
 
 namespace ruleEngine.ruleItems
@@ -41,7 +42,7 @@ namespace ruleEngine.ruleItems
             }
 
             if (pinInfo["output"].value.ToString() != pinInfo["input"].value.ToString())
-                pinInfo["output"].value = pinInfo["input"].value;
+                pinInfo["output"].value.data = pinInfo["input"].value.data;
         }
 
 

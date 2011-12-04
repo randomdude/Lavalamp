@@ -323,5 +323,10 @@ namespace ruleEngine
             buttonsBorderX = btnRun.Left - (btnStop.Left + btnStop.Width) ;
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ctlRule1.advanceDelta();
+        }
+
     }
 }

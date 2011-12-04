@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ruleEngine;
+using ruleEngine.pinDataTypes;
 using ruleEngine.ruleItems;
 using ruleEngine.ruleItems.windows;
 
@@ -56,7 +57,30 @@ namespace TestProjects
                     if (thisType.IsDefined(typeof (ToolboxRule), false))
                         testSerialisationOfRuleWithNamedRuleItem(thisType);
         }
-        
+
+        [TestMethod]
+        public void testSerialisationOfDeletedLineChain()
+        {
+            ctlRule ruleControl = new ctlRule();
+
+            lineChain newChain = new lineChain();
+            rule targetRule = ruleControl.getRule();
+            targetRule.AddLineChainToGlobalPool(newChain);
+
+            // Delete the new chain
+            newChain.requestDelete();
+
+            // Ser and deser
+            String serialized = ruleControl.serialiseRule();
+            ctlRule deSerRuleControl = new ctlRule();
+            deSerRuleControl.deserialiseRule(serialized);
+
+            // Verify that our deleted linechain exists
+            Assert.AreEqual(1, deSerRuleControl.getRule().lineChainCount);
+            // and that it has been deleted
+            Assert.AreEqual(true, deSerRuleControl.getRule().GetLineChainFromGuid(newChain.serial).isDeleted);
+        }
+
         private void testSerialisationOfRuleWithNamedRuleItem(Type targetType)
         {
             ctlRule ruleControl = new ctlRule();
@@ -69,16 +93,15 @@ namespace TestProjects
 
             lineChain newChain = new lineChain();
             rule targetRule = ruleControl.getRule();
-            targetRule.lineChains.Add(newChain.serial.id.ToString() , newChain);
-            targetRule.lineChains[newChain.serial.id.ToString()].start.X = 10;
-            targetRule.lineChains[newChain.serial.id.ToString()].start.Y = 20;
-            targetRule.lineChains[newChain.serial.id.ToString()].end.X = 11;
-            targetRule.lineChains[newChain.serial.id.ToString()].end.Y = 22;
-            targetRule.lineChains[newChain.serial.id.ToString()].col = Color.CornflowerBlue;
-            targetRule.lineChains[newChain.serial.id.ToString()].deleted = true;
-            targetRule.lineChains[newChain.serial.id.ToString()].isdrawnbackwards = true;
-            targetRule.lineChains[newChain.serial.id.ToString()].midPoints = new List<Point>();
-            targetRule.lineChains[newChain.serial.id.ToString()].midPoints.Add(new Point(33, 44));
+            targetRule.AddLineChainToGlobalPool(newChain);
+            newChain.start.X = 10;
+            newChain.start.Y = 20;
+            newChain.end.X = 11;
+            newChain.end.Y = 22;
+            newChain.col = Color.CornflowerBlue;
+            newChain.isdrawnbackwards = true;
+            newChain.midPoints = new List<Point>();
+            newChain.midPoints.Add(new Point(33, 44));
 
             // serialise it
             String serialised = ruleControl.serialiseRule();
@@ -87,15 +110,13 @@ namespace TestProjects
             ctlRule deSerRuleControl = new ctlRule();
             deSerRuleControl.deserialiseRule(serialised);
 
-            Assert.IsTrue(deSerRuleControl.getRule().lineChains.Keys.Count == 1, "Deserialised rule did not have exactly one lineChain");
-            Assert.IsTrue(deSerRuleControl.getRule().ruleItems.Count == 1, "Deserialised rule did not have exactly one ruleItem");
+            Assert.IsTrue(deSerRuleControl.getRule().lineChainCount == 1, "Deserialised rule did not have exactly one lineChain");
+            Assert.IsTrue(deSerRuleControl.getRule().ruleItemCount == 1, "Deserialised rule did not have exactly one ruleItem");
 
-            string chainGuid = null;
-            foreach (string indexer in deSerRuleControl.getRule().lineChains.Keys)
-                chainGuid = indexer;
+            // Ensure that we can get the lineChain by the same GUID as we had before
+            lineChain deSerLineChain = deSerRuleControl.getRule().GetLineChainFromGuid(newChain.serial);
 
-            Assert.IsNotNull(chainGuid);
-
+            // Get the ruleItem. Note that we don't know its GUID yet so we must find it via its iterator.
             string ruleGuid = null;
             foreach (string indexer in deSerRuleControl.getRule().ruleItems.Keys)
                 ruleGuid = indexer;
@@ -103,19 +124,19 @@ namespace TestProjects
             Assert.IsNotNull(ruleGuid);
 
             rule deserialisedRule = deSerRuleControl.getRule();
-            Assert.IsInstanceOfType(deserialisedRule.ruleItems[ruleGuid], targetType, "Deserialised rule did not preserve type of its ruleItem");
-            Assert.IsTrue(deserialisedRule.lineChains[chainGuid].start.X == 10);
-            Assert.IsTrue(deserialisedRule.lineChains[chainGuid].start.Y == 20);
-            Assert.IsTrue(deserialisedRule.lineChains[chainGuid].end.X == 11);
-            Assert.IsTrue(deserialisedRule.lineChains[chainGuid].end.Y == 22);
-            Assert.IsTrue(deserialisedRule.lineChains[chainGuid].col.R == Color.CornflowerBlue.R);
-            Assert.IsTrue(deserialisedRule.lineChains[chainGuid].col.G == Color.CornflowerBlue.G);
-            Assert.IsTrue(deserialisedRule.lineChains[chainGuid].col.B == Color.CornflowerBlue.B);
-            Assert.IsTrue(deserialisedRule.lineChains[chainGuid].deleted);
-            Assert.IsTrue(deserialisedRule.lineChains[chainGuid].isdrawnbackwards);
-            Assert.IsTrue(deserialisedRule.lineChains[chainGuid].midPoints.Count == 1);
-            Assert.IsTrue(deserialisedRule.lineChains[chainGuid].midPoints[0].X == 33);
-            Assert.IsTrue(deserialisedRule.lineChains[chainGuid].midPoints[0].Y == 44);
+            Assert.IsInstanceOfType(deserialisedRule.GetRuleItemFromGuid(new ruleItemGuid(ruleGuid)), targetType, "Deserialised rule did not preserve type of its ruleItem");
+            Assert.IsTrue(deSerLineChain.start.X == 10);
+            Assert.IsTrue(deSerLineChain.start.Y == 20);
+            Assert.IsTrue(deSerLineChain.end.X == 11);
+            Assert.IsTrue(deSerLineChain.end.Y == 22);
+            Assert.IsTrue(deSerLineChain.col.R == Color.CornflowerBlue.R);
+            Assert.IsTrue(deSerLineChain.col.G == Color.CornflowerBlue.G);
+            Assert.IsTrue(deSerLineChain.col.B == Color.CornflowerBlue.B);
+            Assert.IsFalse(deSerLineChain.isDeleted);
+            Assert.IsTrue(deSerLineChain.isdrawnbackwards);
+            Assert.IsTrue(deSerLineChain.midPoints.Count == 1);
+            Assert.IsTrue(deSerLineChain.midPoints[0].X == 33);
+            Assert.IsTrue(deSerLineChain.midPoints[0].Y == 44);
          }
 
         [TestMethod]
@@ -143,8 +164,8 @@ namespace TestProjects
             messageItem.pinInfo["trigger"].connectTo(line.serial,andItem.pinInfo["output1"]);
             andItem.pinInfo["output1"].connectTo(line.serial, messageItem.pinInfo["trigger"]);
             andItem.pinInfo["output1"].parentRuleItem = andGuid;
-            rule.AddPinToGlobalPool(messageItem.pinInfo["trigger"]);
-            rule.AddPinToGlobalPool(andItem.pinInfo["output1"]);
+            rule.afterNewPinCreated(messageItem.pinInfo["trigger"]);
+            rule.afterNewPinCreated(andItem.pinInfo["output1"]);
             rule.AddLineChainToGlobalPool(line);
 
             String serialised = rule.serialise();
@@ -152,7 +173,7 @@ namespace TestProjects
             rule = rule.deserialise(serialised);
 
             Assert.AreEqual("test", rule.name);
-            Assert.AreEqual(1, rule.lineChains.Count);
+            Assert.AreEqual(1, rule.lineChainCount);
             Assert.AreEqual(2, rule.ruleItems.Count);
             andItem = rule.ruleItems[andGuid.id.ToString()];
             messageItem = rule.ruleItems[messageGuid.id.ToString()];
