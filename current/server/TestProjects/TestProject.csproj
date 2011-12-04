@@ -58,6 +58,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ruleTests.cs" />
     <Compile Include="SerialisationTests.cs" />
     <Compile Include="pythonRuleItemTests.cs" />
     <Compile Include="virtualNetworkTests\basicTests.cs" />

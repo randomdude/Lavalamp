@@ -89,17 +89,47 @@ namespace ruleEngine
             return name;
         }
 
+        /// <summary>
+        /// Take an event and pass it to the relevant pin
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void handleTimelineEvent(timeline sender, timelineEvent e)
         {
             e.pinValue.performUpdate();
         }
 
+        /// <summary>
+        /// Move the timeline forward one delta
+        /// </summary>
+        /// <param name="sender"></param>
         private void handleTimelineAdvance(timeline sender)
         {
             foreach (ruleItemBase thisRuleItem in ruleItems.Values)
             {
                 thisRuleItem.evaluate();
             }
+        }
+
+        /// <summary>
+        /// Make a new timeline event in the future
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <param name="timebeforeevent">Deltas until event should fire</param>
+        private void serviceNewTimelineEventRequestInFuture(ruleItemBase sender, timelineEventArgs e, int timebeforeevent)
+        {
+            _timeline.addEventAtDelta(e, timebeforeevent);
+        }
+
+        /// <summary>
+        /// Make a new timeline event at the next delta
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void serviceNewTimelineEventRequest(ruleItemBase sender, timelineEventArgs e)
+        {
+            _timeline.addEventAtNextDelta(e);
         }
 
         #region "global pool stuff"
@@ -122,16 +152,6 @@ namespace ruleEngine
             ruleItems.Add(addThis.serial.id.ToString(), addThis);            
         }
 
-        private void serviceNewTimelineEventRequestInFuture(ruleItemBase sender, timelineEventArgs e, int timebeforeevent)
-        {
-            _timeline.addEventAtDelta(e, timebeforeevent);
-        }
-
-        private void serviceNewTimelineEventRequest(ruleItemBase sender, timelineEventArgs e)
-        {
-            _timeline.addEventAtNextDelta(e);
-        }
-
         public void afterNewPinCreated(pin addThis)
         {
             if (!pins.ContainsKey(addThis.serial.id.ToString()))
@@ -152,6 +172,7 @@ namespace ruleEngine
         {
             return (ruleItems[connection.id.ToString()]);
         }
+
         #endregion
 
         /// <summary>

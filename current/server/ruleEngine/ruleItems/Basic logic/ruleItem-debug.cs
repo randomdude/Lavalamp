@@ -9,7 +9,7 @@ namespace ruleEngine.ruleItems
 {
     [ToolboxRule]
     [ToolboxRuleCategory("Basic logic")]
-    class ruleItem_debug : ruleItemBase 
+    public class ruleItem_debug : ruleItemBase 
     {
         private PictureBox indicator;
         private string lastState = string.Empty;
