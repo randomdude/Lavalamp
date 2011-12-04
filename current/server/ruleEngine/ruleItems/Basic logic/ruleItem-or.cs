@@ -32,9 +32,7 @@ namespace ruleEngine.ruleItems
             IPinData input1 = pinInfo["input1"].value;
             IPinData input2 = pinInfo["input2"].value;
 
-            var newState = pinInfo["input1"].isPriority() ? input1.or(input2) : input2.or(input1);
-
-            pinInfo["output1"].value.data = newState;
+            pinInfo["output1"].value.data = input1.or(input2).data;
         }
 
     }

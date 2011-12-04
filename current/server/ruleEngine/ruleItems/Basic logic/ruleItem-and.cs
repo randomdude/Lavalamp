@@ -31,11 +31,8 @@ namespace ruleEngine.ruleItems
         {
             IPinData input1 = pinInfo["input1"].value;
             IPinData input2 = pinInfo["input2"].value;
-
-            //selects the pin state to use based on the priority of the pin(s).
-            var newState = pinInfo["input1"].isPriority() ? input1.and(input2) : input2.and(input1);
             
-            pinInfo["output1"].value.data = newState.data;
+            pinInfo["output1"].value.data = input1.and(input2).data;
         }
     }
 }

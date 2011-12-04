@@ -166,9 +166,5 @@ namespace ruleEngine
 
         #endregion
 
-        public bool isPriority()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
