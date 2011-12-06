@@ -62,19 +62,19 @@ namespace ruleEngine.pinDataTypes
         public IPinData and(IPinData toCompareTo)
         {
             bool result = asBoolean() && toCompareTo.asBoolean();
-            return new pinDataBool(result, _parentRuleItem, _parentPin) as IPinData;
+            return new pinDataBool(result, _parentRuleItem, _parentPin);
         }
 
         public IPinData or(IPinData toCompareTo)
         {
             bool result = asBoolean() || toCompareTo.asBoolean();
-            return new pinDataBool(result, _parentRuleItem, _parentPin) as IPinData;
+            return new pinDataBool(result, _parentRuleItem, _parentPin);
         }
 
         public IPinData xor(IPinData toCompareTo)
         {
             bool result = asBoolean() ^ toCompareTo.asBoolean();
-            return new pinDataBool(result, _parentRuleItem, _parentPin) as IPinData;
+            return new pinDataBool(result, _parentRuleItem, _parentPin);
         }
 
         public void reevaluate()
