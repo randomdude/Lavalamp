@@ -29,7 +29,7 @@ namespace ruleEngine.ruleItems
 
         public override void evaluate()
         {
-            var input1 = (bool) pinInfo["input1"].value.data;
+            var input1 = pinInfo["input1"].value.data;
             foreach (var pin in pinInfo.Values)
             {
 

@@ -6,6 +6,7 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using ruleEngine.pinDataTypes;
+using ruleEngine.ruleItems;
 using ruleEngine.ruleItems.windows;
 
 namespace ruleEngine
@@ -26,7 +27,7 @@ namespace ruleEngine
         /// The type of data which is present on the pin
         /// </summary>
         public Type valueType = typeof (pinDataBool);
-
+        private ruleItemBase parent;
         /// <summary>
         /// The data which is present on the pin
         /// </summary>
@@ -54,7 +55,7 @@ namespace ruleEngine
             ConstructorInfo pinValueTypeConstructor = valueType.GetConstructor(new Type[] { typeof(ruleItems.ruleItemBase), typeof(pin) });
 
             // Call the constructor, storing the new object.
-            value = (IPinData)pinValueTypeConstructor.Invoke(new object[] { parentRuleItem, this });
+            value = (IPinData)pinValueTypeConstructor.Invoke(new object[] { parent, this });
         }
 
         public void createValue(ruleItems.ruleItemBase parentRuleItem)
@@ -68,6 +69,7 @@ namespace ruleEngine
 
             // Call the constructor, storing the new object.
             value = (IPinData) pinValueTypeConstructor.Invoke(new object[] {parentRuleItem, this});
+            parent = parentRuleItem;
         }
 
         /// <summary>
