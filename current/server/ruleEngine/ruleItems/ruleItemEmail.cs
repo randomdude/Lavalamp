@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using ruleEngine.pinDataTypes;
 using ruleEngine.ruleItems.Starts;
 
 namespace ruleEngine.ruleItems
@@ -41,13 +42,15 @@ namespace ruleEngine.ruleItems
         public override void evaluate()
         {
             bool thisState = pinInfo["checkNow"].value.asBoolean();
-
-            imapChecker mychecker = new imapChecker(widget.options);
-
+             
             if ((lastState != thisState ) && (thisState == true))
             {
+                imapChecker mychecker = new imapChecker(widget.options);
                 if (mychecker.newMail != pinInfo["newEmail"].value.asBoolean())
+                {
                     pinInfo["newEmail"].value.data = mychecker.newMail;
+                    onRequestNewTimelineEvent(new timelineEventArgs(new pinDataBool(pinInfo["newEmail"].value as pinDataBool)));
+                }
             }
             lastState = thisState;
         }

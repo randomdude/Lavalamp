@@ -11,6 +11,7 @@ namespace ruleEngine.pinDataTypes
     {
         public pinDataString(ruleItemBase newParentRuleItem, pin newParentPin) : base("", newParentRuleItem, newParentPin) { }
         public pinDataString(string defaultVal, ruleItemBase newParentRuleItem, pin newParentPin) : base(defaultVal, newParentRuleItem, newParentPin) {}
+        public pinDataString(pinDataString cpy) : base(cpy) {}
 
         public override void setToDefault()
         {

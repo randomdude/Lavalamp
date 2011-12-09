@@ -158,6 +158,13 @@ namespace ruleEngine.Properties {
             }
         }
         
+        public static System.Drawing.Bitmap rss {
+            get {
+                object obj = ResourceManager.GetObject("rss", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         public static System.Drawing.Bitmap ruleItem_and {
             get {
                 object obj = ResourceManager.GetObject("ruleItem_and", resourceCulture);

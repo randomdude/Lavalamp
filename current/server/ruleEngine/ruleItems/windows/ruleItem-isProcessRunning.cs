@@ -49,7 +49,7 @@ namespace ruleEngine.ruleItems.windows
 
             return control.addMenus(toRet);
         }
- 
+
         public override void evaluate()
         {
             bool trigger = (bool)pinInfo["trigger"].value.asBoolean();
@@ -72,6 +72,7 @@ namespace ruleEngine.ruleItems.windows
             }
 
             pinInfo["output1"].value.data = newState;
+            onRequestNewTimelineEvent(new timelineEventArgs(new pinDataTristate(pinInfo["output1"].value)));
         }
 
     }

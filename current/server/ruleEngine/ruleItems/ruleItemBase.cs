@@ -43,6 +43,11 @@ namespace ruleEngine.ruleItems
         public virtual void stop() { }
         public virtual void onResize(Control parent) { }
         public virtual string caption() { return null; }
+        /// <summary>
+        /// The default options for the rule which will be displayed when the ruleItemCtl is double clicked
+        /// </summary>
+        /// <returns>the options form</returns>
+        public virtual Form ruleItemOptions() { return null; }
 
         public virtual void onAfterLoad() { }
 
@@ -180,25 +185,25 @@ namespace ruleEngine.ruleItems
         /// <summary>
         /// Fired when we are inserting a new timeline event to the next delta
         /// </summary>
-        public event timelineEventHandlerDelegate requestNewTimelineEvent;
+        public event timelineEventHandlerDelegate newTimelineEvent;
         public delegate void timelineEventHandlerDelegate(ruleItemBase sender, timelineEventArgs e);
 
         protected void onRequestNewTimelineEvent(timelineEventArgs e)
         {
-            if (requestNewTimelineEvent != null)
+            if (newTimelineEvent != null)
             {
-                requestNewTimelineEvent.Invoke((ruleItemBase) this, e);
+                newTimelineEvent.Invoke((ruleItemBase) this, e);
             }
         }
 
-        public event requestNewTimelineEventInFutureDelegate requestNewTimelineEventInFuture;
+        public event requestNewTimelineEventInFutureDelegate newTimelineEventInFuture;
         public delegate void requestNewTimelineEventInFutureDelegate(ruleItemBase sender, timelineEventArgs e, int timeBeforeEvent);
 
         protected void onRequestNewTimelineEventInFuture(timelineEventArgs e, int timeBeforeEvent)
         {
-            if (requestNewTimelineEventInFuture != null)
+            if (newTimelineEventInFuture != null)
             {
-                requestNewTimelineEventInFuture.Invoke((ruleItemBase)this, e, timeBeforeEvent);
+                newTimelineEventInFuture.Invoke((ruleItemBase)this, e, timeBeforeEvent);
             }
         }
         
@@ -206,6 +211,14 @@ namespace ruleEngine.ruleItems
 
     public class timelineEventArgs : EventArgs
     {
+         public timelineEventArgs()
+         {
+             newValue = null;
+         }
+        public timelineEventArgs(IPinData val)
+        {
+            newValue = val;
+        }
         public IPinData newValue;
     }
 }

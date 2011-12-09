@@ -12,7 +12,8 @@ namespace netGui
     {
         private ITransmitter _mydriver = null;
         private options MyOptions = new options();
-
+      //  private List<ruleItemCustom> _customToolbox = new List<ruleItemCustom>();
+ 
         public ITransmitter getMyDriver()
         {
             if ( (null == _mydriver) || (!_mydriver.portOpen()) )
@@ -334,18 +335,28 @@ namespace netGui
 
         private void addNewRule(rule toAdd)
         {
-            // Create a new rule, and add it to our listView.
-            // Add the new rule's state and name as columns, and the rule object itself as a tag.
-            ListViewItem newItem = new ListViewItem();
+            // if the rule is toolbox promoted it shouldn't appear in the list of runnable rules instead add it to the custom toolbox list
+            // which will be added to the rule editors box
+            if (toAdd.toolboxPromoted)
+            {
+             //   _customToolbox.Add(new ruleItemCustom(toAdd));
+            }
+            else
+            {
+                // Create a new rule, and add it to our listView.
+                // Add the new rule's state and name as columns, and the rule object itself as a tag.
+                ListViewItem newItem = new ListViewItem();
 
-            toAdd.onStatusUpdate += updateRuleIcon;
-            newItem.SubItems.Add(toAdd.name);
-            newItem.SubItems.Add(false.ToString());
-            newItem.Tag = toAdd;
+                toAdd.onStatusUpdate += updateRuleIcon;
+                newItem.SubItems.Add(toAdd.name);
+                newItem.SubItems.Add(false.ToString());
+                newItem.Tag = toAdd;
 
-            lstRules.Items.Add(newItem);
+                lstRules.Items.Add(newItem);
 
-            updateRuleIcon(toAdd);
+                updateRuleIcon(toAdd);
+            }
+
         }
 
         private void deleteRuleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -384,7 +395,7 @@ namespace netGui
             // We serialise the rule before we pass it to the rule edit form. This is to ease the transition
             // to a client-server style rule engine / rule editor kind of situations later on
             newForm.loadRule(rule.serialise());
-            newForm.ctlRule1.getRule().onStatusUpdate += updateRuleIcon;
+            newForm.ctlRuleEditor.getRule().onStatusUpdate += updateRuleIcon;
             newForm.Show();
 
             // Mark this rule as being open in the editor
@@ -412,15 +423,19 @@ namespace netGui
             ListViewItem ruleItem = findRuleItem(saveThis);
             if (ruleItem == null)
             {
-                frmQuestion fm = new frmQuestion("New Rule");
-                if(fm.ShowDialog(this) != DialogResult.OK)
-                    MessageBox.Show("Unable to save rule");
-                else
+                DialogResult result;
+                frmQuestion frm = new frmQuestion("New Rule");
+                if ((result = frm.ShowDialog(this)) != DialogResult.OK)
                 {
-                    saveThis.name = fm.result;
-                    addNewRule(saveThis);
+                    MessageBox.Show("Unable to save rule");
+                    return;
                 }
-                return;
+                while (findRuleItem(frm.result) != null && result == DialogResult.OK)
+                    result = frm.ShowDialog(this);
+                if (result == DialogResult.Cancel)
+                    return;
+                saveThis.name = frm.result;
+                addNewRule(saveThis);
             }
 
             // mark the listView item as not being open in the editor any more

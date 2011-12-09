@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ruleEngine;
+using ruleEngine.pinDataTypes;
 using ruleEngine.ruleItems.windows;
 
 namespace ruleEngine.ruleItems
@@ -32,7 +33,14 @@ namespace ruleEngine.ruleItems
             IPinData input1 = pinInfo["input1"].value;
             IPinData input2 = pinInfo["input2"].value;
 
-            pinInfo["output1"].value.data = input1.or(input2).data;
+            IPinData newOutput = input1.or(input2);
+
+            // only set the output if necessary! constantly setting the output will result in a stack overflow.
+            if (pinInfo["output1"].value.data != newOutput.data)
+            {
+                pinInfo["output1"].value = newOutput;
+                onRequestNewTimelineEvent(new timelineEventArgs(newOutput));
+            }
         }
 
     }

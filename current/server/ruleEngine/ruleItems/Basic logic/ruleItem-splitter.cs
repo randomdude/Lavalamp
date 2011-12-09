@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ruleEngine;
+using ruleEngine.pinDataTypes;
 
 namespace ruleEngine.ruleItems
 {
@@ -19,9 +20,9 @@ namespace ruleEngine.ruleItems
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
 
-            pinList.Add("input1", new pin { name = "input1", description = "input pin", direction = pinDirection.input });
-            pinList.Add("output2", new pin { name = "output2", description = "input pin is true", direction = pinDirection.output });
-            pinList.Add("output1", new pin { name = "output1", description = "input pin is true", direction = pinDirection.output });
+            pinList.Add("input1", new pin { name = "input1", description = "input pin", direction = pinDirection.input, dynamic = true});
+            pinList.Add("output2", new pin { name = "output2", description = "input pin is true", direction = pinDirection.output, dynamic =true});
+            pinList.Add("output1", new pin { name = "output1", description = "input pin is true", direction = pinDirection.output, dynamic = true});
 
             return pinList;
         }
@@ -29,10 +30,27 @@ namespace ruleEngine.ruleItems
         public override void evaluate()
         {
             var input1 = (bool) pinInfo["input1"].value.data;
-            foreach (var pin in pinInfo)
+            foreach (var pin in pinInfo.Values)
             {
-                if (pin.Value.direction == pinDirection.output)
-                    pin.Value.value.data = input1;
+
+                if (pin.direction == pinDirection.output)
+                {
+                    IPinData pinData;
+                    if (pin.valueType != pinInfo["input1"].valueType)
+                    {
+                        pin.valueType = pinInfo["input1"].valueType;
+                        pin.recreateValue();
+                    }
+                    pinData = (IPinData)pin.valueType.GetConstructor(new[]
+                                                                              {
+                                                                                  pin.value.getDataType(),
+                                                                                  typeof (ruleItemBase), typeof (pin)
+                                                                              })
+                                                 .Invoke(new object[] { input1, this, pin });
+                    pin.value = pinData;
+                    onRequestNewTimelineEvent(new timelineEventArgs(pinData));
+                }
+                    
             }
         }
     }

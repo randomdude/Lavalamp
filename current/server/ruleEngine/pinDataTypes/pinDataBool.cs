@@ -16,7 +16,7 @@ namespace ruleEngine.pinDataTypes
         /// Copy constructor
         /// </summary>
         /// <param name="pinDataBase"></param>
-        protected pinDataBool(pinDataBool pinDataBase) : base(pinDataBase) { }
+        public pinDataBool(pinDataBool pinDataBase) : base(pinDataBase) { }
 
         public override void setToDefault()
         {

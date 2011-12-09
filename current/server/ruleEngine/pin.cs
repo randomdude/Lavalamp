@@ -21,7 +21,7 @@ namespace ruleEngine
         public pinGuid linkedTo = new pinGuid();
         public lineChainGuid parentLineChain = new lineChainGuid() ;
         public ruleItemGuid parentRuleItem = new ruleItemGuid() ;
-
+        public bool dynamic;
         /// <summary>
         /// The type of data which is present on the pin
         /// </summary>
@@ -32,12 +32,30 @@ namespace ruleEngine
         /// </summary>
         public IPinData value;
 
+        public static readonly Type[] allDataTypes = { typeof(pinDataBool),typeof(pinDataString),typeof(pinDataTrigger),typeof(pinDataTristate) };
+
+        public Type[] possibleTypes = allDataTypes;
+
         public delegate void pinChanged(pin changed, EventArgs e); 
 
         /// <summary>
         /// Event which fires when the pin changes
         /// </summary>
         public event pinChanged OnPinChange; 
+
+
+        public void recreateValue()
+        {
+            // Set the .value of our pin to an object of type according to .valueType.
+            // Call the appropriate constructor, finding it via reflection.
+            // We pass the constructor the parent ruleItemBase, and the parent pin.
+
+            // Find the constructor
+            ConstructorInfo pinValueTypeConstructor = valueType.GetConstructor(new Type[] { typeof(ruleItems.ruleItemBase), typeof(pin) });
+
+            // Call the constructor, storing the new object.
+            value = (IPinData)pinValueTypeConstructor.Invoke(new object[] { parentRuleItem, this });
+        }
 
         public void createValue(ruleItems.ruleItemBase parentRuleItem)
         {
@@ -88,13 +106,19 @@ namespace ruleEngine
 
             // Only wire up events on input pins, since data progresses from outputs to inputs.
             if (newTargetPin.direction == pinDirection.input)
+            {
+                if (newTargetPin.dynamic)
+                {
+                    newTargetPin.valueType = valueType;
+                    newTargetPin.recreateValue();
+                }
                 OnPinChange += newTargetPin.stateChanged;
+            }
         }
 
         public void stateChanged(pin changed, EventArgs e)
         {
             value.data = changed.value.data;
-            value.reevaluate();
         }
 
         // todo - this should be on an onUIUpdate event or suchlike.

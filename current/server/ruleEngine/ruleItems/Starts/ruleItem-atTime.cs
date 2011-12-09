@@ -66,7 +66,7 @@ namespace ruleEngine.ruleItems.Starts
                 toRet.Items.Add(strip1.Items[0]);
 
             ToolStripMenuItem newItem = new ToolStripMenuItem("Set &time to fire..");
-            newItem.Click += new EventHandler(settime);
+            newItem.Click += setTimeDialogClosed;
             toRet.Items.Add(newItem);
 
             return toRet;
@@ -105,11 +105,11 @@ namespace ruleEngine.ruleItems.Starts
             if (doit == true)
             {
                 timelineEventArgs startArgs = new timelineEventArgs();
-                startArgs.newValue = new pinDataBool(true, this, pinInfo["timeIsNow"]); ;
+                startArgs.newValue = new pinDataBool(true, this, pinInfo["timeIsNow"]);
                 onRequestNewTimelineEvent(startArgs);
 
                 timelineEventArgs cancelArgs = new timelineEventArgs();
-                cancelArgs.newValue = new pinDataBool(false, this, pinInfo["timeIsNow"]); ;
+                cancelArgs.newValue = new pinDataBool(false, this, pinInfo["timeIsNow"]); 
                 onRequestNewTimelineEventInFuture(cancelArgs, 2);
             }
 
@@ -117,17 +117,25 @@ namespace ruleEngine.ruleItems.Starts
             lastMinutes = now.Minute;
         }
 
-        public void settime(object sender, EventArgs e)
-        {
-            while (!presentSetTimeDialog()) { }
-        }
-
-        private bool presentSetTimeDialog()
+        public override Form ruleItemOptions()
         {
             frmQuestion askyform = new frmQuestion("New time (HH:MM):", hours + ":" + minutes);   // TODO: format number in a more pretty manner
+            askyform.Closed += setTimeDialogClosed;
+            return askyform;
+        }
 
-            while (askyform.ShowDialog() == DialogResult.Cancel)
-                return true;
+        private void setTime()
+        {
+            frmQuestion frm = (frmQuestion) ruleItemOptions();
+            frm.ShowDialog();
+        }
+
+        private void setTimeDialogClosed(object sender,EventArgs e)
+        {
+            frmQuestion askyform = (frmQuestion) sender;
+
+            while (askyform.DialogResult == DialogResult.Cancel)
+                return;
 
             int newhours = 0;
             int newminutes = 0; 
@@ -149,12 +157,13 @@ namespace ruleEngine.ruleItems.Starts
             {
                 MessageBox.Show(
                     "Please enter the desired time in the form HH:MM, ie, hours, a semicolon, and then minutes.");
-                return false;
+                askyform.ShowDialog();
+                return;
             }
 
             hours = newhours;
             minutes = newminutes;
-            return true;
+            return ;
         }
 
         public override void stop()

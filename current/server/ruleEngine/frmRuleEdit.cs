@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -15,6 +16,7 @@ namespace ruleEngine
         private int buttonsBorderX;
         private int buttonsBorderY;
         private bool isClosing = false;
+        //private List<ruleItemCustom> _customToolbox; 
 
         public delegate void saveRuleDelegate(rule saveThis);
         public delegate void closeRuleDelegate(rule closeThis);
@@ -31,6 +33,7 @@ namespace ruleEngine
         {
             saveCallback = onSaveRule;
             closeCallback = onCloseRuleEditorDialog;
+          //  _customToolbox = toolbox;
 
             InitializeComponent();
         }
@@ -44,6 +47,14 @@ namespace ruleEngine
         {
             tvToolbox.Nodes.Clear();
             populateToolboxFromAssembly(Assembly.GetExecutingAssembly());
+            /*
+            foreach (ruleItemCustom item in _customToolbox)
+            {
+                ruleItemInfo itemInfo = new ruleItemInfo();
+                itemInfo.itemType = ruleItemType.RuleItem;
+                itemInfo.ruleItemBaseType = typeof(ruleItemCustom);
+                addRuleItemObjectToToolbox(item,itemInfo);
+            }*/
         }
 
         private void populateToolboxFromPythonFile(string filename)
@@ -146,7 +157,7 @@ namespace ruleEngine
                 return; // this will happen for category headers
 
             // ask the rule control to add an item
-            ctlRule1.addRuleItem(((ruleItemInfo)((TreeView)sender).SelectedNode.Tag));
+            ctlRuleEditor.addRuleItem(((ruleItemInfo)((TreeView)sender).SelectedNode.Tag));
         }
 
         private void btnRun_Click(object sender, EventArgs e)
@@ -163,14 +174,14 @@ namespace ruleEngine
         {
             btnStop.Enabled = false;
             btnRun.Enabled = true;
-            ctlRule1.stop();
+            ctlRuleEditor.stop();
         }
 
         public void startRule()
         {
             btnStop.Enabled = true;
             btnRun.Enabled = false;
-            ctlRule1.start();
+            ctlRuleEditor.start();
         }
 
         private void saveRule()
@@ -186,7 +197,7 @@ namespace ruleEngine
             {
                 //String serialised = ctlRule1.serialiseRule();
                 //Clipboard.SetText(serialised);
-                saveCallback.Invoke(ctlRule1.getRule());
+                saveCallback.Invoke(ctlRuleEditor.getRule());
             }
         }
 
@@ -233,7 +244,7 @@ namespace ruleEngine
             StringReader myReader = new StringReader(utf8Xml);
 
             XmlSerializer mySer = new XmlSerializer(typeof(rule));
-            ctlRule1.loadRule((rule) mySer.Deserialize(myReader));
+            ctlRuleEditor.loadRule((rule) mySer.Deserialize(myReader));
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -251,8 +262,8 @@ namespace ruleEngine
         /// </summary>
         private void closeRule()
         {
-            if (ctlRule1 != null)
-                closeCallback.Invoke(ctlRule1.getRule());
+            if (ctlRuleEditor != null)
+                closeCallback.Invoke(ctlRuleEditor.getRule());
 
             stopRule();
 
@@ -294,19 +305,19 @@ namespace ruleEngine
 
         private void frmRuleEdit_ResizeEnd(object sender, EventArgs e)
         {
-            ctlRule1.Width = this.Width - ctlRule1.Left - ctlRule1BorderX;
-            ctlRule1.Height = this.Height - ctlRule1.Top - ctlRule1BorderY;
+            ctlRuleEditor.Width = this.Width - ctlRuleEditor.Left - ctlRule1BorderX;
+            ctlRuleEditor.Height = this.Height - ctlRuleEditor.Top - ctlRule1BorderY;
 
             // We also set the toolbox to end at the same point as the rule control.
-            tvToolbox.Height = (ctlRule1.Top + ctlRule1.Height) - tvToolbox.Top;
+            tvToolbox.Height = (ctlRuleEditor.Top + ctlRuleEditor.Height) - tvToolbox.Top;
 
             // And the buttons.
             foreach( Control thisBtn in new Control [] {btnStop, btnRun, btnCancel, btnSave, btnSaveClose } )
-                thisBtn.Top = ctlRule1.Height + ctlRule1.Top + buttonsBorderY;
+                thisBtn.Top = ctlRuleEditor.Height + ctlRuleEditor.Top + buttonsBorderY;
 
             // Also, move the two rightmost buttons to align nicely
-            btnRun.Left = (ctlRule1.Width + ctlRule1.Left) - btnStop.Width;
-            btnStop.Left = (ctlRule1.Width + ctlRule1.Left) - (btnRun.Width + btnStop.Width + buttonsBorderX);
+            btnRun.Left = (ctlRuleEditor.Width + ctlRuleEditor.Left) - btnStop.Width;
+            btnStop.Left = (ctlRuleEditor.Width + ctlRuleEditor.Left) - (btnRun.Width + btnStop.Width + buttonsBorderX);
 
             // Don't let buttons foul each other, though.
             if (btnStop.Left < (btnSave.Left + btnSave.Width + buttonsBorderX))
@@ -318,27 +329,27 @@ namespace ruleEngine
 
         private void frmRuleEdit_ResizeBegin(object sender, EventArgs e)
         {
-            ctlRule1BorderX = this.Width - (ctlRule1.Width + ctlRule1.Left);
-            ctlRule1BorderY = this.Height - (ctlRule1.Height + ctlRule1.Top);
-            buttonsBorderY = btnStop.Top - (ctlRule1.Top + ctlRule1.Height);
+            ctlRule1BorderX = this.Width - (ctlRuleEditor.Width + ctlRuleEditor.Left);
+            ctlRule1BorderY = this.Height - (ctlRuleEditor.Height + ctlRuleEditor.Top);
+            buttonsBorderY = btnStop.Top - (ctlRuleEditor.Top + ctlRuleEditor.Height);
             buttonsBorderX = btnRun.Left - (btnStop.Left + btnStop.Width) ;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ctlRule1.advanceDelta();
+            ctlRuleEditor.advanceDelta();
         }
 
         private void snapToGridToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            ctlRule1.snapAllToGrid();
+            ctlRuleEditor.snapAllToGrid();
         }
 
         private void alwaysSnapToGridToolStripMenuItem_Click(object sender, EventArgs e)
         {
             alwaysSnapToGridToolStripMenuItem.Checked = !alwaysSnapToGridToolStripMenuItem.Checked;
 
-            ctlRule1.setGridSnapping(alwaysSnapToGridToolStripMenuItem.Checked);
+            ctlRuleEditor.setGridSnapping(alwaysSnapToGridToolStripMenuItem.Checked);
         }
 
     }

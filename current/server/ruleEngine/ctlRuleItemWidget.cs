@@ -173,7 +173,7 @@ namespace ruleEngine
                 thisCtl.MouseDown += new MouseEventHandler(item_MouseDown);
                 thisCtl.MouseUp += new MouseEventHandler(item_MouseUp);
                 thisCtl.MouseMove += new MouseEventHandler(item_MouseMove);
-                
+                thisCtl.DoubleClick += openOptions;
             }
         }
 
@@ -190,8 +190,18 @@ namespace ruleEngine
                     thisCtl.MouseDown += new MouseEventHandler(item_MouseDown);
                     thisCtl.MouseUp += new MouseEventHandler(item_MouseUp);
                     thisCtl.MouseMove += new MouseEventHandler(item_MouseMove);
+                    thisCtl.DoubleClick += openOptions;
                 }
             }
+        }
+
+        private void openOptions(object sender, EventArgs e)
+        {
+            var opts = targetRuleItem.ruleItemOptions(); 
+           if (opts != null)
+           {
+               opts.ShowDialog(this);
+           }
         }
 
         private void addIcon(pin pin)

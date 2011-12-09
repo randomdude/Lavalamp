@@ -50,15 +50,16 @@ namespace ruleEngine.ruleItems
             IPinData inputData = pinInfo["trigger"].value;
             bool newState = inputData.asBoolean();
 
-            // if we have a message swap out the placeholder with the new message.
-            if (inputData.getDataType() == typeof(string))
+            if ((newState != lastState || myOptions.message != _lastMessage) && (newState == true))
             {
-                myOptions.message = myOptions.message.Replace("$message", pinInfo["trigger"].value.ToString());
+                // if we have a message swap out the placeholder with the new message.
+                if (inputData.getDataType() == typeof(string))
+                {
+                    myOptions.message = myOptions.message.Replace("$message", pinInfo["trigger"].value.ToString());
+                }
                 _lastMessage = myOptions.message;
-            }
-            if ( (newState != lastState || myOptions.message != _lastMessage) && (newState == true))
                 showIt();
-
+            }
             lastState = newState;
         }
 
@@ -71,10 +72,17 @@ namespace ruleEngine.ruleItems
             return base.addMenus(toAddTo);
         }
 
-        private void showOptionsDialog(object sender, EventArgs e)
+        public override Form ruleItemOptions()
         {
             FrmDesktopMessageOptions myOptForm = new FrmDesktopMessageOptions(myOptions);
-            if (myOptForm.ShowDialog() == DialogResult.OK)
+            myOptForm.Closed += showOptionsDialog;
+            return myOptForm;
+        }
+
+        private void showOptionsDialog(object sender, EventArgs e)
+        {
+            FrmDesktopMessageOptions myOptForm = (FrmDesktopMessageOptions) sender;
+            if (myOptForm.DialogResult == DialogResult.OK)
                 myOptions = new desktopMessageOptions(myOptForm.currentOptions);
         }
 

@@ -29,7 +29,12 @@ namespace ruleEngine.pinDataTypes
         public new abstract string ToString();
         public abstract Color getColour();
         public abstract bool asBoolean();
+
         public abstract IPinData not();
+        /// <summary>
+        /// Gets the underlining data type, the type parameter to the class
+        /// </summary>
+        /// <returns>the underlining data type</returns>
         public abstract Type getDataType();
         public abstract object noValue { get; }
 
@@ -76,7 +81,9 @@ namespace ruleEngine.pinDataTypes
             bool result = asBoolean() ^ toCompareTo.asBoolean();
             return new pinDataBool(result, _parentRuleItem, _parentPin);
         }
-
+        /// <summary>
+        /// called when we want to evaluate any changes to the data
+        /// </summary>
         public void reevaluate()
         {
             // We propagate the change out of the pin. 

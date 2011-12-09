@@ -117,7 +117,7 @@ namespace ruleEngine
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <param name="timebeforeevent">Deltas until event should fire</param>
-        private void serviceNewTimelineEventRequestInFuture(ruleItemBase sender, timelineEventArgs e, int timebeforeevent)
+        private void serviceNewTimelineEventInFuture(ruleItemBase sender, timelineEventArgs e, int timebeforeevent)
         {
             _timeline.addEventAtDelta(e, timebeforeevent);
         }
@@ -127,7 +127,7 @@ namespace ruleEngine
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void serviceNewTimelineEventRequest(ruleItemBase sender, timelineEventArgs e)
+        private void serviceNewTimelineEvent(ruleItemBase sender, timelineEventArgs e)
         {
             _timeline.addEventAtNextDelta(e);
         }
@@ -147,8 +147,8 @@ namespace ruleEngine
 
         public void AddRuleItemToGlobalPool(ruleItemBase addThis)
         {
-            addThis.requestNewTimelineEvent += serviceNewTimelineEventRequest;
-            addThis.requestNewTimelineEventInFuture += serviceNewTimelineEventRequestInFuture;
+            addThis.newTimelineEvent += serviceNewTimelineEvent;
+            addThis.newTimelineEventInFuture += serviceNewTimelineEventInFuture;
             ruleItems.Add(addThis.serial.id.ToString(), addThis);            
         }
 
@@ -316,6 +316,8 @@ namespace ruleEngine
 
             // mark as deleted.
             toDelete.isDeleted = true;
+            //actually remove the item from the list.
+            ruleItems.Remove(toDelete.serial.ToString());
         }
 
         public void deleteCtlRuleItem(ctlRuleItemWidget toDelete)

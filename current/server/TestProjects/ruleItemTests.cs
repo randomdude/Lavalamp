@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ruleEngine;
-using ruleEngine.pinDataTypes;
 using ruleEngine.ruleItems;
 using ruleEngine.ruleItems.windows;
 
@@ -13,14 +12,14 @@ namespace TestProjects
         public void testStartRunRuleItemAnd()
         {
             rule targetRule = new rule();
+
             ruleItemBase andGate = targetRule.addRuleItem(new ruleItemInfo(typeof(ruleItem_and)));
             targetRule.start();
-
             andGate.pinInfo["input1"].value.data = false;
             andGate.pinInfo["input2"].value.data = false;
             andGate.evaluate();
             Assert.AreEqual(false, andGate.pinInfo["output1"].value.data);
-
+            
             andGate.pinInfo["input1"].value.data = true;
             andGate.pinInfo["input2"].value.data = false;
             andGate.evaluate();
@@ -64,15 +63,15 @@ namespace TestProjects
 
             targetRule.start();
             debugItem.evaluate();
-            Assert.AreEqual(tristate.noValue, debugItem.pinInfo["output"].value.data);
+            Assert.AreEqual(tristate.noValue, debugItem.pinInfo["output1"].value.data);
 
-            debugItem.pinInfo["input"].value.data = false;
+            debugItem.pinInfo["input1"].value.data = false;
             debugItem.evaluate();
-            Assert.AreEqual(tristate.yes, debugItem.pinInfo["output"].value.data);
+            Assert.AreEqual(tristate.yes, debugItem.pinInfo["output1"].value.data);
 
-            debugItem.pinInfo["input"].value.data = true;
+            debugItem.pinInfo["input1"].value.data = true;
             debugItem.evaluate();
-            Assert.AreEqual(tristate.no, debugItem.pinInfo["output"].value.data);
+            Assert.AreEqual(tristate.no, debugItem.pinInfo["output1"].value.data);
         }
 
         [TestMethod]

@@ -12,7 +12,8 @@ namespace ruleEngine.pinDataTypes
         public pinDataTristate(ruleItemBase parentRuleItem, pin newParentPin) : base(tristate.noValue,parentRuleItem, newParentPin) {}
         public pinDataTristate(tristate initialVal, ruleItemBase parentRuleItem, pin newParentPin) : base(initialVal, parentRuleItem, newParentPin) { }
 
-        private pinDataTristate(pinDataBase<tristate> parentRuleItem) : base(parentRuleItem) {}
+        public pinDataTristate(IPinData parentRuleItem) : base((pinDataBase<tristate>) parentRuleItem) {}
+
 
         public override void setToDefault()
         {

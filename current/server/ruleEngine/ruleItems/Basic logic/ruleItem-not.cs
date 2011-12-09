@@ -17,19 +17,22 @@ namespace ruleEngine.ruleItems
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
 
-            pinList.Add("input", new pin { name = "input", description = "input to invert", direction = pinDirection.input, valueType = typeof (pinDataTristate) });
-            pinList.Add("output", new pin { name = "output", description = "input is false", direction = pinDirection.output, valueType = typeof(pinDataTristate) });
+            pinList.Add("input1", new pin { name = "input1", description = "input to invert", direction = pinDirection.input, valueType = typeof (pinDataTristate),possibleTypes = new[]{typeof(pinDataBool), typeof(pinDataTristate)} });
+            pinList.Add("output1", new pin { name = "output1", description = "input is false", direction = pinDirection.output, valueType = typeof(pinDataTristate) });
 
             return pinList;
         }
 
         public override void evaluate()
         {
-            var newOutput = pinInfo["input"].value.not() ;
+            var newOutput = pinInfo["input1"].value.not() ;
 
             // only set the output if necessary! constantly setting the output will result in a stack overflow.
-            if (pinInfo["output"].value.data != newOutput.data)
-                 pinInfo["output"].value.data = newOutput.data;
+            if (pinInfo["output1"].value.data != newOutput.data)
+            {
+                pinInfo["output1"].value = newOutput;
+                onRequestNewTimelineEvent(new timelineEventArgs(newOutput));
+            }
         }
     }
 }

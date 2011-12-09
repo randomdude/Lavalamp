@@ -44,7 +44,7 @@
             this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.snapToGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.alwaysSnapToGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ctlRule1 = new ruleEngine.ctlRule();
+            this.ctlRuleEditor = new ruleEngine.ctlRule();
             this.ctxMnuToolbox.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -186,13 +186,22 @@
             this.alwaysSnapToGridToolStripMenuItem.Text = "Always snap to grid";
             this.alwaysSnapToGridToolStripMenuItem.Click += new System.EventHandler(this.alwaysSnapToGridToolStripMenuItem_Click);
             // 
-            // ctlRule1
+            // ctlRuleEditor
             // 
-            this.ctlRule1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.ctlRule1.Location = new System.Drawing.Point(152, 27);
-            this.ctlRule1.Name = "ctlRule1";
-            this.ctlRule1.Size = new System.Drawing.Size(613, 334);
-            this.ctlRule1.TabIndex = 4;
+            this.ctlRuleEditor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.ctlRuleEditor.Location = new System.Drawing.Point(153, 12);
+            this.ctlRuleEditor.Name = "ctlRuleEditor";
+            this.ctlRuleEditor.Size = new System.Drawing.Size(613, 334);
+            this.ctlRuleEditor.TabIndex = 4;
+            // 
+            // btnPromote
+            // 
+            /*this.btnPromote.Location = new System.Drawing.Point(12, 354);
+            this.btnPromote.Name = "btnPromote";
+            this.btnPromote.Size = new System.Drawing.Size(75, 54);
+            this.btnPromote.TabIndex = 12;
+            this.btnPromote.Text = "Promote Rule To Toolbox";
+            this.btnPromote.UseVisualStyleBackColor = true;*/
             // 
             // frmRuleEdit
             // 
@@ -202,7 +211,8 @@
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(777, 429);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.ctlRule1);
+            //this.Controls.Add(this.btnPromote);
+            this.Controls.Add(this.ctlRuleEditor);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tvToolbox);
@@ -214,9 +224,9 @@
             this.Name = "frmRuleEdit";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Rule editor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRuleEdit_FormClosing);
             this.Load += new System.EventHandler(this.frmRuleEdit_Load);
             this.ResizeBegin += new System.EventHandler(this.frmRuleEdit_ResizeBegin);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRuleEdit_FormClosing);
             this.ResizeEnd += new System.EventHandler(this.frmRuleEdit_ResizeEnd);
             this.ctxMnuToolbox.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
@@ -228,7 +238,7 @@
 
         #endregion
 
-        public ctlRule ctlRule1;
+        public ctlRule ctlRuleEditor;
         private System.Windows.Forms.TreeView tvToolbox;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnRun;

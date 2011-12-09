@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ruleEngine;
 using ruleEngine.ruleItems;
 using ruleEngine.ruleItems.Starts;
@@ -66,20 +64,20 @@ namespace TestProjects
             ruleItemBase invItem = targetRule.addRuleItem(new ruleItemInfo(typeof(ruleItem_not)));
 
             lineChain newChain = new lineChain();
-            startItem.pinInfo["StartOfSim"].connectTo(newChain.serial, invItem.pinInfo["input"]);
+            startItem.pinInfo["StartOfSim"].connectTo(newChain.serial, invItem.pinInfo["input1"]);
             targetRule.AddLineChainToGlobalPool(newChain);
 
             targetRule.start();
             Assert.AreEqual(false, startItem.pinInfo["StartOfSim"].value.data);
-            Assert.AreEqual(tristate.noValue, invItem.pinInfo["input"].value.data);
+            Assert.AreEqual(tristate.noValue, invItem.pinInfo["input1"].value.data);
             targetRule.advanceDelta();
             Assert.AreEqual(true, startItem.pinInfo["StartOfSim"].value.data);
-            Assert.AreEqual(tristate.yes, invItem.pinInfo["input"].value.data);
-            Assert.AreEqual(tristate.no, invItem.pinInfo["output"].value.data);
+            Assert.AreEqual(tristate.yes, invItem.pinInfo["input1"].value.data);
+            Assert.AreEqual(tristate.no, invItem.pinInfo["output1"].value.data);
             targetRule.advanceDelta();
             Assert.AreEqual(false, startItem.pinInfo["StartOfSim"].value.data);
-            Assert.AreEqual(tristate.no, invItem.pinInfo["input"].value.data);
-            Assert.AreEqual(tristate.yes, invItem.pinInfo["output"].value.data);
+            Assert.AreEqual(tristate.no, invItem.pinInfo["input1"].value.data);
+            Assert.AreEqual(tristate.yes, invItem.pinInfo["output1"].value.data);
             targetRule.stop();
         }
     }

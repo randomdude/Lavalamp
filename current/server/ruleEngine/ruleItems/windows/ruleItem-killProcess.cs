@@ -81,10 +81,16 @@ namespace ruleEngine.ruleItems.windows
             return toRet;
         }
 
-        private void pickProcess(object sender, EventArgs e)
+        public override Form ruleItemOptions()
         {
             frmPickProcess picker = new frmPickProcess(name);
-            picker.ShowDialog();
+            picker.Closed += pickProcess;
+            return picker;
+        }
+
+        private void pickProcess(object sender, EventArgs e)
+        {
+            frmPickProcess picker = (frmPickProcess) sender;
 
             if (!picker.cancelled)
             {

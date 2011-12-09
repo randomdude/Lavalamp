@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using System.Linq;
 using ruleEngine.ruleItems;
 
 namespace ruleEngine
@@ -186,7 +187,12 @@ namespace ruleEngine
             {
                 MessageBox.Show(source.direction.ToString() + " pins cannot be connected to other " + source.direction.ToString() + " pins. Wires must connect inputs to outputs.");
                 errored = true;
-            }            
+            }
+            if (dest.possibleTypes.Count(t => t == source.valueType) < 1)
+            {
+                MessageBox.Show("Pins types are incompatable");
+                errored = true;
+            }
 
             if(errored)
             {

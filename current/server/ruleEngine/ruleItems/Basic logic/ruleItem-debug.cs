@@ -41,8 +41,11 @@ namespace ruleEngine.ruleItems
                 lastState = pinInfo["input"].ToString();
             }
 
-            if (pinInfo["output"].value.ToString() != pinInfo["input"].value.ToString())
+            if (pinInfo["output"].value.data != pinInfo["input"].value.data)
+            {
                 pinInfo["output"].value.data = pinInfo["input"].value.data;
+                onRequestNewTimelineEvent(new timelineEventArgs(new pinDataTristate(pinInfo["output"].value)));
+            }
         }
 
 
