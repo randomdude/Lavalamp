@@ -16,7 +16,7 @@ namespace ruleEngine
     public partial class rule : IXmlSerializable 
     {
         public String name;
-
+        public bool toolboxPromoted;
         private ruleState _state;
 
         /// <summary>
