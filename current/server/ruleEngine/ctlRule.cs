@@ -83,11 +83,11 @@ namespace ruleEngine
                 ctlRuleItemWidget newCtl = new ctlRuleItemWidget(thisRule, setTsStatus);
 
                 //hook up line events for deserialized control.
-                foreach (var pins in newCtl.conPins)
+                foreach (var pin in newCtl.conPins.Keys.Where(p => p.isConnected))
                 {
-                    lineChain line = _rule.GetLineChainFromGuid(pins.Key.parentLineChain);
+                    lineChain line = _rule.GetLineChainFromGuid(pin.parentLineChain);
                     newCtl.OnRuleItemMoved += line.LineMoved;
-                    line.onLineDeleted += pins.Key.Disconnected;
+                    line.onLineDeleted += pin.Disconnected;
                 }
                 _rule.AddctlRuleItemWidgetToGlobalPool(newCtl);
                 newCtl.snapToGrid = snapWidgetsToGrid;
