@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ruleEngine;
+using ruleEngine.pinDataTypes;
 using ruleEngine.ruleItems;
 using ruleEngine.ruleItems.Starts;
 using ruleEngine.ruleItems.windows;
@@ -80,5 +81,6 @@ namespace TestProjects
             Assert.AreEqual(tristate.yes, invItem.pinInfo["output1"].value.data);
             targetRule.stop();
         }
+
     }
 }

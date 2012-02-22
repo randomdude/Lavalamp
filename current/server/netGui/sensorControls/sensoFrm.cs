@@ -11,12 +11,12 @@ namespace netGui.sensorControls
             InitializeComponent();
         }
 
-        public sensorFrm(Node target, short newSensorIndex)
+        public sensorFrm(sensor _sensor)
         {
             InitializeComponent();
 
             this.Controls.Remove(this.ctlSensor1);
-            this.ctlSensor1 = new ctlSensor(target, newSensorIndex);
+            this.ctlSensor1 = new ctlSensor(_sensor);
             ctlSensor1.onSetIcon += setIcon;
             this.Controls.Add(this.ctlSensor1);
 

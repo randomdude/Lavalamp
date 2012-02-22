@@ -49,7 +49,6 @@ namespace netbridge
 					case 0x21:
 						throw gcnew sensorWrongTypeException();
 						break;
-
 					default:
 						throw gcnew InternalErrorException();
 				}
@@ -341,6 +340,7 @@ namespace netbridge
 					serialLock->ReleaseMutex();
 					throwerror(errcode);
 				}
+				throw new UnreachableException();
 			}
 
 			void doSetPWMSpeed(Int16 nodeId, Int16 speed, Int16 sensorId)

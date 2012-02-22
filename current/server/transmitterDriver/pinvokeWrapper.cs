@@ -42,7 +42,7 @@ namespace transmitterDriver
             return (appConfig_t)Marshal.PtrToStructure(pinvoke.getTestConfig_Unsafe(), typeof(appConfig_t));
         }
 
-        public static bool injectFaultDesync(ref appConfig_t config)
+        public new static bool injectFaultDesync(ref appConfig_t config)
         {
             return pinvoke.injectFaultDesync(ref config);
         }

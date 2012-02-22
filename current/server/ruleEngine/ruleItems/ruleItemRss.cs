@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.ServiceModel.Syndication;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
@@ -18,14 +17,14 @@ namespace ruleEngine.ruleItems
 {
     [ToolboxRule]
     [ToolboxRuleCategory("Internet")]
-    class ruleItemRss : ruleItemBase
+    public class ruleItemRss : ruleItemBase
     {
         
         [XmlElement("rssOptions")]
-        rssOptions _options = new rssOptions();
+        public rssOptions _options = new rssOptions();
 
         [XmlElement("lastRead")]
-        DateTime _lastRead;
+        public DateTime _lastRead;
 
         private Label _lblFeedTitle;
         private PictureBox _imgFeed;
@@ -67,11 +66,14 @@ namespace ruleEngine.ruleItems
 
         private void loadRuleItemDetails(rssOptions options)
         {
-
-            _lblFeedTitle.Text = String.IsNullOrEmpty(_options.title) ? "feed" : _options.title;
-            if (_options.image != null)
+            string feedText = String.IsNullOrEmpty(_options.title) ? "feed" : _options.title;
+            if (_lblFeedTitle.Text == feedText)
+                return;
+            _lblFeedTitle.Text = feedText;
+            _lastRead = DateTime.MinValue;
+            if (!String.IsNullOrEmpty(_options.imageUrl))
             {
-                HttpWebRequest request = (HttpWebRequest) WebRequest.Create(_options.image);
+                HttpWebRequest request = (HttpWebRequest) WebRequest.Create(new Uri(_options.imageUrl));
                 HttpWebResponse response = (HttpWebResponse) request.GetResponse();
                 Stream responseStream = response.GetResponseStream();
                 _imgFeed.Image = Image.FromStream(responseStream);
@@ -85,16 +87,25 @@ namespace ruleEngine.ruleItems
         public override Dictionary<string, pin> getPinInfo()
         {
             Dictionary<string,pin> pins = new Dictionary<string, pin>();
-            pins.Add("feed",
+            pins.Add("feedTitle",
                      new pin
                          {
-                             name = "feed",
-                             description = "connect to feed for the rss",
+                             name = "feed title",
+                             description = "connect to feed for title of the currently read feed",
                              direction = pinDirection.output,
-                             valueType = typeof (pinDataTypes.pinDataString),
-                            
+                             valueType = typeof(pinDataTypes.pinDataString),
+
                          });
-            pins.Add("newData",
+            pins.Add("feedContent",
+                     new pin
+                     {
+                         name = "feed Content",
+                         description = "connect to feed for the content of the currently read feed",
+                         direction = pinDirection.output,
+                         valueType = typeof(pinDataTypes.pinDataString),
+
+                     });
+            pins.Add("trigger",
                      new pin
                          {
                              name = "trigger",
@@ -106,57 +117,47 @@ namespace ruleEngine.ruleItems
 
         public override void evaluate()
         {
-            if(!pinInfo["newData"].value.asBoolean())
+            if (!pinInfo["trigger"].value.asBoolean())
                 return;
-            
-            if (String.IsNullOrEmpty(_options.url))
-            {
-                _imgFeed.Image = SetImageToInvaild(_imgFeed.Image);
-                return;
-            }
-               
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_options.url);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            Stream feedStream = response.GetResponseStream();
-            if (feedStream == null || response.StatusCode != HttpStatusCode.OK)
-            {
-                _imgFeed.Image = SetImageToInvaild(_imgFeed.Image);
-                return;
-            }
             try
             {
-                
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_options.url);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                Stream feedStream = response.GetResponseStream();
+                if (feedStream == null || response.StatusCode != HttpStatusCode.OK)
+                {
+                    _imgFeed.Image = SetImageToInvaild(_imgFeed.Image);
+                    throw new WebException("Cannot access feed");
+                }
+            
                 SyndicationFeed feed = SyndicationFeed.Load(XmlReader.Create(feedStream));
-                if (feed.LastUpdatedTime < _lastRead)
+                // order by ascending date all the feed items which have not been seen or have been updated and return the first.
+                SyndicationItem feedItem = feed.Items.Where(f => f.PublishDate > _lastRead || f.LastUpdatedTime > _lastRead)
+                                                     .OrderBy(f => f.LastUpdatedTime).ThenBy(f => f.PublishDate)
+                                                     .FirstOrDefault();
+                // if null no new feed items are present
+                if (feedItem == null)
                 {
                     _lastRead = DateTime.Now;
                     return;
                 }
-                StringBuilder rtn = new StringBuilder(feed.Items.Count(f => f.LastUpdatedTime > _lastRead) * 10);
-
-                foreach (SyndicationItem feedItem in feed.Items)
-                {
-                    if (feedItem.LastUpdatedTime < _lastRead)
-                        continue;
-                    Regex removeTags = new Regex("<(.|\n)*?>");
-                    rtn.Append(removeTags.Replace(feedItem.Title.Text,string.Empty) + removeTags.Replace(feedItem.Summary.Text,string.Empty));
-                }
-                _lastRead = DateTime.Now;
-                pinInfo["feed"].value.data = rtn.ToString();
-                onRequestNewTimelineEvent(new timelineEventArgs(new pinDataString(pinInfo["feed"].value as pinDataString)));
+                //regex removes all html tags from the feed.
+                Regex removeTags = new Regex("<(.|\n)*?>");
+                _lastRead = feedItem.PublishDate.LocalDateTime;
+                pinInfo["feedTitle"].value.data = removeTags.Replace(feedItem.Title.Text, string.Empty);
+                pinInfo["feedContent"].value.data = removeTags.Replace(feedItem.Summary.Text, string.Empty);
+                onRequestNewTimelineEvent(new timelineEventArgs(new pinDataString(pinInfo["feedTitle"].value as pinDataString)));
+                onRequestNewTimelineEvent(new timelineEventArgs(new pinDataString(pinInfo["feedContent"].value as pinDataString)));
          
         }
-            catch (Exception e)
-            {
-                _imgFeed.Image = SetImageToInvaild(_imgFeed.Image);
-                
-                errorHandler(e);
-                return;
-            }
-           
-
+        catch (Exception e)
+        {
+            _imgFeed.Image = SetImageToInvaild(_imgFeed.Image);
+            errorHandler(e);
+            return;
         }
+
+     }
 
         public Bitmap SetImageToInvaild(Image i)
         {
@@ -178,10 +179,10 @@ namespace ruleEngine.ruleItems
     }
 
     [Serializable]
-    internal class rssOptions
+    public class rssOptions
     {
-        [XmlElement()]
-        public Uri image;
+        [XmlElement]
+        public string imageUrl;
         [XmlElement]
         public string url { get; set; }
         [XmlElement]

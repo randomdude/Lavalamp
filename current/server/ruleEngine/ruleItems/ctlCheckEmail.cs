@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using ruleEngine.Properties;
 
 namespace ruleEngine.ruleItems
@@ -60,10 +61,17 @@ namespace ruleEngine.ruleItems
 
     public class emailOptions
     {
+        [XmlElement]
         public string serverName = "imap.gmail.com";
+        [XmlElement]
         public int portNum = 993;
+        [XmlElement]
+        public bool useSSL = true; 
+        [XmlElement]
         public string username = "username";
+        //todo: crypt password
+        [XmlElement]
         public string password = "password";
-        public bool useSSL = true;        
+           
     }
 }

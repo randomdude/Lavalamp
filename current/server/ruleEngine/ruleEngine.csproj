@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="IronPython, Version=2.6.10920.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -171,6 +173,7 @@
     <Compile Include="ruleItems\ruleItemEmail.cs" />
     <Compile Include="ruleItems\ruleItemRss.cs" />
     <Compile Include="ruleItems\ruleItemScript.cs" />
+    <Compile Include="ruleItems\ruleItemWallboard.cs" />
     <Compile Include="ruleItems\Starts\ctlTimeInterval.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -224,6 +227,12 @@
     </Compile>
     <Compile Include="ruleItems\windows\frmRunExeOptions.Designer.cs">
       <DependentUpon>frmRunExeOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ruleItems\windows\frmWallboardOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ruleItems\windows\frmWallboardOptions.Designer.cs">
+      <DependentUpon>frmWallboardOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="ruleItems\windows\ruleItem-desktopMessage.cs" />
     <Compile Include="ruleItems\windows\ruleItem-isProcessRunning.cs" />
@@ -315,6 +324,9 @@
     <EmbeddedResource Include="ruleItems\windows\frmRunExeOptions.resx">
       <DependentUpon>frmRunExeOptions.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ruleItems\windows\frmWallboardOptions.resx">
+      <DependentUpon>frmWallboardOptions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

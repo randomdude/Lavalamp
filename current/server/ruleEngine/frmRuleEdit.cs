@@ -352,5 +352,13 @@ namespace ruleEngine
             ctlRuleEditor.setGridSnapping(alwaysSnapToGridToolStripMenuItem.Checked);
         }
 
+        private void beginDrag(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+                return;
+
+          //  this.tvToolbox.DoDragDrop(tvToolbox.SelectedNode.Tag, DragDropEffects.Copy);
+        }
+
     }
 }

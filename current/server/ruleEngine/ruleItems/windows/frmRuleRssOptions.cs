@@ -93,7 +93,7 @@ namespace ruleEngine.ruleItems.windows
                 }
                 if(feed.ImageUrl != null)
                 {
-                    _options.image = feed.ImageUrl;
+                    _options.imageUrl = feed.ImageUrl.ToString();
                 }
                 return true;
             }

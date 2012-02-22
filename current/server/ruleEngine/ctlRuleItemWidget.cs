@@ -142,7 +142,7 @@ namespace ruleEngine
             // wire up events
             foreach (PictureBox thisCtl in conPins.Values)
                 thisCtl.Click += new EventHandler(onPinClick);
-
+            
             addEvents(newRuleItem.controls);
 
             // Load any controls that the item wants
@@ -158,7 +158,7 @@ namespace ruleEngine
                     Controls.Add(thisCtl);
                 }
             }
-
+           
             newRuleItem.onResize(this);
             ruleItemBaseForm_Resize(new object(), new EventArgs());
         }

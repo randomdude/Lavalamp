@@ -1,0 +1,11 @@
+; wallboard.def : Declares the module parameters for the DLL.
+
+LIBRARY      "wallboard"
+
+EXPORTS
+    ; Explicit exports can go here
+connectWallboard
+closeWallboard
+resetWallboard
+sendWallMessage
+checkWallboardErrorState

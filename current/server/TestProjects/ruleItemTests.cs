@@ -1,5 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.IO;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ruleEngine;
+using ruleEngine.pinDataTypes;
 using ruleEngine.ruleItems;
 using ruleEngine.ruleItems.windows;
 
@@ -106,19 +108,46 @@ namespace TestProjects
         public void testStartRunRuleItemSplitter()
         {
             rule targetRule = new rule();
-            ruleItemBase orGate = targetRule.addRuleItem(new ruleItemInfo(typeof(ruleItem_splitter)));
+            ruleItemBase spliter = targetRule.addRuleItem(new ruleItemInfo(typeof(ruleItem_splitter)));
             targetRule.start();
 
-            orGate.pinInfo["input1"].value.data = false;
-            orGate.evaluate();
-            Assert.AreEqual(false, orGate.pinInfo["output1"].value.data);
-            Assert.AreEqual(false, orGate.pinInfo["output2"].value.data);
+            spliter.pinInfo["input1"].value.data = false;
+            spliter.evaluate();
+            Assert.AreEqual(false, spliter.pinInfo["output1"].value.data);
+            Assert.AreEqual(false, spliter.pinInfo["output2"].value.data);
 
-            orGate.pinInfo["input1"].value.data = true;
-            orGate.evaluate();
-            Assert.AreEqual(true, orGate.pinInfo["output1"].value.data);
-            Assert.AreEqual(true, orGate.pinInfo["output2"].value.data);
+            spliter.pinInfo["input1"].value.data = true;
+            spliter.evaluate();
+            Assert.AreEqual(true, spliter.pinInfo["output1"].value.data);
+            Assert.AreEqual(true, spliter.pinInfo["output2"].value.data);
 
+            spliter.pinInfo["input1"].valueType = typeof (pinDataString);
+            spliter.pinInfo["input1"].recreateValue();
+            spliter.pinInfo["input1"].value.data = "lol";
+            spliter.evaluate();
+            Assert.AreEqual("lol", spliter.pinInfo["output1"].value.data);
+            Assert.AreEqual("lol", spliter.pinInfo["output2"].value.data);
+
+            spliter.pinInfo["input1"].valueType = typeof(pinDataTristate);
+            spliter.pinInfo["input1"].recreateValue();
+            spliter.pinInfo["input1"].value.data = tristate.yes;
+            spliter.evaluate();
+            Assert.AreEqual(tristate.yes, spliter.pinInfo["output1"].value.data);
+            Assert.AreEqual(tristate.yes, spliter.pinInfo["output2"].value.data);
+        }
+
+        [TestMethod]
+        public void testRssReader()
+        {
+            rule targetRule = new rule();
+        //   ruleItemRss rss = (ruleItemRss) targetRule.addRuleItem(new ruleItemInfo(typeof(ruleItemRss)));
+           // rss._options.url = "file://" + Path.GetFullPath(Properties.Settings.Default.testDataPath) + @"\test.rss";
+           // rss.pinInfo["trigger"].value.data = true;
+           //targetRule.start();
+           // rss.evaluate();
+
+           // Assert.AreEqual("test entry test details", rss.pinInfo["feed"].value.data); 
+            
         }
     }
 }

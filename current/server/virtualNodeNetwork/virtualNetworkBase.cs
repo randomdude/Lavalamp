@@ -68,7 +68,6 @@ namespace virtualNodeNetwork
         /// <summary>
         /// Fire the onCryptoError event
         /// </summary>
-        /// <param name="sender"></param>
         protected void cryptoError(virtualNodeBase virtualNodeBase)
         {
             log(logLevel.warn, "Crypto error detected.");

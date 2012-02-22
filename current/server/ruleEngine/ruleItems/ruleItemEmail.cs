@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using ruleEngine.pinDataTypes;
 using ruleEngine.ruleItems.Starts;
 
@@ -14,7 +15,8 @@ namespace ruleEngine.ruleItems
         public override string ruleName() { return "email checker"; }
         private bool lastState = false;
         ctlCheckEmail widget = new ctlCheckEmail();
-
+        [XmlElement("EmailOptions")]
+        public emailOptions options { get { return widget.options; } set { widget.options = value; } }
         public override Dictionary<String, pin> getPinInfo()
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
@@ -28,7 +30,7 @@ namespace ruleEngine.ruleItems
         public override System.Windows.Forms.ContextMenuStrip addMenus(System.Windows.Forms.ContextMenuStrip strip1)
         {
             ContextMenuStrip menus = base.addMenus(strip1);
-
+          
             return widget.addMenus( menus );
         }
 

@@ -36,12 +36,11 @@ winampGeneralPurposePlugin plugin =
 	"Lavalamp automation plugin",
 	init,
 	config,
-	quit,
+	quit
 };
 void config()
 {
-	// todo - use winamps hwnd
-	MessageBox(NULL, "Nothing to configure!", "Error", MB_OK);
+	MessageBox(plugin.hwndParent,"Nothing to configure!", "Error", MB_OK);
 }
 
 void quit()
@@ -62,7 +61,8 @@ enum winampAction {
 	winamp_next		=0x02, 
 	winamp_pause	=0x03, 
 	winamp_stop		=0x04,
-	winamp_play		=0x05 
+	winamp_play		=0x05,
+	winamp_getCurrent =0x06
 };
  
 DWORD WINAPI threadProc(LPVOID lpThreadParameter)
@@ -71,7 +71,7 @@ DWORD WINAPI threadProc(LPVOID lpThreadParameter)
 	char* msg;
 	long gle;
 	unsigned char readBuffer;
-	long bytesread;
+	DWORD bytesread;
 	BOOL errorsoretry=FALSE;
 
 	while (TRUE)
@@ -85,7 +85,7 @@ DWORD WINAPI threadProc(LPVOID lpThreadParameter)
 			{
 				msg=(char*)LocalAlloc(LMEM_FIXED, 100);
 				wsprintf(msg,  "Unable to create named pipe. GLE reported %d", gle );
-				MessageBox(NULL, msg, "uh-oh", MB_OK);
+				MessageBox(plugin.hwndParent, msg, "uh-oh", MB_OK);
 				LocalFree(msg);
 				errorsoretry=TRUE;
 			}
@@ -100,7 +100,7 @@ DWORD WINAPI threadProc(LPVOID lpThreadParameter)
 				{
 					msg=(char*)LocalAlloc(LMEM_FIXED, 100);
 					wsprintf(msg,  "Unable to connect named pipe. GLE reported %d", gle );
-					MessageBox(NULL, msg, "uh-oh", MB_OK);
+					MessageBox(plugin.hwndParent, msg, "uh-oh", MB_OK);
 					LocalFree(msg);
 					errorsoretry=TRUE;
 				}
@@ -117,7 +117,7 @@ DWORD WINAPI threadProc(LPVOID lpThreadParameter)
 				{
 					msg=(char*)LocalAlloc(LMEM_FIXED, 100);
 					wsprintf(msg,  "Unable to read from named pipe. Success %d, GLE %d, bytesRead %d.", s, gle , bytesread);
-					MessageBox(NULL, msg, "uh-oh", MB_OK);
+					MessageBox(plugin.hwndParent, msg, "uh-oh", MB_OK);
 					LocalFree(msg);
 					errorsoretry=TRUE;
 				}
@@ -137,8 +137,10 @@ DWORD WINAPI threadProc(LPVOID lpThreadParameter)
 
 void doAction(unsigned char doThis)
 {
-	HANDLE winamp=plugin.hwndParent;
-
+	HWND winamp = plugin.hwndParent;
+	int currentIndex;
+	char* currentSongTitle;
+	DWORD bytesWrote;
 	switch(doThis)
 	{
 		case winamp_previous:
@@ -156,11 +158,14 @@ void doAction(unsigned char doThis)
 		case winamp_next:
 			SendMessage(winamp, WM_COMMAND, WINAMP_BUTTON5, 0);
 			break;
+		case winamp_getCurrent:
+				currentIndex = SendMessage(winamp, WM_USER, 0, 125);
+			currentSongTitle = (char*)SendMessage(winamp, WM_USER, currentIndex, 212);
+			WriteFile(pipeHnd, (LPCVOID)currentSongTitle, (DWORD)strlen(currentSongTitle), &bytesWrote, NULL);
+			break;
 	}
 }
-
-__declspec( dllexport ) winampGeneralPurposePlugin * winampGetGeneralPurposePlugin()
+EXTERN_C __declspec( dllexport ) winampGeneralPurposePlugin * winampGetGeneralPurposePlugin()
 {
 	return &plugin;
 }
-

@@ -11,7 +11,7 @@ namespace ruleItems_winamp
         {
             get { return new char[] { (char)0x05 }; }
         }
-        public override string ruleName()  { return "Play current song";                }
-        public override Image background() { return Properties.Resources.winamp_play;   }
+        public override string ruleName() { return "Play current song"; }
+        public override Image background() { return Properties.Resources.winamp_play; }
     }
 }

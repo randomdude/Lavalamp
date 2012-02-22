@@ -38,7 +38,7 @@ namespace netGui
                 sensorFrm newSensorForm;
                 try
                 {
-                    newSensorForm = new sensorFrm(target, thisSensor.id);
+                    newSensorForm = new sensorFrm(thisSensor);
 
                     newSensorForm.Visible = false;
                     newSensorForm.Show();

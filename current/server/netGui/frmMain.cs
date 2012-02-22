@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -12,7 +13,8 @@ namespace netGui
     {
         private ITransmitter _mydriver = null;
         private options MyOptions = new options();
-      //  private List<ruleItemCustom> _customToolbox = new List<ruleItemCustom>();
+        private readonly Dictionary<string,IntPtr> openRuleWindows = new Dictionary<string, IntPtr>();
+        //  private List<ruleItemCustom> _customToolbox = new List<ruleItemCustom>();
  
         public ITransmitter getMyDriver()
         {
@@ -384,8 +386,7 @@ namespace netGui
         {
             if (ruleItem.SubItems[2].Text == true.ToString() )
             {
-                // todo: being open rule editor window to foregroound
-                MessageBox.Show("This rule is already open.");
+                FromHandle(openRuleWindows[ruleItem.Name]).BringToFront();
                 return;
             }
 
@@ -396,10 +397,17 @@ namespace netGui
             // to a client-server style rule engine / rule editor kind of situations later on
             newForm.loadRule(rule.serialise());
             newForm.ctlRuleEditor.getRule().onStatusUpdate += updateRuleIcon;
+            newForm.Closed += ruleFormClosed;
             newForm.Show();
-
+            openRuleWindows[ruleItem.Name] = newForm.Handle;
             // Mark this rule as being open in the editor
             ruleItem.SubItems[2].Text = true.ToString();
+        }
+
+        private void ruleFormClosed(object sender, EventArgs e)
+        {
+            frmRuleEdit frm = (frmRuleEdit) sender;
+            openRuleWindows.Remove(frm.ctlRuleEditor.getRule().name);
         }
 
         private void onCloseRuleEditorDialog(rule closeThis)
@@ -603,14 +611,14 @@ namespace netGui
             // Now save each rule in turn.
             foreach (ListViewItem thisItem in lstRules.Items)
             {
+                rule thisRule = (rule)thisItem.Tag;
                 try
                 {
-                    rule thisRule = (rule)thisItem.Tag;
                     thisRule.saveToDisk(MyOptions.rulesPath + @"\" + thisRule.name + ".rule");
                 }
-                catch
+                catch (Exception e)
                 {
-                    MessageBox.Show("Unable to save rule file '" + thisItem.Text + "'");
+                    MessageBox.Show("Unable to save rule file '" + thisRule.name + "'");
                 }
             }
             

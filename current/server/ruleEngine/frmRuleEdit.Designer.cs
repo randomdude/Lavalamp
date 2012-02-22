@@ -51,12 +51,14 @@
             // 
             // tvToolbox
             // 
+            this.tvToolbox.AllowDrop = true;
             this.tvToolbox.ContextMenuStrip = this.ctxMnuToolbox;
             this.tvToolbox.Location = new System.Drawing.Point(11, 43);
             this.tvToolbox.Name = "tvToolbox";
             this.tvToolbox.Size = new System.Drawing.Size(135, 318);
             this.tvToolbox.TabIndex = 5;
             this.tvToolbox.DoubleClick += new System.EventHandler(this.tvToolbox_DoubleClick);
+            this.tvToolbox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.beginDrag);
             // 
             // ctxMnuToolbox
             // 
@@ -169,39 +171,31 @@
             this.snapToGridToolStripMenuItem,
             this.alwaysSnapToGridToolStripMenuItem});
             this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
-            this.gridToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.gridToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
             this.gridToolStripMenuItem.Text = "&Rule";
             // 
             // snapToGridToolStripMenuItem
             // 
             this.snapToGridToolStripMenuItem.Name = "snapToGridToolStripMenuItem";
-            this.snapToGridToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.snapToGridToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.snapToGridToolStripMenuItem.Text = "&Snap to grid";
             this.snapToGridToolStripMenuItem.Click += new System.EventHandler(this.snapToGridToolStripMenuItem_Click_1);
             // 
             // alwaysSnapToGridToolStripMenuItem
             // 
             this.alwaysSnapToGridToolStripMenuItem.Name = "alwaysSnapToGridToolStripMenuItem";
-            this.alwaysSnapToGridToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.alwaysSnapToGridToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.alwaysSnapToGridToolStripMenuItem.Text = "Always snap to grid";
             this.alwaysSnapToGridToolStripMenuItem.Click += new System.EventHandler(this.alwaysSnapToGridToolStripMenuItem_Click);
             // 
             // ctlRuleEditor
             // 
+            this.ctlRuleEditor.AllowDrop = true;
             this.ctlRuleEditor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.ctlRuleEditor.Location = new System.Drawing.Point(153, 12);
             this.ctlRuleEditor.Name = "ctlRuleEditor";
             this.ctlRuleEditor.Size = new System.Drawing.Size(613, 334);
             this.ctlRuleEditor.TabIndex = 4;
-            // 
-            // btnPromote
-            // 
-            /*this.btnPromote.Location = new System.Drawing.Point(12, 354);
-            this.btnPromote.Name = "btnPromote";
-            this.btnPromote.Size = new System.Drawing.Size(75, 54);
-            this.btnPromote.TabIndex = 12;
-            this.btnPromote.Text = "Promote Rule To Toolbox";
-            this.btnPromote.UseVisualStyleBackColor = true;*/
             // 
             // frmRuleEdit
             // 
@@ -211,7 +205,6 @@
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(777, 429);
             this.Controls.Add(this.menuStrip1);
-            //this.Controls.Add(this.btnPromote);
             this.Controls.Add(this.ctlRuleEditor);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.label1);

@@ -59,7 +59,7 @@ namespace ruleEngine.ruleItems.windows
                 lastState = trigger;
                 return;
             }
-            lastState = trigger;
+            lastState = true;
 
             tristate newState = tristate.no;
             foreach (Process runningProcess in Process.GetProcesses())

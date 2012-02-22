@@ -42,6 +42,7 @@
     <WarningLevel>4</WarningLevel>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -50,12 +51,14 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'clr|AnyCPU' ">
     <OutputPath>bin\clr\</OutputPath>
     <DebugType>none</DebugType>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -94,6 +97,17 @@
     </Compile>
     <Compile Include="nodeEditForms\FrmChangeId.Designer.cs">
       <DependentUpon>FrmChangeId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\ruleItemDigitalIn.cs" />
+    <Compile Include="RuleEngine\ruleItemDigitalOut.cs" />
+    <Compile Include="RuleEngine\ruleItemPWM.cs" />
+    <Compile Include="RuleEngine\ruleItemTriac.cs" />
+    <Compile Include="RuleEngine\ruleSanityException.cs" />
+    <Compile Include="RuleEngine\windows\frmSensorOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\windows\frmSensorOptions.Designer.cs">
+      <DependentUpon>frmSensorOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="sensorControls\ctlOnOff.cs">
       <SubType>UserControl</SubType>
@@ -168,6 +182,9 @@
     <EmbeddedResource Include="nodeEditForms\FrmChangeId.resx">
       <DependentUpon>FrmChangeId.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\windows\frmSensorOptions.resx">
+      <DependentUpon>frmSensorOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="sensorControls\ctlOnOff.resx">
       <DependentUpon>ctlOnOff.cs</DependentUpon>

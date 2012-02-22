@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "transmitterDriver", "transm
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "winamp-lavalamp-plugin-setup", "netgui-extras\winamp-lavalamp-plugin-setup\winamp-lavalamp-plugin-setup.vdproj", "{21CF31F6-674D-41D9-B996-744AE11B4839}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wallboard", "wallboard\wallboard.vcxproj", "{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -241,6 +243,21 @@ Global
 		{21CF31F6-674D-41D9-B996-744AE11B4839}.Release|Mixed Platforms.Build.0 = Release
 		{21CF31F6-674D-41D9-B996-744AE11B4839}.Release|Win32.ActiveCfg = Release
 		{21CF31F6-674D-41D9-B996-744AE11B4839}.Release|Win32.Build.0 = Release
+		{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7}.clr|Any CPU.ActiveCfg = Release|Win32
+		{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7}.clr|Mixed Platforms.ActiveCfg = Release|Win32
+		{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7}.clr|Mixed Platforms.Build.0 = Release|Win32
+		{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7}.clr|Win32.ActiveCfg = Release|Win32
+		{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7}.clr|Win32.Build.0 = Release|Win32
+		{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7}.Debug|Win32.Build.0 = Debug|Win32
+		{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7}.Release|Any CPU.ActiveCfg = Release|Win32
+		{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7}.Release|Win32.ActiveCfg = Release|Win32
+		{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -249,5 +266,6 @@ Global
 		{7D9B81EE-27E0-4F0D-84AC-9C9B87B4E64D} = {F901F8A0-B678-409A-935D-671EB4A9FF45}
 		{7FFA5C6E-B3B5-4B18-853A-B49433CC856E} = {F901F8A0-B678-409A-935D-671EB4A9FF45}
 		{21CF31F6-674D-41D9-B996-744AE11B4839} = {F901F8A0-B678-409A-935D-671EB4A9FF45}
+		{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7} = {F901F8A0-B678-409A-935D-671EB4A9FF45}
 	EndGlobalSection
 EndGlobal

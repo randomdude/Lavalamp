@@ -6,7 +6,7 @@ namespace netGui
 {
     public class sensor
     {
-        private readonly Node parentNode;
+        private readonly Node _parentNode;
 
         public sensor()
         {
@@ -16,27 +16,34 @@ namespace netGui
 
         public sensor(Node newParentNode)
         {
-            parentNode = newParentNode;
+            _parentNode = newParentNode;
         }
+
+        public string name { get { return _parentNode.name + " : " + id; } }
 
         public Int16 id;
 
         // We cache the sensorType, as it's highly unlikely to change.
-        private sensorType cachedType = null;
+        private sensorType _cachedType;
         public sensorType type
         {
             get
             {
-                if (null == cachedType)
-                    cachedType = parentNode.doGetSensorType(this.id);
+                if (null == _cachedType)
+                    _cachedType = _parentNode.doGetSensorType(id);
 
-                return cachedType;
+                return _cachedType;
             }
         }
 
         public object getValue(bool silently)
         {
-            return parentNode.updateValue(this.id, silently);
+            return _parentNode.updateValue(id, silently);
+        }
+
+        public void setValue(object value,bool silently)
+        {
+            _parentNode.setValue(id,value,silently);
         }
 
     }

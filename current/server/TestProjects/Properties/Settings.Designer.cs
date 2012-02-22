@@ -25,7 +25,7 @@ namespace TestProjects.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\c0adz\\lavalamp\\current\\server\\testData")]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\testData")]
         public string testDataPath {
             get {
                 return ((string)(this["testDataPath"]));

@@ -9,6 +9,3 @@ typedef struct {
 } winampGeneralPurposePlugin;
 
 #define GPPHDR_VER 0x10
-
-extern winampGeneralPurposePlugin *gen_plugins[256];
-typedef winampGeneralPurposePlugin * (*winampGeneralPurposePluginGetter)();

@@ -9,11 +9,10 @@ namespace netGui
 {
     public partial class ctlSensor : UserControl
     {
-        private System.Threading.Timer updateTimer = null;
+        private System.Threading.Timer _updateTimer = null;
         private long _updateInterval = 0;
 
-        public readonly Node node;
-        public readonly Int16 targetSensorIndex ;
+        public readonly sensor _sensor;
 
         public event Action<Icon> onSetIcon;
 
@@ -21,7 +20,7 @@ namespace netGui
         {
             get
             {
-                return node.sensors[targetSensorIndex];
+                return _sensor;
             }
         }
 
@@ -38,15 +37,15 @@ namespace netGui
                 if (value != 0)
                 {
                     // re-init the timer
-                    if (null != updateTimer)
-                        updateTimer.Dispose();
+                    if (null != _updateTimer)
+                        _updateTimer.Dispose();
                     TimerCallback myTimerCallback = new TimerCallback(this.doUpdateNow);
-                    updateTimer = new System.Threading.Timer(myTimerCallback, new object(), 0, value);
+                    _updateTimer = new System.Threading.Timer(myTimerCallback, new object(), 0, value);
                 } 
                 else
                 {
-                    updateTimer.Dispose();
-                    updateTimer = null;
+                    _updateTimer.Dispose();
+                    _updateTimer = null;
                 }
             }
         }
@@ -85,21 +84,20 @@ namespace netGui
 
         #region constructors
         
-        public ctlSensor()
+        internal ctlSensor()
         {
             // Never call this constructor outside the VS IDE!
             InitializeComponent();
         }
 
-        public ctlSensor(Node newNode, short newSensorIndex)
+        public ctlSensor(sensor newSensor)
         {
             InitializeComponent();
 
-            node = newNode;
-            targetSensorIndex = newSensorIndex;
+            _sensor = newSensor;
 
-            lblTitle.Text = node.name + " : " + targetSensorIndex.ToString();
-            lblType.Text = newNode.sensors[newSensorIndex].type.FriendlyType;
+            lblTitle.Text = _sensor.name;
+            lblType.Text = _sensor.type.FriendlyType;
 
             sharedInit();
         }
@@ -213,7 +211,7 @@ namespace netGui
 
             try
             {
-                this.node.setValue(this.targetSensorIndex, sendThis, true);
+                _sensor.setValue(sendThis, true);
                 SafelySetStatus("last update OK");
             }
             catch (sensorException )
@@ -235,7 +233,7 @@ namespace netGui
 
         public ctlSensor copyOf()
         {
-            ctlSensor newMe = new ctlSensor(this.node, this.targetSensorIndex);
+            ctlSensor newMe = new ctlSensor(this._sensor);
 
             newMe.lblStatus.Text = lblStatus.Text;
             newMe.lblStatus.ForeColor = lblStatus.ForeColor;
@@ -285,7 +283,7 @@ namespace netGui
         private void ctlSensor_Load(object sender, EventArgs e)
         {
             // todo: make this work at design time
-            sensorTypeEnum thisSensorType = this.node.sensors[this.targetSensorIndex].type.enumeratedType;
+            sensorTypeEnum thisSensorType = _sensor.type.enumeratedType;
             
             if (sensorTypeEnum.generic_digital_in == thisSensorType)
                 graphTarget = new ctlReadout();
@@ -331,7 +329,7 @@ namespace netGui
         private void moveToNewFloatingWindowToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             // Create a new sensor form which isn't an MDI child of anything.
-            sensorFrm newSensor = new sensorFrm(this.node, this.targetSensorIndex);
+            sensorFrm newSensor = new sensorFrm(_sensor);
             newSensor.Show();
             newSensor.Controls.Remove(newSensor.ctlSensor1);
             newSensor.ctlSensor1 = this.copyOf();
@@ -344,7 +342,7 @@ namespace netGui
         private void copyToNewfloatingWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Create a new sensor form which isn't an MDI child of anything.
-            sensorFrm newSensor = new sensorFrm(this.node, this.targetSensorIndex);
+            sensorFrm newSensor = new sensorFrm(_sensor);
             newSensor.Show();
             newSensor.Controls.Remove(newSensor.ctlSensor1);
             newSensor.ctlSensor1 = this.copyOf();
