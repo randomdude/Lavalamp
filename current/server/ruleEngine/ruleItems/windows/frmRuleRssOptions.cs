@@ -110,7 +110,7 @@ namespace ruleEngine.ruleItems.windows
             string error;
             if (!isVaildFeed(out error))
             {
-                if(DialogResult.No == MessageBox.Show(this, error + " do you want to continue?","Warning",MessageBoxButtons.YesNo))
+                if(DialogResult.No == MessageBox.Show(this, error + " do you want to continue?", "Warning", MessageBoxButtons.YesNo))
                     return;
 
             }

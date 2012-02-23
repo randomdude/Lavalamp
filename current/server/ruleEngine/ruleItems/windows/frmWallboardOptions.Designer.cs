@@ -52,20 +52,20 @@
             // button1
             // 
             this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button1.Location = new System.Drawing.Point(12, 249);
+            this.button1.Location = new System.Drawing.Point(12, 237);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
+            this.button1.TabIndex = 100;
             this.button1.Text = "Cancel";
             this.button1.UseVisualStyleBackColor = true;
             // 
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(245, 249);
+            this.btnOK.Location = new System.Drawing.Point(242, 237);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 1;
+            this.btnOK.TabIndex = 90;
             this.btnOK.Text = "Ok";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
@@ -74,10 +74,10 @@
             this.cboColour.Cursor = System.Windows.Forms.Cursors.Default;
             this.cboColour.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboColour.FormattingEnabled = true;
-            this.cboColour.Location = new System.Drawing.Point(113, 110);
+            this.cboColour.Location = new System.Drawing.Point(107, 107);
             this.cboColour.Name = "cboColour";
             this.cboColour.Size = new System.Drawing.Size(213, 21);
-            this.cboColour.TabIndex = 2;
+            this.cboColour.TabIndex = 50;
             this.cboColour.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.drawColor);
             // 
             // cboSpecial
@@ -85,94 +85,94 @@
             this.cboSpecial.Cursor = System.Windows.Forms.Cursors.Default;
             this.cboSpecial.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSpecial.FormattingEnabled = true;
-            this.cboSpecial.Location = new System.Drawing.Point(113, 179);
+            this.cboSpecial.Location = new System.Drawing.Point(107, 161);
             this.cboSpecial.Name = "cboSpecial";
             this.cboSpecial.Size = new System.Drawing.Size(213, 21);
-            this.cboSpecial.TabIndex = 2;
+            this.cboSpecial.TabIndex = 70;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label1.Location = new System.Drawing.Point(12, 118);
+            this.label1.Location = new System.Drawing.Point(61, 110);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(37, 13);
+            this.label1.Size = new System.Drawing.Size(40, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Colour";
+            this.label1.Text = "Colour:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label2.Location = new System.Drawing.Point(12, 147);
+            this.label2.Location = new System.Drawing.Point(28, 137);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(34, 13);
+            this.label2.Size = new System.Drawing.Size(73, 13);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Mode";
+            this.label2.Text = "Display mode:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label3.Location = new System.Drawing.Point(12, 82);
+            this.label3.Location = new System.Drawing.Point(54, 83);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(44, 13);
+            this.label3.Size = new System.Drawing.Size(47, 13);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Position";
+            this.label3.Text = "Position:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label4.Location = new System.Drawing.Point(12, 182);
+            this.label4.Location = new System.Drawing.Point(26, 164);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(42, 13);
+            this.label4.Size = new System.Drawing.Size(75, 13);
             this.label4.TabIndex = 3;
-            this.label4.Text = "Special";
+            this.label4.Text = "Special effect:";
             // 
             // cboMode
             // 
             this.cboMode.Cursor = System.Windows.Forms.Cursors.Default;
             this.cboMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboMode.FormattingEnabled = true;
-            this.cboMode.Location = new System.Drawing.Point(113, 144);
+            this.cboMode.Location = new System.Drawing.Point(107, 134);
             this.cboMode.Name = "cboMode";
             this.cboMode.Size = new System.Drawing.Size(213, 21);
-            this.cboMode.TabIndex = 2;
+            this.cboMode.TabIndex = 60;
             // 
             // cboTextPosition
             // 
             this.cboTextPosition.Cursor = System.Windows.Forms.Cursors.Default;
             this.cboTextPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTextPosition.FormattingEnabled = true;
-            this.cboTextPosition.Location = new System.Drawing.Point(113, 79);
+            this.cboTextPosition.Location = new System.Drawing.Point(107, 80);
             this.cboTextPosition.Name = "cboTextPosition";
             this.cboTextPosition.Size = new System.Drawing.Size(213, 21);
-            this.cboTextPosition.TabIndex = 2;
+            this.cboTextPosition.TabIndex = 40;
             // 
             // cboPort
             // 
             this.cboPort.FormattingEnabled = true;
-            this.cboPort.Location = new System.Drawing.Point(113, 45);
+            this.cboPort.Location = new System.Drawing.Point(107, 53);
             this.cboPort.Name = "cboPort";
             this.cboPort.Size = new System.Drawing.Size(213, 21);
-            this.cboPort.TabIndex = 4;
+            this.cboPort.TabIndex = 30;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 53);
+            this.label5.Location = new System.Drawing.Point(72, 56);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(26, 13);
+            this.label5.Size = new System.Drawing.Size(29, 13);
             this.label5.TabIndex = 5;
-            this.label5.Text = "Port";
+            this.label5.Text = "Port:";
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(194, 12);
+            this.btnTest.Location = new System.Drawing.Point(134, 25);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(61, 23);
-            this.btnTest.TabIndex = 6;
+            this.btnTest.TabIndex = 10;
             this.btnTest.Text = "Test";
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
@@ -180,58 +180,61 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(9, 17);
+            this.label6.Location = new System.Drawing.Point(18, 10);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(89, 13);
+            this.label6.Size = new System.Drawing.Size(86, 13);
             this.label6.TabIndex = 7;
-            this.label6.Text = "Wallboard State: ";
+            this.label6.Text = "Wallboard State:";
             // 
             // lblState
             // 
-            this.lblState.AutoSize = true;
-            this.lblState.Location = new System.Drawing.Point(104, 17);
+            this.lblState.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblState.Location = new System.Drawing.Point(110, 9);
             this.lblState.Name = "lblState";
-            this.lblState.Size = new System.Drawing.Size(53, 13);
+            this.lblState.Size = new System.Drawing.Size(210, 13);
             this.lblState.TabIndex = 8;
             this.lblState.Text = "Unknown";
             this.lblState.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(261, 12);
+            this.btnReset.Location = new System.Drawing.Point(201, 25);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(65, 23);
-            this.btnReset.TabIndex = 9;
-            this.btnReset.Text = "Reset";
+            this.btnReset.Size = new System.Drawing.Size(119, 23);
+            this.btnReset.TabIndex = 20;
+            this.btnReset.Text = "Reset wallboard";
             this.btnReset.UseVisualStyleBackColor = true;
             // 
             // trackBarTime
             // 
             this.trackBarTime.AutoSize = false;
             this.trackBarTime.LargeChange = 5000;
-            this.trackBarTime.Location = new System.Drawing.Point(107, 206);
+            this.trackBarTime.Location = new System.Drawing.Point(107, 188);
             this.trackBarTime.Maximum = 120000;
             this.trackBarTime.Name = "trackBarTime";
-            this.trackBarTime.Size = new System.Drawing.Size(219, 42);
+            this.trackBarTime.Size = new System.Drawing.Size(210, 42);
             this.trackBarTime.SmallChange = 1000;
-            this.trackBarTime.TabIndex = 10;
+            this.trackBarTime.TabIndex = 80;
             this.trackBarTime.TickFrequency = 5000;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label7.Location = new System.Drawing.Point(12, 206);
+            this.label7.Location = new System.Drawing.Point(6, 188);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(86, 26);
             this.label7.TabIndex = 11;
-            this.label7.Text = "Time before text \r\ncan be change";
+            this.label7.Text = "Time before text \r\ncan be changed";
             // 
             // frmWallboardOptions
             // 
+            this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(332, 307);
+            this.CancelButton = this.button1;
+            this.ClientSize = new System.Drawing.Size(332, 271);
+            this.ControlBox = false;
             this.Controls.Add(this.label7);
             this.Controls.Add(this.trackBarTime);
             this.Controls.Add(this.btnReset);
@@ -251,6 +254,9 @@
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.button1);
             this.Cursor = System.Windows.Forms.Cursors.Default;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmWallboardOptions";
             this.Text = "Wallboard Options";
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTime)).EndInit();
