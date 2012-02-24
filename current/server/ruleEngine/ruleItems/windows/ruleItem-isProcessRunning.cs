@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using ruleEngine.pinDataTypes;
 using ruleEngine.Properties;
 using ruleEngine;
@@ -15,6 +16,9 @@ namespace ruleEngine.ruleItems.windows
     {
         private readonly ctlIsProcRunning control = new ctlIsProcRunning();
         private bool lastState;
+
+        [XmlElement("processName")]
+        public string processName { get { return control.processName; } set { control.processName = value; } }
 
         public override System.Drawing.Size preferredSize()
         {

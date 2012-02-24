@@ -6,7 +6,8 @@ namespace ruleEngine.ruleItems.windows
 {
     public partial class ctlIsProcRunning : UserControl
     {
-        public String processName = "";
+        private string _processName;
+        public String processName { get { return _processName; } set { _processName = value; this.lbl.Text = "Is process '" + _processName + "' running?"; } }
 
         public ctlIsProcRunning()
         {
@@ -33,11 +34,9 @@ namespace ruleEngine.ruleItems.windows
         {
             frmQuestion question = new frmQuestion("Name of process to check for:", processName);
 
-
             if (question.ShowDialog() == DialogResult.Cancel)
                 return;
 
-            this.lbl.Text = "Is process '" + question.result + "' running?";
             processName = question.result;
         }
     }
