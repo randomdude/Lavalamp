@@ -42,8 +42,6 @@ void closeWallboard(HANDLE hndport)
 	CloseHandle(hndport);
 }
 
-
-
 wallboardErrorState checkWallboardErrorState(HANDLE hndport)
 {
 	// Protocol format - 
@@ -116,7 +114,7 @@ void resetWallboard(HANDLE hndPort)
 
 // speed is 0-4
 // charset is 0-5
-void sendWallMessage(HANDLE hndport, const char* sayit, char pos, long style,  char col, unsigned char special,  bool dumppkt)
+void sendWallMessage(HANDLE hndport, const char* sayit, char pos, char style,  char col, unsigned char special,  bool dumppkt)
 /* displays message in sayit on all wallboards on port opened as port. Set special to 0xff for no special mode. 
    Note that speed and charset no longer work. */
 {
@@ -153,15 +151,24 @@ void sendWallMessage(HANDLE hndport, const char* sayit, char pos, long style,  c
 
 	message[MSG_POS]=pos;												// position specifier
 	if (style>0) 
-		message[MSG_STYLE]=(char)style+0x61; 
+		message[MSG_STYLE]=style; 
 	else 
 		message[MSG_STYLE]=0x62;		
 
-	if (special!=0xff)	// theres a special specifier. set style to 'n' and enter the specifier, moving the rest of the packet along one
+	if (special!=0xff)	
 	{
-		message[MSG_STYLE  ]='n';
-		message[MSG_STYLE+1]=special;
+		// theres a special specifier. set style to 'n' and enter the specifier, moving the rest of the packet along one
+		message[MSG_STYLE  ]= 'n';
+		message[MSG_STYLE+1]= special;
 		++MSG_TEXT;
+		
+		if (special > 0x39) // there is a special graphic an additional mode is required use the selected mode 
+		{
+			message[MSG_STYLE + 2] = 0x1b;
+			message[MSG_STYLE + 3] = pos;
+			message[MSG_STYLE + 4] = style;
+			MSG_TEXT += 3;
+		}
 	}
 
 	msglen = strlen(sayit) + MSG_TEXT + 2 + 1;				// find total packet length - before text, text length, extra space for escape codes, and 1 EOT char
@@ -213,35 +220,3 @@ bool readPacket(HANDLE hndport, char* packet)
 	}
 	return true;
 }
-
-const char* specialstyles[10] = { "twinkle",	\
-	"sparkle",	\
-	"snow",		\
-	"interlock",\
-	"switch",	\
-	"slide",	\
-	"spray",	\
-	"starburst",	\
-	"welcome",	\
-	"slot_machine" };
-
-const char* modes[20]={	"rotate",	\
-	"hold",			\
-	"flash",		\
-	"reserved",		\
-	"roll_up",		\
-	"roll_down",	\
-	"roll_left",	\
-	"roll_right",	\
-	"wipe_up",		\
-	"wipe_down",	\
-	"wipe_left",	\
-	"wipe_right",	\
-	"scroll",		\
-	"reserved",		\
-	"random_mode",	\
-	"roll_in",		\
-	"roll_out",		\
-	"wipe_in",		\
-	"wipe_out",		\
-	"compressed_rotate"	};

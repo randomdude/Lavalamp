@@ -12,11 +12,13 @@ namespace ruleEngine.ruleItems.windows
         public frmPickProcess()
         {
             InitializeComponent();
+            CenterToParent();
         }
 
         public frmPickProcess(string newName)
         {
             InitializeComponent();
+            CenterToParent();
             cboProcessName.Text = name = newName;
 
             // add running processes to process list

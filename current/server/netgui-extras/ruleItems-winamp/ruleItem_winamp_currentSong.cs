@@ -26,7 +26,7 @@ namespace ruleItems_winamp
 
         public override Image background()
         {
-            return Properties.Resources.winamp_stop;
+            return Properties.Resources.winamp_current;
         }
 
         public override Dictionary<string, pin> getPinInfo()

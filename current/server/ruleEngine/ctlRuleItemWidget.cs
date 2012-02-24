@@ -11,7 +11,7 @@ using ruleEngine.ruleItems;
 namespace ruleEngine
 {
     [Serializable]
-    public class ctlRuleItemWidget : UserControl 
+    public class ctlRuleItemWidget : UserControl
     {
         public readonly Dictionary<pin, PictureBox> conPins = new Dictionary<pin, PictureBox>();
         public ruleItemBase targetRuleItem;
@@ -45,6 +45,13 @@ namespace ruleEngine
             catch (NotImplementedException)
             {
                 // Fair enough, it has no menus to add.
+            }
+            // this probably should be done in addMenus on the base class but the code to openOptions isn't there so to avoid repeating code its here
+            var opt = newRuleItemBase.ruleItemOptions();
+            if (opt != null)
+            {
+                ContextMenuStrip.Items.Add(new ToolStripSeparator());
+                ContextMenuStrip.Items.Add(new ToolStripMenuItem("&Options...",null,openOptions));
             }
         }
 
@@ -197,11 +204,11 @@ namespace ruleEngine
 
         private void openOptions(object sender, EventArgs e)
         {
-            var opts = targetRuleItem.ruleItemOptions(); 
-           if (opts != null)
-           {
-               opts.ShowDialog(this);
-           }
+            var opts = targetRuleItem.ruleItemOptions();
+            if (opts != null)
+            {
+                opts.ShowDialog(this);
+            }
         }
 
         private void addIcon(pin pin)

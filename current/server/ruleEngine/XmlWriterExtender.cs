@@ -38,7 +38,7 @@ namespace ruleEngine
                 writer.WriteElementString("Y", toSerialise[thisKey].location.Y.ToString());
                 writer.WriteStartElement("config");
                 writer.WriteAttributeString("type", toSerialise[thisKey].GetType().ToString());
-
+                writer.WriteAttributeString("assembly",toSerialise[thisKey].GetType().Assembly.Location);
                 XmlSerializer mySer = new XmlSerializer(toSerialise[thisKey].GetType());
                 XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
                 ns.Add("", "");

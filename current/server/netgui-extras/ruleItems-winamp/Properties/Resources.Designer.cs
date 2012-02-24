@@ -60,6 +60,13 @@ namespace ruleItems_winamp.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap winamp_current {
+            get {
+                object obj = ResourceManager.GetObject("winamp_current", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap winamp_next {
             get {
                 object obj = ResourceManager.GetObject("winamp_next", resourceCulture);

@@ -209,10 +209,11 @@ namespace ruleEngine
 
                 if (xmlName == "config" && reader.NodeType == XmlNodeType.Element)
                 {
+                    string thisAssemblyName = reader["assembly"];
                     thisTypeName = reader["type"];
-
                     // Find the type of our new RuleItem
-                    Assembly thisAss = Assembly.GetExecutingAssembly();
+                    Assembly thisAss = thisAssemblyName == null ? Assembly.GetExecutingAssembly() : Assembly.LoadFile(thisAssemblyName);
+
                     Type thisType;
                     try
                     {

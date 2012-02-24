@@ -134,8 +134,10 @@
             // 
             // frmRuleRssOptions
             // 
+            this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(284, 215);
             this.Controls.Add(this.lblFeedAuthors);
             this.Controls.Add(this.lblFeedDescription);
@@ -147,6 +149,9 @@
             this.Controls.Add(this.btnCheck);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmRuleRssOptions";
             this.Text = "RSS reader options";
             this.ResumeLayout(false);

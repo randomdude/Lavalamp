@@ -24,7 +24,7 @@ namespace ruleEngine.ruleItems.windows
         private void commonConstructorStuff()
         {
             InitializeComponent();
-
+            CenterToParent();
             cmbLocation.Items.Clear();
             foreach (string positionName in Enum.GetNames(typeof(desktopMessageLocation)))
                 cmbLocation.Items.Add(positionName);

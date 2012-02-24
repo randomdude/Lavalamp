@@ -445,13 +445,15 @@ namespace netGui
                 saveThis.name = frm.result;
                 addNewRule(saveThis);
             }
+            else
+            {
+                // mark the listView item as not being open in the editor any more
+                ruleItem.SubItems[2].Text = false.ToString();
 
-            // mark the listView item as not being open in the editor any more
-            ruleItem.SubItems[2].Text = false.ToString();
-
-            // Stash our rule object in the listViewItem.
-            ruleItem.Tag = saveThis;
-        }
+                // Stash our rule object in the listViewItem.
+                ruleItem.Tag = saveThis;
+            }
+      }
 
 
         private ListViewItem findRuleItem(string findName)
@@ -525,6 +527,7 @@ namespace netGui
             FileInfo[] fileList;
             try
             {
+                
                 rulesDir = new DirectoryInfo(MyOptions.rulesPath);
                 fileList = rulesDir.GetFiles();
             } catch {

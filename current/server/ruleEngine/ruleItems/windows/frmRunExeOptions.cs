@@ -17,12 +17,13 @@ namespace ruleEngine.ruleItems
         public frmRunExeOptions()
         {
             InitializeComponent();
+            CenterToParent();
         }
 
         public frmRunExeOptions(string username, string password, bool impersonate, ProcessWindowStyle style)
         {
             InitializeComponent();
-
+            CenterToParent();
             this.chkImpersonate.Checked = impersonate;
             if (impersonate)
             {

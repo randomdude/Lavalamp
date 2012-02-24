@@ -7,28 +7,36 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Timers;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using ruleEngine.ruleItems.windows;
 using Timer = System.Windows.Forms.Timer;
 
 namespace ruleEngine.ruleItems
 {
+    /// <summary>
+    /// position the text appears on the wallboard contrary to the documentation fill appears to be 0x20 and middle as 0x30
+    /// on our model of the wallboard anyway..
+    /// </summary>
     public enum position
     {
-        middle, top, bottom, fill
+        middle = 0x30, top = 0x22, bottom = 0x26, fill = 0x20
     }
     public enum colour
     {
-        red, green, amber, rainbow1, rainbow2, mix, auto
+        red = 0x31, green = 0x32, amber = 0x33, rainbow1 = 0x39, rainbow2 = 0x41, mix = 0x42, auto = 0x43
     }
     public enum specialStyle
     {
-        twinkle, sparkle, snow, interlock, style_switch, slide, spray, starburst, welcome, slot_machine,
-        none
+        twinkle = 0x30, sparkle = 0x31, snow = 0x32, interlock = 0x33, style_switch = 0x34,
+        slide = 0x35, spray = 0x36, starburst = 0x37, welcome = 0x38, slot_machine = 0x39,
+        thankyou = 0x53, no_smoking = 0x55, dont_drink_and_drive = 0x56, running_animal = 0x57,
+        fireworks = 0x58, turbocar = 0x59, cherry_bomb = 0x5A,
+        none = 0xFF
     }
     public enum mode
     {
-        rotate, hold, flash, mode_reserved_1, roll_up, roll_down, roll_left, roll_right, wipe_up, wipe_down, wipe_left, wipe_right,
-        scroll, mode_reserved_2, random_mode, roll_in, roll_out, wipe_in, wipe_out, compressed_rotate
+        rotate = 0x61, hold = 0x62, flash = 0x63, mode_reserved_1 = 0x64, roll_up = 0x65, roll_down = 0x66, roll_left = 0x67, roll_right = 0x68, wipe_up = 0x69, wipe_down = 0x6A, wipe_left =0x6B, wipe_right =0x6C,
+        scroll = 0x6D, random_mode = 0x6F, roll_in = 0x70, roll_out = 0x71, wipe_in = 0x72, wipe_out = 0x73, compressed_rotate = 0x74
     }
     [ToolboxRule]
     [ToolboxRuleCategory("Notifiers")]
@@ -40,7 +48,8 @@ namespace ruleEngine.ruleItems
         /// <summary>
         /// the wallboard options created with defaults which will be overwritten if deserialized
         /// </summary>
-        private wallboardOptions _options = new wallboardOptions{   colour = colour.auto,
+        [XmlElement("options")]
+        public wallboardOptions _options = new wallboardOptions{   colour = colour.auto,
                                                                     mode = mode.hold,position = position.fill,
                                                                     specialStyle = specialStyle.none,
                                                                     state = wallboardErrorState.Unknown
@@ -50,7 +59,7 @@ namespace ruleEngine.ruleItems
 
         public ruleItemWallboard()
         {
-            controls.Add(new Label(){Text = "Wallboard"});
+            controls.Add(new Label() { Text = "Wallboard", Size = new Size(73, 37), Location = new Point(3, 39), TextAlign = ContentAlignment.MiddleCenter });
             _timeSincePrevChange.Tick += new EventHandler(_timeSincePrevChange_Tick);
         }
 
@@ -107,16 +116,6 @@ namespace ruleEngine.ruleItems
             
         }
 
-        public override ContextMenuStrip addMenus(ContextMenuStrip strip1)
-        {
-            var menu = strip1;
-            menu.Items.Add("Options", null, delegate
-                                                { 
-                                                   ruleItemOptions().ShowDialog();
-                                                });
-            return base.addMenus(strip1);
-        }
-
         public override Form ruleItemOptions()
         {
             frmWallboardOptions frm = new frmWallboardOptions(_options);
@@ -132,25 +131,47 @@ namespace ruleEngine.ruleItems
         }
 
         [Pure]
-        public static bool testWallboardConnectivity(string port)
+        public static wallboardErrorState testWallboardConnectivity(string port, position testPos, mode testMode, colour testCol, specialStyle testSpecial)
         {
-
+            if (string.IsNullOrEmpty(port))
+                throw new NullReferenceException("No Port set for wallboard");
             IntPtr portHwd = IntPtr.Zero;
             wallboardErrorState state;
             try
             {
                 portHwd = connectWallboard(port);
                 if (portHwd == IntPtr.Zero)
-                    return false;
+                    return wallboardErrorState.Unknown;
                 state = checkWallboardErrorState(portHwd);
+                if (state == wallboardErrorState.None)
+                {
+                    sendWallMessage(portHwd, "Hello World", testPos, testMode, testCol, testSpecial, false);
+                }
             }
             finally
             {
                 friendlyClosePort(ref portHwd);
             }
-            return state == wallboardErrorState.None;
+            return state;
         }
 
+        public static void resetWallboard(string port)
+        {
+            if (string.IsNullOrEmpty(port))
+                throw new NullReferenceException("No Port set for wallboard");
+            IntPtr portHwd = IntPtr.Zero;
+            try
+            {
+                portHwd = connectWallboard(port);
+                if (portHwd == IntPtr.Zero)
+                    return;
+                resetWallboard(portHwd);
+            }
+            finally
+            {
+                friendlyClosePort(ref portHwd);
+            }
+        }
 
         #region "Wallboard interop"
         public enum wallboardErrorState
@@ -169,7 +190,7 @@ namespace ruleEngine.ruleItems
         private static extern IntPtr connectWallboard([MarshalAs(UnmanagedType.LPStr)] string portname);
 
         [DllImport(@"wallboard.dll")]
-        private static extern void sendWallMessage(IntPtr port, [MarshalAs(UnmanagedType.LPStr)] String sayit, char pos, UInt32 style, char col, char special, bool dumppkt);
+        private static extern void sendWallMessage(IntPtr port, [MarshalAs(UnmanagedType.LPStr)] String sayit, position pos, mode style,  colour col, specialStyle special, bool dumppkt);
 
         [DllImport(@"wallboard.dll")]
         private static extern void closeWallboard(IntPtr port);
@@ -190,10 +211,12 @@ namespace ruleEngine.ruleItems
         private void friendlySendWallMessage(String sayit, position pos, mode useMode, colour col, specialStyle useStyle)
         {
             IntPtr portHwd = IntPtr.Zero;
+            if (string.IsNullOrEmpty(_options.port))
+                throw new NullReferenceException("No Port set for wallboard");
             try
             {
                 portHwd = connectWallboard(_options.port);
-                sendWallMessage(portHwd, sayit, posToMagic(pos), modeToMagic(useMode), colourToMagic(col), styleToMagic(useStyle), false);
+                sendWallMessage(portHwd, sayit, pos, useMode, col, useStyle, false);
                 
             }
             catch(wallboardException ex)
@@ -213,126 +236,6 @@ namespace ruleEngine.ruleItems
                 friendlyClosePort(ref portHwd);
             }
             
-        }
-
-        
-        private char modeToMagic(mode toFind)
-        {
-            switch (toFind)
-            {
-                case (mode.rotate):
-                    return (char)0x0;
-                case (mode.hold):
-                    return (char)0x1;
-                case (mode.flash):
-                    return (char)0x2;
-                case (mode.mode_reserved_1):
-                    return (char)0x3;
-                case (mode.roll_up):
-                    return (char)0x4;
-                case (mode.roll_down):
-                    return (char)0x5;
-                case (mode.roll_left):
-                    return (char)0x6;
-                case (mode.roll_right):
-                    return (char)0x7;
-                case (mode.wipe_up):
-                    return (char)0x8;
-                case (mode.wipe_down):
-                    return (char)0x9;
-                case (mode.wipe_left):
-                    return (char)0xa;
-                case (mode.wipe_right):
-                    return (char)0xb;
-
-                case (mode.scroll):
-                    return (char)0xc;
-                case (mode.mode_reserved_2):
-                    return (char)0xd;
-                case (mode.random_mode):
-                    return (char)0xe;
-                case (mode.roll_in):
-                    return (char)0xf;
-                case (mode.roll_out):
-                    return (char)0x10;
-                case (mode.wipe_in):
-                    return (char)0x11;
-                case (mode.wipe_out):
-                    return (char)0x12;
-                case (mode.compressed_rotate):
-                    return (char)0x13;
-
-            }
-            throw new wallboardException("unknown mode");
-        }
-
-        private char styleToMagic(specialStyle toFind)
-        {
-            // todo: there must be a better way to do this, with Enum...
-            switch (toFind)
-            {
-                case (specialStyle.twinkle):
-                    return (char)0x30;
-                case (specialStyle.sparkle):
-                    return (char)0x31;
-                case (specialStyle.snow):
-                    return (char)0x32;
-                case (specialStyle.interlock):
-                    return (char)0x33;
-                case (specialStyle.style_switch):
-                    return (char)0x34;
-                case (specialStyle.slide):
-                    return (char)0x35;
-                case (specialStyle.spray):
-                    return (char)0x36;
-                case (specialStyle.starburst):
-                    return (char)0x37;
-                case (specialStyle.welcome):
-                    return (char)0x38;
-                case (specialStyle.slot_machine):
-                    return (char)0x39;
-                case (specialStyle.none):
-                    return (char)0xff;
-            }
-            throw new wallboardException("unknown specialStyle");
-        }
-
-        private char colourToMagic(colour toFind)
-        {
-            switch (toFind)
-            {
-                case (colour.red):
-                    return '1';
-                case (colour.green):
-                    return '2';
-                case (colour.amber):
-                    return '3';
-                case (colour.rainbow1):
-                    return '9';
-                case (colour.rainbow2):
-                    return 'A';
-                case (colour.mix):
-                    return 'B';
-                case (colour.auto):
-                    return 'C';
-            }
-            throw new wallboardException("unknown colour");
-        }
-
-        private char posToMagic(position toFind)
-        {
-            switch (toFind)
-            {
-                case (position.top):
-                    return (char)0x22;
-                case (position.middle):
-                    return (char)0x20;
-                case (position.bottom):
-                    return (char)0x26;
-                case (position.fill):
-                    return (char)0x30;
-            }
-            throw new wallboardException("unknown position");
         }
     #endregion
 

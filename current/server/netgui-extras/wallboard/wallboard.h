@@ -17,7 +17,7 @@ enum wallboardErrorState
 };
 
 HANDLE connectWallboard(const char* port);
-void sendWallMessage(HANDLE hndPort,const std::string& sayIt, char pos, long style, char col, unsigned char special, bool dumppkt);
+void sendWallMessage(HANDLE hndPort,const char* sayIt, char pos, long style, char col, unsigned char special, bool dumppkt);
 wallboardErrorState checkWallboardErrorState(HANDLE hndPort);
 void resetWallboard(HANDLE hndPort);
 void closeWallboard(HANDLE hndPort);

@@ -65,25 +65,15 @@ namespace ruleEngine.ruleItems
 
         public override ContextMenuStrip addMenus(ContextMenuStrip toAddTo)
         {
-            ToolStripItem optionsItem = new ToolStripMenuItem("&Options");
-            optionsItem.Click += showOptionsDialog;
-            toAddTo.Items.Add(optionsItem);
-
             return base.addMenus(toAddTo);
         }
 
         public override Form ruleItemOptions()
         {
             FrmDesktopMessageOptions myOptForm = new FrmDesktopMessageOptions(myOptions);
-            myOptForm.Closed += showOptionsDialog;
+            myOptForm.Closed += delegate { if (myOptForm.DialogResult == DialogResult.OK)
+                                                myOptions = myOptForm.currentOptions; };
             return myOptForm;
-        }
-
-        private void showOptionsDialog(object sender, EventArgs e)
-        {
-            FrmDesktopMessageOptions myOptForm = (FrmDesktopMessageOptions) sender;
-            if (myOptForm.DialogResult == DialogResult.OK)
-                myOptions = new desktopMessageOptions(myOptForm.currentOptions);
         }
 
         public void showIt()

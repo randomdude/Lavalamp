@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -28,6 +29,8 @@ namespace ruleEngine.ruleItems
 
         private Label _lblFeedTitle;
         private PictureBox _imgFeed;
+        private Dictionary<string,bool> _readFeedItems = new Dictionary<string,bool>();
+        
 
         public ruleItemRss()
         {
@@ -40,12 +43,6 @@ namespace ruleEngine.ruleItems
         public override string ruleName()
         {
             return "Feed Reader";
-        }
-
-        public override ContextMenuStrip addMenus(ContextMenuStrip strip1)
-        {
-            strip1.Items.Add("&Options", null, (sender, e) => ruleItemOptions().ShowDialog());
-            return base.addMenus(strip1);
         }
 
         public override Form ruleItemOptions()
@@ -63,20 +60,37 @@ namespace ruleEngine.ruleItems
                 loadRuleItemDetails(_options);
             }
         }
-
+        public void resetReader()
+        {
+            _lastRead = DateTime.MinValue;
+            _readFeedItems.Clear();
+        }
         private void loadRuleItemDetails(rssOptions options)
         {
-            string feedText = String.IsNullOrEmpty(_options.title) ? "feed" : _options.title;
+            string feedText = String.IsNullOrEmpty(_options.title) ? "RSS Feed Reader" : _options.title;
             if (_lblFeedTitle.Text == feedText)
                 return;
             _lblFeedTitle.Text = feedText;
             _lastRead = DateTime.MinValue;
             if (!String.IsNullOrEmpty(_options.imageUrl))
             {
-                HttpWebRequest request = (HttpWebRequest) WebRequest.Create(new Uri(_options.imageUrl));
-                HttpWebResponse response = (HttpWebResponse) request.GetResponse();
-                Stream responseStream = response.GetResponseStream();
-                _imgFeed.Image = Image.FromStream(responseStream);
+                try
+                {
+                    HttpWebRequest request = (HttpWebRequest) WebRequest.Create(new Uri(_options.imageUrl));
+                    HttpWebResponse response = (HttpWebResponse) request.GetResponse();
+                    using (Stream responseStream = response.GetResponseStream())
+                    {
+                        if   (responseStream != null)
+                            _imgFeed.Image = Image.FromStream(responseStream);
+                        else
+                            errorHandler(new Exception("Invalid feed url"));
+                    }
+                }
+                catch(Exception ex)
+                {
+                    errorHandler(ex);
+                }
+               
             }
             else
             {
@@ -91,19 +105,18 @@ namespace ruleEngine.ruleItems
                      new pin
                          {
                              name = "feed title",
-                             description = "connect to feed for title of the currently read feed",
+                             description = "Title",
                              direction = pinDirection.output,
-                             valueType = typeof(pinDataTypes.pinDataString),
+                             valueType = typeof(pinDataTypes.pinDataString)
 
                          });
             pins.Add("feedContent",
                      new pin
                      {
                          name = "feed Content",
-                         description = "connect to feed for the content of the currently read feed",
+                         description = "Content", 
                          direction = pinDirection.output,
-                         valueType = typeof(pinDataTypes.pinDataString),
-
+                         valueType = typeof(pinDataTypes.pinDataString)
                      });
             pins.Add("trigger",
                      new pin
@@ -126,13 +139,15 @@ namespace ruleEngine.ruleItems
                 Stream feedStream = response.GetResponseStream();
                 if (feedStream == null || response.StatusCode != HttpStatusCode.OK)
                 {
-                    _imgFeed.Image = SetImageToInvaild(_imgFeed.Image);
+                    _imgFeed.Image = setImageToInvaild(_imgFeed.Image);
                     throw new WebException("Cannot access feed");
                 }
             
                 SyndicationFeed feed = SyndicationFeed.Load(XmlReader.Create(feedStream));
-                // order by ascending date all the feed items which have not been seen or have been updated and return the first.
-                SyndicationItem feedItem = feed.Items.Where(f => f.PublishDate > _lastRead || f.LastUpdatedTime > _lastRead)
+                // order by ascending date all the feed items which have not been seen or have been updated and return the first. 
+                // If the feed items do not have dates in it we can't filter it
+                SyndicationItem feedItem = feed.Items.Where(f => f.PublishDate > _lastRead || f.LastUpdatedTime > _lastRead ||
+                                                           (f.PublishDate == DateTime.MinValue && f.LastUpdatedTime == DateTime.MinValue && !_readFeedItems.ContainsKey(f.Title.Text)  ))
                                                      .OrderBy(f => f.LastUpdatedTime).ThenBy(f => f.PublishDate)
                                                      .FirstOrDefault();
                 // if null no new feed items are present
@@ -141,7 +156,8 @@ namespace ruleEngine.ruleItems
                     _lastRead = DateTime.Now;
                     return;
                 }
-                //regex removes all html tags from the feed.
+                _readFeedItems.Add(feedItem.Title.Text,true);
+                //regex removes all HTML tags from the feed.
                 Regex removeTags = new Regex("<(.|\n)*?>");
                 _lastRead = feedItem.PublishDate.LocalDateTime;
                 pinInfo["feedTitle"].value.data = removeTags.Replace(feedItem.Title.Text, string.Empty);
@@ -152,29 +168,24 @@ namespace ruleEngine.ruleItems
         }
         catch (Exception e)
         {
-            _imgFeed.Image = SetImageToInvaild(_imgFeed.Image);
+            _imgFeed.Image = setImageToInvaild(_imgFeed.Image);
             errorHandler(e);
-            return;
         }
 
      }
 
-        public Bitmap SetImageToInvaild(Image i)
+        public Bitmap setImageToInvaild(Image i)
         {
-            Bitmap Bmp = i as Bitmap;
-           
-            int rgb;
-            Color c;
-
-            for (int y = 0; y < Bmp.Height; y++)
-                for (int x = 0; x < Bmp.Width; x++)
+            Bitmap bmp = i as Bitmap;
+            Debug.Assert(bmp != null, "bmp != null");
+            for (int y = 0; y < bmp.Height; y++)
+                for (int x = 0; x < bmp.Width; x++)
                 {
-                    c = Bmp.GetPixel(x, y);
-                    rgb = (int)((c.R + c.G + c.B) / 3);
-                    Bmp.SetPixel(x, y, Color.FromArgb(rgb, rgb, rgb));
+                    Color c = bmp.GetPixel(x, y);
+                    int rgb = (c.R + c.G + c.B) / 3;
+                    bmp.SetPixel(x, y, Color.FromArgb(rgb, rgb, rgb));
                 }
-            return Bmp;
-
+            return bmp;
         }
     }
 

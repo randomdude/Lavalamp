@@ -14,6 +14,7 @@ namespace ruleEngine.ruleItems
         public frmCheckEmailOptions(emailOptions newOptions)
         {
             InitializeComponent();
+            CenterToParent();
             options = newOptions;
         }
 

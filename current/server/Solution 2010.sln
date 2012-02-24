@@ -22,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "netGui", "netGui\netGui.csp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netbridge", "netbridge\netbridge.vcxproj", "{ADFA97F6-D7A7-489F-86AF-D7A835D18E51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProjects\TestProject.csproj", "{0B3B6B27-EB33-4DB5-8E2D-3C225EF09DC8}"
+Project("{00000000-0000-0000-0000-000000000000}") = "TestProject", "TestProjects\TestProject.csproj", "{0B3B6B27-EB33-4DB5-8E2D-3C225EF09DC8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ruleItems-winamp", "netgui-extras\ruleItems-winamp\ruleItems-winamp.csproj", "{7D9B81EE-27E0-4F0D-84AC-9C9B87B4E64D}"
 EndProject
@@ -41,7 +41,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "transmitterDriver", "transm
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "winamp-lavalamp-plugin-setup", "netgui-extras\winamp-lavalamp-plugin-setup\winamp-lavalamp-plugin-setup.vdproj", "{21CF31F6-674D-41D9-B996-744AE11B4839}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wallboard", "wallboard\wallboard.vcxproj", "{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wallboard", "netgui-extras\wallboard\wallboard.vcxproj", "{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
