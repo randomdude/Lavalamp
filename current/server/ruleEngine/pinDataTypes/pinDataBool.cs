@@ -72,7 +72,7 @@ namespace ruleEngine.pinDataTypes
                     convertedData = true;
             }
             else
-                throw new ArgumentTypeException("Invaild Pin types! No conversion exists between " + tpyToConvert + " and bool");
+                throw new ArgumentTypeException("Invaild pin types - no conversion exists between " + tpyToConvert + " and bool.");
 
             return convertedData;
 

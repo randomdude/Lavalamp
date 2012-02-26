@@ -171,20 +171,20 @@
             this.snapToGridToolStripMenuItem,
             this.alwaysSnapToGridToolStripMenuItem});
             this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
-            this.gridToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
+            this.gridToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.gridToolStripMenuItem.Text = "&Rule";
             // 
             // snapToGridToolStripMenuItem
             // 
             this.snapToGridToolStripMenuItem.Name = "snapToGridToolStripMenuItem";
-            this.snapToGridToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.snapToGridToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.snapToGridToolStripMenuItem.Text = "&Snap to grid";
             this.snapToGridToolStripMenuItem.Click += new System.EventHandler(this.snapToGridToolStripMenuItem_Click_1);
             // 
             // alwaysSnapToGridToolStripMenuItem
             // 
             this.alwaysSnapToGridToolStripMenuItem.Name = "alwaysSnapToGridToolStripMenuItem";
-            this.alwaysSnapToGridToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.alwaysSnapToGridToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.alwaysSnapToGridToolStripMenuItem.Text = "Always snap to grid";
             this.alwaysSnapToGridToolStripMenuItem.Click += new System.EventHandler(this.alwaysSnapToGridToolStripMenuItem_Click);
             // 
@@ -192,7 +192,7 @@
             // 
             this.ctlRuleEditor.AllowDrop = true;
             this.ctlRuleEditor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.ctlRuleEditor.Location = new System.Drawing.Point(153, 12);
+            this.ctlRuleEditor.Location = new System.Drawing.Point(153, 27);
             this.ctlRuleEditor.Name = "ctlRuleEditor";
             this.ctlRuleEditor.Size = new System.Drawing.Size(613, 334);
             this.ctlRuleEditor.TabIndex = 4;
@@ -217,9 +217,9 @@
             this.Name = "frmRuleEdit";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Rule editor";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRuleEdit_FormClosing);
             this.Load += new System.EventHandler(this.frmRuleEdit_Load);
             this.ResizeBegin += new System.EventHandler(this.frmRuleEdit_ResizeBegin);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRuleEdit_FormClosing);
             this.ResizeEnd += new System.EventHandler(this.frmRuleEdit_ResizeEnd);
             this.ctxMnuToolbox.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);

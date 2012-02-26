@@ -59,7 +59,7 @@ namespace ruleEngine.ruleItems
 
         protected ruleItemBase()
         {
-            // Control stuff (!?)
+            // Control stuff 
             Size currentPreferredSize = preferredSize();
 
             _errorIcon.Image = Properties.Resources.error.ToBitmap();
@@ -83,6 +83,7 @@ namespace ruleEngine.ruleItems
                 lblCaption.Width = currentPreferredSize.Width;
                 lblCaption.Height = currentPreferredSize.Height - 15;
                 lblCaption.TextAlign = ContentAlignment.BottomCenter;
+                lblCaption.BackColor = Color.Transparent;
 
                 controls.Add(lblCaption);
             }
@@ -188,7 +189,7 @@ namespace ruleEngine.ruleItems
         public event timelineEventHandlerDelegate newTimelineEvent;
         public delegate void timelineEventHandlerDelegate(ruleItemBase sender, timelineEventArgs e);
 
-        protected void onRequestNewTimelineEvent(timelineEventArgs e)
+        public void onRequestNewTimelineEvent(timelineEventArgs e)
         {
             if (newTimelineEvent != null)
             {
@@ -199,7 +200,7 @@ namespace ruleEngine.ruleItems
         public event requestNewTimelineEventInFutureDelegate newTimelineEventInFuture;
         public delegate void requestNewTimelineEventInFutureDelegate(ruleItemBase sender, timelineEventArgs e, int timeBeforeEvent);
 
-        protected void onRequestNewTimelineEventInFuture(timelineEventArgs e, int timeBeforeEvent)
+        public void onRequestNewTimelineEventInFuture(timelineEventArgs e, int timeBeforeEvent)
         {
             if (newTimelineEventInFuture != null)
             {

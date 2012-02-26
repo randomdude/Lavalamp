@@ -219,6 +219,8 @@ namespace ruleEngine
             thisPinBox.Cursor = Cursors.Hand;
             thisPinBox.BackColor = Color.Transparent;
             thisPinBox.MouseMove += new MouseEventHandler(thisPinBox_MouseMove);
+            ToolTip tt = new ToolTip();
+            tt.SetToolTip(thisPinBox, pin.description);
             conPins.Add(pin, thisPinBox);
             thisPinBox.Tag = pin;
             pin.imageBox = thisPinBox;

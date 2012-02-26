@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -28,9 +29,8 @@ namespace ruleEngine.ruleItems.windows
             }
         }
 
-        internal rssOptions getOptions() { return _options;}
+        internal rssOptions getOptions() { return _options; }
         
-
         private void btnCheck_Click(object sender, EventArgs e)
         {
             string error;
@@ -40,8 +40,8 @@ namespace ruleEngine.ruleItems.windows
         /// <summary>
         /// Checks that the address of the field entered is a valid RSS feed
         /// </summary>
-        /// <param name="error">An human readable error message</param>
-        /// <returns>If there is an error</returns>
+        /// <param name="error">A human readable error message</param>
+        /// <returns>TRUE if there is an error, FALSE if not</returns>
         private bool isVaildFeed(out string error)
         {
             Uri url;
@@ -90,15 +90,33 @@ namespace ruleEngine.ruleItems.windows
                 }
                 lblFeedTitle.Text = _options.title = feed.Title.Text;
                 lblFeedDescription.Text = feed.Description.Text;
-                lblFeedAuthors.Text = string.Join(", ", feed.Authors.Select(s => s.Name + " (" + s.Email + " )").ToArray());
+
+                List<string> authorArray = new List<string>();
+                foreach (SyndicationPerson author in feed.Authors)
+                {
+                    if (!String.IsNullOrEmpty(author.Name) &&
+                        !String.IsNullOrEmpty(author.Email)   )
+                    {
+                        authorArray.Add(author.Name + " (" + author.Email + " )");
+                    }
+                    else if (!String.IsNullOrEmpty(author.Name))
+                    {
+                        authorArray.Add(author.Name);
+                    }
+                    else if (!String.IsNullOrEmpty(author.Email))
+                    {
+                        authorArray.Add(author.Email);
+                    }
+                    else
+                    {
+                        authorArray.Add("unknown");
+                    }
+                }
+
+                lblFeedAuthors.Text = string.Join(", ", authorArray.ToArray());
                 if (feed.Links.Count > 0)
-                {
                     _options.website = feed.Links[0].Uri.ToString();
-                }
-                if(feed.ImageUrl != null)
-                {
-                    _options.imageUrl = feed.ImageUrl.ToString();
-                }
+
                 return true;
             }
             catch (Exception)

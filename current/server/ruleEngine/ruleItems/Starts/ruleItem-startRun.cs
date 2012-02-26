@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using ruleEngine;
 using ruleEngine.pinDataTypes;
-using ruleEngine.ruleItems.windows;
-using Timer = System.Threading.Timer;
 
 namespace ruleEngine.ruleItems.Starts
 {
@@ -16,17 +13,9 @@ namespace ruleEngine.ruleItems.Starts
 
         public override string ruleName() { return "At start of run"; }
 
-        public ruleItem_startRun()
+        public override string caption()
         {
-            lblCaption = new Label();
-            lblCaption.AutoSize = false;
-            lblCaption.Width = preferredSize().Width;
-            lblCaption.Height = 20;
-            lblCaption.Left = 0;
-            lblCaption.Top = preferredSize().Height - lblCaption.Height;
-            lblCaption.Text = "At start of run";
-            lblCaption.Visible = true;
-            controls.Add(lblCaption);
+            return "At start of run";
         }
 
         public override void start()

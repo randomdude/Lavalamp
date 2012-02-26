@@ -44,15 +44,12 @@
             this.label6 = new System.Windows.Forms.Label();
             this.lblState = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
-            this.trackBarTime = new System.Windows.Forms.TrackBar();
-            this.label7 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarTime)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
             this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button1.Location = new System.Drawing.Point(12, 237);
+            this.button1.Location = new System.Drawing.Point(12, 205);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 100;
@@ -62,7 +59,7 @@
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(242, 237);
+            this.btnOK.Location = new System.Drawing.Point(245, 205);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 90;
@@ -206,38 +203,14 @@
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
-            // trackBarTime
-            // 
-            this.trackBarTime.AutoSize = false;
-            this.trackBarTime.LargeChange = 5000;
-            this.trackBarTime.Location = new System.Drawing.Point(107, 188);
-            this.trackBarTime.Maximum = 120000;
-            this.trackBarTime.Name = "trackBarTime";
-            this.trackBarTime.Size = new System.Drawing.Size(210, 42);
-            this.trackBarTime.SmallChange = 1000;
-            this.trackBarTime.TabIndex = 80;
-            this.trackBarTime.TickFrequency = 5000;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label7.Location = new System.Drawing.Point(6, 188);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(86, 26);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Time before text \r\ncan be changed";
-            // 
             // frmWallboardOptions
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button1;
-            this.ClientSize = new System.Drawing.Size(332, 271);
+            this.ClientSize = new System.Drawing.Size(332, 240);
             this.ControlBox = false;
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.trackBarTime);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.lblState);
             this.Controls.Add(this.label6);
@@ -259,8 +232,8 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmWallboardOptions";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Wallboard Options";
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarTime)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -284,7 +257,5 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lblState;
         private System.Windows.Forms.Button btnReset;
-        private System.Windows.Forms.TrackBar trackBarTime;
-        private System.Windows.Forms.Label label7;
     }
 }

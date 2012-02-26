@@ -19,7 +19,7 @@ namespace ruleEngine.ruleItems
     /// </summary>
     public enum position
     {
-        middle = 0x30, top = 0x22, bottom = 0x26, fill = 0x20
+        fill = 0x30, top = 0x22, bottom = 0x26, middle = 0x20
     }
     public enum colour
     {
@@ -38,6 +38,7 @@ namespace ruleEngine.ruleItems
         rotate = 0x61, hold = 0x62, flash = 0x63, mode_reserved_1 = 0x64, roll_up = 0x65, roll_down = 0x66, roll_left = 0x67, roll_right = 0x68, wipe_up = 0x69, wipe_down = 0x6A, wipe_left =0x6B, wipe_right =0x6C,
         scroll = 0x6D, random_mode = 0x6F, roll_in = 0x70, roll_out = 0x71, wipe_in = 0x72, wipe_out = 0x73, compressed_rotate = 0x74
     }
+
     [ToolboxRule]
     [ToolboxRuleCategory("Notifiers")]
     public class ruleItemWallboard : ruleItemBase
@@ -71,13 +72,13 @@ namespace ruleEngine.ruleItems
 
         public override string ruleName()
         {
-            return "Wallboard Notifier";
+            return "Wallboard notifier";
         }
 
         public override Dictionary<string, pin> getPinInfo()
         {
             var pins = base.getPinInfo();
-            pins.Add("input",new pin(){name = "input",description = "Display on Wallboard",direction = pinDirection.input, valueType = typeof(pinDataTypes.pinDataString)});
+            pins.Add("input",new pin(){name = "input", description = "Display on wallboard", direction = pinDirection.input, valueType = typeof(pinDataTypes.pinDataString)});
             return pins;
         }
 
@@ -94,24 +95,19 @@ namespace ruleEngine.ruleItems
                 }
                 if (_updatesTodo.Count != 0)
                 {
-                    if(newValToShow != _lastVal)
+                    if (newValToShow != _lastVal)
                         _updatesTodo.Enqueue(newValToShow);
                     newValToShow = _updatesTodo.Dequeue();
                 }
-                else // we only want to update the last value if it hasn't been queued already
+                else
+                {
+                    // we only want to update the last value if it hasn't been queued already
                     _lastVal = newValToShow;
-                
+                }
+
                 friendlySendWallMessage(newValToShow, _options.position, _options.mode,
                                         _options.colour,
                                         _options.specialStyle);
-
-                if (_options.timeBeforeCanBeChanged > 0)
-                {
-                    _canBeChangedNow = false;
-                    _timeSincePrevChange.Interval = _options.timeBeforeCanBeChanged;
-                    _timeSincePrevChange.Start();
-                
-                }
             }
             
         }
@@ -134,7 +130,7 @@ namespace ruleEngine.ruleItems
         public static wallboardErrorState testWallboardConnectivity(string port, position testPos, mode testMode, colour testCol, specialStyle testSpecial)
         {
             if (string.IsNullOrEmpty(port))
-                throw new NullReferenceException("No Port set for wallboard");
+                throw new Exception("No port set for wallboard");
             IntPtr portHwd = IntPtr.Zero;
             wallboardErrorState state;
             try
@@ -158,7 +154,7 @@ namespace ruleEngine.ruleItems
         public static void resetWallboard(string port)
         {
             if (string.IsNullOrEmpty(port))
-                throw new NullReferenceException("No Port set for wallboard");
+                throw new Exception("No port set for wallboard");
             IntPtr portHwd = IntPtr.Zero;
             try
             {
@@ -229,7 +225,7 @@ namespace ruleEngine.ruleItems
                 //attempt to get additional info about the error if the handle was successfully opened
                 if (portHwd != IntPtr.Zero)
                     _options.state = checkWallboardErrorState(portHwd);
-                errorHandler(new wallboardException("an exception occurred while sending " + sayit + " to the wallboard", _options.state, ex));
+                errorHandler(new wallboardException("An exception occurred while sending " + sayit + " to the wallboard", _options.state, ex));
             }
             finally
             {
@@ -241,7 +237,7 @@ namespace ruleEngine.ruleItems
 
     }
 
-    internal class wallboardException : Exception
+    public class wallboardException : Exception
     {
         private readonly ruleItemWallboard.wallboardErrorState _errorCode;
         public wallboardException(string exeception) : base(exeception) { }
@@ -253,7 +249,7 @@ namespace ruleEngine.ruleItems
         {
             get
             {
-                return base.Message + " Wallboard Error: " + _errorCode.ToString();
+                return base.Message + " Wallboard error: " + _errorCode.ToString();
             }
         }
     }
@@ -261,8 +257,6 @@ namespace ruleEngine.ruleItems
     [Serializable]
     public class wallboardOptions
     {
-        public int timeBeforeCanBeChanged { get; set; }
-
         public string port{ get; set; }
 
         public mode mode { get; set; }

@@ -121,6 +121,39 @@ void sendWallMessage(HANDLE hndport, const char* sayit, char pos, char style,  c
 	unsigned long done;
 	long msglen;
 
+	// first, send a string requesting that 'file A' is the maximum length (see protoacd.doc appendix C).
+	// This only really needs doing once, but we do it on every message because I'm lazy.
+#define textFileLenPacketLen 35
+	char textFileLenPacket[textFileLenPacketLen] = 
+	{
+		00,00,00,00,00,	// 5 nulls are required by the message center to lock on to the baud rate
+		0x01,	//	"Start of Header" character
+		0x5a, 0x30, 0x30,	// "Z00" -  Unit Type Code/Address Field
+		0x02,	// "Start of Text" character
+		'E',	//Write Special Functions Command Code
+		'$',	// Special Functions label for Memory Configuration (directory)
+		'A', 	// File Label
+		'A',	//TEXT file type
+		'U',	//"Unlocked" keyboard status
+		'0','4','0','0',	// TEXT file size in bytes (hexadecimal or 1024 decimal) 
+		'F','F',			// TEXT file run start time ("FF" represents "always")
+		'0','0',			// TEXT file run stop time (ignored when start time is "always")
+		'A',				// File Label
+		'B',				// STRING file type
+		'L',				// "Locked" keyboard status
+		'0','0','2','0',	// STRING file size in bytes (hexadecimal or 32 decimal)
+		' ',' ',			// ignored
+		' ',' ',			// ignored
+		0x04				// "End of Transmission" character
+	};
+	bool s = WriteFile(hndport, textFileLenPacket, textFileLenPacketLen, &done, NULL);
+	if (!s || done != textFileLenPacketLen)
+	{
+		// No error handling here.. oops.
+		return;
+	}
+
+
 	#define MSG_POS 13
 	#define MSG_STYLE 14
 	long MSG_TEXT = 15;		// this changes if we're writing a SPECIAL to allow for the extra byte
@@ -133,21 +166,24 @@ void sendWallMessage(HANDLE hndport, const char* sayit, char pos, char style,  c
 	// Start of Text - 0x02
 	// Command code  - 'A'  (Write text file)
 	// Start of text file - 'A' 
-	// File label	 - '0' (prioirity file)
+	// File label	 - 'A' (the default file displayed on clear)
 	// Escape code   - 0x1B
 	// Display position
 	// Mode code
 	// (optional byte of 'special' set only when mode = 'n')
 	// ASCII data ....
 	// EOT	         - 0x04
-	char message[255]={ 00,00,00,00,00,	\
-						01,				\
-						'Z',			\
-						'?','?',		\
-						 02,			\
-						'A',			\
-						'0',
-						0x1b	};
+#define msgPreludeLen 13
+	char* message = (char*)malloc(50 + strlen(sayit));
+	char msgPrelude[msgPreludeLen]={ 00,00,00,00,00,	\
+									01,				\
+									'Z',			\
+									'?','?',		\
+									 02,			\
+									'A',			\
+									'A',
+									0x1b	};
+	memcpy(message, msgPrelude, msgPreludeLen);
 
 	message[MSG_POS]=pos;												// position specifier
 	if (style>0) 
@@ -177,8 +213,12 @@ void sendWallMessage(HANDLE hndport, const char* sayit, char pos, char style,  c
 	message[MSG_TEXT+1]=col;
 
 	if (dumppkt)
+	{
 		for (int n=0; n<msglen; n++)
+		{
 			printf(" %d.. '%c' 0x%x\n", n, message[n],message[n] );
+		}
+	}
 
 	WriteFile(hndport, message, msglen, &done, NULL);
 } 

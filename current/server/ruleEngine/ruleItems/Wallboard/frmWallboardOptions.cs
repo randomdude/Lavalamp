@@ -35,13 +35,11 @@ namespace ruleEngine.ruleItems.windows
 
         void frmWallboardOptions_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-
             _selectedOpt.port = cboPort.Text;
             _selectedOpt.colour = (colour)cboColour.SelectedValue;
             _selectedOpt.specialStyle = (specialStyle)cboSpecial.SelectedValue;
             _selectedOpt.position = (position)cboTextPosition.SelectedValue;
             _selectedOpt.mode = (mode)cboMode.SelectedValue;
-            _selectedOpt.timeBeforeCanBeChanged = trackBarTime.Value;
         }
 
         private void drawColor(object sender, DrawItemEventArgs e)

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -20,7 +19,6 @@ namespace ruleEngine.ruleItems
     [ToolboxRuleCategory("Internet")]
     public class ruleItemRss : ruleItemBase
     {
-        
         [XmlElement("rssOptions")]
         public rssOptions _options = new rssOptions();
 
@@ -29,20 +27,33 @@ namespace ruleEngine.ruleItems
 
         private Label _lblFeedTitle;
         private PictureBox _imgFeed;
-        private Dictionary<string,bool> _readFeedItems = new Dictionary<string,bool>();
-        
+        private Dictionary<string, bool> _readFeedItems = new Dictionary<string, bool>();
 
         public ruleItemRss()
         {
-            _imgFeed = new PictureBox { SizeMode = PictureBoxSizeMode.StretchImage, Size = new Size(39, 33), Location = new Point(19, 3),Margin = new Padding(3,3,3,3)};
-            controls.Add(_imgFeed);
-            _lblFeedTitle = new Label(){Size = new Size(73, 37),Location = new Point(3, 39),TextAlign = ContentAlignment.MiddleCenter};
+            _imgFeed = new PictureBox
+                           {
+                               SizeMode = PictureBoxSizeMode.StretchImage,
+                               Size = new Size(39, 33),
+                               Location = new Point((preferredSize().Width/2) - (39/2),
+                                   (preferredSize().Height / 3) - (33 / 2)),
+                               Margin = new Padding(3, 3, 3, 3)
+                           };
+            controls.Add(_imgFeed); 
+            _lblFeedTitle = new Label()
+            {
+                Size = new Size( preferredSize().Width, preferredSize().Height - 15),
+                Location = new Point(0, 0),
+                BackColor = Color.Transparent,
+                TextAlign = ContentAlignment.BottomCenter
+            };
             controls.Add(_lblFeedTitle);
             loadRuleItemDetails(_options);
         }
+
         public override string ruleName()
         {
-            return "Feed Reader";
+            return "RSS reader";
         }
 
         public override Form ruleItemOptions()
@@ -52,25 +63,35 @@ namespace ruleEngine.ruleItems
             return options;
         }
 
+        public override Size preferredSize()
+        {
+            return new Size(150, 105);
+        }
+
         void options_Closed(object sender, EventArgs e)
         {
             frmRuleRssOptions options = (frmRuleRssOptions) sender;
+
             if (options.DialogResult == DialogResult.OK)
             {
                 loadRuleItemDetails(_options);
             }
         }
+
         public void resetReader()
         {
             _lastRead = DateTime.MinValue;
             _readFeedItems.Clear();
         }
+
         private void loadRuleItemDetails(rssOptions options)
         {
-            string feedText = String.IsNullOrEmpty(_options.title) ? "RSS Feed Reader" : _options.title;
+//            _lblFeedTitle.Text = "RSS reader";
+            string feedText = String.IsNullOrEmpty(_options.title) ? "RSS reader" : "RSS: " + _options.title;
             if (_lblFeedTitle.Text == feedText)
                 return;
             _lblFeedTitle.Text = feedText;
+
             _lastRead = DateTime.MinValue;
             if (!String.IsNullOrEmpty(_options.imageUrl))
             {
@@ -80,7 +101,7 @@ namespace ruleEngine.ruleItems
                     HttpWebResponse response = (HttpWebResponse) request.GetResponse();
                     using (Stream responseStream = response.GetResponseStream())
                     {
-                        if   (responseStream != null)
+                        if (responseStream != null)
                             _imgFeed.Image = Image.FromStream(responseStream);
                         else
                             errorHandler(new Exception("Invalid feed url"));
@@ -107,7 +128,7 @@ namespace ruleEngine.ruleItems
                              name = "feed title",
                              description = "Title",
                              direction = pinDirection.output,
-                             valueType = typeof(pinDataTypes.pinDataString)
+                             valueType = typeof(pinDataString)
 
                          });
             pins.Add("feedContent",
@@ -116,13 +137,13 @@ namespace ruleEngine.ruleItems
                          name = "feed Content",
                          description = "Content", 
                          direction = pinDirection.output,
-                         valueType = typeof(pinDataTypes.pinDataString)
+                         valueType = typeof(pinDataString)
                      });
             pins.Add("trigger",
                      new pin
                          {
                              name = "trigger",
-                             description = "set when you want to check for new info in your feed",
+                             description = "Poll",
                              direction = pinDirection.input
                          });
             return pins;
@@ -132,60 +153,104 @@ namespace ruleEngine.ruleItems
         {
             if (!pinInfo["trigger"].value.asBoolean())
                 return;
+
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_options.url);
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                HttpWebRequest request = (HttpWebRequest) WebRequest.Create(_options.url);
+                HttpWebResponse response = (HttpWebResponse) request.GetResponse();
                 Stream feedStream = response.GetResponseStream();
                 if (feedStream == null || response.StatusCode != HttpStatusCode.OK)
-                {
-                    _imgFeed.Image = setImageToInvaild(_imgFeed.Image);
                     throw new WebException("Cannot access feed");
-                }
-            
+
                 SyndicationFeed feed = SyndicationFeed.Load(XmlReader.Create(feedStream));
                 // order by ascending date all the feed items which have not been seen or have been updated and return the first. 
                 // If the feed items do not have dates in it we can't filter it
-                SyndicationItem feedItem = feed.Items.Where(f => f.PublishDate > _lastRead || f.LastUpdatedTime > _lastRead ||
-                                                           (f.PublishDate == DateTime.MinValue && f.LastUpdatedTime == DateTime.MinValue && !_readFeedItems.ContainsKey(f.Title.Text)  ))
-                                                     .OrderBy(f => f.LastUpdatedTime).ThenBy(f => f.PublishDate)
-                                                     .FirstOrDefault();
+                SyndicationItem feedItem =
+                    feed.Items.Where(f => f.PublishDate > _lastRead || f.LastUpdatedTime > _lastRead ||
+                                          (f.PublishDate == DateTime.MinValue && f.LastUpdatedTime == DateTime.MinValue &&
+                                           !_readFeedItems.ContainsKey(getItemID(f))))
+                        .OrderBy(f => f.LastUpdatedTime).ThenBy(f => f.PublishDate)
+                        .FirstOrDefault();
                 // if null no new feed items are present
                 if (feedItem == null)
                 {
                     _lastRead = DateTime.Now;
                     return;
                 }
-                _readFeedItems.Add(feedItem.Title.Text,true);
-                //regex removes all HTML tags from the feed.
-                Regex removeTags = new Regex("<(.|\n)*?>");
+                _readFeedItems.Add(getItemID(feedItem), true);
                 _lastRead = feedItem.PublishDate.LocalDateTime;
-                pinInfo["feedTitle"].value.data = removeTags.Replace(feedItem.Title.Text, string.Empty);
-                pinInfo["feedContent"].value.data = removeTags.Replace(feedItem.Summary.Text, string.Empty);
-                onRequestNewTimelineEvent(new timelineEventArgs(new pinDataString(pinInfo["feedTitle"].value as pinDataString)));
-                onRequestNewTimelineEvent(new timelineEventArgs(new pinDataString(pinInfo["feedContent"].value as pinDataString)));
-         
-        }
-        catch (Exception e)
-        {
-            _imgFeed.Image = setImageToInvaild(_imgFeed.Image);
-            errorHandler(e);
-        }
 
-     }
-
-        public Bitmap setImageToInvaild(Image i)
-        {
-            Bitmap bmp = i as Bitmap;
-            Debug.Assert(bmp != null, "bmp != null");
-            for (int y = 0; y < bmp.Height; y++)
-                for (int x = 0; x < bmp.Width; x++)
+                if (feedItem.Content != null)
                 {
-                    Color c = bmp.GetPixel(x, y);
-                    int rgb = (c.R + c.G + c.B) / 3;
-                    bmp.SetPixel(x, y, Color.FromArgb(rgb, rgb, rgb));
+                    string newSummary = getItemContent(feedItem);
+                    newSummary = newSummary.Replace("<foo type=\"html\" xmlns=\"bar\">", "");
+                    newSummary = newSummary.Replace("</foo>", "");
+                    newSummary = unXMLEscape(newSummary);
+                    onRequestNewTimelineEvent(
+                        new timelineEventArgs(new pinDataString(newSummary, this, pinInfo["feed Content"])));
                 }
-            return bmp;
+                if (feedItem.Title != null)
+                {
+                    string newTitle = unXMLEscape(feedItem.Title.Text);
+
+                    onRequestNewTimelineEvent(
+                        new timelineEventArgs(new pinDataString(newTitle, this, pinInfo["feed title"])));
+                }
+            }
+            catch (Exception e)
+            {
+                errorHandler(e);
+            }
+        }
+
+        private string getItemContent(SyndicationItem feedItem)
+        {
+            // Since the only way to get to the 'content' node is to write it to an XMLWriter, we
+            // end up doing this the long way - we write it, take it as text, then strip off the
+            // XML tags we added when we first wrote. :-/
+            //
+            // TODO: What will happen if the feedItem.Content.Type isn't HTML? Surely this will
+            // break.
+            TextWriter tw = new StringWriter();
+            XmlWriter writer = new XmlTextWriter(tw);
+            feedItem.Content.WriteTo(writer, "foo", "bar");
+
+            return tw.ToString();
+        }
+
+        private string getItemID(SyndicationItem feedItem)
+        {
+            // We should return something which is unique for each feedItem. Some feeds provide an 'id' field, but
+            // unfortunately some don't, so fall back on the 'content' data if it doesn't. If there's no content 
+            // then try the summary, then the title.
+            if (feedItem.Id != null)
+                return feedItem.Id;
+
+            if (feedItem.Content != null)
+            {
+                string content = getItemContent(feedItem);
+                if (!String.IsNullOrEmpty(content))
+                    return content;
+            }
+
+            if (feedItem.Summary != null)
+                return feedItem.Summary.Text;
+
+            if (feedItem.Title != null)
+                return feedItem.Title.Text;
+
+            throw new Exception("Unable to find item ID");
+        }
+
+        private string unXMLEscape(string data)
+        {
+            data = data.Replace("&amp;", "&");
+            data = data.Replace("&quot;", "\"" );
+            data = data.Replace("&apos;", "'");
+            data = data.Replace("&lt;", "<");
+            data = data.Replace("&gt;", ">");
+
+            return data;
         }
     }
 

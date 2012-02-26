@@ -173,7 +173,7 @@
     <Compile Include="ruleItems\ruleItemEmail.cs" />
     <Compile Include="ruleItems\ruleItemRss.cs" />
     <Compile Include="ruleItems\ruleItemScript.cs" />
-    <Compile Include="ruleItems\ruleItemWallboard.cs" />
+    <Compile Include="ruleItems\Wallboard\ruleItemWallboard.cs" />
     <Compile Include="ruleItems\Starts\ctlTimeInterval.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -216,10 +216,10 @@
     <Compile Include="ruleItems\windows\frmPickProcess.Designer.cs">
       <DependentUpon>frmPickProcess.cs</DependentUpon>
     </Compile>
-    <Compile Include="ruleItems\windows\frmRuleRssOptions.cs">
+    <Compile Include="ruleItems\frmRuleRssOptions.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ruleItems\windows\frmRuleRssOptions.Designer.cs">
+    <Compile Include="ruleItems\frmRuleRssOptions.Designer.cs">
       <DependentUpon>frmRuleRssOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="ruleItems\windows\frmRunExeOptions.cs">
@@ -228,10 +228,10 @@
     <Compile Include="ruleItems\windows\frmRunExeOptions.Designer.cs">
       <DependentUpon>frmRunExeOptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="ruleItems\windows\frmWallboardOptions.cs">
+    <Compile Include="ruleItems\Wallboard\frmWallboardOptions.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ruleItems\windows\frmWallboardOptions.Designer.cs">
+    <Compile Include="ruleItems\Wallboard\frmWallboardOptions.Designer.cs">
       <DependentUpon>frmWallboardOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="ruleItems\windows\ruleItem-desktopMessage.cs" />
@@ -318,14 +318,14 @@
       <DependentUpon>frmPickProcess.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="ruleItems\windows\frmRuleRssOptions.resx">
+    <EmbeddedResource Include="ruleItems\frmRuleRssOptions.resx">
       <DependentUpon>frmRuleRssOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ruleItems\windows\frmRunExeOptions.resx">
       <DependentUpon>frmRunExeOptions.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="ruleItems\windows\frmWallboardOptions.resx">
+    <EmbeddedResource Include="ruleItems\Wallboard\frmWallboardOptions.resx">
       <DependentUpon>frmWallboardOptions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
