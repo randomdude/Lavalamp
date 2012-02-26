@@ -31,7 +31,7 @@ namespace ruleEngine
         private bool snapWidgetsToGrid;
 
         /// <summary>
-        /// A List of all clild ctlRuleItems
+        /// A List of all child ctlRuleItems
         /// </summary>
         List<ctlRuleItemWidget> itemWidgets = new List<ctlRuleItemWidget>();
 

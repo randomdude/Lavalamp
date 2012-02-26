@@ -86,7 +86,6 @@ namespace ruleEngine.ruleItems
 
         private void loadRuleItemDetails(rssOptions options)
         {
-//            _lblFeedTitle.Text = "RSS reader";
             string feedText = String.IsNullOrEmpty(_options.title) ? "RSS reader" : "RSS: " + _options.title;
             if (_lblFeedTitle.Text == feedText)
                 return;
@@ -115,7 +114,7 @@ namespace ruleEngine.ruleItems
             }
             else
             {
-                _imgFeed.Image = Resources.rss;
+                _imgFeed.Image = Resources.ruleItem_rss;
             }
         }
 

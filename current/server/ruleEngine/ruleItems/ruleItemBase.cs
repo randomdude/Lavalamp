@@ -7,6 +7,34 @@ using ruleEngine.ruleItems.windows;
 
 namespace ruleEngine.ruleItems
 {
+    public class transparentPictureBox : PictureBox
+    {
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x00000020; //WS_EX_TRANSPARENT
+                return cp;
+            }
+        }
+
+        protected void InvalidateEx()
+        {
+            SetStyle(ControlStyles.Opaque, false); 
+            
+            if (Parent == null)
+                return;
+            Rectangle rc = new Rectangle(this.Location, this.Size);
+            Parent.Invalidate(rc, true);
+        }
+        
+        protected override void OnPaintBackground(PaintEventArgs pevent)
+        {
+            //do not allow the background to be painted 
+        }        
+    }
+
     [XmlRoot("config" )]
     public abstract class ruleItemBase : ruleItemEvents
     {
@@ -72,11 +100,34 @@ namespace ruleEngine.ruleItems
 
             controls.Add(_errorIcon);
 
+            // Load up background. We put this in a PictureBox instead of the control background so that
+            // we can position it - we want it slightly above the center of the image, so that it does not
+            // foul the ruleItem's caption.
+            Image bg = background();
+            PictureBox backgroundBox = null;
+            if (bg != null)
+            {
+                backgroundBox = new PictureBox();
+                // We keep the background image the size of the bitmap passed in, just so that the ruleItem
+                // can keep control of it that way.
+                // We position the image at the middle-top. We leave a 3px border at the top so it looks a
+                // bit nicer.
+                backgroundBox.Image = bg;
+                backgroundBox.SizeMode = PictureBoxSizeMode.AutoSize;
+                backgroundBox.Left = (preferredSize().Width / 2) - (bg.Width / 2);
+                backgroundBox.Top = 3;
+                backgroundBox.Visible = true;
+                backgroundBox.BackColor = Color.Transparent;
+                controls.Add(backgroundBox);
+            }
+
+
             // caption label
             String currentCaption = this.caption();
+            Label lblCaption = null;
             if (currentCaption != null)
             {
-                Label lblCaption = new Label();
+                lblCaption = new Label();
                 lblCaption.Text = currentCaption;
                 lblCaption.Visible = true;
                 lblCaption.Location = new Point(0, 0);

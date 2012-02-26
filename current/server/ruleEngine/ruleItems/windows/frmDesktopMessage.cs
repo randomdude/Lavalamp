@@ -15,12 +15,12 @@ namespace ruleEngine.ruleItems.windows
             WindowState = FormWindowState.Normal;
         }
 
-        public frmDesktopMessage(desktopMessageOptions newOptions)
+        public frmDesktopMessage(desktopMessageOptions newOptions, string messageToShow)
         {
             InitializeComponent();
 
             myOptions = newOptions;
-            lblMessage.Text = newOptions.message;
+            lblMessage.Text = messageToShow;
             WindowState = FormWindowState.Normal;
         }
 

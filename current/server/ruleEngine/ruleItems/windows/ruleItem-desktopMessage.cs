@@ -18,11 +18,10 @@ namespace ruleEngine.ruleItems
         // TODO: allow dynamically-changing captions 
         public override string caption() { return "Show message"; }
 
-        public override Size preferredSize() { return new Size( 150,75 ); }
+        public override Size preferredSize() { return new Size( 150, 75 ); }
 
         public desktopMessageOptions myOptions = new desktopMessageOptions();
 
-        private bool lastState;
         private string _lastMessage;
 
         // Every ruleItem requires a parameterless constructor. It is used by the toolbox
@@ -48,19 +47,15 @@ namespace ruleEngine.ruleItems
         public override void evaluate()
         {
             IPinData inputData = pinInfo["trigger"].value;
-            bool newState = inputData.asBoolean();
 
-            if ((newState != lastState || myOptions.message != _lastMessage) && (newState == true))
+            // Swap out the placeholder with the new message.
+            string messageToShow = myOptions.message.Replace("$message", inputData.ToString());
+
+            if (messageToShow != _lastMessage)
             {
-                // if we have a message swap out the placeholder with the new message.
-                if (inputData.getDataType() == typeof(string))
-                {
-                    myOptions.message = myOptions.message.Replace("$message", pinInfo["trigger"].value.ToString());
-                }
-                _lastMessage = myOptions.message;
-                showIt();
+                showIt(messageToShow);
+                _lastMessage = messageToShow;
             }
-            lastState = newState;
         }
 
         public override ContextMenuStrip addMenus(ContextMenuStrip toAddTo)
@@ -76,28 +71,24 @@ namespace ruleEngine.ruleItems
             return myOptForm;
         }
 
-        public void showIt()
+        public void showIt(string messageToShow)
         {
             // Mind the threading trickery!
             // We make a new Timer, thus creating a new thread.
             // On this, we make a messageLoop for it, and show the new form.. 
-            System.Threading.Timer myTimer = new System.Threading.Timer(timercallback, null, 1, Timeout.Infinite  );
+            System.Threading.Timer myTimer = new System.Threading.Timer(timercallback, messageToShow, 1, Timeout.Infinite);
         }
 
         private void timercallback(object state)
         {
+            string messageToShow = (string) state;
             // make our form
-            frmDesktopMessage messageForm = new frmDesktopMessage(myOptions);
+            frmDesktopMessage messageForm = new frmDesktopMessage(myOptions, messageToShow);
             messageForm.Visible = false;
 
             // Kick up a message loop and show the form.
             Application.DoEvents();
             Application.Run(messageForm);
-        }
-
-        public override void stop()
-        {
-            base.stop();
         }
     }
 }

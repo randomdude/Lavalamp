@@ -141,11 +141,6 @@ namespace ruleEngine
             this.Location = newRuleItem.location;
             this.Size = newRuleItem.preferredSize();
 
-            // Load up background
-            Image bg = newRuleItem.background();
-            if (bg != null)
-                this.BackgroundImage = bg;
-
             // wire up events
             foreach (PictureBox thisCtl in conPins.Values)
                 thisCtl.Click += new EventHandler(onPinClick);

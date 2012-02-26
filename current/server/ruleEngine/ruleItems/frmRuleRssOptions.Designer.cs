@@ -45,7 +45,7 @@
             // btnOk
             // 
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOk.Location = new System.Drawing.Point(250, 130);
+            this.btnOk.Location = new System.Drawing.Point(250, 157);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 0;
@@ -56,7 +56,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(12, 130);
+            this.btnCancel.Location = new System.Drawing.Point(12, 157);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 1;
@@ -84,24 +84,23 @@
             // 
             // txtFeed
             // 
-            this.txtFeed.Location = new System.Drawing.Point(12, 27);
+            this.txtFeed.Location = new System.Drawing.Point(15, 27);
             this.txtFeed.Name = "txtFeed";
-            this.txtFeed.Size = new System.Drawing.Size(230, 20);
+            this.txtFeed.Size = new System.Drawing.Size(227, 20);
             this.txtFeed.TabIndex = 4;
             // 
             // lblWarning
             // 
-            this.lblWarning.AutoSize = true;
             this.lblWarning.ForeColor = System.Drawing.Color.DarkRed;
-            this.lblWarning.Location = new System.Drawing.Point(13, 26);
+            this.lblWarning.Location = new System.Drawing.Point(93, 50);
             this.lblWarning.Name = "lblWarning";
-            this.lblWarning.Size = new System.Drawing.Size(0, 13);
+            this.lblWarning.Size = new System.Drawing.Size(233, 27);
             this.lblWarning.TabIndex = 5;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(34, 53);
+            this.label2.Location = new System.Drawing.Point(34, 80);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 13);
             this.label2.TabIndex = 7;
@@ -111,7 +110,7 @@
             // 
             this.lblFeedTitle.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblFeedTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFeedTitle.Location = new System.Drawing.Point(93, 50);
+            this.lblFeedTitle.Location = new System.Drawing.Point(93, 77);
             this.lblFeedTitle.Name = "lblFeedTitle";
             this.lblFeedTitle.Size = new System.Drawing.Size(232, 24);
             this.lblFeedTitle.TabIndex = 8;
@@ -120,7 +119,7 @@
             // lblFeedDescription
             // 
             this.lblFeedDescription.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblFeedDescription.Location = new System.Drawing.Point(93, 96);
+            this.lblFeedDescription.Location = new System.Drawing.Point(93, 123);
             this.lblFeedDescription.Name = "lblFeedDescription";
             this.lblFeedDescription.Size = new System.Drawing.Size(232, 22);
             this.lblFeedDescription.TabIndex = 10;
@@ -128,7 +127,7 @@
             // label
             // 
             this.label.AutoSize = true;
-            this.label.Location = new System.Drawing.Point(15, 75);
+            this.label.Location = new System.Drawing.Point(15, 102);
             this.label.Name = "label";
             this.label.Size = new System.Drawing.Size(72, 13);
             this.label.TabIndex = 11;
@@ -137,7 +136,7 @@
             // lblFeedAuthors
             // 
             this.lblFeedAuthors.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblFeedAuthors.Location = new System.Drawing.Point(93, 74);
+            this.lblFeedAuthors.Location = new System.Drawing.Point(93, 101);
             this.lblFeedAuthors.Name = "lblFeedAuthors";
             this.lblFeedAuthors.Size = new System.Drawing.Size(232, 22);
             this.lblFeedAuthors.TabIndex = 12;
@@ -145,7 +144,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(-1, 98);
+            this.label3.Location = new System.Drawing.Point(-1, 125);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(88, 13);
             this.label3.TabIndex = 13;
@@ -157,7 +156,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(337, 165);
+            this.ClientSize = new System.Drawing.Size(337, 193);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblFeedAuthors);
             this.Controls.Add(this.label);

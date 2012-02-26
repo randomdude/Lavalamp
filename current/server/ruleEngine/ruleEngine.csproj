@@ -33,6 +33,10 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.4.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Third Party\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="IronPython, Version=2.6.10920.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Third Party\IronPython.dll</HintPath>
@@ -135,6 +139,7 @@
     <Compile Include="pinDataTypes\pinDataString.cs" />
     <Compile Include="pinDataTypes\pinDataTrigger.cs" />
     <Compile Include="pinDirection.cs" />
+    <Compile Include="ruleItems\Basic logic\ruleItem_HTMLStripper.cs" />
     <Compile Include="ruleItems\IScriptEngine.cs" />
     <Compile Include="lineChain-xml.cs" />
     <Compile Include="lineChain.cs" />
@@ -169,7 +174,9 @@
     <Compile Include="ruleItems\frmCheckEmailOptions.Designer.cs">
       <DependentUpon>frmCheckEmailOptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="ruleItems\ruleItemBase.cs" />
+    <Compile Include="ruleItems\ruleItemBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ruleItems\ruleItemEmail.cs" />
     <Compile Include="ruleItems\ruleItemRss.cs" />
     <Compile Include="ruleItems\ruleItemScript.cs" />
@@ -405,6 +412,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\rss.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ruleItem_HTMLStripper.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

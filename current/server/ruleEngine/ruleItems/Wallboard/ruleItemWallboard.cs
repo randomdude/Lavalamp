@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Timers;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using ruleEngine.ruleItems.windows;
@@ -21,10 +18,12 @@ namespace ruleEngine.ruleItems
     {
         fill = 0x30, top = 0x22, bottom = 0x26, middle = 0x20
     }
+
     public enum colour
     {
         red = 0x31, green = 0x32, amber = 0x33, rainbow1 = 0x39, rainbow2 = 0x41, mix = 0x42, auto = 0x43
     }
+
     public enum specialStyle
     {
         twinkle = 0x30, sparkle = 0x31, snow = 0x32, interlock = 0x33, style_switch = 0x34,
@@ -33,6 +32,7 @@ namespace ruleEngine.ruleItems
         fireworks = 0x58, turbocar = 0x59, cherry_bomb = 0x5A,
         none = 0xFF
     }
+
     public enum mode
     {
         rotate = 0x61, hold = 0x62, flash = 0x63, mode_reserved_1 = 0x64, roll_up = 0x65, roll_down = 0x66, roll_left = 0x67, roll_right = 0x68, wipe_up = 0x69, wipe_down = 0x6A, wipe_left =0x6B, wipe_right =0x6C,

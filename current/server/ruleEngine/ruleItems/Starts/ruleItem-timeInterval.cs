@@ -13,6 +13,7 @@ namespace ruleEngine.ruleItems.Starts
     public class ruleItem_timeInterval : ruleItemBase
     {
         private Timer _intervalCountdown;
+        private Object _intervalCountdownLock = new object();
         itemControls.ctlTimeInterval _timer = new itemControls.ctlTimeInterval();
 
         [XmlElement("timer")] public int timerLow = 5000;
@@ -63,9 +64,10 @@ namespace ruleEngine.ruleItems.Starts
 
         public override void start()
         {
-            if (_intervalCountdown != null)
-                _intervalCountdown.Dispose();
-            _intervalCountdown = new Timer(timerCallbackSet, null, timerLow, timerLow);
+            lock (_intervalCountdownLock)
+            {
+                _intervalCountdown = new Timer(timerCallbackSet, null, timerLow, timerLow);
+            }
             _timer.setTo(false);
         }
         
@@ -84,7 +86,11 @@ namespace ruleEngine.ruleItems.Starts
 
         public override void stop()
         {
-            _intervalCountdown.Dispose();
+            lock (_intervalCountdownLock)
+            {
+                if (_intervalCountdown != null)
+                    _intervalCountdown.Dispose();
+            }
             _timer.setTo(false);
         }
 

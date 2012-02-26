@@ -44,7 +44,7 @@ namespace ruleEngine.ruleItems.windows
         private void cmdPreview_Click(object sender, EventArgs e)
         {
             ruleItems.ruleItem_desktopMessage preview = new ruleItem_desktopMessage(currentOptions);
-            preview.showIt();
+            preview.showIt(txtMessage.Text);
         }
 
         private void trackbarFadeInSpeed_Scroll(object sender, EventArgs e)
