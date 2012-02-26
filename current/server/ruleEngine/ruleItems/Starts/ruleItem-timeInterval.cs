@@ -16,7 +16,7 @@ namespace ruleEngine.ruleItems.Starts
         private Object _intervalCountdownLock = new object();
         itemControls.ctlTimeInterval _timer = new itemControls.ctlTimeInterval();
 
-        [XmlElement("timer")] public int timerLow = 5000;
+        [XmlElement("timer")] public int intervalSec = 5;
 
         // This delegate type should be used to set the interval which the timer fires at.
         public delegate void setIntervalDelegate(int low);
@@ -37,17 +37,17 @@ namespace ruleEngine.ruleItems.Starts
         public override void onAfterLoad()
         {
             // Set this here since we need to have finished loading the object - we need the timerLow
-            _timer.setTimeCaption(timerLow);
+            _timer.setTimeCaption(intervalSec);
         }
 
         private int handleGetTimerInterval()
         {
-            return timerLow;
+            return intervalSec;
         }
 
         private void handleSetTimerInterval(int newLow)
         {
-            timerLow = newLow;
+            intervalSec = newLow;
         }
 
         public override ContextMenuStrip addMenus(ContextMenuStrip mnuParent)
@@ -66,7 +66,7 @@ namespace ruleEngine.ruleItems.Starts
         {
             lock (_intervalCountdownLock)
             {
-                _intervalCountdown = new Timer(timerCallbackSet, null, timerLow, timerLow);
+                _intervalCountdown = new Timer(timerCallbackSet, null, intervalSec * 1000, intervalSec * 1000);
             }
             _timer.setTo(false);
         }
@@ -101,10 +101,10 @@ namespace ruleEngine.ruleItems.Starts
 
         public override Dictionary<String, pin> getPinInfo()
         {
-            _timer.setTimeCaption(timerLow);
+            _timer.setTimeCaption(intervalSec);
 
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
-            pinList.Add("IntervalIsNow", new pin { name = "IntervalIsNow", description = "time has elapsed", direction = pinDirection.output });
+            pinList.Add("IntervalIsNow", new pin { name = "IntervalIsNow", description = "Time has elapsed", direction = pinDirection.output });
 
             return pinList;
         }

@@ -20,7 +20,7 @@ namespace ruleEngine.ruleItems.itemControls
 
         public void setTimeCaption(int low)
         {
-            lblTime.Text = "Fires every " + low + "ms";
+            lblTime.Text = "Fires every " + low + " sec";
         }
 
         public ContextMenuStrip addMenus(ContextMenuStrip mnuParent)
@@ -57,7 +57,7 @@ namespace ruleEngine.ruleItems.itemControls
 
         private bool promptForNewInterval()
         {
-            frmQuestion askyform = new frmQuestion("New time interval (ms):", getInterval().ToString() );
+            frmQuestion askyform = new frmQuestion("New time interval (seconds):", getInterval().ToString() );
 
             if (askyform.ShowDialog(this) == DialogResult.Cancel)
                 return true;
@@ -70,11 +70,6 @@ namespace ruleEngine.ruleItems.itemControls
                 try
                 {
                     newInterval = int.Parse(result);
-                    if (newInterval  < 500)
-                    {
-                        if ( MessageBox.Show( "That value is rather small - are you sure you want to use such a low value? Making your system run too fast can cause problems.", "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.No)
-                            return false;
-                    }
                     setInterval(newInterval);
                     setTimeCaption(newInterval);
                     return true;

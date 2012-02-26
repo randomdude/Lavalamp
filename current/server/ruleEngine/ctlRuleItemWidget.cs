@@ -46,6 +46,7 @@ namespace ruleEngine
             {
                 // Fair enough, it has no menus to add.
             }
+
             // this probably should be done in addMenus on the base class but the code to openOptions isn't there so to avoid repeating code its here
             var opt = newRuleItemBase.ruleItemOptions();
             if (opt != null)

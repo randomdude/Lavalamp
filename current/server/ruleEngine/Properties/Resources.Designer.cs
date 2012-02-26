@@ -172,6 +172,13 @@ namespace ruleEngine.Properties {
             }
         }
         
+        public static System.Drawing.Bitmap ruleItem_msgDelay {
+            get {
+                object obj = ResourceManager.GetObject("ruleItem_msgDelay", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         public static System.Drawing.Bitmap ruleItem_not {
             get {
                 object obj = ResourceManager.GetObject("ruleItem_not", resourceCulture);

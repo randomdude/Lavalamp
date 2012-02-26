@@ -140,6 +140,7 @@
     <Compile Include="pinDataTypes\pinDataTrigger.cs" />
     <Compile Include="pinDirection.cs" />
     <Compile Include="ruleItems\Basic logic\ruleItem_HTMLStripper.cs" />
+    <Compile Include="ruleItems\Basic logic\ruleItem_msgDelay.cs" />
     <Compile Include="ruleItems\IScriptEngine.cs" />
     <Compile Include="lineChain-xml.cs" />
     <Compile Include="lineChain.cs" />
@@ -175,7 +176,6 @@
       <DependentUpon>frmCheckEmailOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="ruleItems\ruleItemBase.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="ruleItems\ruleItemEmail.cs" />
     <Compile Include="ruleItems\ruleItemRss.cs" />
@@ -415,6 +415,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ruleItem_HTMLStripper.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ruleItem_msgDelay.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

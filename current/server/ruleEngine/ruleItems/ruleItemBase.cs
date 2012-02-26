@@ -7,34 +7,6 @@ using ruleEngine.ruleItems.windows;
 
 namespace ruleEngine.ruleItems
 {
-    public class transparentPictureBox : PictureBox
-    {
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cp = base.CreateParams;
-                cp.ExStyle |= 0x00000020; //WS_EX_TRANSPARENT
-                return cp;
-            }
-        }
-
-        protected void InvalidateEx()
-        {
-            SetStyle(ControlStyles.Opaque, false); 
-            
-            if (Parent == null)
-                return;
-            Rectangle rc = new Rectangle(this.Location, this.Size);
-            Parent.Invalidate(rc, true);
-        }
-        
-        protected override void OnPaintBackground(PaintEventArgs pevent)
-        {
-            //do not allow the background to be painted 
-        }        
-    }
-
     [XmlRoot("config" )]
     public abstract class ruleItemBase : ruleItemEvents
     {
@@ -71,6 +43,7 @@ namespace ruleEngine.ruleItems
         public virtual void stop() { }
         public virtual void onResize(Control parent) { }
         public virtual string caption() { return null; }
+
         /// <summary>
         /// The default options for the rule which will be displayed when the ruleItemCtl is double clicked
         /// </summary>
@@ -104,10 +77,9 @@ namespace ruleEngine.ruleItems
             // we can position it - we want it slightly above the center of the image, so that it does not
             // foul the ruleItem's caption.
             Image bg = background();
-            PictureBox backgroundBox = null;
             if (bg != null)
             {
-                backgroundBox = new PictureBox();
+                PictureBox backgroundBox = new PictureBox();
                 // We keep the background image the size of the bitmap passed in, just so that the ruleItem
                 // can keep control of it that way.
                 // We position the image at the middle-top. We leave a 3px border at the top so it looks a
