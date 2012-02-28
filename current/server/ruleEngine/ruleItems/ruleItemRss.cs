@@ -22,9 +22,6 @@ namespace ruleEngine.ruleItems
         [XmlElement("rssOptions")]
         public rssOptions _options = new rssOptions();
 
-        [XmlElement("lastRead")]
-        public DateTime _lastRead;
-
         private Label _lblFeedTitle;
         private PictureBox _imgFeed;
         private Dictionary<string, bool> _readFeedItems = new Dictionary<string, bool>();
@@ -80,7 +77,6 @@ namespace ruleEngine.ruleItems
 
         public void resetReader()
         {
-            _lastRead = DateTime.MinValue;
             _readFeedItems.Clear();
         }
 
@@ -91,7 +87,6 @@ namespace ruleEngine.ruleItems
                 return;
             _lblFeedTitle.Text = feedText;
 
-            _lastRead = DateTime.MinValue;
             if (!String.IsNullOrEmpty(_options.imageUrl))
             {
                 try
@@ -165,19 +160,14 @@ namespace ruleEngine.ruleItems
                 // order by ascending date all the feed items which have not been seen or have been updated and return the first. 
                 // If the feed items do not have dates in it we can't filter it
                 SyndicationItem feedItem =
-                    feed.Items.Where(f => f.PublishDate > _lastRead || f.LastUpdatedTime > _lastRead ||
-                                          (f.PublishDate == DateTime.MinValue && f.LastUpdatedTime == DateTime.MinValue &&
-                                           !_readFeedItems.ContainsKey(getItemID(f))))
+                    feed.Items.Where(f => !_readFeedItems.ContainsKey(getItemID(f)))
                         .OrderBy(f => f.LastUpdatedTime).ThenBy(f => f.PublishDate)
                         .FirstOrDefault();
                 // if null no new feed items are present
                 if (feedItem == null)
-                {
-                    _lastRead = DateTime.Now;
                     return;
-                }
+
                 _readFeedItems.Add(getItemID(feedItem), true);
-                _lastRead = feedItem.PublishDate.LocalDateTime;
 
                 if (feedItem.Content != null)
                 {
