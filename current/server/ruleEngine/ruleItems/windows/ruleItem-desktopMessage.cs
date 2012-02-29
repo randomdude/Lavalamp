@@ -44,6 +44,11 @@ namespace ruleEngine.ruleItems
             return pinList;
         }
 
+        public override void start()
+        {
+            _lastMessage = "";
+        }
+
         public override void evaluate()
         {
             IPinData inputData = pinInfo["trigger"].value;
