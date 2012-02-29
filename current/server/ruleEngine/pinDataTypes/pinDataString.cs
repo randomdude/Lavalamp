@@ -62,22 +62,22 @@ namespace ruleEngine.pinDataTypes
             else if (cvtType == typeof(bool))
             {
                 if ((bool)value)
-                    convertedType = "on";
+                    convertedType = "yes";
                 else
-                    convertedType = "";
+                    convertedType = "no";
             }
             else if (cvtType == typeof(tristate))
             {
                 switch ((tristate)value)
                 {
                         case tristate.yes:
-                            convertedType = "on";
+                            convertedType = "yes";
                             break;
                         case tristate.no:
-                            convertedType = "";
+                            convertedType = "no";
                             break;
                         case tristate.noValue:
-                            convertedType = "";
+                            convertedType = "nothing";
                             break;
                 }
             }

@@ -116,7 +116,7 @@ namespace ruleEngine.ruleItems
         public override Dictionary<string, pin> getPinInfo()
         {
             Dictionary<string,pin> pins = new Dictionary<string, pin>();
-            pins.Add("feedTitle",
+            pins.Add("feed Title",
                      new pin
                          {
                              name = "feed title",
@@ -125,7 +125,7 @@ namespace ruleEngine.ruleItems
                              valueType = typeof(pinDataString)
 
                          });
-            pins.Add("feedContent",
+            pins.Add("feed Content",
                      new pin
                      {
                          name = "feed Content",
@@ -183,7 +183,7 @@ namespace ruleEngine.ruleItems
                     string newTitle = unXMLEscape(feedItem.Title.Text);
 
                     onRequestNewTimelineEvent(
-                        new timelineEventArgs(new pinDataString(newTitle, this, pinInfo["feed title"])));
+                        new timelineEventArgs(new pinDataString(newTitle, this, pinInfo["feed Title"])));
                 }
             }
             catch (Exception e)

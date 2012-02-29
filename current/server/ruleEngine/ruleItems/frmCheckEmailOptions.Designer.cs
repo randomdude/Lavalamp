@@ -44,7 +44,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(205, 181);
+            this.btnOK.Location = new System.Drawing.Point(205, 140);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 0;
@@ -55,7 +55,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(12, 181);
+            this.btnCancel.Location = new System.Drawing.Point(12, 140);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 1;
@@ -145,7 +145,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(109, 181);
+            this.btnTest.Location = new System.Drawing.Point(109, 140);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(75, 23);
             this.btnTest.TabIndex = 11;
@@ -159,7 +159,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(292, 216);
+            this.ClientSize = new System.Drawing.Size(292, 174);
             this.ControlBox = false;
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.txtPort);
