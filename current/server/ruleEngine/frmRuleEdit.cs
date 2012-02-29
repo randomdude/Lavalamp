@@ -82,12 +82,7 @@ namespace ruleEngine
                             Object newRuleItem = constr.Invoke(new object[0]);
                              ruleItemInfo itemInfo = new ruleItemInfo();
 
-                             foreach (Attribute customAttribute in thisType.GetCustomAttributes(typeof(ToolboxRuleCategoryAttribute), false))
-                             {
-                                 ToolboxRuleCategoryAttribute toolboxRule =
-                                     (ToolboxRuleCategoryAttribute) customAttribute;
-                                 itemInfo.itemType = toolboxRule.isNode ? ruleItemType.NodeItem : ruleItemType.RuleItem;
-                             }
+                            itemInfo.itemType = ruleItemType.RuleItem;
                             itemInfo.ruleItemBaseType = thisType;
 
                             addRuleItemObjectToToolbox((ruleItemBase) newRuleItem, itemInfo);

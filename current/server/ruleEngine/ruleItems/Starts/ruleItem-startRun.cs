@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using ruleEngine.pinDataTypes;
 
 namespace ruleEngine.ruleItems.Starts
@@ -9,8 +8,6 @@ namespace ruleEngine.ruleItems.Starts
     [ToolboxRuleCategory("Start items")]
     public class ruleItem_startRun : ruleItemBase
     {
-        private Label lblCaption;
-
         public override string ruleName() { return "At start of run"; }
 
         public override string caption()

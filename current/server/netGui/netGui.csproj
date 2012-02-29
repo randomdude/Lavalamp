@@ -61,6 +61,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Contracts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -98,17 +99,16 @@
     <Compile Include="nodeEditForms\FrmChangeId.Designer.cs">
       <DependentUpon>FrmChangeId.cs</DependentUpon>
     </Compile>
+    <Compile Include="RuleEngine\frmSensorOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\frmSensorOptions.designer.cs">
+      <DependentUpon>frmSensorOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="RuleEngine\ruleItemDigitalIn.cs" />
     <Compile Include="RuleEngine\ruleItemDigitalOut.cs" />
     <Compile Include="RuleEngine\ruleItemPWM.cs" />
     <Compile Include="RuleEngine\ruleItemTriac.cs" />
-    <Compile Include="RuleEngine\ruleSanityException.cs" />
-    <Compile Include="RuleEngine\windows\frmSensorOptions.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RuleEngine\windows\frmSensorOptions.Designer.cs">
-      <DependentUpon>frmSensorOptions.cs</DependentUpon>
-    </Compile>
     <Compile Include="sensorControls\ctlOnOff.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -183,7 +183,7 @@
       <DependentUpon>FrmChangeId.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="RuleEngine\windows\frmSensorOptions.resx">
+    <EmbeddedResource Include="RuleEngine\frmSensorOptions.resx">
       <DependentUpon>frmSensorOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="sensorControls\ctlOnOff.resx">

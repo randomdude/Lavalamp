@@ -25,6 +25,8 @@ namespace transmitterDriver
             // Pass through encryption setting
             myseshdata.useEncryption = useEncryption;
 
+            myseshdata.isSerialPort = false;
+
             // Now, open the port.
             if (!initPort(ref myseshdata))
                 throw new cantOpenPortException();

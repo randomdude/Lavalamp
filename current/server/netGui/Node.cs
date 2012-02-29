@@ -4,7 +4,6 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using transmitterDriver;
 
-
 namespace netGui
 {
     public class Node

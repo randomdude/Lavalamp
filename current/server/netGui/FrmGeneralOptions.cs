@@ -42,9 +42,10 @@ namespace netGui
                 MyOptions.myKey.setKey(txtKey.Text);
 				MyOptions.save();
                 DestroyHandle();
-            } catch (FormatException) {
+            } 
+            catch (FormatException) 
+            {
                 MessageBox.Show(this, "Your network key must be a 32-character value, containing values from zero through nine, and 'A' through 'F'.");
-                return;
             }
         }
 

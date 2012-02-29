@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="appConfig_t.cs" />
+    <Compile Include="sensorType.cs" />
     <Compile Include="transmitter.cs" />
     <Compile Include="cmdResponseGeneric_t.cs" />
     <Compile Include="exceptions.cs" />

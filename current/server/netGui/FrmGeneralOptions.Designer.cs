@@ -32,14 +32,13 @@ namespace netGui
             this.cboPort = new System.Windows.Forms.ComboBox();
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdCancel = new System.Windows.Forms.Button();
-			this.cmdReload = new System.Windows.Forms.Button();
+            this.cmdReload = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.txtKey = new System.Windows.Forms.TextBox();
             this.txtRulePath = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.chkUseEncryption = new System.Windows.Forms.CheckBox();
-			this.lblStatus = new System.Windows.Forms.Label();
-			
+            this.lblStatus = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -56,13 +55,13 @@ namespace netGui
             this.cboPort.FormattingEnabled = true;
             this.cboPort.Location = new System.Drawing.Point(92, 13);
             this.cboPort.Name = "cboPort";
-            this.cboPort.Size = new System.Drawing.Size(146, 21);
+            this.cboPort.Size = new System.Drawing.Size(132, 21);
             this.cboPort.TabIndex = 1;
-			this.cboPort.SelectedIndexChanged += new System.EventHandler(this.CheckVaildPort);
+            this.cboPort.SelectedIndexChanged += new System.EventHandler(this.CheckVaildPort);
             // 
             // cmdOK
             // 
-            this.cmdOK.Location = new System.Drawing.Point(300, 157);
+            this.cmdOK.Location = new System.Drawing.Point(300, 115);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(75, 23);
             this.cmdOK.TabIndex = 2;
@@ -73,32 +72,25 @@ namespace netGui
             // cmdCancel
             // 
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(12, 157);
+            this.cmdCancel.Location = new System.Drawing.Point(12, 115);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(75, 23);
             this.cmdCancel.TabIndex = 3;
             this.cmdCancel.Text = "&Cancel";
             this.cmdCancel.UseVisualStyleBackColor = true;
             this.cmdCancel.Click += new System.EventHandler(this.cmdCancel_Click);
-			//
-			// cmdReload
             // 
-			this.cmdReload.Location = new System.Drawing.Point(310, 12);
-			this.cmdReload.Name = "cmdReload";
-			this.cmdReload.Size = new System.Drawing.Size(75, 23);
-			this.cmdReload.TabIndex = 4;
-			this.cmdReload.Text = "&Reload";
-			this.cmdReload.UseVisualStyleBackColor = true;
+            // cmdReload
+            // 
+            this.cmdReload.Location = new System.Drawing.Point(286, 13);
+            this.cmdReload.Name = "cmdReload";
+            this.cmdReload.Size = new System.Drawing.Size(89, 23);
+            this.cmdReload.TabIndex = 4;
+            this.cmdReload.Text = "Rescan &port list";
+            this.cmdReload.UseVisualStyleBackColor = true;
             this.cmdReload.Click += new System.EventHandler(this.cmdReload_Click);
-			//
-			// lblStatus
-			//
-			this.lblStatus.Location = new System.Drawing.Point(235, 12);
-			this.lblStatus.Name = "lblStatus";
-			this.lblStatus.Size = new System.Drawing.Size(75, 23);
-			this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			//
-			// label2
+            // 
+            // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(16, 66);
@@ -145,13 +137,21 @@ namespace netGui
             this.chkUseEncryption.UseVisualStyleBackColor = true;
             this.chkUseEncryption.CheckedChanged += new System.EventHandler(this.chkUseEncryption_CheckedChanged);
             // 
+            // lblStatus
+            // 
+            this.lblStatus.Location = new System.Drawing.Point(230, 13);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(50, 23);
+            this.lblStatus.TabIndex = 9;
+            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // FrmGeneralOptions
             // 
             this.AcceptButton = this.cmdOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
-            this.ClientSize = new System.Drawing.Size(387,200);
+            this.ClientSize = new System.Drawing.Size(387, 149);
             this.ControlBox = false;
             this.Controls.Add(this.chkUseEncryption);
             this.Controls.Add(this.txtRulePath);
@@ -160,8 +160,8 @@ namespace netGui
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cmdCancel);
             this.Controls.Add(this.cmdOK);
-			this.Controls.Add(this.cmdReload);
-			this.Controls.Add(this.lblStatus);
+            this.Controls.Add(this.cmdReload);
+            this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.cboPort);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;

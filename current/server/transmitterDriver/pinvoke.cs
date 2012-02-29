@@ -97,16 +97,4 @@ namespace transmitterDriver
         pwm_out = 0x03,
         triac_out = 0x04
     }
-
-    public class sensorType
-    {
-        public String FriendlyType;
-        public sensorTypeEnum enumeratedType;
-
-        public sensorType(sensorTypeEnum type)
-        {
-            enumeratedType = type;
-            FriendlyType = Enum.GetName(typeof (sensorTypeEnum), enumeratedType);
-        }
-    }
 }

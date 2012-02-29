@@ -118,10 +118,9 @@ namespace ruleEngine.ruleItems.Starts
             sendCmd("select " + folder);
 
             bool responded = false;
-            String loginResponse;
             while (!responded)
             {
-                loginResponse = myReader.ReadLine();
+                String loginResponse = myReader.ReadLine();
 
                 String[] responseParts = (loginResponse.Split(' '));
                 if (responseParts.Length > 0 && responseParts[0] == "a" + cmdNum.ToString("000"))
@@ -156,7 +155,8 @@ namespace ruleEngine.ruleItems.Starts
                 throw new Exception("bad login. Check username / password and retry. (server line '" + loginResponse + "')");
             if (answerChunks[1].ToUpper() == "BAD")
                 throw new Exception("Failure sending username/password. Check login, hope it isn't a bug (server line '" + loginResponse + "')");
-            //newer versions of imap (well gmail) broadcast their capability on a successful login first, so we ignore this message.
+            // newer versions of gmail broadcast their capability on a successful login first, so we ignore 
+            // this message.
             if (answerChunks[1].ToUpper() == "CAPABILITY")
                 answerChunks = myReader.ReadLine().Split(' ');
             if (answerChunks[1].ToUpper() != "OK")
@@ -176,7 +176,6 @@ namespace ruleEngine.ruleItems.Starts
 
         private void imapConnect(string server, int port, bool useSSL)
         {
-            Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             TcpClient myClient = new TcpClient(server, port);
             tcpStream = myClient.GetStream();
 
@@ -194,8 +193,6 @@ namespace ruleEngine.ruleItems.Starts
                 myWriter.AutoFlush = true;
                 myReader = new StreamReader(tcpStream);                
             }
-
-            char[] charIn = new char[1];
 
             string lineIn = myReader.ReadLine();
 

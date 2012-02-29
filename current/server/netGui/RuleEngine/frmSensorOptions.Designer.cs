@@ -40,6 +40,7 @@
             // cboNodes
             // 
             this.cboNodes.DisplayMember = "name";
+            this.cboNodes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboNodes.FormattingEnabled = true;
             this.cboNodes.Location = new System.Drawing.Point(32, 43);
             this.cboNodes.Name = "cboNodes";
@@ -60,6 +61,7 @@
             // 
             // cboSensors
             // 
+            this.cboSensors.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSensors.FormattingEnabled = true;
             this.cboSensors.Location = new System.Drawing.Point(33, 83);
             this.cboSensors.Name = "cboSensors";
@@ -102,8 +104,9 @@
             this.lblError.AutoSize = true;
             this.lblError.Location = new System.Drawing.Point(9, 9);
             this.lblError.Name = "lblError";
-            this.lblError.Size = new System.Drawing.Size(0, 13);
+            this.lblError.Size = new System.Drawing.Size(83, 13);
             this.lblError.TabIndex = 6;
+            this.lblError.Text = "(filled at runtime)";
             // 
             // frmSensorOptions
             // 
@@ -122,6 +125,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmSensorOptions";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Sensor Options";
             this.ResumeLayout(false);
             this.PerformLayout();

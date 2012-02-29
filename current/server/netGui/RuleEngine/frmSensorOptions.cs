@@ -11,11 +11,11 @@ namespace netGui.RuleEngine.windows
         public frmSensorOptions(sensorSettings settings)
         {
             InitializeComponent();
+
             _tpy = settings.selectedType;
             List<Node> allNodes = FrmMain.getAllConnectedNodes();
             foreach (Node node in allNodes)
             {
-                
                 if (node.hasSensorOf(settings.selectedType))
                 {
                     cboNodes.Items.Add(node);

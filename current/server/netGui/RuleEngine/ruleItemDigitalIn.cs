@@ -18,10 +18,10 @@ namespace netGui.RuleEngine
 
         public override string ruleName()
         {
-            return "Digital In";
+            return "Digital in";
         }
 
-        public override System.Windows.Forms.Form ruleItemOptions()
+        public override Form ruleItemOptions()
         {
             frmSensorOptions options = new frmSensorOptions(settings);
             options.Closed += sensorOptClosed;
@@ -41,7 +41,7 @@ namespace netGui.RuleEngine
             pinList.Add("in", new pin
             {
                 name = "in",
-                description = "digital in",
+                description = "Digital in",
                 direction = pinDirection.output,
             });
             return pinList;

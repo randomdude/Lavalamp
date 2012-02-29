@@ -17,11 +17,6 @@ namespace netGui
         private readonly Dictionary<string, IntPtr> _openRuleWindows = new Dictionary<string, IntPtr>();
         private static readonly List<Node> _nodes = new List<Node>();
  
-        public static List<Node> getAllConnectedNodes()
-        {
-            return _nodes;
-        }
-
         public  ITransmitter getMyDriver()
         {
             if ( (null == _mydriver) || (!_mydriver.portOpen()) )
@@ -89,7 +84,12 @@ namespace netGui
             MessageBox.Show("Port closed.");
             generalToolStripMenuItem.Enabled = true;
         }
-        
+
+        public static List<Node> getAllConnectedNodes()
+        {
+            return _nodes;
+        }
+
         private void MnuItemConnectToTrans_Click(object sender, EventArgs e)
         {
             if (_mydriver == null)
@@ -327,20 +327,23 @@ namespace netGui
         {
             while (true)
             {
-                frmQuestion newname = new frmQuestion("New rule name", "UnnamedRule");
+                // Find a rule name which doesn't exist, and use this as the default
+                string defaultName = "Unnamed Rule";
+                int n = 0;
+                while ((findRuleItem(defaultName) != null))
+                {
+                    defaultName = String.Format("Unnamed Rule {0}", n.ToString());
+                    n++;
+                }
+
+                // Ask the user what name they want
+                frmQuestion newname = new frmQuestion("New rule name", defaultName);
 
                 if (newname.ShowDialog(this) == DialogResult.Cancel)
                     return;
 
-                if (findRuleItem(newname.result) != null)
-                {
-                    MessageBox.Show("A rule with that name already exists");
-                }
-                else
-                {
-                    addNewRule(new rule(newname.result));
-                    return;
-                }
+                addNewRule(new rule(newname.result));
+                return;
             }
 
         }

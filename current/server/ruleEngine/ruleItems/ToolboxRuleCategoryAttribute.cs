@@ -7,10 +7,8 @@ namespace ruleEngine
     public class ToolboxRuleCategoryAttribute : Attribute
     {
         internal readonly string name;
-        internal readonly bool isNode;
-        public ToolboxRuleCategoryAttribute(string newName, bool isItemNode = false)
+        public ToolboxRuleCategoryAttribute(string newName)
         {
-            isNode = isItemNode;
             name = newName;
         }
     }

@@ -13,7 +13,7 @@ namespace netGui.RuleEngine
 {
     [ToolboxRule]
     [ToolboxRuleCategory("Node Sensors")]
-    class ruleItemDigitalOut : ruleItemBase
+    public class ruleItemDigitalOut : ruleItemBase
     {
         public sensorSettings settings = new sensorSettings(sensorTypeEnum.generic_digital_out);
         private object _prevVal;
@@ -40,7 +40,7 @@ namespace netGui.RuleEngine
 
         public override Dictionary<string, ruleEngine.pin> getPinInfo()
         {
-            var pinList = base.getPinInfo();
+            Dictionary<string, pin> pinList = base.getPinInfo();
             pinList.Add("out" , new pin
             {
                 name = "out",
