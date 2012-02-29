@@ -230,6 +230,11 @@ namespace ruleEngine
             }
         }
 
+        public void advanceDelta(object sender, EventArgs e)
+        {
+            advanceDelta();
+        }
+
         /// <summary>
         /// Move one delta step forward
         /// </summary>
@@ -329,5 +334,6 @@ namespace ruleEngine
         {
             return pins.Values;
         }
+
     }
 }

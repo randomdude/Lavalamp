@@ -119,7 +119,7 @@ namespace ruleEngine.ruleItems
             pins.Add("feed Title",
                      new pin
                          {
-                             name = "feed title",
+                             name = "feed Title",
                              description = "Title",
                              direction = pinDirection.output,
                              valueType = typeof(pinDataString)

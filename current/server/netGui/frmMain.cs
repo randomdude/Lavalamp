@@ -16,7 +16,8 @@ namespace netGui
         private options _myOptions = new options();
         private readonly Dictionary<string, IntPtr> _openRuleWindows = new Dictionary<string, IntPtr>();
         private static readonly List<Node> _nodes = new List<Node>();
- 
+        private Timer timelineTimer = new Timer();
+
         public  ITransmitter getMyDriver()
         {
             if ( (null == _mydriver) || (!_mydriver.portOpen()) )
@@ -37,6 +38,8 @@ namespace netGui
         public FrmMain()
         {
             InitializeComponent();
+            timelineTimer.Interval = 100;
+            timelineTimer.Enabled = true;
         }
 		
         #region node interaction
@@ -583,6 +586,7 @@ namespace netGui
                 else
                 {
                     thisRuleToStart.start();
+                    timelineTimer.Tick += thisRuleToStart.advanceDelta;
                     updateRuleIcon(thisRuleToStart);
                 }
             }
@@ -603,6 +607,7 @@ namespace netGui
                 else
                 {
                     thisRuleToStop.stop();
+                    timelineTimer.Tick -= thisRuleToStop.advanceDelta;
                     updateRuleIcon(thisRuleToStop);
                 }
             }
