@@ -43,9 +43,7 @@ namespace ruleEngine.ruleItems
     [ToolboxRuleCategory("Notifiers")]
     public class ruleItemWallboard : ruleItemBase
     {
-        private Timer _timeSincePrevChange = new Timer();
-        private Queue<string> _updatesTodo = new Queue<string>(); 
-        private string _lastVal;
+        private string _lastVal = "";
         /// <summary>
         /// the wallboard options created with defaults which will be overwritten if deserialized
         /// </summary>
@@ -56,18 +54,9 @@ namespace ruleEngine.ruleItems
                                                                     state = wallboardErrorState.Unknown
                                                                 };
 
-        private bool _canBeChangedNow = true;
-
         public ruleItemWallboard()
         {
             controls.Add(new Label() { Text = "Wallboard", Size = new Size(73, 37), Location = new Point(3, 39), TextAlign = ContentAlignment.MiddleCenter });
-            _timeSincePrevChange.Tick += new EventHandler(_timeSincePrevChange_Tick);
-        }
-
-        void _timeSincePrevChange_Tick(object sender, EventArgs e)
-        {
-            
-            _canBeChangedNow = true;
         }
 
         public override string ruleName()
@@ -85,25 +74,9 @@ namespace ruleEngine.ruleItems
         public override void evaluate()
         {
             string newValToShow = pinInfo["input"].value.ToString();
-            if (newValToShow != _lastVal || _updatesTodo.Count > 0)
+            if (newValToShow != _lastVal)
             {
-                if (!_canBeChangedNow && newValToShow != _lastVal)
-                {
-                    _updatesTodo.Enqueue(newValToShow);
-                    _lastVal = pinInfo["input"].value.ToString();
-                    return;
-                }
-                if (_updatesTodo.Count != 0)
-                {
-                    if (newValToShow != _lastVal)
-                        _updatesTodo.Enqueue(newValToShow);
-                    newValToShow = _updatesTodo.Dequeue();
-                }
-                else
-                {
-                    // we only want to update the last value if it hasn't been queued already
-                    _lastVal = newValToShow;
-                }
+                _lastVal = newValToShow;
 
                 friendlySendWallMessage(newValToShow, _options.position, _options.mode,
                                         _options.colour,

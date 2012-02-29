@@ -22,7 +22,7 @@ namespace ruleEngine.ruleItems
 
         public desktopMessageOptions myOptions = new desktopMessageOptions();
 
-        private string _lastMessage;
+        private string _lastMessage = "";
 
         // Every ruleItem requires a parameterless constructor. It is used by the toolbox
         // routines via reflection.

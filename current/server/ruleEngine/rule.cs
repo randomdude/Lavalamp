@@ -224,7 +224,7 @@ namespace ruleEngine
 
                 foreach (pin thisPin in anItem.pinInfo.Values)
                 {
-                    thisPin.value.setToDefault();
+                    //thisPin.value.setToDefault();
                     thisPin.updateUI();
                 }
             }
