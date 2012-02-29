@@ -40,7 +40,7 @@ namespace ruleEngine.ruleItems
             if (toRet.Items.Count > 0)
                 toRet.Items.Add("-");
 
-            while(contextMenuStrip1.Items.Count > 0)
+            while (contextMenuStrip1.Items.Count > 0)
                 toRet.Items.Add(contextMenuStrip1.Items[0]);
 
             return toRet;
@@ -59,6 +59,7 @@ namespace ruleEngine.ruleItems
 
     }
 
+    [Serializable]
     public class emailOptions
     {
         [XmlElement]

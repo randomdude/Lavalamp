@@ -22,6 +22,6 @@ namespace ruleEngine
 
     public enum ruleItemType
     {
-        RuleItem, scriptFile
+        RuleItem, scriptFile, NodeItem
     }
 }

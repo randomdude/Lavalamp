@@ -6,6 +6,9 @@ namespace netGui
     public interface ITransmitter : IDisposable
     {
         bool portOpen();
+        String getPort();
+        bool usesEncryption();
+        byte[] getKey();
 		String doIdentify(Int16 nodeId);
         Int16 doGetSensorCount(Int16 nodeId);
 		void doPing(Int16 nodeId);

@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
 using System.Drawing;
+using System.Globalization;
 using Microsoft.Scripting;
 using ruleEngine.ruleItems;
 using ruleEngine.ruleItems.windows;
@@ -56,8 +57,8 @@ namespace ruleEngine.pinDataTypes
                 return null;
             string convertedType = "";
             Type cvtType = value.GetType();
-            if (cvtType == typeof(string))
-               convertedType = value.ToString();
+            if (cvtType == typeof(string) || cvtType == typeof(int))
+                convertedType = value.ToString();
             else if (cvtType == typeof(bool))
             {
                 if ((bool)value)
@@ -81,7 +82,7 @@ namespace ruleEngine.pinDataTypes
                 }
             }
             else
-                throw new ArgumentTypeException("Invaild Pin types! No conversion exists between " + cvtType + " and string");
+                throw new ArgumentTypeException("Invalid Pin types! No conversion exists between " + cvtType + " and string");
 
             return convertedType;
 

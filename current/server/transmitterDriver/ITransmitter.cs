@@ -5,7 +5,10 @@ namespace transmitterDriver
     public interface ITransmitter : IDisposable
     {
         bool portOpen();
+        String getPort();
 		String doIdentify(Int16 nodeId);
+        bool usesEncryption();
+        byte[] getKey();
         Int16 doGetSensorCount(Int16 nodeId);
 		void doPing(Int16 nodeId);
         bool doGetGenericDigitalIn(Int16 nodeId, Int16 sensorId);

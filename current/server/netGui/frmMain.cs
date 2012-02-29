@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using netGui.nodeEditForms;
@@ -12,11 +13,16 @@ namespace netGui
     public partial class FrmMain : Form
     {
         private ITransmitter _mydriver = null;
-        private options MyOptions = new options();
-        private readonly Dictionary<string,IntPtr> openRuleWindows = new Dictionary<string, IntPtr>();
-        //  private List<ruleItemCustom> _customToolbox = new List<ruleItemCustom>();
+        private options _myOptions = new options();
+        private readonly Dictionary<string, IntPtr> _openRuleWindows = new Dictionary<string, IntPtr>();
+        private static readonly List<Node> _nodes = new List<Node>();
  
-        public ITransmitter getMyDriver()
+        public static List<Node> getAllConnectedNodes()
+        {
+            return _nodes;
+        }
+
+        public  ITransmitter getMyDriver()
         {
             if ( (null == _mydriver) || (!_mydriver.portOpen()) )
             {
@@ -26,7 +32,7 @@ namespace netGui
                 if ((response == DialogResult.No) || (response == DialogResult.None))
                     throw new cantOpenPortException();
 
-                _mydriver = new _transmitter(MyOptions.portname, MyOptions.useEncryption, MyOptions.myKey.keyArray);
+                _mydriver = new _transmitter(_myOptions.portname, _myOptions.useEncryption, _myOptions.myKey.keyArray);
                 generalToolStripMenuItem.Enabled = false;
             } 
 
@@ -37,7 +43,7 @@ namespace netGui
         {
             InitializeComponent();
         }
-
+		
         #region node interaction
         public void setMyDriver(ITransmitter toThis)
         {
@@ -48,7 +54,7 @@ namespace netGui
         {
             try
             {
-                setMyDriver(new _transmitter(MyOptions.portname, MyOptions.useEncryption, MyOptions.myKey.keyArray));
+                setMyDriver(new _transmitter(_myOptions.portname, _myOptions.useEncryption, _myOptions.myKey.keyArray));
             }
             catch (badPortException)
             {
@@ -161,23 +167,24 @@ namespace netGui
             ListViewItem listItem = new ListViewItem(new[] { caption, id, name, sensorCount  }, 0);
             listItem.ImageIndex = 0;
             listItem.Tag = newNode;
-
-            lstNodes.Items.Add(listItem);            
+            lstNodes.Items.Add(listItem);
+            _nodes.Add(newNode);
         }
 
         private void mnuItemGeneralOpts(object sender, EventArgs e)
         {
-            options tmpOptions = new options(MyOptions);
+            options tmpOptions = new options(_myOptions);
             FrmGeneralOptions options = new FrmGeneralOptions(tmpOptions);
             options.ShowDialog(this);
             if (!options.cancelled)
             {
-                MyOptions = tmpOptions; // If OK'ed, apply new settings
+                _myOptions = tmpOptions; // If OK'ed, apply new settings
             }
-
+			
             options.Dispose();
-            this.BringToFront();
-        }
+			this.Enabled = true;
+            this.BringToFront();        
+		}
 
         private void lstNodes_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -222,7 +229,10 @@ namespace netGui
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (lstNodes.SelectedItems.Count == 1)
-                lstNodes.SelectedItems[0].Remove();
+            {
+               Node nd = (Node) lstNodes.SelectedItems[0].Tag;
+                _nodes.Remove(nd);
+            }
         }
 
         private void refreshThisNodeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -266,7 +276,7 @@ namespace netGui
 
         private void FrmMain_FormClosed(object sender, FormClosedEventArgs e)
         {
-            MyOptions.save();
+            _myOptions.save();
             saveAllRules();
         }
 
@@ -284,7 +294,7 @@ namespace netGui
             foreach (ListViewItem thisItem in lstNodes.SelectedItems)
             {
                 FrmChangeKey keyChangeForm = new FrmChangeKey((Node)thisItem.Tag);
-                keyChangeForm.txtNewKey.Text = MyOptions.myKey.ToString();
+                keyChangeForm.txtNewKey.Text = _myOptions.myKey.ToString();
                 keyChangeForm.Show(this);
             }
         }
@@ -371,8 +381,8 @@ namespace netGui
 
             if (sureness == System.Windows.Forms.DialogResult.Yes)
                 lstRules.Items.Remove(toRemove);
-            if(File.Exists(MyOptions.rulesPath + @"\" + r.name + ".rule"))
-                File.Delete(MyOptions.rulesPath + @"\" + r.name + ".rule");
+            if(File.Exists(_myOptions.rulesPath + @"\" + r.name + ".rule"))
+                File.Delete(_myOptions.rulesPath + @"\" + r.name + ".rule");
         }
 
         private void lstRules_ItemActivate(object sender, EventArgs e)
@@ -386,12 +396,10 @@ namespace netGui
         {
             if (ruleItem.SubItems[2].Text == true.ToString() )
             {
-                FromHandle(openRuleWindows[ruleItem.Name]).BringToFront();
+                FromHandle(_openRuleWindows[ruleItem.Name]).BringToFront();
                 return;
             }
-
-            rule rule = (rule) ruleItem.Tag;
-
+            rule rule = (rule)ruleItem.Tag;
             frmRuleEdit newForm = new frmRuleEdit(onSaveRule, onCloseRuleEditorDialog);
             // We serialise the rule before we pass it to the rule edit form. This is to ease the transition
             // to a client-server style rule engine / rule editor kind of situations later on
@@ -399,15 +407,17 @@ namespace netGui
             newForm.ctlRuleEditor.getRule().onStatusUpdate += updateRuleIcon;
             newForm.Closed += ruleFormClosed;
             newForm.Show();
-            openRuleWindows[ruleItem.Name] = newForm.Handle;
+            _openRuleWindows[ruleItem.Name] = newForm.Handle;
             // Mark this rule as being open in the editor
             ruleItem.SubItems[2].Text = true.ToString();
         }
 
+
+
         private void ruleFormClosed(object sender, EventArgs e)
         {
             frmRuleEdit frm = (frmRuleEdit) sender;
-            openRuleWindows.Remove(frm.ctlRuleEditor.getRule().name);
+            _openRuleWindows.Remove(frm.ctlRuleEditor.getRule().name);
         }
 
         private void onCloseRuleEditorDialog(rule closeThis)
@@ -528,10 +538,10 @@ namespace netGui
             try
             {
                 
-                rulesDir = new DirectoryInfo(MyOptions.rulesPath);
+                rulesDir = new DirectoryInfo(_myOptions.rulesPath);
                 fileList = rulesDir.GetFiles();
             } catch {
-                MessageBox.Show("Unable to read rule files from " + MyOptions.rulesPath);
+                MessageBox.Show("Unable to read rule files from " + _myOptions.rulesPath);
                 return;
             }
 
@@ -602,12 +612,12 @@ namespace netGui
             DirectoryInfo rulesDir;
             try
             {
-                rulesDir = new DirectoryInfo(MyOptions.rulesPath);
+                rulesDir = new DirectoryInfo(_myOptions.rulesPath);
                 rulesDir.GetFiles();
             }
             catch
             {
-                MessageBox.Show("Unable to read rule files from " + MyOptions.rulesPath);
+                MessageBox.Show("Unable to read rule files from " + _myOptions.rulesPath);
                 return;
             }
 
@@ -617,9 +627,9 @@ namespace netGui
                 rule thisRule = (rule)thisItem.Tag;
                 try
                 {
-                    thisRule.saveToDisk(MyOptions.rulesPath + @"\" + thisRule.name + ".rule");
+                    thisRule.saveToDisk(_myOptions.rulesPath + @"\" + thisRule.name + ".rule");
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     MessageBox.Show("Unable to save rule file '" + thisRule.name + "'");
                 }

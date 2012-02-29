@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Linq;
 using transmitterDriver;
 
 
@@ -89,9 +91,9 @@ namespace netGui
             int sensorCount = getSensorCount();
 
             sensors.Clear();
-            for (Int16 n=1; n < sensorCount+1; n++)
+            for (Int16 n = 1; n < sensorCount + 1; n++)
             {
-                sensor newSensor = new sensor(this) {id = n};
+                sensor newSensor = new sensor(this) { id = n };
 
                 sensors.Add(newSensor.id, newSensor);
             }
@@ -178,14 +180,14 @@ namespace netGui
 
             try
             {
-                if (toThis.GetType() == typeof(bool))
+                if (toThis is bool)
                 {
                     if ((bool)toThis)
                         Mydriver.doSetGenericOut(id, 0x01, sensorId);
                     else
                         Mydriver.doSetGenericOut(id, 0x00, sensorId);
                 }
-                else if (toThis.GetType() == typeof(Int16))
+                else if (toThis is short)
                 {
                     Mydriver.doSetGenericOut(id, ((Int16)toThis), sensorId);
                 }
@@ -250,6 +252,16 @@ namespace netGui
             {
                 safelyCloseFormWait(holdup);
             }
+        }
+        [Pure]
+        public List<sensor> getSensorsOfType(sensorType sensorType)
+        {
+            return sensors.Values.Where(s => s.type == sensorType).ToList();
+        }
+        [Pure]
+        public bool hasSensorOf(sensorType selectedType)
+        {
+            return getSensorsOfType(selectedType).Count != 0;
         }
     }
 }

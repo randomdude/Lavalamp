@@ -16,7 +16,6 @@ namespace ruleEngine
         private int buttonsBorderX;
         private int buttonsBorderY;
         private bool isClosing = false;
-        //private List<ruleItemCustom> _customToolbox; 
 
         public delegate void saveRuleDelegate(rule saveThis);
         public delegate void closeRuleDelegate(rule closeThis);
@@ -33,7 +32,6 @@ namespace ruleEngine
         {
             saveCallback = onSaveRule;
             closeCallback = onCloseRuleEditorDialog;
-          //  _customToolbox = toolbox;
 
             InitializeComponent();
         }
@@ -47,14 +45,6 @@ namespace ruleEngine
         {
             tvToolbox.Nodes.Clear();
             populateToolboxFromAssembly(Assembly.GetExecutingAssembly());
-            /*
-            foreach (ruleItemCustom item in _customToolbox)
-            {
-                ruleItemInfo itemInfo = new ruleItemInfo();
-                itemInfo.itemType = ruleItemType.RuleItem;
-                itemInfo.ruleItemBaseType = typeof(ruleItemCustom);
-                addRuleItemObjectToToolbox(item,itemInfo);
-            }*/
         }
 
         private void populateToolboxFromPythonFile(string filename)
@@ -90,9 +80,14 @@ namespace ruleEngine
                             // Instantiate a new object just so we can pluck the name from it
                             ConstructorInfo constr = thisType.GetConstructor(new Type[0]);
                             Object newRuleItem = constr.Invoke(new object[0]);
+                             ruleItemInfo itemInfo = new ruleItemInfo();
 
-                            ruleItemInfo itemInfo = new ruleItemInfo();
-                            itemInfo.itemType = ruleItemType.RuleItem;
+                             foreach (Attribute customAttribute in thisType.GetCustomAttributes(typeof(ToolboxRuleCategoryAttribute), false))
+                             {
+                                 ToolboxRuleCategoryAttribute toolboxRule =
+                                     (ToolboxRuleCategoryAttribute) customAttribute;
+                                 itemInfo.itemType = toolboxRule.isNode ? ruleItemType.NodeItem : ruleItemType.RuleItem;
+                             }
                             itemInfo.ruleItemBaseType = thisType;
 
                             addRuleItemObjectToToolbox((ruleItemBase) newRuleItem, itemInfo);

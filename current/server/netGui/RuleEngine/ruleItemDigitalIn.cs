@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Windows.Forms;
 using netGui.RuleEngine.windows;
 using ruleEngine;
+using ruleEngine.pinDataTypes;
 using ruleEngine.ruleItems;
 using transmitterDriver;
 
@@ -13,8 +13,8 @@ namespace netGui.RuleEngine
     [ToolboxRuleCategory("Node Sensors")]
     class ruleItemDigitalIn : ruleItemBase
     {
-        private sensorSettings _settings;
-        private object inVal;
+        public sensorSettings settings = new sensorSettings(sensorTypeEnum.generic_digital_in);
+        private bool _inVal;
 
         public override string ruleName()
         {
@@ -23,14 +23,16 @@ namespace netGui.RuleEngine
 
         public override System.Windows.Forms.Form ruleItemOptions()
         {
-            frmSensorOptions options = new frmSensorOptions(typeof(sensorTypeEnum));
+            frmSensorOptions options = new frmSensorOptions(settings);
             options.Closed += sensorOptClosed;
             return options;
         }
 
         private void sensorOptClosed(object sender, EventArgs e)
         {
-            
+            frmSensorOptions options = (frmSensorOptions)sender;
+            if (options.DialogResult == DialogResult.OK)
+                settings.selectedSensor = options.selectedSensor();
         }
 
         public override Dictionary<string, ruleEngine.pin> getPinInfo()
@@ -47,8 +49,13 @@ namespace netGui.RuleEngine
 
         public override void evaluate()
         {
-            if (pinInfo["in"].value.data != inVal)
-                _settings.selectedSensor.setValue(pinInfo["in"].value.data, true);
+            //digital is only boolean atm this will hopefully change in the future
+            var newVal = (bool)settings.selectedSensor.getValue(true);
+            if (newVal != _inVal)
+            {
+                onRequestNewTimelineEvent(new timelineEventArgs(new pinDataBool(newVal, this, pinInfo["in"])));
+            }
+            _inVal = newVal;
         }
     }
 }

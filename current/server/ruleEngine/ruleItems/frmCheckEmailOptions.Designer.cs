@@ -109,7 +109,7 @@
             // 
             this.cmbServer.FormattingEnabled = true;
             this.cmbServer.Items.AddRange(new object[] {
-            "imap.google.com"});
+            "imap.gmail.com"});
             this.cmbServer.Location = new System.Drawing.Point(104, 64);
             this.cmbServer.Name = "cmbServer";
             this.cmbServer.Size = new System.Drawing.Size(176, 21);

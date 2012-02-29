@@ -21,7 +21,8 @@ namespace ruleEngine.ruleItems
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
 
-            pinList.Add("newEmail", new pin { name = "newEmail", description = "unread mail is present", direction = pinDirection.output });
+            pinList.Add("newEmail", new pin { name = "newEmail", description = "unread mail is present", direction = pinDirection.output, valueType = typeof(pinDataTrigger)});
+            pinList.Add("newEmailTitle", new pin { name = "newEmailTitle", description = "unread mail title", direction = pinDirection.output, valueType = typeof(pinDataString)});
             pinList.Add("checkNow", new pin { name = "checkNow", description = "trigger to check email now", direction = pinDirection.input });
 
             return pinList;
@@ -50,8 +51,8 @@ namespace ruleEngine.ruleItems
                 imapChecker mychecker = new imapChecker(widget.options);
                 if (mychecker.newMail != pinInfo["newEmail"].value.asBoolean())
                 {
-                    pinInfo["newEmail"].value.data = mychecker.newMail;
-                    onRequestNewTimelineEvent(new timelineEventArgs(new pinDataBool(pinInfo["newEmail"].value as pinDataBool)));
+                    onRequestNewTimelineEvent(new timelineEventArgs(new pinDataTrigger(mychecker.newMail, this, pinInfo["newEmail"])));
+                    onRequestNewTimelineEvent(new timelineEventArgs(new pinDataString(mychecker.mailTitle,this,pinInfo["newEmailTitle"])));
                 }
             }
             lastState = thisState;

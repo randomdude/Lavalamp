@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using netGui;
+using netGui.RuleEngine;
 using netGui.RuleEngine.windows;
 using ruleEngine;
 using ruleEngine.pinDataTypes;
@@ -13,8 +15,9 @@ namespace netgui.ruleEngine
     [ToolboxRuleCategory("Node Sensors")]
     class ruleItemPWM : ruleItemBase
     {
-        private sensor _sensor;
-        private object[] _previousValues; 
+        public sensorSettings settings = new sensorSettings(sensorTypeEnum.pwm_out);
+
+        private short[] _previousValues = new short[2]; 
 
         public override string ruleName()
         {
@@ -23,14 +26,16 @@ namespace netgui.ruleEngine
 
         public override System.Windows.Forms.Form ruleItemOptions()
         {
-            frmSensorOptions options = new frmSensorOptions(typeof(sensorTypeEnum));
+            frmSensorOptions options = new frmSensorOptions(settings);
             options.Closed += sensorOptClosed;
             return options;
         }
 
         private void sensorOptClosed(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            frmSensorOptions options = (frmSensorOptions)sender;
+            if (options.DialogResult == DialogResult.OK)
+                settings.selectedSensor = options.selectedSensor();
         }
 
 
@@ -44,6 +49,7 @@ namespace netgui.ruleEngine
                                 name = "pwm_fadeDelay",
                                 description = "pwm fade delay",
                                 direction = pinDirection.input,
+                                valueType = typeof(pinDataInt)
                             });
             pinList.Add("pwm_brightness",
                         new pin
@@ -51,17 +57,21 @@ namespace netgui.ruleEngine
                                 name = "pwm_brightness",
                                 description = "pwm brightness",
                                 direction = pinDirection.input,
+                                valueType = typeof(pinDataInt)
                             });
             return pinList;
         }
         
         public override void evaluate()
         {
-          
-            if (pinInfo["pwm_fadeDelay_" + _sensor.id ].value.data != _previousValues[0])
-                _sensor.setValue(new pwm_speed((short) pinInfo["pwm_fadeDelay_" + _sensor.id].value.data),true);
-            if (pinInfo["pwm_brightness_" + _sensor.id].value.data != _previousValues[1])
-                _sensor.setValue(new pwm_brightness((short)pinInfo["pwm_fadeDelay_" + _sensor.id].value.data),true);
+            short newPWMSpeedVal = (short) pinInfo["pwm_fadeDelay_" + settings.selectedSensor.id].value.data;
+            short newPWMBrightnessVal = (short) pinInfo["pwm_brightness_" + settings.selectedSensor.id].value.data;
+            if (newPWMSpeedVal != _previousValues[0])
+                settings.selectedSensor.setValue(new pwm_speed(newPWMSpeedVal), true);
+            _previousValues[0] = newPWMSpeedVal;
+            if (newPWMBrightnessVal != _previousValues[1])
+                settings.selectedSensor.setValue(new pwm_brightness(newPWMBrightnessVal), true);
+            _previousValues[1] = newPWMBrightnessVal;
         }
     }
 }

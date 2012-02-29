@@ -13,6 +13,7 @@ namespace transmitterDriver
         /// We lock on this before performing any interop, since our native code is not threadsafe.
         /// </summary>
         private readonly object serialLock = new Object();
+        private readonly byte[] rawKey; 
 
         public transmitter(string strPortName, bool useEncryption, byte[] key)
         {
@@ -32,7 +33,7 @@ namespace transmitterDriver
             if (useEncryption)
             {
                 if (key.Length != 16) throw new ArgumentException("Key is of an invalid length");
-
+                rawKey = key;
                 myseshdata.key1 = (key[3] << 0) |
                                     (key[2] << 8) |
                                     (key[1] << 16) |
@@ -156,6 +157,8 @@ namespace transmitterDriver
             }
         }
 
+
+
         public void doPing(short nodeId)
         {
             lock (serialLock)
@@ -258,6 +261,20 @@ namespace transmitterDriver
         public void doSetNodeKey(short nodeId, byte[] key)
         {
             throw new NotImplementedException();
+        }
+
+        public string getPort()
+        {
+            return myseshdata.portName;
+        }
+        public bool usesEncryption()
+        {
+            return myseshdata.useEncryption;
+        }
+
+        public byte[] getKey()
+        {
+            return rawKey;
         }
 
     }

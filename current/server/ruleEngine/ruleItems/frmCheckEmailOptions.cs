@@ -94,7 +94,7 @@ namespace ruleEngine.ruleItems
                 if (MessageBox.Show("You have not tested these settings sucessfully; testing is recommended. Do you want to continue anyway?", "Are you sure?", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
                     return;
             }
-
+            DialogResult = DialogResult.OK;
             cancelled = false;
 
             this.Close();

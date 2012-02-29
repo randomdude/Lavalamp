@@ -66,6 +66,8 @@ namespace ruleEngine.pinDataTypes
                 convertedData = (bool)value;
             else if (tpyToConvert == typeof(string))
                 convertedData = !String.IsNullOrEmpty(value as string);
+            else if (tpyToConvert == typeof(int))
+                convertedData = ((int)value != 0);
             else if (tpyToConvert == typeof(tristate))
             {
                 if (((tristate)value) == tristate.yes)

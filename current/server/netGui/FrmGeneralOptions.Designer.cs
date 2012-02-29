@@ -32,11 +32,14 @@ namespace netGui
             this.cboPort = new System.Windows.Forms.ComboBox();
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdCancel = new System.Windows.Forms.Button();
+			this.cmdReload = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.txtKey = new System.Windows.Forms.TextBox();
             this.txtRulePath = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.chkUseEncryption = new System.Windows.Forms.CheckBox();
+			this.lblStatus = new System.Windows.Forms.Label();
+			
             this.SuspendLayout();
             // 
             // label1
@@ -51,19 +54,11 @@ namespace netGui
             // cboPort
             // 
             this.cboPort.FormattingEnabled = true;
-            this.cboPort.Items.AddRange(new object[] {
-            "COM1",
-            "COM2",
-            "COM3",
-            "COM4",
-            "COM5",
-            "COM6",
-            "COM7",
-            "COM8"});
             this.cboPort.Location = new System.Drawing.Point(92, 13);
             this.cboPort.Name = "cboPort";
             this.cboPort.Size = new System.Drawing.Size(146, 21);
             this.cboPort.TabIndex = 1;
+			this.cboPort.SelectedIndexChanged += new System.EventHandler(this.CheckVaildPort);
             // 
             // cmdOK
             // 
@@ -85,14 +80,31 @@ namespace netGui
             this.cmdCancel.Text = "&Cancel";
             this.cmdCancel.UseVisualStyleBackColor = true;
             this.cmdCancel.Click += new System.EventHandler(this.cmdCancel_Click);
+			//
+			// cmdReload
             // 
-            // label2
+			this.cmdReload.Location = new System.Drawing.Point(310, 12);
+			this.cmdReload.Name = "cmdReload";
+			this.cmdReload.Size = new System.Drawing.Size(75, 23);
+			this.cmdReload.TabIndex = 4;
+			this.cmdReload.Text = "&Reload";
+			this.cmdReload.UseVisualStyleBackColor = true;
+            this.cmdReload.Click += new System.EventHandler(this.cmdReload_Click);
+			//
+			// lblStatus
+			//
+			this.lblStatus.Location = new System.Drawing.Point(235, 12);
+			this.lblStatus.Name = "lblStatus";
+			this.lblStatus.Size = new System.Drawing.Size(75, 23);
+			this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			//
+			// label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(16, 66);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(70, 13);
-            this.label2.TabIndex = 4;
+            this.label2.TabIndex = 6;
             this.label2.Text = "Network key:";
             // 
             // txtKey
@@ -139,7 +151,7 @@ namespace netGui
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdCancel;
-            this.ClientSize = new System.Drawing.Size(387, 192);
+            this.ClientSize = new System.Drawing.Size(387,200);
             this.ControlBox = false;
             this.Controls.Add(this.chkUseEncryption);
             this.Controls.Add(this.txtRulePath);
@@ -148,6 +160,8 @@ namespace netGui
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cmdCancel);
             this.Controls.Add(this.cmdOK);
+			this.Controls.Add(this.cmdReload);
+			this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.cboPort);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -168,10 +182,12 @@ namespace netGui
         private System.Windows.Forms.ComboBox cboPort;
         private System.Windows.Forms.Button cmdOK;
         private System.Windows.Forms.Button cmdCancel;
+		private System.Windows.Forms.Button cmdReload;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtKey;
         private System.Windows.Forms.TextBox txtRulePath;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox chkUseEncryption;
+		private System.Windows.Forms.Label lblStatus;
     }
 }

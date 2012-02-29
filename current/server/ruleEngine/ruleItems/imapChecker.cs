@@ -14,6 +14,7 @@ namespace ruleEngine.ruleItems.Starts
         private StreamWriter myWriter;
         private StreamReader myReader;
         public bool newMail;
+        public string mailTitle;
 
         public void makeImapChecker(string server, int port, string username, string password, bool useSSL)
         {
@@ -23,8 +24,39 @@ namespace ruleEngine.ruleItems.Starts
             {
                 imapLogin(username, password);
                 imapSelect("inbox");
-                newMail = imapSearch();
+                string[] messageIds = imapSearch();
+                if (newMail)
+                    mailTitle = imapFetch(messageIds[2]);
             }
+        }
+
+        private string imapFetch(string messageId)
+        {
+            sendCmd("fetch " + messageId + ":" + (int.Parse(messageId) + 1) + " body[header.fields (from subject)]");
+            string fetched = "";
+            bool responded = false;
+            while (!responded)
+            {
+                String fetchResponse = myReader.ReadLine();
+                if (fetchResponse.StartsWith("From:"))
+                {
+                    fetched = fetched + " - " + fetchResponse.Substring(7);
+                    continue;
+                }
+                if (fetchResponse.StartsWith("Subject:"))
+                {
+                    fetched = fetchResponse.Substring(9) + fetched;
+                    continue;
+                }
+                if (fetchResponse.StartsWith("OK"))
+                    responded = true;
+                if (fetchResponse.StartsWith("NO"))
+                    throw new Exception("Searching for new mail failed.");
+                if (fetchResponse.StartsWith("BAD"))
+                    throw new Exception("Server failed to parse SEARCH command");
+                
+            }
+            return fetched;
         }
 
         public imapChecker(emailOptions options)
@@ -33,18 +65,17 @@ namespace ruleEngine.ruleItems.Starts
                                    options.useSSL);
         }
 
-        private bool imapSearch()
+        private string[] imapSearch()
         {
             sendCmd("search unseen");
 
             bool responded = false;
-            String loginResponse;
-            bool newItems = false;
+            String[] responseParts ;
+            String[] emailList = new string[0];
             while (!responded)
             {
-                loginResponse = myReader.ReadLine();
-
-                String[] responseParts = (loginResponse.Split(' '));
+                String loginResponse = myReader.ReadLine();
+                responseParts = (loginResponse.Split(' '));
                 if (responseParts.Length > 0)
                 {
                     if (responseParts[0] == "a" + cmdNum.ToString("000"))
@@ -64,19 +95,22 @@ namespace ruleEngine.ruleItems.Starts
                             else if (responseParts[1].ToUpper() == "BAD")
                                 throw new Exception("Server failed to parse SEARCH command");
                             else
-                                throw new Exception("Server gave unrecognised response ('" + responseParts[1] +
+                                throw new Exception("Server gave unrecognized response ('" + responseParts[1] +
                                                     "') to SEARCH");
                         }
                     }
                     if (responseParts[1] == "SEARCH")
                     {
                         if (responseParts.Length > 2)
-                            newItems = true;
+                        {
+                            emailList = responseParts;
+                            newMail = true;
+                        }
                     }
                 }
             }
 
-            return newItems;
+            return emailList;
         }
 
         private void imapSelect(string folder)
@@ -113,9 +147,8 @@ namespace ruleEngine.ruleItems.Starts
 
         private void imapLogin(string username, string password)
         {
-            // todo: check for LOGINDISABLED capability
-            sendCmd("LOGIN " + username + " " + password);
-
+            // todo: check for LOGINDISABLED capability  
+            sendCmd("LOGIN \"" + username + "\" \"" + password + "\"");
             String loginResponse = myReader.ReadLine();
 
             String[] answerChunks = loginResponse.Split(' ');
@@ -123,8 +156,11 @@ namespace ruleEngine.ruleItems.Starts
                 throw new Exception("bad login. Check username / password and retry. (server line '" + loginResponse + "')");
             if (answerChunks[1].ToUpper() == "BAD")
                 throw new Exception("Failure sending username/password. Check login, hope it isn't a bug (server line '" + loginResponse + "')");
-            if (!(answerChunks[1].ToUpper() == "OK"))
-                throw new Exception("Server response to login not recognised (as OK, NO, or BAD) (server line '" + loginResponse + "')");
+            //newer versions of imap (well gmail) broadcast their capability on a successful login first, so we ignore this message.
+            if (answerChunks[1].ToUpper() == "CAPABILITY")
+                answerChunks = myReader.ReadLine().Split(' ');
+            if (answerChunks[1].ToUpper() != "OK")
+                throw new Exception("Server response to login not recognized (as OK, NO, or BAD) (server line '" + loginResponse + "')");
         }
 
         private void sendCmd(string command)

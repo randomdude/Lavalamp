@@ -74,6 +74,7 @@ namespace transmitterDriver
      *	Note that errors returned from the PIC are command-dependant and thus need parsing at the PC-side, depending
      *	which command they are returned from.
      */
+
     public enum errorcode_enum
     {
         errcode_none = 0x00, 

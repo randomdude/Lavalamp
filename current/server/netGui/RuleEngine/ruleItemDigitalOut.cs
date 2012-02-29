@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using netGui.RuleEngine.windows;
 using ruleEngine;
 using ruleEngine.pinDataTypes;
@@ -14,9 +15,8 @@ namespace netGui.RuleEngine
     [ToolboxRuleCategory("Node Sensors")]
     class ruleItemDigitalOut : ruleItemBase
     {
-        private sensorSettings _settings;
-        private bool pollPrevVal;
-        private bool prevSetVal;
+        public sensorSettings settings = new sensorSettings(sensorTypeEnum.generic_digital_out);
+        private object _prevVal;
 
         public override string ruleName()
         {
@@ -25,14 +25,16 @@ namespace netGui.RuleEngine
 
         public override System.Windows.Forms.Form ruleItemOptions()
         {
-            frmSensorOptions options = new frmSensorOptions(typeof(sensorTypeEnum));
+            frmSensorOptions options = new frmSensorOptions(settings);
             options.Closed += sensorOptClosed;
             return options;
         }
 
         private void sensorOptClosed(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            frmSensorOptions options = (frmSensorOptions)sender;
+            if (options.DialogResult == DialogResult.OK)
+                settings.selectedSensor = options.selectedSensor(); ;
         }
 
 
@@ -50,16 +52,13 @@ namespace netGui.RuleEngine
 
         public override void evaluate()
         {
-            if (pinInfo["poll"].value.asBoolean() != (bool)pollPrevVal)
+            //the lack of type info here makes Kat an unhappy girl (TODO)
+            if (pinInfo["out"].value.data != _prevVal)
             {
-                bool val = (bool)_settings.selectedSensor.getValue(true);
-                if (val != (bool)prevSetVal)
-                {
-                    pinInfo["out"].value.data = val;
-                    //propagate
-                    onRequestNewTimelineEvent(new timelineEventArgs(new pinDataBool(val, this, pinInfo["out"])));
-                }
+                settings.selectedSensor.setValue(pinInfo["out"].value.data, true);
             }
+            _prevVal = pinInfo["out"].value.data;
+
         }
     }
 }
