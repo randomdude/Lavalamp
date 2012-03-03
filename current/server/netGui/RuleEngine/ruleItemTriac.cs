@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
 using System.Windows.Forms;
 using netGui.RuleEngine.windows;
 using ruleEngine;
@@ -14,9 +11,9 @@ namespace netGui.RuleEngine
 {
     [ToolboxRule]
     [ToolboxRuleCategory("Node Sensors")]
-    class ruleItemTriac : ruleItemBase
+    public class ruleItemTriac : ruleItemBase
     {
-        public sensorSettings settings = new sensorSettings(sensorTypeEnum.triac_out);
+        public sensor selectedSensor;
         private short _pwmBrightnessLast;
         private short _pwmFadeDelayLast;
 
@@ -25,9 +22,14 @@ namespace netGui.RuleEngine
             return "Triac Sensor";
         }
 
-        public override System.Windows.Forms.Form ruleItemOptions()
+        public override string caption()
         {
-            frmSensorOptions options = new frmSensorOptions(settings);
+            return "Triac";
+        }
+
+        public override Form ruleItemOptions()
+        {
+            frmSensorOptions options = new frmSensorOptions(sensorTypeEnum.triac_out, selectedSensor);
             options.Closed += sensorOptClosed;
             return options;
         }
@@ -36,7 +38,7 @@ namespace netGui.RuleEngine
         {
             frmSensorOptions options = (frmSensorOptions)sender;
             if (options.DialogResult == DialogResult.OK)
-                settings.selectedSensor = options.selectedSensor();
+                selectedSensor = options.selectedSensor();
         }
 
         public override Dictionary<string, ruleEngine.pin> getPinInfo()
@@ -62,27 +64,22 @@ namespace netGui.RuleEngine
         } 
         public override void evaluate()
         {
-            short triacFade = (short) pinInfo["pwm_fadeDelay"].value.data;
-            short triacBrightness = (short) pinInfo["pwm_brightness"].value.data;
-            if (triacFade != _pwmFadeDelayLast)
-                settings.selectedSensor.setValue(new pwm_speed(triacFade), true);
-            _pwmFadeDelayLast = triacFade;
+            try
+            {
+                short triacFade = (short)pinInfo["pwm_fadeDelay"].value.data;
+                short triacBrightness = (short) pinInfo["pwm_brightness"].value.data;
+                if (triacFade != _pwmFadeDelayLast)
+                    selectedSensor.setValue(new pwm_speed(triacFade) , true);
+                _pwmFadeDelayLast = triacFade;
 
-            if (triacBrightness != _pwmBrightnessLast)
-                settings.selectedSensor.setValue(new pwm_brightness(triacBrightness), true);
-            _pwmBrightnessLast = triacBrightness;
-        }
-    }
-
-    [Serializable]
-    public class sensorSettings
-    {
-        public sensor selectedSensor;
-        public sensorType selectedType;
-
-        public sensorSettings(sensorTypeEnum sensorType)
-        {
-            selectedType = new sensorType(sensorType);
+                if (triacBrightness != _pwmBrightnessLast)
+                    selectedSensor.setValue(new pwm_brightness(triacBrightness) , true);
+                _pwmBrightnessLast = triacBrightness;
+            }
+            catch (Exception e)
+            {
+                errorHandler(e);
+            }
         }
     }
 }

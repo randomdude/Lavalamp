@@ -1,45 +1,31 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 using transmitterDriver;
 
 
 namespace netGui
 {
     [Serializable]
-    public class sensor : ISerializable 
+    public class sensor : IXmlSerializable 
     {
-        private readonly Node _parentNode;
+        private Node _parentNode;
 
         public sensor()
         {
             // Because we can't talk to a sensor without knowing what node it's on
-            throw new Exception("You need to initialize the Sensor class with a parent instance of the Node class");
+            //throw new Exception("You need to initialize the Sensor class with a parent instance of the Node class");
         }
 
-        protected sensor(SerializationInfo info, StreamingContext context)
-        {
-            id = info.GetInt16("ID");
-            _cachedType = new sensorType((sensorTypeEnum) info.GetInt32("nodeType"));
-            short parentNodeId = info.GetInt16("parentNodeID");
-            string port = info.GetString("driverPort");
-            bool encrypt = info.GetBoolean("driverEncryption");
-            byte[] key = new byte[16];
-            if (encrypt)
-            {
-                for (int i = 0; i < 16; i++)
-                    key[i] = info.GetByte("key" + i);
-            }
-            _transmitter trans = new _transmitter(port, encrypt, key);
-            _parentNode = new Node(trans, parentNodeId);
-
-        }
         public sensor(Node newParentNode)
         {
             _parentNode = newParentNode;
         }
-
+        [XmlIgnore]
         public string name { get { return _parentNode.name + " : " + id; } }
-
+        [XmlIgnore]
         public Int16 id;
 
         // We cache the sensorType, as it's highly unlikely to change.
@@ -65,19 +51,79 @@ namespace netGui
             _parentNode.setValue(id,value,silently);
         }
 
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        public XmlSchema GetSchema()
         {
-            info.AddValue("ID", id);
-            info.AddValue("nodeType", (int)type.enumeratedType);
-            info.AddValue("parentNodeID", _parentNode.id);
-            info.AddValue("driverPort", _parentNode.Mydriver.getPort());
-            info.AddValue("driverEncryption",_parentNode.Mydriver.usesEncryption());
+            throw new NotImplementedException();
+        }
+
+        public void ReadXml(XmlReader reader)
+        {
+            short parentNodeId = 0;
+            string port = null;
+            bool encrypt = false;
+            byte[] key = new byte[16];
+            bool readElement = false;
+           while(!readElement)
+           {
+               switch (reader.Name)
+               {
+                   case "ID":
+                       id = (short)reader.ReadElementContentAsInt();
+                       break;
+                   case "nodeType":
+                       _cachedType = new sensorType((sensorTypeEnum)reader.ReadElementContentAsInt());
+                       break;
+                   case "parentNodeID":
+                       parentNodeId = (short)reader.ReadElementContentAsInt();
+                       break;
+                   case "driverPort":
+                       port = reader.ReadElementContentAsString();
+                       break;
+                   case "driverEncrypt":
+                       encrypt = reader.ReadElementContentAsBoolean();
+                       break;
+                   case "key":
+                       reader.ReadElementContentAsBinHex(key, 0, 16);
+                       break;
+                   case "selectedSensor":
+                       if (reader.NodeType == XmlNodeType.EndElement)
+                           readElement = true;
+                       else
+                           reader.Read();
+                       break;
+                   default:
+                       reader.Read();
+                       break;
+               }
+            }
+            _parentNode = new Node(new _transmitter(port,encrypt,key),parentNodeId);
+        }
+
+        public void WriteXml(XmlWriter writer)
+        {
+            writer.WriteStartElement("ID");
+            writer.WriteValue(id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("nodeType");
+            writer.WriteValue((int)_cachedType.enumeratedType);
+            writer.WriteEndElement();
+            writer.WriteStartElement("parentNodeID");
+            writer.WriteValue(_parentNode.id);
+            writer.WriteEndElement();
+            writer.WriteStartElement("driverPort");
+            writer.WriteValue(_parentNode.Mydriver.getPort());
+            writer.WriteEndElement();
+            writer.WriteStartElement("driverEncrypt");
+            writer.WriteValue(_parentNode.Mydriver.usesEncryption());
+            writer.WriteEndElement();
             if (_parentNode.Mydriver.usesEncryption())
             {
-                byte[] key = _parentNode.Mydriver.getKey();
-                for(int i = 0; i < 16; i++)
-                    info.AddValue("key" + i,key[i]);
+                writer.WriteStartElement("key");
+                writer.WriteBinHex(_parentNode.Mydriver.getKey(),0,16);
+                writer.WriteEndElement();
             }
+            _parentNode.Mydriver.Dispose();
+
         }
     }
 }

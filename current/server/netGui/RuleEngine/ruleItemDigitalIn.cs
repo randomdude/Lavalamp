@@ -11,9 +11,9 @@ namespace netGui.RuleEngine
 {
     [ToolboxRule]
     [ToolboxRuleCategory("Node Sensors")]
-    class ruleItemDigitalIn : ruleItemBase
+    public class ruleItemDigitalIn : ruleItemBase
     {
-        public sensorSettings settings = new sensorSettings(sensorTypeEnum.generic_digital_in);
+        public sensor connectedSensor;
         private bool _inVal;
 
         public override string ruleName()
@@ -21,9 +21,14 @@ namespace netGui.RuleEngine
             return "Digital in";
         }
 
+        public override string caption()
+        {
+            return "Digital in";
+        }
+
         public override Form ruleItemOptions()
         {
-            frmSensorOptions options = new frmSensorOptions(settings);
+            frmSensorOptions options = new frmSensorOptions(sensorTypeEnum.generic_digital_in, connectedSensor);
             options.Closed += sensorOptClosed;
             return options;
         }
@@ -32,12 +37,19 @@ namespace netGui.RuleEngine
         {
             frmSensorOptions options = (frmSensorOptions)sender;
             if (options.DialogResult == DialogResult.OK)
-                settings.selectedSensor = options.selectedSensor();
+                connectedSensor = options.selectedSensor();
         }
 
-        public override Dictionary<string, ruleEngine.pin> getPinInfo()
+        public override Dictionary<string, pin> getPinInfo()
         {
             var pinList = base.getPinInfo();
+            pinList.Add("trigger",new pin
+            {
+                name = "trigger", 
+                description = "check digital in", 
+                direction = pinDirection.input,
+                valueType = typeof(pinDataTrigger)
+            });
             pinList.Add("in", new pin
             {
                 name = "in",
@@ -49,13 +61,24 @@ namespace netGui.RuleEngine
 
         public override void evaluate()
         {
-            //digital is only boolean atm this will hopefully change in the future
-            var newVal = (bool)settings.selectedSensor.getValue(true);
-            if (newVal != _inVal)
+            if (pinInfo["trigger"].value.asBoolean())
             {
-                onRequestNewTimelineEvent(new timelineEventArgs(new pinDataBool(newVal, this, pinInfo["in"])));
+                try
+                {
+                    //digital is only boolean atm this will hopefully change in the future
+                    bool newVal = (bool) connectedSensor.getValue(true);
+                    if (newVal != _inVal)
+                    {
+                        onRequestNewTimelineEvent(new timelineEventArgs(new pinDataBool(newVal , this , pinInfo["in"])));
+                    }
+                    _inVal = newVal;
+                }
+                catch(Exception e)
+                {
+                    errorHandler(e);
+                }
             }
-            _inVal = newVal;
+            
         }
     }
 }

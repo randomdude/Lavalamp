@@ -2,7 +2,7 @@
 
 namespace ruleEngine.pinDataTypes
 {
-    class pinDataTrigger : pinDataBool
+    public class pinDataTrigger : pinDataBool
     {
         public pinDataTrigger(ruleItemBase parentRuleItem, pin newParentPin) : base(parentRuleItem, newParentPin)
         {

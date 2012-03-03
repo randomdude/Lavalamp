@@ -563,7 +563,8 @@ namespace netGui
                         // Add our  rule name to our listView, with a .tag() set to the rule object itself.
                          addNewRule((rule)mySer.Deserialize(thisFileReader));
                     }
-                } catch {
+                }
+                catch {
                     MessageBox.Show("Unable to read rule file '" + thisFile.FullName + "'" );
                 }
             }

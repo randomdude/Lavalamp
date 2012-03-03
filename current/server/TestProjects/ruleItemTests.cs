@@ -140,13 +140,13 @@ namespace TestProjects
         public void testRssReader()
         {
             rule targetRule = new rule();
-        //   ruleItemRss rss = (ruleItemRss) targetRule.addRuleItem(new ruleItemInfo(typeof(ruleItemRss)));
-           // rss._options.url = "file://" + Path.GetFullPath(Properties.Settings.Default.testDataPath) + @"\test.rss";
-           // rss.pinInfo["trigger"].value.data = true;
-           //targetRule.start();
-           // rss.evaluate();
+            ruleItemRss rss = (ruleItemRss) targetRule.addRuleItem(new ruleItemInfo(typeof(ruleItemRss)));
+            rss._options.url = "file://" + Path.GetFullPath(Properties.Settings.Default.testDataPath) + @"\test.rss";
+            rss.pinInfo["trigger"].value.data = true;
+            targetRule.start();
+            rss.evaluate();
 
-           // Assert.AreEqual("test entry test details", rss.pinInfo["feed"].value.data); 
+            Assert.AreEqual("test entry test details", rss.pinInfo["feed"].value.data); 
             
         }
     }

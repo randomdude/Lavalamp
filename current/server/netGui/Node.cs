@@ -25,7 +25,7 @@ namespace netGui
 
         private frmWait SafelyMakeNewFrmWait()
         {
-            if (_ownerWindow.InvokeRequired)
+            if (_ownerWindow != null && _ownerWindow.InvokeRequired)
                 return (frmWait)_ownerWindow.Invoke(makeNewFrmWaitDelegate);
             else
                 return makeNewFrmWaitDelegate();
@@ -38,7 +38,7 @@ namespace netGui
 
         private void safelyCloseFormWait(frmWait thisone)
         {
-            if (_ownerWindow.InvokeRequired)
+            if (_ownerWindow != null && _ownerWindow.InvokeRequired)
                 _ownerWindow.Invoke(closeFrmWaitDelegate, thisone);
             else
                 closeFormWait(thisone);
@@ -49,10 +49,10 @@ namespace netGui
         {
             id = newid;
             Mydriver = driver;
-
-            fillProperties();
             makeNewFrmWaitDelegate = makeNewFrmWait;
             closeFrmWaitDelegate = closeFormWait;
+            fillProperties();
+            
         }
         public Node(Int16 newid)
         {
@@ -255,7 +255,7 @@ namespace netGui
         [Pure]
         public List<sensor> getSensorsOfType(sensorType sensorType)
         {
-            return sensors.Values.Where(s => s.type == sensorType).ToList();
+            return sensors.Values.Where(s => s.type.enumeratedType == sensorType.enumeratedType).ToList();
         }
         [Pure]
         public bool hasSensorOf(sensorType selectedType)

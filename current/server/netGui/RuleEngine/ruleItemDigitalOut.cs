@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using netGui.RuleEngine.windows;
 using ruleEngine;
-using ruleEngine.pinDataTypes;
 using ruleEngine.ruleItems;
 using transmitterDriver;
 
@@ -15,7 +12,8 @@ namespace netGui.RuleEngine
     [ToolboxRuleCategory("Node Sensors")]
     public class ruleItemDigitalOut : ruleItemBase
     {
-        public sensorSettings settings = new sensorSettings(sensorTypeEnum.generic_digital_out);
+        
+        public sensor selectedSensor;
         private object _prevVal;
 
         public override string ruleName()
@@ -23,9 +21,14 @@ namespace netGui.RuleEngine
             return "Digital Out";
         }
 
-        public override System.Windows.Forms.Form ruleItemOptions()
+        public override string caption()
         {
-            frmSensorOptions options = new frmSensorOptions(settings);
+            return "Digital Out";
+        }
+
+        public override Form ruleItemOptions()
+        {
+            frmSensorOptions options = new frmSensorOptions(sensorTypeEnum.generic_digital_out, selectedSensor);
             options.Closed += sensorOptClosed;
             return options;
         }
@@ -34,11 +37,11 @@ namespace netGui.RuleEngine
         {
             frmSensorOptions options = (frmSensorOptions)sender;
             if (options.DialogResult == DialogResult.OK)
-                settings.selectedSensor = options.selectedSensor(); ;
+                selectedSensor = options.selectedSensor();
         }
 
 
-        public override Dictionary<string, ruleEngine.pin> getPinInfo()
+        public override Dictionary<string, pin> getPinInfo()
         {
             Dictionary<string, pin> pinList = base.getPinInfo();
             pinList.Add("out" , new pin
@@ -52,13 +55,19 @@ namespace netGui.RuleEngine
 
         public override void evaluate()
         {
-            //the lack of type info here makes Kat an unhappy girl (TODO)
-            if (pinInfo["out"].value.data != _prevVal)
+            try
             {
-                settings.selectedSensor.setValue(pinInfo["out"].value.data, true);
+                //the lack of type info here makes Kat an unhappy girl (TODO)
+                if (pinInfo["out"].value.data != _prevVal)
+                {
+                    selectedSensor.setValue(pinInfo["out"].value.data , true);
+                }
+                _prevVal = pinInfo["out"].value.data;
             }
-            _prevVal = pinInfo["out"].value.data;
-
+            catch(Exception e)
+            {
+                errorHandler(e);
+            }
         }
     }
 }

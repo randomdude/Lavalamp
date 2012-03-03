@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using Microsoft.Scripting;
 using ruleEngine.ruleItems;
 using ruleEngine.ruleItems.windows;
@@ -13,7 +10,9 @@ namespace ruleEngine.pinDataTypes
     public class pinDataInt : pinDataBase<int>
     {
         public pinDataInt(pinDataBase<int> cpy) : base(cpy) {}
-        public pinDataInt(int defaultVal , ruleItemBase newParentRuleItem , pin newParentPin) : base(defaultVal , newParentRuleItem , newParentPin) {}
+        public pinDataInt(ruleItemBase newParentRuleItem, pin newParentPin) : base(0,newParentRuleItem,newParentPin) {}
+        public pinDataInt(int defaultVal, ruleItemBase newParentRuleItem, pin newParentPin) : base(defaultVal, newParentRuleItem, newParentPin) { }
+        
         public override void setToDefault()
         {
             _data = 0;

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using netGui;
-using netGui.RuleEngine;
 using netGui.RuleEngine.windows;
 using ruleEngine;
 using ruleEngine.pinDataTypes;
@@ -13,9 +12,9 @@ namespace netgui.ruleEngine
 {
     [ToolboxRule]
     [ToolboxRuleCategory("Node Sensors")]
-    class ruleItemPWM : ruleItemBase
+    public class ruleItemPWM : ruleItemBase
     {
-        public sensorSettings settings = new sensorSettings(sensorTypeEnum.pwm_out);
+        public sensor selectedSensor;
 
         private short[] _previousValues = new short[2]; 
 
@@ -24,9 +23,14 @@ namespace netgui.ruleEngine
             return "PWM Sensor";
         }
 
-        public override System.Windows.Forms.Form ruleItemOptions()
+        public override string caption()
         {
-            frmSensorOptions options = new frmSensorOptions(settings);
+            return "PWM";
+        }
+
+        public override Form ruleItemOptions()
+        {
+            frmSensorOptions options = new frmSensorOptions(sensorTypeEnum.pwm_out, selectedSensor);
             options.Closed += sensorOptClosed;
             return options;
         }
@@ -35,7 +39,7 @@ namespace netgui.ruleEngine
         {
             frmSensorOptions options = (frmSensorOptions)sender;
             if (options.DialogResult == DialogResult.OK)
-                settings.selectedSensor = options.selectedSensor();
+                selectedSensor = options.selectedSensor();
         }
 
 
@@ -64,14 +68,21 @@ namespace netgui.ruleEngine
         
         public override void evaluate()
         {
-            short newPWMSpeedVal = (short) pinInfo["pwm_fadeDelay_" + settings.selectedSensor.id].value.data;
-            short newPWMBrightnessVal = (short) pinInfo["pwm_brightness_" + settings.selectedSensor.id].value.data;
-            if (newPWMSpeedVal != _previousValues[0])
-                settings.selectedSensor.setValue(new pwm_speed(newPWMSpeedVal), true);
-            _previousValues[0] = newPWMSpeedVal;
-            if (newPWMBrightnessVal != _previousValues[1])
-                settings.selectedSensor.setValue(new pwm_brightness(newPWMBrightnessVal), true);
-            _previousValues[1] = newPWMBrightnessVal;
+            try
+            {
+                short newPWMSpeedVal = (short)pinInfo["pwm_fadeDelay_" + selectedSensor.id].value.data;
+                short newPWMBrightnessVal = (short) pinInfo["pwm_brightness_" + selectedSensor.id].value.data;
+                if (newPWMSpeedVal != _previousValues[0])
+                    selectedSensor.setValue(new pwm_speed(newPWMSpeedVal) , true);
+                _previousValues[0] = newPWMSpeedVal;
+                if (newPWMBrightnessVal != _previousValues[1])
+                    selectedSensor.setValue(new pwm_brightness(newPWMBrightnessVal) , true);
+                _previousValues[1] = newPWMBrightnessVal;
+            }
+            catch(Exception e)
+            {
+                errorHandler(e);
+            }
         }
     }
 }

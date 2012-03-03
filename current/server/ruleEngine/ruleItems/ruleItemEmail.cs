@@ -52,7 +52,7 @@ namespace ruleEngine.ruleItems
                 if (mychecker.newMail != pinInfo["newEmail"].value.asBoolean())
                 {
                     onRequestNewTimelineEvent(new timelineEventArgs(new pinDataTrigger(mychecker.newMail, this, pinInfo["newEmail"])));
-                    onRequestNewTimelineEvent(new timelineEventArgs(new pinDataString(mychecker.mailTitle,this,pinInfo["newEmailTitle"])));
+                    onRequestNewTimelineEvent(new timelineEventArgs(new pinDataString(mychecker.mailSubject,this,pinInfo["newEmailTitle"])));
                 }
             }
             lastState = thisState;

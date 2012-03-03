@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -202,18 +203,8 @@ namespace ruleEngine
             {
                 foreach (String thisFile in dlg.FileNames)
                 {
-                    if (thisFile.ToUpper().Substring(thisFile.Length - 3, 3) == "DLL")
-                    {
-                        try
-                        {
-                            populateToolboxFromAssembly(Assembly.LoadFile(thisFile));
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Unable to load assembly from file (" + ex.Message + ")");
-                        }
-                    }
-                    else
+                    if (thisFile.EndsWith("pyc",true,CultureInfo.CurrentCulture) ||
+                        thisFile.EndsWith("py",true,CultureInfo.CurrentCulture))
                     {
                         try
                         {
@@ -222,6 +213,17 @@ namespace ruleEngine
                         catch (Exception ex)
                         {
                             MessageBox.Show("Unable to load python from file (" + ex.Message + ")");
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                             populateToolboxFromAssembly(Assembly.LoadFile(thisFile));
+                        }
+                        catch (Exception ex)
+                        {
+                                MessageBox.Show("Unable to load assembly from file (" + ex.Message + ")");
                         }
                     }
                 }

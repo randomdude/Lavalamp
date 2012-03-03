@@ -78,7 +78,7 @@
             this.Controls.Add(this.lbl);
             this.Controls.Add(this.pictureIcon);
             this.Name = "ctlCheckEmail";
-            this.Size = new System.Drawing.Size(76, 76);
+            this.Size = new System.Drawing.Size(81, 80);
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureIcon)).EndInit();
             this.ResumeLayout(false);

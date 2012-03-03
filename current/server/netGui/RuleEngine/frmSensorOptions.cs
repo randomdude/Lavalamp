@@ -8,25 +8,22 @@ namespace netGui.RuleEngine.windows
     public partial class frmSensorOptions : Form
     {
         private readonly sensorType _tpy;
-        public frmSensorOptions(sensorSettings settings)
+        public frmSensorOptions(sensorTypeEnum tpy, sensor selectedSensor)
         {
             InitializeComponent();
-
-            _tpy = settings.selectedType;
+            _tpy = new sensorType(tpy);
             List<Node> allNodes = FrmMain.getAllConnectedNodes();
             foreach (Node node in allNodes)
             {
-                if (node.hasSensorOf(settings.selectedType))
+                
+                if (node.hasSensorOf(_tpy))
                 {
                     cboNodes.Items.Add(node);
                 }
             }
-            if (cboNodes.Items.Count == 0)
-            {
-                lblError.Text = "No nodes of this type are connected";
-            }
-            if (settings.selectedSensor != null)
-                cboNodes.SelectedItem = settings.selectedSensor;
+            lblError.Text = cboNodes.Items.Count == 0 ? "No nodes of this type are connected" : "";
+            if (selectedSensor != null)
+                cboNodes.SelectedItem = selectedSensor;
         }
 
         [Pure]

@@ -14,7 +14,8 @@ namespace ruleEngine.ruleItems.Starts
         private StreamWriter myWriter;
         private StreamReader myReader;
         public bool newMail;
-        public string mailTitle;
+        public string mailFrom;
+        public string mailSubject;
 
         public void makeImapChecker(string server, int port, string username, string password, bool useSSL)
         {
@@ -26,26 +27,25 @@ namespace ruleEngine.ruleItems.Starts
                 imapSelect("inbox");
                 string[] messageIds = imapSearch();
                 if (newMail)
-                    mailTitle = imapFetch(messageIds[2]);
+                    imapFetch(messageIds[2]);
             }
         }
 
-        private string imapFetch(string messageId)
+        private void imapFetch(string messageId)
         {
             sendCmd("fetch " + messageId + ":" + (int.Parse(messageId) + 1) + " body[header.fields (from subject)]");
-            string fetched = "";
             bool responded = false;
             while (!responded)
             {
                 String fetchResponse = myReader.ReadLine();
                 if (fetchResponse.StartsWith("From:"))
                 {
-                    fetched = fetched + " - " + fetchResponse.Substring(7);
+                    mailFrom = fetchResponse.Substring(6);
                     continue;
                 }
                 if (fetchResponse.StartsWith("Subject:"))
                 {
-                    fetched = fetchResponse.Substring(9) + fetched;
+                    mailSubject = fetchResponse.Substring(9);
                     continue;
                 }
                 if (fetchResponse.StartsWith("OK"))
@@ -56,7 +56,6 @@ namespace ruleEngine.ruleItems.Starts
                     throw new Exception("Server failed to parse SEARCH command");
                 
             }
-            return fetched;
         }
 
         public imapChecker(emailOptions options)
