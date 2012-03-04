@@ -40,7 +40,7 @@ init:
 	call initswuart
 #endif
 #ifndef IS_TRANSMITTER
-;	call enableidetimer
+	call enableidetimer
 #endif
 	return
 
@@ -69,10 +69,8 @@ inituart:
 
 	bsf STATUS, RP0  ; page 1
 
-;	movlw 0x81		; 2400 @ 20mhz if you clear BRGH
-;	movlw 0x19		; 9600 @  4mhz if you set BRGH
-	movlw 0x81		; 9600 @ 20mhz if you clear BRGH
-;	movlw 0x00		; 250000 @  4mhz if you set BRGH
+	; Set the baud rate according to the user config
+	movlw COMMLINK_HWUART_DELAY
 	movwf SPBRG		; set baud rate 
 
 	bcf STATUS, RP0  ; page 0
@@ -85,8 +83,11 @@ inituart:
 	bsf TRISB, 2	; USART requires both to be set to 
 	bsf TRISB, 1	; INPUTs.
 
-;	movlw b'00100100'	; TXSTA - set CSRC , and brgh (2)
+#ifdef COMMLINK_HWUART_BRGH
+	movlw b'00100100'	; TXSTA - set CSRC , and set brgh (2)
+#else
 	movlw b'00000100'	; TXSTA - set CSRC , and clear brgh (2)
+#endif
 	movwf TXSTA
 
 	bsf TXSTA, TXEN

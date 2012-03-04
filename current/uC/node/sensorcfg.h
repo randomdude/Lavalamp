@@ -7,6 +7,23 @@
 ;
 ; COMMLINK_HWUART uses a simple serial link to a host PC.
 #define COMMLINK_HWUART
+;
+; If you are using the HWUART, set the baud rate here. Some baud 
+; Select the desired baud rate and the oscillator speed on your
+; board, uncomment that line, and set 'COMMLINK_HWUART_BRGH' if
+; necessary.
+; 2400 @ 20mhz if you clear BRGH
+;#define COMMLINK_HWUART_DELAY 0x81
+; 9600 @  4mhz if you set BRGH
+#define COMMLINK_HWUART_DELAY 0x19
+; 9600 @ 20mhz if you clear BRGH
+;#define COMMLINK_HWUART_DELAY 0x81
+; 250000 @  4mhz if you set BRGH
+;#define COMMLINK_HWUART_DELAY 0x00
+;
+; Set this if instructed to by the COMMLINK_HWUART_DELAY define 
+; you selected above.
+#define COMMLINK_HWUART_BRGH
 
 ; Use 32-round XTEA encryption?
 ; #define CRYPTO_XTEA
@@ -17,12 +34,13 @@
 ; the communications link.
 ; #define TEST_TRANSMISSION
 ;
-; define these to set pins to singal various events which are
+; Define these to set pins to singal various events which are
 ; useful. These will not impair the rest of the code.
-#define DEBUG_PULSE_ON_SYNC
-#define DEBUG_PULSE_ON_SYNC_PORT PORTB
-#define DEBUG_PULSE_ON_SYNC_TRIS TRISB
-#define DEBUG_PULSE_ON_SYNC_PIN 0
+;
+;#define DEBUG_PULSE_ON_SYNC
+;#define DEBUG_PULSE_ON_SYNC_PORT PORTB
+;#define DEBUG_PULSE_ON_SYNC_TRIS TRISB
+;#define DEBUG_PULSE_ON_SYNC_PIN 0
 
 #define idletimerenabled
 
@@ -45,45 +63,22 @@
 
 #define NODEID 0x01
 
-#define SENSOR_COUNT 5
+#define SENSOR_COUNT 1
 
 ; config for sensor 1
 ;
 #define SENSOR_1_PRESENT
-#define SENSOR_1_PORT PORTA
-#define SENSOR_1_TRIS TRISA
-#define SENSOR_1_PIN 0
+#define SENSOR_1_PORT PORTB
+#define SENSOR_1_TRIS TRISB
+#define SENSOR_1_PIN 3
 #define SENSOR_1_TYPE SENSOR_ID_PWM_LED
-#define SENSOR_1_PWM_PRESCALER 0xC4
+#define SENSOR_1_PWM_DEFAULT 10
 
 ; config for sensor 2
-#define SENSOR_2_PRESENT
-#define SENSOR_2_PORT PORTA
-#define SENSOR_2_TRIS TRISA
-#define SENSOR_2_PIN 1
-#define SENSOR_2_TYPE SENSOR_ID_PWM_LED
-#define SENSOR_2_PWM_PRESCALER 0xC4
+;#define SENSOR_2_PRESENT
+;#define SENSOR_2_PORT PORTA
+;#define SENSOR_2_TRIS TRISA
+;#define SENSOR_2_PIN 1
+;#define SENSOR_2_TYPE SENSOR_ID_PWM_LED
+;#define SENSOR_2_PWM_PRESCALER 0xC4
 
-; config for sensor 3
-#define SENSOR_3_PRESENT
-#define SENSOR_3_PORT PORTA
-#define SENSOR_3_TRIS TRISA
-#define SENSOR_3_PIN 2
-#define SENSOR_3_TYPE SENSOR_ID_PWM_LED
-#define SENSOR_3_PWM_PRESCALER 0xC4
-
-; config for sensor 4
-#define SENSOR_4_PRESENT
-#define SENSOR_4_PORT PORTA
-#define SENSOR_4_TRIS TRISA
-#define SENSOR_4_PIN 3
-#define SENSOR_4_TYPE SENSOR_ID_PWM_LED
-#define SENSOR_4_PWM_PRESCALER 0xC4
-
-; config for sensor 5
-#define SENSOR_5_PRESENT
-#define SENSOR_5_PORT PORTA
-#define SENSOR_5_TRIS TRISA
-#define SENSOR_5_PIN 4
-#define SENSOR_5_TYPE SENSOR_ID_PWM_LED
-#define SENSOR_5_PWM_PRESCALER 0xC4
