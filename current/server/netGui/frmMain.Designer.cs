@@ -43,20 +43,20 @@ namespace netGui
             this.saveAllRulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadAllRulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lstNodes = new System.Windows.Forms.ListView();
-            this.ColCaption = new System.Windows.Forms.ColumnHeader();
-            this.colId = new System.Windows.Forms.ColumnHeader();
-            this.colName = new System.Windows.Forms.ColumnHeader();
-            this.colSensorCount = new System.Windows.Forms.ColumnHeader();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ColCaption = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colSensorCount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.nodeMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshThisNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolNodeSeperater1 = new System.Windows.Forms.ToolStripSeparator();
             this.thisNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeKeyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changePadvancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolNodeSeperator2 = new System.Windows.Forms.ToolStripSeparator();
             this.cmnuAddNode = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.largeIconsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,10 +73,10 @@ namespace netGui
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lstRules = new System.Windows.Forms.ListView();
-            this.colHdrState = new System.Windows.Forms.ColumnHeader();
-            this.colHdrName = new System.Windows.Forms.ColumnHeader();
-            this.colHdrIsOpenInEditor = new System.Windows.Forms.ColumnHeader();
-            this.colHdrDetail = new System.Windows.Forms.ColumnHeader();
+            this.colHdrState = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colHdrName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colHdrIsOpenInEditor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colHdrDetail = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStripRules = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.runRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,7 +86,7 @@ namespace netGui
             this.editRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imgLstStates = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip1.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
+            this.nodeMenuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -195,7 +195,7 @@ namespace netGui
             this.colId,
             this.colName,
             this.colSensorCount});
-            this.lstNodes.ContextMenuStrip = this.contextMenuStrip1;
+            this.lstNodes.ContextMenuStrip = this.nodeMenuStrip;
             this.lstNodes.GridLines = true;
             this.lstNodes.LabelEdit = true;
             this.lstNodes.LargeImageList = this.imgLstNodes;
@@ -205,9 +205,9 @@ namespace netGui
             this.lstNodes.SmallImageList = this.imgLstNodes;
             this.lstNodes.TabIndex = 1;
             this.lstNodes.UseCompatibleStateImageBehavior = false;
-            this.lstNodes.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstNodes_MouseDoubleClick);
             this.lstNodes.SelectedIndexChanged += new System.EventHandler(this.lstNodes_SelectedIndexChanged);
             this.lstNodes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lstNodes_KeyPress);
+            this.lstNodes.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstNodes_MouseDoubleClick);
             // 
             // ColCaption
             // 
@@ -228,18 +228,19 @@ namespace netGui
             // 
             this.colSensorCount.Text = "Sensor count";
             // 
-            // contextMenuStrip1
+            // nodeMenuStrip
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.nodeMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.deleteToolStripMenuItem,
             this.refreshThisNodeToolStripMenuItem,
-            this.toolStripMenuItem1,
+            this.toolNodeSeperater1,
             this.thisNodeToolStripMenuItem,
-            this.toolStripMenuItem3,
+            this.toolNodeSeperator2,
             this.cmnuAddNode,
             this.viewToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(160, 126);
+            this.nodeMenuStrip.Name = "contextMenuStrip1";
+            this.nodeMenuStrip.Size = new System.Drawing.Size(160, 148);
+            this.nodeMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.nodeMenuStrip_Opening);
             // 
             // deleteToolStripMenuItem
             // 
@@ -255,10 +256,10 @@ namespace netGui
             this.refreshThisNodeToolStripMenuItem.Text = "Refresh this node";
             this.refreshThisNodeToolStripMenuItem.Click += new System.EventHandler(this.refreshThisNodeToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem1
+            // toolNodeSeperater1
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(156, 6);
+            this.toolNodeSeperater1.Name = "toolNodeSeperater1";
+            this.toolNodeSeperater1.Size = new System.Drawing.Size(156, 6);
             // 
             // thisNodeToolStripMenuItem
             // 
@@ -299,10 +300,10 @@ namespace netGui
             this.changePadvancedToolStripMenuItem.Text = "Change P (advanced!)";
             this.changePadvancedToolStripMenuItem.Click += new System.EventHandler(this.changePadvancedToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem3
+            // toolNodeSeperator2
             // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(156, 6);
+            this.toolNodeSeperator2.Name = "toolNodeSeperator2";
+            this.toolNodeSeperator2.Size = new System.Drawing.Size(156, 6);
             // 
             // cmnuAddNode
             // 
@@ -553,11 +554,11 @@ namespace netGui
             this.MaximizeBox = false;
             this.Name = "FrmMain";
             this.Text = "Lavalamp GUI";
-            this.Load += new System.EventHandler(this.FrmMain_Load);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmMain_FormClosed);
+            this.Load += new System.EventHandler(this.FrmMain_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.contextMenuStrip1.ResumeLayout(false);
+            this.nodeMenuStrip.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -578,7 +579,7 @@ namespace netGui
         private System.Windows.Forms.ToolStripMenuItem MnuItemConnectToTrans;
         private System.Windows.Forms.ToolStripMenuItem MnuItemDisconnectFromTrans;
         private System.Windows.Forms.ListView lstNodes;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ContextMenuStrip nodeMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem cmnuAddNode;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label2;
@@ -593,7 +594,7 @@ namespace netGui
         private System.Windows.Forms.ToolStripMenuItem detailsToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader ColCaption;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolNodeSeperater1;
         private System.Windows.Forms.ToolStripMenuItem refreshThisNodeToolStripMenuItem;
         private System.Windows.Forms.Label lblSensorCount;
         private System.Windows.Forms.Label label4;
@@ -604,7 +605,7 @@ namespace netGui
         private System.Windows.Forms.ToolStripMenuItem changeKeyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changePadvancedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeNameToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripSeparator toolNodeSeperator2;
         private System.Windows.Forms.ToolStripMenuItem rulesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showRuleEditorToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox2;

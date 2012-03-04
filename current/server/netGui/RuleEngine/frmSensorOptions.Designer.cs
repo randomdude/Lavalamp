@@ -39,7 +39,7 @@
             // 
             // cboNodes
             // 
-            this.cboNodes.DisplayMember = "name";
+            this.cboNodes.DisplayMember = "name + \":\" + id";
             this.cboNodes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboNodes.FormattingEnabled = true;
             this.cboNodes.Location = new System.Drawing.Point(32, 43);

@@ -60,9 +60,18 @@ namespace netGui
             makeNewFrmWaitDelegate = makeNewFrmWait;
             closeFrmWaitDelegate = closeFormWait;
         }
-
-        public Int16 id;
-        public string name;
+         
+        public Int16 id;   
+        private string _name;
+        public string name 
+        { 
+            get
+            {
+                if (String.IsNullOrEmpty(_name))
+                    _name = doGetName();
+                return _name;
+            }  
+        }
         public Dictionary<Int16, sensor> sensors = new Dictionary<Int16, sensor>();
 
         private frmWait makeNewFrmWait()
@@ -86,7 +95,6 @@ namespace netGui
         public void fillProperties()
         {
             doPing();
-            name = doGetName();
             int sensorCount = getSensorCount();
 
             sensors.Clear();
@@ -126,7 +134,7 @@ namespace netGui
             }
         }
 
-        public string doGetName()
+        private string doGetName()
         {
             frmWait holdup = SafelyMakeNewFrmWait();
 
@@ -262,5 +270,12 @@ namespace netGui
         {
             return getSensorsOfType(selectedType).Count != 0;
         }
+
+        public override string ToString()
+        {
+            
+            return name + ":" + id;
+        }
+
     }
 }

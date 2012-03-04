@@ -30,6 +30,9 @@ namespace ruleEngine
 
         private bool snapWidgetsToGrid;
 
+        public delegate void ruleItemLoaded(ruleItemBase item);
+        public event ruleItemLoaded onRuleItemLoaded;
+
         /// <summary>
         /// A List of all child ctlRuleItems
         /// </summary>
@@ -94,6 +97,8 @@ namespace ruleEngine
                 Controls.Add(newCtl);
                 newCtl.BringToFront();
                 itemWidgets.Add(newCtl);
+                if (onRuleItemLoaded != null)
+                    onRuleItemLoaded.Invoke(thisRule);
             }
         }
 

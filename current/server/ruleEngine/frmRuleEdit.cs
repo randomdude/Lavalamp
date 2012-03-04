@@ -39,13 +39,8 @@ namespace ruleEngine
 
         private void frmRuleEdit_Load(object sender, EventArgs e)
         {
-            populateToolbox();
-        }
-
-        private void populateToolbox()
-        {
-            tvToolbox.Nodes.Clear();
             populateToolboxFromAssembly(Assembly.GetExecutingAssembly());
+            tvToolbox.Sort();
         }
 
         private void populateToolboxFromPythonFile(string filename)
@@ -227,6 +222,7 @@ namespace ruleEngine
                         }
                     }
                 }
+                tvToolbox.Sort();
             }
         }
 
@@ -236,7 +232,17 @@ namespace ruleEngine
             StringReader myReader = new StringReader(utf8Xml);
 
             XmlSerializer mySer = new XmlSerializer(typeof(rule));
+            ctlRuleEditor.onRuleItemLoaded += loadAssemblyForRuleItem;
             ctlRuleEditor.loadRule((rule) mySer.Deserialize(myReader));
+        }
+
+        private void loadAssemblyForRuleItem(ruleItemBase item)
+        {
+            if (item.GetType().Assembly.FullName != Assembly.GetExecutingAssembly().FullName)
+            {
+                populateToolboxFromAssembly(Assembly.Load(item.GetType().Assembly.FullName));
+                tvToolbox.Refresh();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -98,7 +97,7 @@ namespace netGui
                         break;
                 }
             }
-            _parentNode = new Node(new _transmitter(port, encrypt, key), parentNodeId);
+            _parentNode = new Node(parentNodeId);
         }
 
         public void WriteXml(XmlWriter writer)

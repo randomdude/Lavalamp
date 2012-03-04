@@ -21,7 +21,16 @@ namespace netGui.RuleEngine.windows
                     cboNodes.Items.Add(node);
                 }
             }
-            lblError.Text = cboNodes.Items.Count == 0 ? "No nodes of this type are connected" : "";
+            if (cboNodes.Items.Count == 0)
+            {
+                lblError.Text = "No nodes of this type are connected";
+                cboNodes.Enabled = false;
+            }
+            else
+            {
+                lblError.Text = "";
+                cboNodes.SelectedIndex = 0;
+            }
             if (selectedSensor != null)
                 cboNodes.SelectedItem = selectedSensor;
         }

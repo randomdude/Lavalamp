@@ -659,5 +659,32 @@ namespace netGui
             editRuleItem(lstRules.SelectedItems[0]);
         }
 
+        /// <summary>
+        /// Disable and enables Node context menu options based on if a node is selected.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void nodeMenuStrip_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+        
+            if (lstNodes.SelectedItems.Count > 0)
+            {
+                thisNodeToolStripMenuItem.Visible = true;
+                refreshThisNodeToolStripMenuItem.Visible = true;
+                deleteToolStripMenuItem.Visible = true;
+                toolNodeSeperater1.Visible = true;
+                toolNodeSeperator2.Visible = true;
+            }
+            else
+            {
+                thisNodeToolStripMenuItem.Visible = false;
+                refreshThisNodeToolStripMenuItem.Visible = false;
+                deleteToolStripMenuItem.Visible = false;
+                toolNodeSeperater1.Visible = false;
+                toolNodeSeperator2.Visible = false;
+            }
+        }
+
+
     }
 }
