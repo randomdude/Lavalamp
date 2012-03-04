@@ -9,22 +9,22 @@ using transmitterDriver;
 namespace netGui
 {
     [Serializable]
-    public class sensor : IXmlSerializable 
+    public class sensor : IXmlSerializable
     {
         private Node _parentNode;
 
         public sensor()
         {
-            // Because we can't talk to a sensor without knowing what node it's on
-            //throw new Exception("You need to initialize the Sensor class with a parent instance of the Node class");
         }
 
         public sensor(Node newParentNode)
         {
             _parentNode = newParentNode;
         }
+
         [XmlIgnore]
         public string name { get { return _parentNode.name + " : " + id; } }
+
         [XmlIgnore]
         public Int16 id;
 
@@ -46,11 +46,12 @@ namespace netGui
             return _parentNode.updateValue(id, silently);
         }
 
-        public void setValue(object value,bool silently)
+        public void setValue(object value, bool silently)
         {
-            _parentNode.setValue(id,value,silently);
+            _parentNode.setValue(id, value, silently);
         }
 
+        #region IXmlSerialisable memebrs
         public XmlSchema GetSchema()
         {
             throw new NotImplementedException();
@@ -63,40 +64,41 @@ namespace netGui
             bool encrypt = false;
             byte[] key = new byte[16];
             bool readElement = false;
-           while(!readElement)
-           {
-               switch (reader.Name)
-               {
-                   case "ID":
-                       id = (short)reader.ReadElementContentAsInt();
-                       break;
-                   case "nodeType":
-                       _cachedType = new sensorType((sensorTypeEnum)reader.ReadElementContentAsInt());
-                       break;
-                   case "parentNodeID":
-                       parentNodeId = (short)reader.ReadElementContentAsInt();
-                       break;
-                   case "driverPort":
-                       port = reader.ReadElementContentAsString();
-                       break;
-                   case "driverEncrypt":
-                       encrypt = reader.ReadElementContentAsBoolean();
-                       break;
-                   case "key":
-                       reader.ReadElementContentAsBinHex(key, 0, 16);
-                       break;
-                   case "selectedSensor":
-                       if (reader.NodeType == XmlNodeType.EndElement)
-                           readElement = true;
-                       else
-                           reader.Read();
-                       break;
-                   default:
-                       reader.Read();
-                       break;
-               }
+
+            while (!readElement)
+            {
+                switch (reader.Name)
+                {
+                    case "ID":
+                        id = (short)reader.ReadElementContentAsInt();
+                        break;
+                    case "nodeType":
+                        _cachedType = new sensorType((sensorTypeEnum)reader.ReadElementContentAsInt());
+                        break;
+                    case "parentNodeID":
+                        parentNodeId = (short)reader.ReadElementContentAsInt();
+                        break;
+                    case "driverPort":
+                        port = reader.ReadElementContentAsString();
+                        break;
+                    case "driverEncrypt":
+                        encrypt = reader.ReadElementContentAsBoolean();
+                        break;
+                    case "key":
+                        reader.ReadElementContentAsBinHex(key, 0, 16);
+                        break;
+                    case "selectedSensor":
+                        if (reader.NodeType == XmlNodeType.EndElement)
+                            readElement = true;
+                        else
+                            reader.Read();
+                        break;
+                    default:
+                        reader.Read();
+                        break;
+                }
             }
-            _parentNode = new Node(new _transmitter(port,encrypt,key),parentNodeId);
+            _parentNode = new Node(new _transmitter(port, encrypt, key), parentNodeId);
         }
 
         public void WriteXml(XmlWriter writer)
@@ -119,11 +121,12 @@ namespace netGui
             if (_parentNode.Mydriver.usesEncryption())
             {
                 writer.WriteStartElement("key");
-                writer.WriteBinHex(_parentNode.Mydriver.getKey(),0,16);
+                writer.WriteBinHex(_parentNode.Mydriver.getKey(), 0, 16);
                 writer.WriteEndElement();
             }
             _parentNode.Mydriver.Dispose();
 
         }
+        #endregion
     }
 }
