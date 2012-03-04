@@ -12,9 +12,12 @@ namespace ruleEngine.ruleItems.Starts
     [ToolboxRuleCategory("Start items")]
     public class ruleItem_atTime : ruleItemBase
     {
+        [XmlIgnore]
         public Timer checkTimer;
-        private long _hours;
-        private long _minutes;
+        [XmlElement("hours")]
+        public long _hours;
+        [XmlElement("minutes")]
+        public long _minutes;
         private bool running = false;
         private long lastHours;
         private long lastMinutes;
@@ -92,12 +95,10 @@ namespace ruleEngine.ruleItems.Starts
                 running = true;
                 return;
             }
-            bool doit = false;
+            bool doit = (targettime > lasttime ) &&       // was time of last check before the target time?
+                        (targettime < now      );
 
             // Otherwise, see if the specified date has passed since the last call.
-            if ( (targettime > lasttime ) &&       // was time of last check before the target time?
-                 (targettime < now      )   )      // is the target time in the past?
-                doit = true;
 
             if (targettime.CompareTo(now) == 0)     // or it is exactly time
                 doit = true;

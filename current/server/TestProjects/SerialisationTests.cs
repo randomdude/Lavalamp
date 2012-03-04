@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
-using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using netGui;
 using ruleEngine;
 using ruleEngine.pinDataTypes;
 using ruleEngine.ruleItems;
-using ruleEngine.ruleItems.windows;
+using ruleItems_winamp;
 
 namespace TestProjects
 {
@@ -52,10 +52,41 @@ namespace TestProjects
         [TestMethod]
         public void testSerialisationOfRuleWithAnySingleRuleItem()
         {
-            foreach (Module myMod in Assembly.GetExecutingAssembly().GetModules()) 
-                foreach (Type thisType in myMod.GetTypes()) 
-                    if (thisType.IsDefined(typeof (ToolboxRule), false))
+            int count = 0;
+            // the main set of rule items
+            foreach (Module myMod in Assembly.GetAssembly(typeof(rule)).GetModules()) 
+                foreach (Type thisType in myMod.GetTypes())
+                    if (thisType.IsDefined(typeof(ToolboxRule), false))
+                    {
                         testSerialisationOfRuleWithNamedRuleItem(thisType);
+                        ++count;
+                    }
+            if (count == 0)
+                throw new AssertInconclusiveException();
+            count = 0;
+            //netgui's rule items
+            foreach (Module myMod in Assembly.GetAssembly(typeof(sensor)).GetModules())
+                foreach (Type thisType in myMod.GetTypes())
+                    if (thisType.IsDefined(typeof(ToolboxRule), false))
+                    {
+                        testSerialisationOfRuleWithNamedRuleItem(thisType);
+                        ++count;
+                    }
+            if (count == 0)
+                throw new AssertInconclusiveException();
+
+            count = 0;
+            //winamp's rule items
+            foreach (Module myMod in Assembly.GetAssembly(typeof(ruleItem_winamp_base)).GetModules())
+                foreach (Type thisType in myMod.GetTypes())
+                    if (thisType.IsDefined(typeof(ToolboxRule), false))
+                        if (thisType.IsDefined(typeof(ToolboxRule), false))
+                        {
+                            testSerialisationOfRuleWithNamedRuleItem(thisType);
+                            ++count;
+                        }
+            if (count == 0)
+                throw new AssertInconclusiveException();
         }
 
         [TestMethod]

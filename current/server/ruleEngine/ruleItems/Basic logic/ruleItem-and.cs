@@ -33,10 +33,8 @@ namespace ruleEngine.ruleItems
             IPinData input1 = pinInfo["input1"].value;
             IPinData input2 = pinInfo["input2"].value;
 
-            pinInfo["output1"].value = input1.and(input2);
-
             //propagate changed value
-            onRequestNewTimelineEvent(new timelineEventArgs(new pinDataBool(pinInfo["output1"].value as pinDataBool)));
+            onRequestNewTimelineEvent(new timelineEventArgs(new pinDataBool(input1.and(input2 as pinDataBool).asBoolean(), this, pinInfo["output1"])));
         }
     }
 }

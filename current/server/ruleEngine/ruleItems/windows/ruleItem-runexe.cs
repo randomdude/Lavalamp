@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using ruleEngine.ruleItems.itemControls;
 using ruleEngine.ruleItems.windows;
 
@@ -14,10 +15,19 @@ namespace ruleEngine.ruleItems
     {
         public override string ruleName() { return "Execute program"; }
 
+        
         public delegate void executeItNowDelegate();    // this is used by the control, when the user asks to 'test' configuration by running the target
 
         private bool lastState;
-        private ctlRunFile controlwidget = null;
+
+        [XmlElement("FileToRun")]
+        public string fileToRun
+        {
+            get { return controlwidget.filename; }
+            set { controlwidget.filename = value; }
+        }
+
+        private ctlRunFile controlwidget = new ctlRunFile();
 
         public override System.Drawing.Image background()
         {

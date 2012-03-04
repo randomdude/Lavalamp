@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="testDataPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">..\..\..\testData</Value>
+      <Value Profile="(Default)">..\..\testData</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+	<channel>
+		<title>RSS 2.0 Test</title>
+		<description>Rss test description</description>
+		<link>http://gamesfairy.co.uk</link>
+		<pubDate>Fri, 12 Dec 2011 19:14:00 GMT</pubDate>
+		<item>
+			<title>hi &lt;3</title>
+			<description>Hello World</description>
+			<guid>38B00476-34F1-4BB1-8178-6ACB7813E009</guid>
+			<pubDate>Sun, 04 Mar 2011 19:14:00 GMT</pubDate>
+		</item>
+		<item>
+			<title>test entry</title>
+			<description>Test &apos;details&apos;</description>
+			<guid>38B00476-34F1-4BB1-8178-6ACB7812E109</guid>
+			<pubDate>Fri, 12 Dec 2011 19:14:00 GMT</pubDate>
+		</item>
+	</channel>
+</rss>

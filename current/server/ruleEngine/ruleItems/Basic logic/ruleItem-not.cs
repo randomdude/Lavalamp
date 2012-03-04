@@ -30,8 +30,7 @@ namespace ruleEngine.ruleItems
             // only set the output if necessary! constantly setting the output will result in a stack overflow.
             if (pinInfo["output1"].value.data != newOutput.data)
             {
-                pinInfo["output1"].value = newOutput;
-                onRequestNewTimelineEvent(new timelineEventArgs(newOutput));
+                onRequestNewTimelineEvent(new timelineEventArgs(new pinDataTristate((tristate)newOutput.data, this, pinInfo["output1"])));
             }
         }
     }

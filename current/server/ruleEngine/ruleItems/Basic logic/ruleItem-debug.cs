@@ -12,7 +12,7 @@ namespace ruleEngine.ruleItems
     public class ruleItem_debug : ruleItemBase 
     {
         private PictureBox indicator;
-        private string lastState = string.Empty;
+        private bool lastState;
 
         public override string ruleName() { return "Debug indicator"; }
 
@@ -28,23 +28,21 @@ namespace ruleEngine.ruleItems
 
         public override void evaluate()
         {
-            if (pinInfo["input"].value.ToString() != lastState)
+            if (pinInfo["input"].value.asBoolean() != lastState)
             {
-                if ((pinInfo["input"].value.ToString() == "False") ||
-                     (pinInfo["input"].value.ToString() == "no"))
+                if (!pinInfo["input"].value.asBoolean())
                     indicator.Image = Properties.Resources._0;
                 else
                     indicator.Image = Properties.Resources._1;
 
                 indicator.Invalidate();
 
-                lastState = pinInfo["input"].ToString();
+                lastState = pinInfo["input"].value.asBoolean();
             }
 
             if (pinInfo["output"].value.data != pinInfo["input"].value.data)
             {
-                pinInfo["output"].value.data = pinInfo["input"].value.data;
-                onRequestNewTimelineEvent(new timelineEventArgs(new pinDataTristate(pinInfo["output"].value)));
+                onRequestNewTimelineEvent(new timelineEventArgs(new pinDataTristate((tristate)pinInfo["input"].value.data, this, pinInfo["output"])));
             }
         }
 

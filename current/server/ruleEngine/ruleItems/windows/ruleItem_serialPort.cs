@@ -5,6 +5,7 @@ using System.IO.Ports;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using ruleEngine.pinDataTypes;
 using ruleEngine.ruleItems.windows;
 
@@ -17,8 +18,8 @@ namespace ruleEngine.ruleItems
         public override string ruleName() { return "Serial port"; }
 
         public override string caption() { return "Serial port"; }
-
-        private serialPortOptions opts = new serialPortOptions();
+        [XmlElement]
+        public serialPortOptions opts = new serialPortOptions();
 
         private SerialPort commport = null;
         private string lastInput = "";
@@ -80,7 +81,7 @@ namespace ruleEngine.ruleItems
             return myOptForm;
         }
     }
-
+    [Serializable]
     public class serialPortOptions
     {
         public string portName = "com2";

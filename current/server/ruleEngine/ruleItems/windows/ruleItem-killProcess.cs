@@ -11,7 +11,8 @@ namespace ruleEngine.ruleItems.windows
     [ToolboxRuleCategory("Windows tools")]
     public class ruleItem_killProcess : ruleItemBase
     {
-        [XmlElement("name")] public string name = "(not set)";
+        [XmlElement("name")] 
+        public string name = "(not set)";
         private bool lastInput;
         private Label lblCaption;
 

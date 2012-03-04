@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using ruleEngine.pinDataTypes;
 
 namespace ruleEngine.ruleItems
@@ -56,7 +57,8 @@ namespace ruleEngine.ruleItems
 
         private int timeUntilEmpty = 0;
         private string lastInput = "";
-        private int delayIntervalSecs = 10;
+        [XmlElement("delay")]
+        public int delayIntervalSecs = 10;
 
         public override void evaluate()
         {

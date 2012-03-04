@@ -2,16 +2,23 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace ruleEngine.ruleItems.itemControls
 {
+    [Serializable]
     public partial class ctlRunFile : UserControl
     {
         private Color normalBackground;
+        [XmlElement("Executable")]
         public string filename = "";
+        [XmlIgnore]
         public string username = "";
-        public string password;
+        [XmlIgnore]
+        public string password = "";
+        [XmlElement]
         public ProcessWindowStyle windowStyle = ProcessWindowStyle.Normal;
+        [XmlElement]
         public bool doImpersonate = false;
 
         private ruleItem_runexe.executeItNowDelegate executeIt = null;

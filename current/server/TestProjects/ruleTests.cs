@@ -74,9 +74,10 @@ namespace TestProjects
             targetRule.advanceDelta();
             Assert.AreEqual(true, startItem.pinInfo["StartOfSim"].value.data);
             Assert.AreEqual(tristate.yes, invItem.pinInfo["input1"].value.data);
-            Assert.AreEqual(tristate.no, invItem.pinInfo["output1"].value.data);
             targetRule.advanceDelta();
+            Assert.AreEqual(tristate.no, invItem.pinInfo["output1"].value.data);
             Assert.AreEqual(false, startItem.pinInfo["StartOfSim"].value.data);
+            targetRule.advanceDelta();
             Assert.AreEqual(tristate.no, invItem.pinInfo["input1"].value.data);
             Assert.AreEqual(tristate.yes, invItem.pinInfo["output1"].value.data);
             targetRule.stop();

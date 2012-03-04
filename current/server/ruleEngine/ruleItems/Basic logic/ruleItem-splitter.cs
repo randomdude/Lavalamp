@@ -47,7 +47,6 @@ namespace ruleEngine.ruleItems
                                                                                   typeof (ruleItemBase), typeof (pin)
                                                                               })
                                                  .Invoke(new object[] { input1, this, pin });
-                    pin.value = pinData;
                     onRequestNewTimelineEvent(new timelineEventArgs(pinData));
                 }
                     

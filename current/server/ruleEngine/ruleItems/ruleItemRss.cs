@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.ServiceModel.Syndication;
 using System.Text.RegularExpressions;
+using System.Web;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
@@ -150,11 +151,14 @@ namespace ruleEngine.ruleItems
 
             try
             {
-                HttpWebRequest request = (HttpWebRequest) WebRequest.Create(_options.url);
-                HttpWebResponse response = (HttpWebResponse) request.GetResponse();
+                WebRequest request = WebRequest.Create(_options.url);
+                WebResponse response = request.GetResponse();
                 Stream feedStream = response.GetResponseStream();
-                if (feedStream == null || response.StatusCode != HttpStatusCode.OK)
+                if (feedStream == null || response.ContentLength <= 0)
                     throw new WebException("Cannot access feed");
+                if (response is HttpWebResponse)
+                    if (((HttpWebResponse)response).StatusCode != HttpStatusCode.OK)
+                        throw new WebException("Cannot access feed (" + ((HttpWebResponse)response).StatusDescription + ")");
 
                 SyndicationFeed feed = SyndicationFeed.Load(XmlReader.Create(feedStream));
                 // order by ascending date all the feed items which have not been seen or have been updated and return the first. 
@@ -169,10 +173,11 @@ namespace ruleEngine.ruleItems
 
                 _readFeedItems.Add(getItemID(feedItem), true);
 
-                if (feedItem.Content != null)
+                if (feedItem.Content != null || feedItem.Summary != null)
                 {
                     string newSummary = getItemContent(feedItem);
-                    newSummary = newSummary.Replace("<foo type=\"html\" xmlns=\"bar\">", "");
+                    Regex replace = new Regex("<foo type=\"[\\w]+\" xmlns=\"bar\">");
+                    newSummary = replace.Replace(newSummary , string.Empty);
                     newSummary = newSummary.Replace("</foo>", "");
                     newSummary = unXMLEscape(newSummary);
                     onRequestNewTimelineEvent(
@@ -200,11 +205,18 @@ namespace ruleEngine.ruleItems
             //
             // TODO: What will happen if the feedItem.Content.Type isn't HTML? Surely this will
             // break.
-            TextWriter tw = new StringWriter();
-            XmlWriter writer = new XmlTextWriter(tw);
-            feedItem.Content.WriteTo(writer, "foo", "bar");
-
-            return tw.ToString();
+            if (feedItem.Content != null)
+            {
+                TextWriter tw = new StringWriter();
+                XmlWriter writer = new XmlTextWriter(tw);
+                feedItem.Content.WriteTo(writer , "foo" , "bar");
+                return tw.ToString();
+            }
+            else if (feedItem.Summary != null)
+            {
+                return feedItem.Summary.Text;
+            }
+            return null;
         }
 
         private string getItemID(SyndicationItem feedItem)
@@ -233,13 +245,7 @@ namespace ruleEngine.ruleItems
 
         private string unXMLEscape(string data)
         {
-            data = data.Replace("&amp;", "&");
-            data = data.Replace("&quot;", "\"" );
-            data = data.Replace("&apos;", "'");
-            data = data.Replace("&lt;", "<");
-            data = data.Replace("&gt;", ">");
-
-            return data;
+            return HttpUtility.HtmlDecode(data);
         }
     }
 

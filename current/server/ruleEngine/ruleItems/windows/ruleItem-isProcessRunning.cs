@@ -58,12 +58,10 @@ namespace ruleEngine.ruleItems.windows
         {
             bool trigger = (bool)pinInfo["trigger"].value.asBoolean();
 
-            if (!trigger || (lastState == trigger))
+            if (!trigger)
             {
-                lastState = trigger;
                 return;
             }
-            lastState = true;
 
             tristate newState = tristate.no;
             foreach (Process runningProcess in Process.GetProcesses())
