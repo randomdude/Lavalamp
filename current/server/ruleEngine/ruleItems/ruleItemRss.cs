@@ -154,11 +154,13 @@ namespace ruleEngine.ruleItems
                 WebRequest request = WebRequest.Create(_options.url);
                 WebResponse response = request.GetResponse();
                 Stream feedStream = response.GetResponseStream();
-                if (feedStream == null || response.ContentLength <= 0)
+                if (feedStream == null || response.ContentLength == 0)
                     throw new WebException("Cannot access feed");
                 if (response is HttpWebResponse)
-                    if (((HttpWebResponse)response).StatusCode != HttpStatusCode.OK)
-                        throw new WebException("Cannot access feed (" + ((HttpWebResponse)response).StatusDescription + ")");
+                {
+                    if (((HttpWebResponse) response).StatusCode != HttpStatusCode.OK)
+                        throw new WebException("Cannot access feed (" + ((HttpWebResponse) response).StatusDescription + ")");
+                }
 
                 SyndicationFeed feed = SyndicationFeed.Load(XmlReader.Create(feedStream));
                 // order by ascending date all the feed items which have not been seen or have been updated and return the first. 
