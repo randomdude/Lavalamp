@@ -24,7 +24,7 @@ dotests:
 
 doagain:
 	bcf PORTB, 7
-	call awaitidlesymbol
+	call a_waitidlesymbol
 	bsf PORTB, 7
 
 waitack:

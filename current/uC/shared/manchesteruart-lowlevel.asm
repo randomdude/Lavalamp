@@ -5,8 +5,8 @@
 
 	code
 
-awaitidlesymbol:
-	global awaitidlesymbol
+a_waitidlesymbol:
+	global a_waitidlesymbol
 	; This function waits for a 010 sequence, where '1' is at least as
 	; long as one manchester bit period.
 	; with the default 1Khz carrier signal (delay timer value 0xD8EF),

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using virtualNodeNetwork;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace TestProjects.GPSimTests
 {
@@ -14,6 +11,7 @@ namespace TestProjects.GPSimTests
     /// Here we test our GPSim class by firing it up with some known-good .hex files. The focus here is to
     /// test the GPSim interaction, not to test the PIC code itself, so we avoid using any lavalamp PIC code.
     /// </summary>
+    [Ignore]
     [TestClass]
     public class gpSimTests
     {

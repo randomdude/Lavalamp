@@ -4,8 +4,10 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 using virtualNodeNetwork.PICStuff;
 
 namespace virtualNodeNetwork
@@ -25,11 +27,9 @@ namespace virtualNodeNetwork
         private const string _cmdProcessor = @"processor";
         private const string _breakpointCannotBeSetOnString = @"break cannot be set on";
         private const string _bpHitString = @"message:";
-        private const string _runCommandString = "run\r\n";
-        private const string _runningString = "running...";
+        private const string _runCommandString = "run";
+        private const string _runningString = "running...\r\n";
         private const string _emptyProcessorListString = "(empty)";
-        // The keystroke we use to pause PIC execution
-        private static readonly string _breakIn = ((char)0x03).ToString();
 
         /// <summary>
         /// Was a 'run' command the last issued?
@@ -85,15 +85,23 @@ namespace virtualNodeNetwork
 
         public gpSim(string filename, ISynchronizeInvoke newEventHandler)
         {
+            if (!File.Exists(filename + ".cod") || !File.Exists(filename + ".lst"))
+                throw new GPSimException("File not found");
+
             _eventHandler = newEventHandler;
+
+            // GPSim is (strangely) throwing an AV if it loads a .cod from an absolute path. To work around this, we 
+            // set the working directory to the location of the file to load, and load it via a relative path.
+            FileInfo fileinfo = new FileInfo(filename);
 
             // Start up the executable. 
             ProcessStartInfo info = new ProcessStartInfo(_gpSimBinary)
                                         {
-                                            Arguments = " -i ",
+                                            Arguments = " -i -S=disable ",
                                             RedirectStandardOutput = true,
                                             RedirectStandardInput = true,
-                                            UseShellExecute = false
+                                            UseShellExecute = false,
+                                            WorkingDirectory = fileinfo.DirectoryName
                                         };
             _gpSimProcess = new Process();
             _gpSimProcess.StartInfo = info;
@@ -104,13 +112,24 @@ namespace virtualNodeNetwork
             // instead
             //
             // FIXME - won't we miss data from gpsim if it's scheduled to run before our read?
-            _gpSimProcess.StandardOutput.BaseStream.BeginRead(_charInBuf, 0, 1, gpSimOutputDataRecieved, this);
+            Thread readThread = new Thread(this.readThread) { Name = "GPSim input polling thread" };
+            readThread.Start();
 
             // Wait for our initial prompt to be returned.
             waitForPrompt();
 
             // And then load the code file.
-            load(filename);
+            load(fileinfo.Name);
+        }
+
+        public void readThread()
+        {
+            while (true)
+            {
+                if (_gpSimProcess.StandardOutput.BaseStream.Read(_charInBuf, 0, 1) == 0)
+                    throw new GPSimException("gpsim died?");
+                gpSimOutputDataRecieved(null);
+            }
         }
 
         /// <summary>
@@ -134,8 +153,8 @@ namespace virtualNodeNetwork
         {
             try
             {
-                if (_gpSimProcess.StandardOutput.BaseStream.EndRead(ar) == 0)
-                    return;
+                //if (_gpSimProcess.StandardOutput.BaseStream.EndRead(ar) == 0)
+                //    return;
 
                 lock (_stdOutLock)
                 {
@@ -158,7 +177,7 @@ namespace virtualNodeNetwork
                 }
 
                 // eek stack overflow here eventually?!
-                _gpSimProcess.StandardOutput.BaseStream.BeginRead(_charInBuf, 0, 1, gpSimOutputDataRecieved, this);
+                //_gpSimProcess.StandardOutput.BaseStream.BeginRead(_charInBuf, 0, 1, gpSimOutputDataRecieved, this);
             }
             catch (InvalidOperationException)
             {
@@ -278,9 +297,6 @@ namespace virtualNodeNetwork
         /// <param name="filename"></param>
         private void load(string filename)
         {
-            if (!File.Exists(filename + ".cod") || !File.Exists(filename + ".lst") )
-                throw new GPSimException("File not found");
-
             string lineToExec = String.Format("load \"{0}.cod\"", filename );
             writeLine(lineToExec);
             waitForPrompt();
@@ -302,8 +318,8 @@ namespace virtualNodeNetwork
 
         private void writeLine(string toWrite)
         {
-            Thread.Sleep(10);
-            _gpSimProcess.StandardInput.Flush();
+            //Thread.Sleep(10);
+            //_gpSimProcess.StandardInput.Flush();
             _gpSimProcess.StandardInput.Write(toWrite);
             _gpSimProcess.StandardInput.Write("\n");
             _gpSimProcess.StandardInput.Flush();
@@ -374,9 +390,47 @@ namespace virtualNodeNetwork
         {
             lock (this)
             {
-                writeLine(_breakIn);
-                waitForSpecified(_promptString.ToLower() + "\r\n" + _promptString.ToLower());
+//                Process p = Process.Start("C:\\cygwin\\bin\\kill.exe", "-s INT " + _gpSimProcess.Id);
+//                p.WaitForExit();
+
+                // Send a CTRL-C via p/invoke.
+                //IntPtr eventHandle = CreateEvent(IntPtr.Zero, false, false, "gpsimInterrupt");
+                IntPtr eventHandle = OpenEvent(0x001F0003, false, "gpsimInterrupt");
+                var err = Marshal.GetLastWin32Error();
+                SetEvent(eventHandle);
+
+                //EnumWindows(enumCallback, (IntPtr) 0);
+                waitForPrompt();
             }
+
+        }
+
+        private bool enumCallback(IntPtr hwnd, IntPtr lparam)
+        {
+            StringBuilder className = new StringBuilder(1024);
+            GetClassName(hwnd, className, className.Capacity);
+
+            if (className.ToString() != "ConsoleWindowClass")
+                return true;
+
+            StringBuilder windowText = new StringBuilder(1024);
+            GetWindowText(hwnd, windowText, windowText.Capacity);
+
+            if (!windowText.ToString().ToLower().EndsWith("gpsim.exe"))
+                return true;
+
+            // OK we have found our window!
+            //int VK_CONTROL = 0x11;
+            //uint wm_keydown = 0x100;
+            //uint wm_keyup = 0x101;
+            //int VK_C = 0x43;
+
+            //PostMessage(hwnd, wm_keydown, VK_CONTROL, 0);       //Send Ctrl down 
+            //PostMessage(hwnd, wm_keydown, VK_C, 0);             //Send 'c' down 
+            //PostMessage(hwnd, wm_keyup, VK_C, 0);               //Send 'c' up 
+            //PostMessage(hwnd, wm_keyup, VK_CONTROL, 0);         //Send Ctrl up
+
+            return false;
         }
 
         public int readMemory(string symToRead)
@@ -495,5 +549,26 @@ namespace virtualNodeNetwork
             }
             catch (ObjectDisposedException) { }
         }
+
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern bool PostMessage(IntPtr hwnd, uint Msg, int wParam, int lParam);
+        private delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool SetForegroundWindow(IntPtr hWnd);
+        [DllImport("kernel32.dll")]
+        static extern IntPtr CreateEvent(IntPtr lpEventAttributes, bool bManualReset, bool bInitialState, string lpName);
+        [DllImport("kernel32.dll")]
+        static extern bool SetEvent(IntPtr hEvent);
+        [DllImport("Kernel32.dll", SetLastError = true)]
+        static extern IntPtr OpenEvent(uint dwDesiredAccess, bool bInheritHandle, string lpName);
     }
 }

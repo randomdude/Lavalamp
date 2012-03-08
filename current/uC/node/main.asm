@@ -5,7 +5,7 @@
 	#include "main.h"
 	#include "sensorcfg.h"
 	#include "tea.h"
-	#include "../shared/init.h"
+	#include "..\..\shared\init.h"
 	#include "protocol.h"
 	#include "cmds.h"
 	#include "maths.h"
@@ -20,17 +20,17 @@
 
 #ifndef COMMLINK_HWUART 
 #ifndef COMMLINK_SWMANCHESTER
-error "Define either COMMLINK_HWUART or COMMLINK_SWMANCHESTER"
+	error "Define either COMMLINK_HWUART or COMMLINK_SWMANCHESTER"
 #endif
 #endif
 
 #ifdef COMMLINK_HWUART 
 #ifdef COMMLINK_SWMANCHESTER
-error "Do not define both COMMLINK_HWUART and COMMLINK_SWMANCHESTER"
+	error "Do not define both COMMLINK_HWUART and COMMLINK_SWMANCHESTER"
 #endif
 #endif
 	
-	page CODE
+;	page CODE
 	ORG 0x00
   	goto start
 	nop
@@ -382,7 +382,7 @@ resync
 
 #ifdef COMMLINK_SWMANCHESTER
 	;Here, we wait for a stable idle seq.
-	call awaitidlesymbol
+	call a_waitidlesymbol
 #endif
 
 	goto waitfordata

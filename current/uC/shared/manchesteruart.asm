@@ -1,6 +1,6 @@
 
 	#include "main.h"
-	#include "manchesteruart-lowlevel.h"
+	#include "..\shared\manchesteruart-lowlevel.h"
 
 	CODE
 
@@ -25,8 +25,8 @@
 
 	; these defines will throw out some debug info
 	#undefine debugging 
-	#undefine debugoutput PORTB,0
-	#undefine debugtris TRISB,0
+	#undefine debugoutput ;PORTB,0
+	#undefine debugtris ;TRISB,0
 
 
 initswuart:

@@ -1,5 +1,5 @@
 
-	#include "p16f628.inc"
+	#include <p16f628.inc>
 
 key1 EQU	H'20' ; key bytes
 key2 EQU	H'21'

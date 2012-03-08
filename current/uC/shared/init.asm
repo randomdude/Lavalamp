@@ -1,9 +1,9 @@
 
-	#include "main.h"
-	#include "manchesteruart.h"
+	#include "..\..\node\main.h"
+	#include "..\..\shared\manchesteruart.h"
 #ifndef IS_TRANSMITTER
-	#include "sensorcfg.h"
-	#include "idletimer.h"
+	#include "..\sensorcfg.h"
+	#include "..\idletimer.h"
 #endif
 	errorlevel  -302  
 

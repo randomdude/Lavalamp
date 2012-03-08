@@ -1,7 +1,7 @@
 	extern sendstartsymbol
 	extern sendidlesymbol
 	extern awaitstartsymbol
-	extern awaitidlesymbol
+	extern a_waitidlesymbol
 	extern awaitidlesymbolwithabort
 	extern halfbitpause
 	extern bitpause

@@ -1,3 +1,3 @@
 	EXTERN init
 	EXTERN inituart
-	EXTERN awaitidlesymbol
+	EXTERN a_waitidlesymbol
