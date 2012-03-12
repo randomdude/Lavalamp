@@ -57,8 +57,8 @@
             this.tvToolbox.Name = "tvToolbox";
             this.tvToolbox.Size = new System.Drawing.Size(135, 318);
             this.tvToolbox.TabIndex = 5;
+            this.tvToolbox.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.tvToolbox_ItemDrag);
             this.tvToolbox.DoubleClick += new System.EventHandler(this.tvToolbox_DoubleClick);
-            this.tvToolbox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.beginDrag);
             // 
             // ctxMnuToolbox
             // 
@@ -217,10 +217,11 @@
             this.Name = "frmRuleEdit";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Rule editor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRuleEdit_FormClosing);
             this.Load += new System.EventHandler(this.frmRuleEdit_Load);
             this.ResizeBegin += new System.EventHandler(this.frmRuleEdit_ResizeBegin);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRuleEdit_FormClosing);
             this.ResizeEnd += new System.EventHandler(this.frmRuleEdit_ResizeEnd);
+            this.DragOver += new System.Windows.Forms.DragEventHandler(this.frmRuleEdit_DragOver);
             this.ctxMnuToolbox.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

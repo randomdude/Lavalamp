@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -24,16 +25,20 @@ namespace ruleEngine
         public saveRuleDelegate saveCallback;
         public closeRuleDelegate closeCallback;
 
+        public ImageList imageList { get; private set; }
+
         public frmRuleEdit()
         {
             InitializeComponent();
+            imageList = new ImageList();
+           
         }
 
         public frmRuleEdit(saveRuleDelegate onSaveRule, closeRuleDelegate onCloseRuleEditorDialog)
         {
             saveCallback = onSaveRule;
             closeCallback = onCloseRuleEditorDialog;
-
+            imageList = new ImageList();
             InitializeComponent();
         }
 
@@ -233,7 +238,9 @@ namespace ruleEngine
 
             XmlSerializer mySer = new XmlSerializer(typeof(rule));
             ctlRuleEditor.onRuleItemLoaded += loadAssemblyForRuleItem;
-            ctlRuleEditor.loadRule((rule) mySer.Deserialize(myReader));
+            rule loadingRule = (rule) mySer.Deserialize(myReader);
+            ctlRuleEditor.loadRule(loadingRule);
+            this.Text += " - " + loadingRule.name;
         }
 
         private void loadAssemblyForRuleItem(ruleItemBase item)
@@ -350,12 +357,39 @@ namespace ruleEngine
             ctlRuleEditor.setGridSnapping(alwaysSnapToGridToolStripMenuItem.Checked);
         }
 
-        private void beginDrag(object sender, MouseEventArgs e)
-        {
-            if (e.Button != MouseButtons.Left)
-                return;
 
-          //  this.tvToolbox.DoDragDrop(tvToolbox.SelectedNode.Tag, DragDropEffects.Copy);
+
+        private void tvToolbox_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            TreeView view = ((TreeView)sender);
+            TreeNode dragNode = (TreeNode)e.Item;
+            if (dragNode.Tag == null)
+                return; // this will happen for category headers
+           
+            ruleItemInfo info = (ruleItemInfo)dragNode.Tag;
+            view.SelectedNode = dragNode;
+
+            imageList.Images.Clear();
+            imageList.Images.Add(info.getItemImage());
+            imageList.Images[0].Save("test.bmp");
+            DataObject data = new DataObject(info);
+            Point mousePos = tvToolbox.PointToClient(MousePosition);
+
+            int dx = mousePos.X + tvToolbox.Indent - dragNode.Bounds.Left;
+            int dy = mousePos.Y - dragNode.Bounds.Top;
+
+            if(DragDropHelper.ImageList_BeginDrag(imageList.Handle, 0, dx, dy))
+            {
+                DoDragDrop(data , DragDropEffects.Copy);
+                DragDropHelper.ImageList_EndDrag();
+            }
+        }
+
+        private void frmRuleEdit_DragOver(object sender, DragEventArgs e)
+        {
+            Point mousePos = PointToClient(new Point(e.X, e.Y));
+            DragDropHelper.ImageList_DragMove(mousePos.X - Left,
+                                          mousePos.Y - Top);
         }
 
     }

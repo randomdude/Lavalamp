@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{560BFC3D-3D57-46B5-B1C5-A3E01A88963C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>netGui</RootNamespace>
+    <AssemblyName>netGui</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\output\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'clr|AnyCPU' ">
+    <OutputPath>bin\clr\</OutputPath>
+    <DebugType>none</DebugType>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Contracts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="addNode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="addNode.Designer.cs">
+      <DependentUpon>addNode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ITransmitter.cs" />
+    <Compile Include="key.cs" />
+    <Compile Include="nodeEditForms\FrmChangeP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="nodeEditForms\FrmChangeP.Designer.cs">
+      <DependentUpon>FrmChangeP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="nodeEditForms\FrmChangeKey.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="nodeEditForms\FrmChangeKey.Designer.cs">
+      <DependentUpon>FrmChangeKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="nodeEditForms\FrmChangeId.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="nodeEditForms\FrmChangeId.Designer.cs">
+      <DependentUpon>FrmChangeId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\frmSensorOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\frmSensorOptions.designer.cs">
+      <DependentUpon>frmSensorOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\ruleItemDigitalIn.cs" />
+    <Compile Include="RuleEngine\ruleItemDigitalOut.cs" />
+    <Compile Include="RuleEngine\ruleItemPWM.cs" />
+    <Compile Include="RuleEngine\ruleItemTriac.cs" />
+    <Compile Include="sensorControls\ctlOnOff.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="sensorControls\ctlOnOff.Designer.cs">
+      <DependentUpon>ctlOnOff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="sensorControls\ctlPWM.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="sensorControls\ctlPWM.Designer.cs">
+      <DependentUpon>ctlPWM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="sensorControls\ctlReadout.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="sensorControls\ctlReadout.Designer.cs">
+      <DependentUpon>ctlReadout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="sensorControls\ctlRGB.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="sensorControls\ctlRGB.Designer.cs">
+      <DependentUpon>ctlRGB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="sensorControls\ctlSensor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="sensorControls\ctlSensor.Designer.cs">
+      <DependentUpon>ctlSensor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmGeneralOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmGeneralOptions.Designer.cs">
+      <DependentUpon>FrmGeneralOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmNodeSensors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmNodeSensors.Designer.cs">
+      <DependentUpon>frmNodeSensors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmWait.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWait.Designer.cs">
+      <DependentUpon>frmWait.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Node.cs" />
+    <Compile Include="Options.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="addNode.resx">
+      <DependentUpon>addNode.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="nodeEditForms\FrmChangeP.resx">
+      <DependentUpon>FrmChangeP.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="nodeEditForms\FrmChangeKey.resx">
+      <DependentUpon>FrmChangeKey.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="nodeEditForms\FrmChangeId.resx">
+      <DependentUpon>FrmChangeId.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\frmSensorOptions.resx">
+      <DependentUpon>frmSensorOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sensorControls\ctlOnOff.resx">
+      <DependentUpon>ctlOnOff.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sensorControls\ctlPWM.resx">
+      <DependentUpon>ctlPWM.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sensorControls\ctlReadout.resx">
+      <DependentUpon>ctlReadout.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sensorControls\ctlSensor.resx">
+      <DependentUpon>ctlSensor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmGeneralOptions.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FrmGeneralOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmNodeSensors.resx">
+      <DependentUpon>frmNodeSensors.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWait.resx">
+      <DependentUpon>frmWait.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sensorControls\sensoFrm.resx">
+      <DependentUpon>sensoFrm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="sensor.cs" />
+    <Compile Include="sensorControls\sensoFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="sensorControls\sensoFrm.Designer.cs">
+      <DependentUpon>sensoFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="_transmitter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Run.bmp" />
+    <None Include="Resources\Pause.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ruleEngine\ruleEngine.csproj">
+      <Project>{04834DB5-4E91-48EA-9107-FD2246087122}</Project>
+      <Name>ruleEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\transmitterDriver\transmitterDriver.csproj">
+      <Project>{00AAF76B-138C-4E79-960B-4540924D43C4}</Project>
+      <Name>transmitterDriver</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\0.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\_0.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\_1.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

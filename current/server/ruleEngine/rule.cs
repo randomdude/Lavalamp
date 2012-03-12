@@ -15,7 +15,7 @@ namespace ruleEngine
     [XmlRootAttribute("rule") ]
     public partial class rule : IXmlSerializable 
     {
-        public String name;
+        public String name { get; protected set; }
         public bool toolboxPromoted;
         private ruleState _state;
 
@@ -187,6 +187,38 @@ namespace ruleEngine
             }
         }
 
+        public void changeName(string path, string newName)
+        {
+            if (!string.IsNullOrEmpty(path))
+                path += @"\";
+
+            if(File.Exists(path + newName + ".rule"))
+                throw new IOException(newName + " already exists!");
+            // if the rule was saved to disk we delete the old file name and recreate it else we just rename the object in memory
+            string oldName = name;
+            name = newName;
+            try
+            {
+                if (File.Exists(path + oldName + ".rule"))
+                {
+                    File.Delete(path + oldName + ".rule");
+                    saveToDisk(path + newName + ".rule");
+                }
+            } // if for some reason this fails we roll back to the previous state
+            catch (Exception)
+            {
+                name = oldName;
+                if (File.Exists(path + newName + ".rule"))
+                {
+                    File.Delete(path + newName + ".rule");
+                    if (!File.Exists(path + oldName + ".rule"))
+                        saveToDisk(path + oldName + ".rule");
+                }
+                throw;
+            }
+            
+        }
+
         /// <summary>
         /// Start the rule running!
         /// </summary>
@@ -334,6 +366,7 @@ namespace ruleEngine
         {
             return pins.Values;
         }
+    
 
     }
 }

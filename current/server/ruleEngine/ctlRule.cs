@@ -56,6 +56,11 @@ namespace ruleEngine
         /// <param name="info">Description of the type to create</param>
         public void addRuleItem(ruleItemInfo info)
         {
+            addRuleItem(info, 0, 0);
+        }
+
+        public void addRuleItem(ruleItemInfo info, int x, int y)
+        {
             // Create our rule item
             ruleItemBase newRuleItem = _rule.addRuleItem(info);
 
@@ -67,6 +72,7 @@ namespace ruleEngine
 
             // add a visual widget for it, and then add it to the visible controls
             ctlRuleItemWidget newCtl = new ctlRuleItemWidget(newRuleItem, setTsStatus);
+            newCtl.Location = new Point(x, y);
             _rule.AddctlRuleItemWidgetToGlobalPool(newCtl);
             newCtl.snapToGrid = snapWidgetsToGrid;
             Controls.Add(newCtl);
@@ -643,6 +649,23 @@ namespace ruleEngine
         private void tmrStep_Tick(object sender, EventArgs e)
         {
             advanceDelta();
+        }
+
+        private void ctlRule_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(typeof(ruleItemInfo)))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void ctlRule_DragDrop(object sender, DragEventArgs e)
+        {
+            frmRuleEdit parent = (frmRuleEdit) ParentForm;
+            DragDropHelper.ImageList_DragLeave(parent.imageList.Handle);
+            ruleItemInfo info = (ruleItemInfo) e.Data.GetData(typeof(ruleItemInfo));
+            Point actual = PointToClient(new Point(e.X , e.Y));
+            addRuleItem(info, actual.X, actual.Y);
         }
     }
 }

@@ -12,6 +12,11 @@ namespace ruleEngine.ruleItems
     {
         public override string ruleName() { return "AND function"; }
 
+        public override string caption()
+        {
+            return "AND";
+        }
+
         public override System.Drawing.Image background()
         {
             return Properties.Resources.ruleItem_and;

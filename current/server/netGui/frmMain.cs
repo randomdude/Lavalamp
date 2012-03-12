@@ -458,7 +458,7 @@ namespace netGui
                     result = frm.ShowDialog(this);
                 if (result == DialogResult.Cancel)
                     return;
-                saveThis.name = frm.result;
+                saveThis.changeName(_myOptions.rulesPath,frm.result);
                 addNewRule(saveThis);
             }
             else
@@ -683,6 +683,46 @@ namespace netGui
                 toolNodeSeperater1.Visible = false;
                 toolNodeSeperator2.Visible = false;
             }
+        }
+
+        private void renameRuleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lstRules.SelectedItems.Count <= 0)
+            {
+                return;
+            }
+            if (lstRules.SelectedItems[0].SubItems[2].Text == true.ToString())
+            {
+                MessageBox.Show(this , "Cannot rename rule which is open in the editor");
+                return;
+            }
+            
+            rule toRename = (rule) lstRules.SelectedItems[0].Tag;
+            string oldname = toRename.name;
+            while(true)
+            {
+                frmQuestion newname = new frmQuestion("New rule name" , oldname);
+
+                if (newname.ShowDialog(this) == DialogResult.Cancel)
+                    return;
+
+                // nothing to do if the same name
+                if (newname.result == toRename.name)
+                    return;
+
+                if (findRuleItem(newname.result) != null)
+                {
+                    MessageBox.Show(this , "Sorry a rule is already called " + newname.result);
+                    oldname = newname.result;
+                }
+                else
+                {
+                    toRename.changeName(_myOptions.rulesPath,newname.result );
+                    break;
+                }
+            }
+            lstRules.SelectedItems[0].SubItems[1].Text = toRename.name;
+
         }
 
 

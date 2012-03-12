@@ -24,7 +24,7 @@ namespace TestProjects
             ctlRule ruleControl = new ctlRule();
 
             rule targetRule = ruleControl.getRule();
-            targetRule.name = "magicName";
+            targetRule.changeName("", "magicName");
             targetRule.state = ruleState.running;
 
             // Serialise it

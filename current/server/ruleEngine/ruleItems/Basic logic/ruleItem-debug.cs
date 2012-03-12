@@ -16,6 +16,11 @@ namespace ruleEngine.ruleItems
 
         public override string ruleName() { return "Debug indicator"; }
 
+        public override string caption()
+        {
+            return "Debug";
+        }
+
         public override Dictionary<String, pin> getPinInfo()
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();

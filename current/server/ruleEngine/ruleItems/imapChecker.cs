@@ -35,9 +35,20 @@ namespace ruleEngine.ruleItems.Starts
         {
             sendCmd("fetch " + messageId + ":" + (int.Parse(messageId) + 1) + " body[header.fields (from subject)]");
             bool responded = false;
+        
             while (!responded)
             {
                 String fetchResponse = myReader.ReadLine();
+                String[] fetchParts = fetchResponse.Split(' ');
+                if (fetchParts[0] == "a" + cmdNum.ToString("000"))
+                {
+                    if (fetchParts[1] == "OK")
+                        responded = true;
+                    if (fetchParts[1] == "NO")
+                        throw new Exception("Searching for new mail failed.");
+                    if (fetchParts[1] == "BAD")
+                        throw new Exception("Server failed to parse SEARCH command");
+                }
                 if (fetchResponse.StartsWith("From:"))
                 {
                     mailFrom = fetchResponse.Substring(6);
@@ -48,12 +59,6 @@ namespace ruleEngine.ruleItems.Starts
                     mailSubject = fetchResponse.Substring(9);
                     continue;
                 }
-                if (fetchResponse.StartsWith("OK"))
-                    responded = true;
-                if (fetchResponse.StartsWith("NO"))
-                    throw new Exception("Searching for new mail failed.");
-                if (fetchResponse.StartsWith("BAD"))
-                    throw new Exception("Server failed to parse SEARCH command");
                 
             }
         }

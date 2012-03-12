@@ -52,8 +52,10 @@ namespace ruleEngine.pinDataTypes
         {
             int convertedType = 0;
             Type valType = value.GetType();
-            if (valType == typeof(string))
-                convertedType = int.Parse((string) value);
+            if (valType == typeof(int))
+                convertedType = (int)value;
+            else if (valType == typeof(string))
+                convertedType = int.Parse((string)value);
             else if (valType == typeof(bool))
             {
                 if ((bool)value)
@@ -72,7 +74,7 @@ namespace ruleEngine.pinDataTypes
                         convertedType = 0;
                         break;
                     case tristate.noValue:
-                        convertedType = (int) noValue;
+                        convertedType = (int)noValue;
                         break;
                 }
             }

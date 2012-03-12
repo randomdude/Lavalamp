@@ -18,28 +18,26 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lavalampdll", "lavalampdll\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "win32cmdline", "win32cmdline\win32cmdline.vcxproj", "{BB59A3A1-E675-4FDF-95D6-520BD78DC660}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "netGui", "netGui\netGui.csproj", "{560BFC3D-3D57-46B5-B1C5-A3E01A88963C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "netGui", "netGui\netGui2010.csproj", "{560BFC3D-3D57-46B5-B1C5-A3E01A88963C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netbridge", "netbridge\netbridge.vcxproj", "{ADFA97F6-D7A7-489F-86AF-D7A835D18E51}"
+Project("{00000000-0000-0000-0000-000000000000}") = "TestProject", "TestProjects\TestProject2010.csproj", "{0B3B6B27-EB33-4DB5-8E2D-3C225EF09DC8}"
 EndProject
-Project("{00000000-0000-0000-0000-000000000000}") = "TestProject", "TestProjects\TestProject.csproj", "{0B3B6B27-EB33-4DB5-8E2D-3C225EF09DC8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ruleItems-winamp", "netgui-extras\ruleItems-winamp\ruleItems-winamp.csproj", "{7D9B81EE-27E0-4F0D-84AC-9C9B87B4E64D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ruleItems-winamp", "netgui-extras\ruleItems-winamp\ruleItems-winamp2010.csproj", "{7D9B81EE-27E0-4F0D-84AC-9C9B87B4E64D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winamp-plugin", "netgui-extras\lavalamp-winamp\gen_tray.vcxproj", "{7FFA5C6E-B3B5-4B18-853A-B49433CC856E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ruleEngine", "ruleEngine\ruleEngine.csproj", "{04834DB5-4E91-48EA-9107-FD2246087122}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ruleEngine", "ruleEngine\ruleEngine2010.csproj", "{04834DB5-4E91-48EA-9107-FD2246087122}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ruleService", "ruleService\ruleService.csproj", "{C31BBA68-893A-4077-8184-DA63F29688A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ruleService", "ruleService\ruleService2010.csproj", "{C31BBA68-893A-4077-8184-DA63F29688A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "virtualNodeNetwork", "virtualNodeNetwork\virtualNodeNetwork.csproj", "{C5253F17-CF0C-4966-86A9-D9CB95137735}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "virtualNodeNetwork", "virtualNodeNetwork\virtualNodeNetwork2010.csproj", "{C5253F17-CF0C-4966-86A9-D9CB95137735}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "transmitterDriver", "transmitterDriver\transmitterDriver.csproj", "{00AAF76B-138C-4E79-960B-4540924D43C4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "transmitterDriver", "transmitterDriver\transmitterDriver2010.csproj", "{00AAF76B-138C-4E79-960B-4540924D43C4}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B71E2089-C4C8-46E7-81F7-E5BC0806A08B} = {B71E2089-C4C8-46E7-81F7-E5BC0806A08B}
 	EndProjectSection
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "winamp-lavalamp-plugin-setup", "netgui-extras\winamp-lavalamp-plugin-setup\winamp-lavalamp-plugin-setup.vdproj", "{21CF31F6-674D-41D9-B996-744AE11B4839}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "winamp-lavalamp-plugin-setup", "netgui-extras\winamp-lavalamp-plugin-setup\winamp-lavalamp-plugin-setup2010.vdproj", "{21CF31F6-674D-41D9-B996-744AE11B4839}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wallboard", "netgui-extras\wallboard\wallboard.vcxproj", "{F6BA35B6-5B1D-4C58-8CC8-FAEF658CBCA7}"
 EndProject

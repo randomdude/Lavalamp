@@ -71,7 +71,6 @@ namespace ruleEngine.ruleItems
         [XmlElement]
         public string username = "username";
         //todo: crypt password
-        [XmlElement]
         public string password = "password";
            
     }

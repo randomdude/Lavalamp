@@ -12,6 +12,11 @@ namespace ruleEngine.ruleItems
     {
         public override string ruleName() { return "OR function"; }
 
+        public override string caption()
+        {
+            return "OR";
+        }
+
         public override System.Drawing.Image background()
         {
             return Properties.Resources.ruleItem_or;

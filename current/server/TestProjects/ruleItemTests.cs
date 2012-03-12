@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ruleEngine;
+using ruleEngine.basicLogic;
 using ruleEngine.pinDataTypes;
 using ruleEngine.ruleItems;
 using ruleEngine.ruleItems.windows;
@@ -139,7 +140,7 @@ namespace TestProjects
             Assert.AreEqual(true, spliter.pinInfo["output1"].value.data);
             Assert.AreEqual(true, spliter.pinInfo["output2"].value.data);
 
-            spliter.pinInfo["input1"].valueType = typeof (pinDataString);
+            spliter.pinInfo["input1"].valueType = typeof(pinDataString);
             spliter.pinInfo["input1"].recreateValue();
             spliter.pinInfo["input1"].value.data = "lol";
             spliter.evaluate();
@@ -234,6 +235,97 @@ namespace TestProjects
             targetRule.advanceDelta();
             running = isRunning.pinInfo["output1"].value.asBoolean();
             Assert.AreEqual(running, false);
+
+        }
+        /*
+        [TestMethod]
+        public void testFlipFlopRuleItem()
+        {
+            rule targetRule = new rule();
+            ruleItem_flipFlop switchRule = (ruleItem_flipFlop)targetRule.addRuleItem(new ruleItemInfo(typeof(ruleItem_flipFlop)));
+
+            targetRule.start();
+
+            switchRule.pinInfo["set"].value.data = false;
+            switchRule.pinInfo["clear"].value.data = false;
+            targetRule.advanceDelta();
+            // output is trisated
+            switchRule.pinInfo["set"].value.data = true;
+            switchRule.pinInfo["clear"].value.data = false;
+            targetRule.advanceDelta();
+            // output is true
+            targetRule.advanceDelta();
+            switchRule.pinInfo["set"].value.data = false;
+            switchRule.pinInfo["clear"].value.data = false;
+            // output is still true
+            targetRule.advanceDelta();
+            switchRule.pinInfo["set"].value.data = false;
+            switchRule.pinInfo["clear"].value.data = true;
+            targetRule.advanceDelta();
+            // output is false
+
+        }*/
+
+        [TestMethod]
+        public void testSwitchRuleItem()
+        {
+            rule targetRule = new rule();
+            ruleItem_switch switchRule = (ruleItem_switch)targetRule.addRuleItem(new ruleItemInfo(typeof(ruleItem_switch)));
+
+            targetRule.start();
+            //test bools 
+            switchRule.pinInfo["inputTrue"].value.data = true;
+            switchRule.pinInfo["inputFalse"].value.data = false;
+            switchRule.pinInfo["switch"].value.data = false;
+            //must start as tristate and noValue
+            Assert.IsInstanceOfType(switchRule.pinInfo["output"].value.data, typeof(tristate));
+            Assert.AreEqual(switchRule.pinInfo["output"].value.data,tristate.noValue);
+            switchRule.evaluate();
+            targetRule.advanceDelta();
+            Assert.IsInstanceOfType(switchRule.pinInfo["output"].value.data, typeof(bool));
+            Assert.IsFalse((bool) switchRule.pinInfo["output"].value.data);
+            switchRule.pinInfo["switch"].value.data = true;
+            switchRule.evaluate();
+            targetRule.advanceDelta();
+            Assert.IsTrue((bool) switchRule.pinInfo["output"].value.data);
+            //test string and bool
+            switchRule.pinInfo["inputFalse"].valueType = typeof(pinDataString);
+            switchRule.pinInfo["inputFalse"].recreateValue();
+            switchRule.pinInfo["inputFalse"].value.data = "True";
+            switchRule.pinInfo["switch"].value.data = false;
+            switchRule.evaluate();
+            targetRule.advanceDelta();
+            Assert.IsInstanceOfType(switchRule.pinInfo["output"].value.data, typeof(string));
+            Assert.AreEqual(switchRule.pinInfo["output"].value.data, "True");
+            switchRule.pinInfo["switch"].value.data = true;
+            switchRule.evaluate();
+            targetRule.advanceDelta();
+            Assert.IsInstanceOfType(switchRule.pinInfo["output"].value.data, typeof(bool));
+            Assert.IsTrue((bool) switchRule.pinInfo["output"].value.data);
+            //test int and bool 
+            switchRule.pinInfo["inputFalse"].valueType = typeof(pinDataInt);
+            switchRule.pinInfo["inputFalse"].recreateValue();
+            switchRule.pinInfo["inputFalse"].value.data = 255;
+            switchRule.pinInfo["switch"].value.data = false;
+            switchRule.evaluate();
+            targetRule.advanceDelta();
+            Assert.IsInstanceOfType(switchRule.pinInfo["output"].value.data, typeof(int));
+            Assert.AreEqual(switchRule.pinInfo["output"].value.data, 255);
+            switchRule.pinInfo["switch"].value.data = true;
+            switchRule.evaluate();
+            targetRule.advanceDelta();
+            Assert.IsInstanceOfType(switchRule.pinInfo["output"].value.data, typeof(bool));
+            Assert.AreEqual(switchRule.pinInfo["output"].value.data, true);
+            //bool and tristate
+            switchRule.pinInfo["inputFalse"].valueType = typeof(pinDataTristate);
+            switchRule.pinInfo["inputFalse"].recreateValue();
+            switchRule.pinInfo["inputFalse"].value.data = tristate.yes;
+            switchRule.pinInfo["switch"].value.data = false;
+            switchRule.evaluate();
+            targetRule.advanceDelta();
+            Assert.IsInstanceOfType(switchRule.pinInfo["output"].value.data, typeof(tristate));
+            Assert.AreEqual(switchRule.pinInfo["output"].value.data, tristate.yes);
+            targetRule.stop();
 
         }
 

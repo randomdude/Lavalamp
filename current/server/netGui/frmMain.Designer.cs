@@ -85,6 +85,7 @@ namespace netGui
             this.deleteRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imgLstStates = new System.Windows.Forms.ImageList(this.components);
+            this.renameRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.nodeMenuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -239,7 +240,7 @@ namespace netGui
             this.cmnuAddNode,
             this.viewToolStripMenuItem});
             this.nodeMenuStrip.Name = "contextMenuStrip1";
-            this.nodeMenuStrip.Size = new System.Drawing.Size(160, 148);
+            this.nodeMenuStrip.Size = new System.Drawing.Size(160, 126);
             this.nodeMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.nodeMenuStrip_Opening);
             // 
             // deleteToolStripMenuItem
@@ -485,16 +486,17 @@ namespace netGui
             this.toolStripMenuItem4,
             this.newRuleToolStripMenuItem,
             this.deleteRuleToolStripMenuItem,
-            this.editRuleToolStripMenuItem});
+            this.editRuleToolStripMenuItem,
+            this.renameRuleToolStripMenuItem});
             this.contextMenuStripRules.Name = "contextMenuStrip1";
-            this.contextMenuStripRules.Size = new System.Drawing.Size(127, 120);
+            this.contextMenuStripRules.Size = new System.Drawing.Size(153, 164);
             // 
             // runRuleToolStripMenuItem
             // 
             this.runRuleToolStripMenuItem.Image = global::netGui.Properties.Resources.Run;
             this.runRuleToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.runRuleToolStripMenuItem.Name = "runRuleToolStripMenuItem";
-            this.runRuleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.runRuleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.runRuleToolStripMenuItem.Text = "&Run rule";
             this.runRuleToolStripMenuItem.Click += new System.EventHandler(this.runRuleToolStripMenuItem_Click);
             // 
@@ -503,33 +505,33 @@ namespace netGui
             this.stopRuleToolStripMenuItem.Image = global::netGui.Properties.Resources.Pause;
             this.stopRuleToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.stopRuleToolStripMenuItem.Name = "stopRuleToolStripMenuItem";
-            this.stopRuleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.stopRuleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.stopRuleToolStripMenuItem.Text = "&Stop rule";
             this.stopRuleToolStripMenuItem.Click += new System.EventHandler(this.stopRuleToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(123, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(149, 6);
             // 
             // newRuleToolStripMenuItem
             // 
             this.newRuleToolStripMenuItem.Name = "newRuleToolStripMenuItem";
-            this.newRuleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.newRuleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.newRuleToolStripMenuItem.Text = "&New rule";
             this.newRuleToolStripMenuItem.Click += new System.EventHandler(this.newRuleToolStripMenuItem_Click);
             // 
             // deleteRuleToolStripMenuItem
             // 
             this.deleteRuleToolStripMenuItem.Name = "deleteRuleToolStripMenuItem";
-            this.deleteRuleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.deleteRuleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.deleteRuleToolStripMenuItem.Text = "&Delete rule";
             this.deleteRuleToolStripMenuItem.Click += new System.EventHandler(this.deleteRuleToolStripMenuItem_Click);
             // 
             // editRuleToolStripMenuItem
             // 
             this.editRuleToolStripMenuItem.Name = "editRuleToolStripMenuItem";
-            this.editRuleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.editRuleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.editRuleToolStripMenuItem.Text = "&Edit rule";
             this.editRuleToolStripMenuItem.Click += new System.EventHandler(this.editRuleToolStripMenuItem_Click);
             // 
@@ -540,6 +542,13 @@ namespace netGui
             this.imgLstStates.Images.SetKeyName(0, "Pause.bmp");
             this.imgLstStates.Images.SetKeyName(1, "Critical.bmp");
             this.imgLstStates.Images.SetKeyName(2, "Run.bmp");
+            // 
+            // renameRuleToolStripMenuItem
+            // 
+            this.renameRuleToolStripMenuItem.Name = "renameRuleToolStripMenuItem";
+            this.renameRuleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.renameRuleToolStripMenuItem.Text = "&Rename rule";
+            this.renameRuleToolStripMenuItem.Click += new System.EventHandler(this.renameRuleToolStripMenuItem_Click);
             // 
             // FrmMain
             // 
@@ -626,6 +635,7 @@ namespace netGui
         private System.Windows.Forms.ToolStripMenuItem stopRuleToolStripMenuItem;
         private System.Windows.Forms.ImageList imgLstNodes;
         private System.Windows.Forms.ToolStripMenuItem editRuleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem renameRuleToolStripMenuItem;
     }
 }
 

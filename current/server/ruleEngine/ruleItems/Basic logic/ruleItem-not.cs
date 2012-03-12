@@ -13,6 +13,11 @@ namespace ruleEngine.ruleItems
 
         public override System.Drawing.Image background() { return Properties.Resources.ruleItem_not; }
 
+        public override string caption()
+        {
+            return "NOT";
+        }
+
         public override Dictionary<String, pin> getPinInfo()
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();

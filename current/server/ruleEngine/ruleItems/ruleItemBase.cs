@@ -16,6 +16,9 @@ namespace ruleEngine.ruleItems
         [XmlIgnore] public Exception whyIsErrored;
         [XmlIgnore] public Point location = new Point(0, 0);
         [XmlIgnore] public List<Control> controls = new List<Control>();
+        [XmlIgnore] private Image _backgroundImage;
+
+
 
         /// <summary>
         /// Pin objects on this ruleItem, indexed by pin name
@@ -38,7 +41,13 @@ namespace ruleEngine.ruleItems
         public abstract string ruleName();
         public virtual Dictionary<String, pin> getPinInfo() { return new Dictionary<String,pin>(); }
         public abstract void evaluate();
-        public virtual Image background() { return null; }
+        public virtual Image background() { return _backgroundImage; }
+        public virtual void setBackground(Image image)
+        {
+            _backgroundBox.Image = image;
+            _backgroundBox.Refresh();
+           
+        }
         public virtual void start() { }
         public virtual void stop() { }
         public virtual void onResize(Control parent) { }
@@ -57,6 +66,7 @@ namespace ruleEngine.ruleItems
         public delegate void errorDelegate(Exception ex);
 
         [XmlIgnore] public bool isDeleted = false;
+        private PictureBox _backgroundBox;
 
         protected ruleItemBase()
         {
@@ -79,18 +89,18 @@ namespace ruleEngine.ruleItems
             Image bg = background();
             if (bg != null)
             {
-                PictureBox backgroundBox = new PictureBox();
+                _backgroundBox = new PictureBox();
                 // We keep the background image the size of the bitmap passed in, just so that the ruleItem
                 // can keep control of it that way.
                 // We position the image at the middle-top. We leave a 3px border at the top so it looks a
                 // bit nicer.
-                backgroundBox.Image = bg;
-                backgroundBox.SizeMode = PictureBoxSizeMode.AutoSize;
-                backgroundBox.Left = (preferredSize().Width / 2) - (bg.Width / 2);
-                backgroundBox.Top = 3;
-                backgroundBox.Visible = true;
-                backgroundBox.BackColor = Color.Transparent;
-                controls.Add(backgroundBox);
+                _backgroundBox.Image = bg;
+                _backgroundBox.SizeMode = PictureBoxSizeMode.AutoSize;
+                _backgroundBox.Left = (preferredSize().Width / 2) - (bg.Width / 2);
+                _backgroundBox.Top = 3;
+                _backgroundBox.Visible = true;
+                _backgroundBox.BackColor = Color.Transparent;
+                controls.Add(_backgroundBox);
             }
 
 
@@ -110,6 +120,11 @@ namespace ruleEngine.ruleItems
 
                 controls.Add(lblCaption);
             }
+        }
+
+        protected ruleItemBase(Image backgroundImage)
+        {
+            _backgroundImage = backgroundImage;
         }
 
         public void errorIcon_Click(object sender, EventArgs e)
@@ -211,6 +226,7 @@ namespace ruleEngine.ruleItems
         /// </summary>
         public event timelineEventHandlerDelegate newTimelineEvent;
         public delegate void timelineEventHandlerDelegate(ruleItemBase sender, timelineEventArgs e);
+
 
         public void onRequestNewTimelineEvent(timelineEventArgs e)
         {

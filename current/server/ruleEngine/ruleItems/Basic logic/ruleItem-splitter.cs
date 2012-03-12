@@ -16,6 +16,11 @@ namespace ruleEngine.ruleItems
             return Properties.Resources.ruleItem_splitter;
         }
 
+        public override string caption()
+        {
+            return "Splitter";
+        }
+
         public override Dictionary<String, pin> getPinInfo()
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
