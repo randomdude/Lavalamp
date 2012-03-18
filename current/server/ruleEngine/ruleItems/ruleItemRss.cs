@@ -149,6 +149,9 @@ namespace ruleEngine.ruleItems
             if (!pinInfo["trigger"].value.asBoolean())
                 return;
 
+            if (isErrored)
+                return;
+            
             try
             {
                 WebRequest request = WebRequest.Create(_options.url);

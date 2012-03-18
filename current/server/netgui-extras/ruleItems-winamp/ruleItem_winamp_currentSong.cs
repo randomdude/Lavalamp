@@ -56,19 +56,22 @@ namespace ruleItems_winamp
                 }
                 lastInput = pinInfo["trigger"].value;
             }
-            catch (ObjectDisposedException)
+            catch (ObjectDisposedException e)
             {
                 // todo - add option to ignore errors / errored state / etc
                 MessageBox.Show("Unable to contact winamp. Is it running? Is the plugin installed OK?");
+                errorHandler(e);
             }
-            catch (IOException)
+            catch (IOException e)
             {
                 // todo - add option to ignore errors / errored state / etc
                 MessageBox.Show("Unable to contact winamp. Is it running? Is the plugin installed OK?");
+                errorHandler(e);
             }
-            catch (System.TimeoutException)
+            catch (System.TimeoutException e)
             {
                 MessageBox.Show("Unable to contact winamp. Is it running? Is the plugin installed OK?");
+                errorHandler(e);
             }
         }
 

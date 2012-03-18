@@ -33,7 +33,7 @@ namespace ruleEngine
         /// </summary>
         public IPinData value;
 
-        public static readonly Type[] allDataTypes = { typeof(pinDataBool),typeof(pinDataString),typeof(pinDataTrigger),typeof(pinDataTristate) };
+        public static readonly Type[] allDataTypes = { typeof(pinDataBool), typeof(pinDataString), typeof(pinDataTrigger), typeof(pinDataTristate), typeof(pinDataInt) };
 
         public Type[] possibleTypes = allDataTypes;
 
