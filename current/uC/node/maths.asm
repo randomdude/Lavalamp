@@ -2,7 +2,7 @@
 
 	#include "main.h"
 	#include "tea.h"
-	#include "../../shared/init.h"
+	#include "../shared/init.h"
 
 	errorlevel  -302  
 

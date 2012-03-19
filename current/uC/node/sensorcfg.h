@@ -68,17 +68,95 @@
 ; config for sensor 1
 ;
 #define SENSOR_1_PRESENT
-#define SENSOR_1_PORT PORTB
-#define SENSOR_1_TRIS TRISB
-#define SENSOR_1_PIN 3
-#define SENSOR_1_TYPE SENSOR_ID_PWM_LED
-#define SENSOR_1_PWM_DEFAULT 10
+#define SENSOR_1_TYPE SENSOR_ID_MULTILED_MULTIPLEX
 
-; config for sensor 2
-;#define SENSOR_2_PRESENT
-;#define SENSOR_2_PORT PORTA
-;#define SENSOR_2_TRIS TRISA
-;#define SENSOR_2_PIN 1
-;#define SENSOR_2_TYPE SENSOR_ID_PWM_LED
-;#define SENSOR_2_PWM_PRESCALER 0xC4
+#define SENSOR_1_MULTILED_PORT_1 PORTA
+#define SENSOR_1_MULTILED_TRIS_1 TRISA
+#define SENSOR_1_MULTILED_PIN_1 0
+#define SENSOR_1_MULTILED_PORT_2 PORTA
+#define SENSOR_1_MULTILED_TRIS_2 TRISA
+#define SENSOR_1_MULTILED_PIN_2 1
+#define SENSOR_1_MULTILED_PORT_3 PORTA
+#define SENSOR_1_MULTILED_TRIS_3 TRISA
+#define SENSOR_1_MULTILED_PIN_3 2
+#define SENSOR_1_MULTILED_PORT_4 PORTA
+#define SENSOR_1_MULTILED_TRIS_4 TRISA
+#define SENSOR_1_MULTILED_PIN_4 3
+#define SENSOR_1_MULTILED_PORT_5 PORTA
+#define SENSOR_1_MULTILED_TRIS_5 TRISA
+#define SENSOR_1_MULTILED_PIN_5 4
 
+#define SENSOR_1_MULTILED_CONTROL_1_PORT PORTB
+#define SENSOR_1_MULTILED_CONTROL_1_TRIS TRISB
+#define SENSOR_1_MULTILED_CONTROL_1_PIN 5
+#define SENSOR_1_MULTILED_CONTROL_2_PORT PORTB
+#define SENSOR_1_MULTILED_CONTROL_2_TRIS TRISB
+#define SENSOR_1_MULTILED_CONTROL_2_PIN 4
+
+#define SENSOR_1_MIN 0
+#define SENSOR_1_DEFAULT d'0'
+#define SENSOR_1_MAX d'255'
+
+
+; Use the MULTILED sensor type to drive multiple on/off signals
+; (eg. LEDS) from multiple pins. By default, the value set will 
+; be placed on to the pins like this:
+;  value 0 -> 001
+;  value 1 -> 010
+;  value 2 -> 011
+;  value 3 -> 100
+; However, you can also define _SINGLEBIT to illuminate only one
+; bit at a time, like this:
+;  value 0 -> 0001
+;  value 1 -> 0010
+;  value 2 -> 0100
+;  value 3 -> 1000
+; If you have set _SINGLEBIT, you can also set _SINGLEBIT_FILL to
+; create the following effect:
+;  value 0 -> 0001
+;  value 1 -> 0011
+;  value 2 -> 0111
+;  value 3 -> 1111
+; Any sensor time can also accomodate OFF_AT_ZERO, which will turn
+; off all outputs when the value zero is recieved, thus:
+;  value 0 -> 0000
+;  value 1 -> 0001
+;  value 2 -> 0010
+;  value 3 -> 0011
+
+; #define SENSOR_1_PRESENT
+;#define SENSOR_1_TYPE SENSOR_ID_MULTILED
+;#define SENSOR_1_MIN 0
+;#define SENSOR_1_DEFAULT d'255'
+;#define SENSOR_1_MAX d'255'
+; #define SENSOR_1_MULTILED_OFF_AT_ZERO
+; #define SENSOR_1_MULTILED_SINGLEBIT_FILL
+;#define SENSOR_1_MULTILED_SINGLEBIT
+;#define SENSOR_1_MULTILED_ELEMENTCOUNT 4
+;#define SENSOR_1_MULTILED_PORT_1 PORTA
+;#define SENSOR_1_MULTILED_TRIS_1 TRISA
+;#define SENSOR_1_MULTILED_PIN_1 0
+;#define SENSOR_1_MULTILED_PORT_2 PORTA
+;#define SENSOR_1_MULTILED_TRIS_2 TRISA
+;#define SENSOR_1_MULTILED_PIN_2 1
+;#define SENSOR_1_MULTILED_PORT_3 PORTA
+;#define SENSOR_1_MULTILED_TRIS_3 TRISA
+;#define SENSOR_1_MULTILED_PIN_3 2
+;#define SENSOR_1_MULTILED_PORT_4 PORTA
+;#define SENSOR_1_MULTILED_TRIS_4 TRISA
+;#define SENSOR_1_MULTILED_PIN_4 3
+;#define SENSOR_1_MULTILED_PORT_5 PORTA
+;#define SENSOR_1_MULTILED_TRIS_5 TRISA
+;#define SENSOR_1_MULTILED_PIN_5 4
+;#define SENSOR_1_MULTILED_PORT_6 PORTB
+;#define SENSOR_1_MULTILED_TRIS_6 TRISB
+;#define SENSOR_1_MULTILED_PIN_6 0
+;#define SENSOR_1_MULTILED_PORT_7 PORTB
+;#define SENSOR_1_MULTILED_TRIS_7 TRISB
+;#define SENSOR_1_MULTILED_PIN_7 3
+;#define SENSOR_1_MULTILED_PORT_8 PORTB
+;#define SENSOR_1_MULTILED_TRIS_8 TRISB
+;#define SENSOR_1_MULTILED_PIN_8 4
+;#define SENSOR_1_MULTILED_PORT_9 PORTB
+;#define SENSOR_1_MULTILED_TRIS_9 TRISB
+;#define SENSOR_1_MULTILED_PIN_9 5

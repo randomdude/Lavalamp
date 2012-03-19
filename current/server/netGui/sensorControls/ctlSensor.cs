@@ -274,7 +274,7 @@ namespace netGui
                     newItem.Checked = oldItem.Checked;
                     if (oldItem.HasDropDownItems)
                     {
-                        recursivelyCopyMenuStates( ((ToolStripDropDownItem)oldItem).DropDownItems, (ToolStripItemCollection)newItem.DropDownItems);
+                        recursivelyCopyMenuStates( (oldItem).DropDownItems, newItem.DropDownItems);
                     }
                 }
             }
@@ -292,6 +292,10 @@ namespace netGui
             else if (sensorTypeEnum.pwm_out == thisSensorType)
                 graphTarget = new ctlPWM();
             else if (sensorTypeEnum.triac_out == thisSensorType)
+                graphTarget = new ctlPWM();
+            else if (sensorTypeEnum.barLED == thisSensorType)
+                graphTarget = new ctlPWM();
+            else if (sensorTypeEnum.mulitplexedLEDs == thisSensorType)
                 graphTarget = new ctlPWM();
             else 
                 throw new ArgumentOutOfRangeException();

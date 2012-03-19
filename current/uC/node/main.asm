@@ -5,7 +5,7 @@
 	#include "main.h"
 	#include "sensorcfg.h"
 	#include "tea.h"
-	#include "..\..\shared\init.h"
+	#include "..\shared\init.h"
 	#include "protocol.h"
 	#include "cmds.h"
 	#include "maths.h"

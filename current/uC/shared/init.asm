@@ -1,9 +1,9 @@
 
-	#include "..\..\node\main.h"
-	#include "..\..\shared\manchesteruart.h"
+	#include "..\node\main.h"
+	#include "..\shared\manchesteruart.h"
 #ifndef IS_TRANSMITTER
-	#include "..\sensorcfg.h"
-	#include "..\idletimer.h"
+	#include "sensorcfg.h"
+	#include "idletimer.h"
 #endif
 	errorlevel  -302  
 
@@ -48,12 +48,16 @@ disableperiphs:
 	; Here we disable any part-specific on-chip periphials which
 	; otherwise would stop us getting proper digital IO.
 
-#IFDEF __16F627
+#Ifdef __16F627
 	bsf CMCON, CM0
-	bsf CMCON, CM1	; Kill comparators on my 16f627/8
+	bsf CMCON, CM1	; Kill comparators
 	bsf CMCON, CM2
 #ENDIF
-
+#ifdef __16F628
+	bsf CMCON, CM0
+	bsf CMCON, CM1	; Kill comparators
+	bsf CMCON, CM2
+#ENDIF
 	return
 
 #ifndef IS_TRANSMITTER

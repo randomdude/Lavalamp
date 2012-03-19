@@ -227,7 +227,7 @@ enable=0
 transport=0
 format=0
 [CUSTOM_BUILD]
-Pre-Build=C:\c0adz\lavalamp\current\uC\node\prebuild.batC:\c0adz\lavalamp\current\uC\node\prebuild.bat
+Pre-Build=C:\c0adz\lavalamp\current\uC\node\prebuild.bat
 Pre-BuildEnabled=1
-Post-Build=C:\c0adz\lavalamp\current\uC\node\postbuild.batC:\c0adz\lavalamp\current\uC\node\postbuild.bat
+Post-Build=C:\c0adz\lavalamp\current\uC\node\postbuild.bat
 Post-BuildEnabled=1

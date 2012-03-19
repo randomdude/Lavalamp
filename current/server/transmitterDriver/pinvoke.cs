@@ -95,6 +95,8 @@ namespace transmitterDriver
         generic_digital_in = 0x01,
         generic_digital_out = 0x02,
         pwm_out = 0x03,
-        triac_out = 0x04
+        triac_out = 0x04,
+        barLED = 0x05,
+        mulitplexedLEDs = 0x06
     }
 }

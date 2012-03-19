@@ -9,7 +9,6 @@ using System.Xml.Serialization;
 
 namespace ruleEngine.ruleItems.windows.WMI
 {
-
     [Serializable]
     public abstract class WMIOptions
     {

@@ -2,9 +2,8 @@
 
 	#include "main.h"
 	#include "tea.h"
-;	#include "../shared/init.h"
-	#include "../../shared/manchesteruart.h"
-	#include "../../shared/manchesteruart-lowlevel.h"
+	#include "../shared/manchesteruart.h"
+	#include "../shared/manchesteruart-lowlevel.h"
 	#include "idletimer.h"
 	#include "sensorcfg.h"
 

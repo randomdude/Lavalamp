@@ -205,8 +205,6 @@
     <Compile Include="ruleItems\Starts\ruleItem-atTime.cs" />
     <Compile Include="ruleItems\Starts\ruleItem-startRun.cs" />
     <Compile Include="ruleItems\Starts\ruleItem-timeInterval.cs" />
-    <Compile Include="ruleItems\Wallboard\ruleItemWallboard.cs" />
-    <Compile Include="ruleItems\imapChecker.cs" />
     <Compile Include="ruleItems\ToolboxRuleCategoryAttribute.cs" />
     <Compile Include="ruleItems\windows\ctlIsProcRunning.cs">
       <SubType>UserControl</SubType>

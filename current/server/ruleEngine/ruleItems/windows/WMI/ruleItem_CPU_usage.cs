@@ -11,7 +11,7 @@ namespace ruleEngine.ruleItems.windows.WMI
 {
     [ToolboxRule]
     [ToolboxRuleCategory("Windows tools")]
-    class ruleItem_CPU_usage : ruleItemBase
+    public class ruleItem_CPU_usage : ruleItemBase
     {
      
         [XmlElement]

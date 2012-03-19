@@ -356,6 +356,9 @@ cmdResponseGetSensorType_t* cmdGetSensorType(appConfig_t* myconfig)
 			case 0x03:
 				toreturn->FriendlyType = "LED dimmer control";
 				break;
+			case 0x04:
+				toreturn->FriendlyType = "Multi-LED strip";
+				break;
 			default:
 				toreturn->FriendlyType = "(unknown)";
 				break;
