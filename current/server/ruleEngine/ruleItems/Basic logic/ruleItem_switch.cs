@@ -6,7 +6,7 @@ using ruleEngine.ruleItems.windows;
 namespace ruleEngine.basicLogic
 {
     [ToolboxRule]
-    [ToolboxRuleCategory("Basic logic")]
+    [ToolboxRuleCategory("unfinished stuff")]
     public class ruleItem_switch : ruleItems.ruleItemBase
     {
         private tristate _lastState = tristate.noValue;
@@ -15,7 +15,6 @@ namespace ruleEngine.basicLogic
         {
             return "Switch";
         }
-
 
         public override System.Drawing.Image background()
         {

@@ -11,7 +11,7 @@ using transmitterDriver;
 namespace netgui.ruleEngine
 {
     [ToolboxRule]
-    [ToolboxRuleCategory("Node Sensors")]
+    [ToolboxRuleCategory("Node sensors")]
     public class ruleItemPWM : ruleItemBase
     {
         public sensor selectedSensor;
@@ -20,7 +20,7 @@ namespace netgui.ruleEngine
 
         public override string ruleName()
         {
-            return "PWM Sensor";
+            return "PWM sensor";
         }
 
         public override string caption()
@@ -32,6 +32,7 @@ namespace netgui.ruleEngine
         {
             frmSensorOptions options = new frmSensorOptions(sensorTypeEnum.pwm_out, selectedSensor);
             options.Closed += sensorOptClosed;
+
             return options;
         }
 
@@ -51,7 +52,7 @@ namespace netgui.ruleEngine
                         new pin
                             {
                                 name = "pwm_fadeDelay",
-                                description = "pwm fade delay",
+                                description = "PWM Fade delay",
                                 direction = pinDirection.input,
                                 valueType = typeof(pinDataInt)
                             });
@@ -59,7 +60,7 @@ namespace netgui.ruleEngine
                         new pin
                             {
                                 name = "pwm_brightness",
-                                description = "pwm brightness",
+                                description = "PWM Brightness",
                                 direction = pinDirection.input,
                                 valueType = typeof(pinDataInt)
                             });
@@ -70,13 +71,16 @@ namespace netgui.ruleEngine
         {
             try
             {
-                short newPWMSpeedVal = (short)pinInfo["pwm_fadeDelay_" + selectedSensor.id].value.data;
-                short newPWMBrightnessVal = (short) pinInfo["pwm_brightness_" + selectedSensor.id].value.data;
+                short newPWMSpeedVal = Convert.ToInt16( pinInfo["pwm_fadeDelay"].value.data );
+                short newPWMBrightnessVal = Convert.ToInt16( pinInfo["pwm_brightness"].value.data );
+                
                 if (newPWMSpeedVal != _previousValues[0])
                     selectedSensor.setValue(new pwm_speed(newPWMSpeedVal) , true);
                 _previousValues[0] = newPWMSpeedVal;
+
                 if (newPWMBrightnessVal != _previousValues[1])
                     selectedSensor.setValue(new pwm_brightness(newPWMBrightnessVal) , true);
+                
                 _previousValues[1] = newPWMBrightnessVal;
             }
             catch(Exception e)

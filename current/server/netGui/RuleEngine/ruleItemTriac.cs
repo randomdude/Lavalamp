@@ -10,7 +10,7 @@ using transmitterDriver;
 namespace netGui.RuleEngine
 {
     [ToolboxRule]
-    [ToolboxRuleCategory("Node Sensors")]
+    [ToolboxRuleCategory("Node sensors")]
     public class ruleItemTriac : ruleItemBase
     {
         public sensor selectedSensor;
@@ -19,7 +19,7 @@ namespace netGui.RuleEngine
 
         public override string ruleName()
         {
-            return "Triac Sensor";
+            return "Triac sensor";
         }
 
         public override string caption()

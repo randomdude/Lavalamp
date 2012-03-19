@@ -10,7 +10,7 @@ using transmitterDriver;
 namespace netGui.RuleEngine
 {
     [ToolboxRule]
-    [ToolboxRuleCategory("Node Sensors")]
+    [ToolboxRuleCategory("Node sensors")]
     public class ruleItemDigitalIn : ruleItemBase
     {
         public sensor connectedSensor;

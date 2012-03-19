@@ -9,7 +9,7 @@ using transmitterDriver;
 namespace netGui.RuleEngine
 {
     [ToolboxRule]
-    [ToolboxRuleCategory("Node Sensors")]
+    [ToolboxRuleCategory("Node sensors")]
     public class ruleItemDigitalOut : ruleItemBase
     {
         
@@ -18,12 +18,12 @@ namespace netGui.RuleEngine
 
         public override string ruleName()
         {
-            return "Digital Out";
+            return "Digital out";
         }
 
         public override string caption()
         {
-            return "Digital Out";
+            return "Digital out";
         }
 
         public override Form ruleItemOptions()

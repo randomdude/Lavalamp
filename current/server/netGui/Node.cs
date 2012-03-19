@@ -260,11 +260,19 @@ namespace netGui
                 safelyCloseFormWait(holdup);
             }
         }
+
+        [Pure]
+        public List<sensor> getSensors()
+        {
+            return sensors.Values.ToList();
+        }
+
         [Pure]
         public List<sensor> getSensorsOfType(sensorType sensorType)
         {
             return sensors.Values.Where(s => s.type.enumeratedType == sensorType.enumeratedType).ToList();
         }
+
         [Pure]
         public bool hasSensorOf(sensorType selectedType)
         {
