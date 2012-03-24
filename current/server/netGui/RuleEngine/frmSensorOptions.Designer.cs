@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.cboNodes = new System.Windows.Forms.ComboBox();
-            this.cmdOk = new System.Windows.Forms.Button();
+            this.btnOK = new System.Windows.Forms.Button();
             this.cboSensors = new System.Windows.Forms.ComboBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.lblNode = new System.Windows.Forms.Label();
@@ -48,16 +48,16 @@
             this.cboNodes.TabIndex = 0;
             this.cboNodes.SelectedIndexChanged += new System.EventHandler(this.cboNodes_SelectedIndexChanged);
             // 
-            // cmdOk
+            // btnOK
             // 
-            this.cmdOk.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.cmdOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.cmdOk.Location = new System.Drawing.Point(140, 79);
-            this.cmdOk.Name = "cmdOk";
-            this.cmdOk.Size = new System.Drawing.Size(75, 23);
-            this.cmdOk.TabIndex = 1;
-            this.cmdOk.Text = "OK";
-            this.cmdOk.UseVisualStyleBackColor = true;
+            this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOK.Location = new System.Drawing.Point(140, 79);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.TabIndex = 1;
+            this.btnOK.Text = "OK";
+            this.btnOK.UseVisualStyleBackColor = true;
             // 
             // cboSensors
             // 
@@ -119,7 +119,7 @@
             this.Controls.Add(this.lblNode);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.cboSensors);
-            this.Controls.Add(this.cmdOk);
+            this.Controls.Add(this.btnOK);
             this.Controls.Add(this.cboNodes);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -135,7 +135,7 @@
         #endregion
 
         private System.Windows.Forms.ComboBox cboNodes;
-        private System.Windows.Forms.Button cmdOk;
+        private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.ComboBox cboSensors;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label lblNode;

@@ -8,8 +8,10 @@ namespace netGui.RuleEngine.windows
     public partial class frmSensorOptions : Form
     {
         private readonly sensorType _tpy;
+        
         public frmSensorOptions(sensorTypeEnum tpy, sensor selectedSensor)
         {
+
             InitializeComponent();
             _tpy = new sensorType(tpy);
             List<Node> allNodes = FrmMain.getAllConnectedNodes();
@@ -24,6 +26,7 @@ namespace netGui.RuleEngine.windows
             if (cboNodes.Items.Count == 0)
             {
                 lblError.Text = "No nodes of this type are connected";
+                btnOK.Enabled = false;
                 cboNodes.Enabled = false;
             }
             else
@@ -44,6 +47,7 @@ namespace netGui.RuleEngine.windows
                 return nd.getSensorsOfType(_tpy)[0];
             }
             return (sensor) cboSensors.SelectedItem;
+            Contract.Ensures(Contract.Result<sensor>() != null);
         }
 
         private void cboNodes_SelectedIndexChanged(object sender, System.EventArgs e)

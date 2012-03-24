@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using ruleEngine;
@@ -13,14 +14,20 @@ namespace ruleEngine.ruleItems.windows
     {
         [XmlElement("name")] 
         public string name = "(not set)";
-        private bool lastInput;
-        private Label lblCaption;
+        private bool _lastInput;
 
         public override string ruleName() { return "Close a process"; }
 
         public override System.Drawing.Image background()
         {
-            return Properties.Resources.delete;
+            System.Drawing.Bitmap img = Properties.Resources.delete;
+        
+            return img;
+        }
+
+        public override string caption()
+        {
+            return "Kill process\n'" + name + "'";
         }
 
         public override Dictionary<String, pin> getPinInfo()
@@ -36,10 +43,10 @@ namespace ruleEngine.ruleItems.windows
         {
             bool input1 = (bool)pinInfo["input1"].value.asBoolean();
 
-            if (input1 && !lastInput)
+            if (input1 && !_lastInput)
                 killProcess();
 
-            lastInput = input1;
+            _lastInput = input1;
 
         }
 
@@ -51,19 +58,6 @@ namespace ruleEngine.ruleItems.windows
                 thisProcess.Kill();
         }
 
-        public ruleItem_killProcess()
-        {
-            lblCaption = new Label();
-            lblCaption.AutoSize = false;
-            lblCaption.Width = preferredSize().Width;
-            lblCaption.Height = 40;
-            lblCaption.Left = 0;
-            lblCaption.Top = preferredSize().Height - lblCaption.Height;
-            lblCaption.Text = "Kill process '" + name + "'";
-            lblCaption.Visible = true;
-            lblCaption.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            controls.Add(lblCaption);
-        }
 
         public override System.Windows.Forms.ContextMenuStrip addMenus(System.Windows.Forms.ContextMenuStrip strip1)
         {
@@ -71,13 +65,6 @@ namespace ruleEngine.ruleItems.windows
 
             while (strip1.Items.Count > 0)
                 toRet.Items.Add(strip1.Items[0]);
-
-            ToolStripSeparator newItem1 = new ToolStripSeparator();
-            toRet.Items.Add(newItem1);
-
-            ToolStripMenuItem newItem2 = new ToolStripMenuItem("Choose &Process..");
-            newItem2.Click += new EventHandler(pickProcess);
-            toRet.Items.Add(newItem2);
 
             return toRet;
         }
@@ -96,15 +83,8 @@ namespace ruleEngine.ruleItems.windows
             if (!picker.cancelled)
             {
                 name = picker.name;
-                lblCaption.Text = "Kill process '" + name + "'";
             }
         }
-    }
-}
-
-namespace ruleEngine
-{
-    internal class saveThisAttribute : Attribute
-    {
+        public override Size preferredSize() { return new Size(87, 80); }
     }
 }

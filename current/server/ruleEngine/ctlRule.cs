@@ -668,7 +668,7 @@ namespace ruleEngine
                 _dragCursorMove.Dispose();
                 _dragCursorMove = null;
             }
-            Cursor.Current = _dragCursorMove = CursorUtil.CreateCursor((Bitmap)info.getItemImage(), 0, 0);
+            Cursor.Current = _dragCursorMove = cursorUtil.CreateCursor((Bitmap)info.getItemImage(), 0, 0);
         }
 
         private void ctlRule_DragDrop(object sender, DragEventArgs e)
