@@ -16,6 +16,7 @@ namespace ruleEngine.ruleItems.windows.WMI
      
         [XmlElement]
         public CPUUsageOptions options = new CPUUsageOptions();
+
         public override string ruleName()
         {
             return "CPU Usage";
@@ -53,24 +54,32 @@ namespace ruleEngine.ruleItems.windows.WMI
 
         public override Form ruleItemOptions()
         {
-            frmWMIOptions frmWmi = new frmWMIOptions(new CPUUsageOptions());
+            frmWMIOptions frmWmi = new frmWMIOptions(options);
             frmWmi.Closed += frmWmi_Closed;
             return frmWmi;
+        }
+
+        public override string ToString()
+        {
+            return "Options...";
         }
 
         void frmWmi_Closed(object sender, EventArgs e)
         {
             frmWMIOptions frmWmi = (frmWMIOptions) sender;
             if (frmWmi.DialogResult == DialogResult.OK)
-                options.deviceID = options.currentlySelectedCPU();
+                options = (CPUUsageOptions) frmWmi.SelectedOptions();
         }
     }
 
+    
     public class CPUUsageOptions : WMIOptions
     {
+        [XmlElement]
         public string deviceID;
-        public string _newDevice;
-        private readonly List<ManagementBaseObject> _processorList = new List<ManagementBaseObject>();
+
+        private List<ManagementBaseObject> _processorList = new List<ManagementBaseObject>();
+
         private Label manuLabel = new Label();
         private Label descLabel = new Label();
         private Label archiLabel = new Label();
@@ -79,16 +88,14 @@ namespace ruleEngine.ruleItems.windows.WMI
         private Label dataWidthLabel = new Label();
         private Label clockLabel = new Label();
         private Label familyLabel = new Label();
-        private ComboBox box;
+        private ComboBox cboProcessorList;
+
         public CPUUsageOptions()
         {
             onScopeOptsChanged += updateProcessorList;
-            updateProcessorList(openScope());
+
         }
-        public string currentlySelectedCPU()
-        {
-            return _newDevice;
-        }
+
          void updateProcessorList(ConnectionOptions opts)
          {
              ManagementScope scope = openScope();
@@ -110,16 +117,16 @@ namespace ruleEngine.ruleItems.windows.WMI
         public override Control[] getCustomControls()
         {
             updateProcessorList(openScope());
-            box = new ComboBox()
+            cboProcessorList = new ComboBox()
             {
                 DataSource = _processorList.Select(m => new { Name = m["Name"], ID = m["DeviceID"] }).ToList(),
                                             DisplayMember = "Name", ValueMember = "ID",
                                             DropDownStyle = ComboBoxStyle.DropDownList };
           
-            box.ParentChanged += processorChanged;
+            cboProcessorList.ParentChanged += processorChanged;
             return new Control[]
                        {
-                           new Label() {Text = "Processor:"} , box ,
+                           new Label() {Text = "Processor:"} , cboProcessorList ,
                            new Label() {Text = "Manufacturer:"} , manuLabel ,
                            new Label() {Text = "Description:"} , descLabel ,
                            new Label() {Text = "Architecture:"} , archiLabel ,
@@ -146,7 +153,7 @@ namespace ruleEngine.ruleItems.windows.WMI
                     dataWidthLabel.Text = processor["DataWidth"].ToString();
                     familyLabel.Text = processor["Family"].ToString();
                     clockLabel.Text = processor["MaxClockSpeed"].ToString();
-                    _newDevice = processor["DeviceID"].ToString();
+                    deviceID = processor["DeviceID"].ToString();
                     break;
                     
                 }
@@ -156,14 +163,26 @@ namespace ruleEngine.ruleItems.windows.WMI
     ;
         }
 
-        public override void setCustomControl(Control ctl)
+        public override void setCustomValues()
         {
+            deviceID = (string) cboProcessorList.SelectedValue;
         }
 
         public override void clearControls()
         {
 
         }
-        
+
+        public override object Clone()
+        {
+            CPUUsageOptions clone = new CPUUsageOptions()
+                                        {
+                                            deviceID = this.deviceID,
+                                            username = this.username,
+                                            _password = this._password,
+                                            computer = this.computer
+                                        };
+            return clone;
+        }
     }
 }

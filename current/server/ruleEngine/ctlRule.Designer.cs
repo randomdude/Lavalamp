@@ -17,6 +17,8 @@
             {
                 components.Dispose();
             }
+            if (_dragCursorMove != null)
+                _dragCursorMove.Dispose();
             base.Dispose(disposing);
         }
 

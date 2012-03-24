@@ -203,7 +203,7 @@
             this.MaximizeBox = false;
             this.Name = "FrmDesktopMessageOptions";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Desktop message options";
+            this.Text = "Options...";
             ((System.ComponentModel.ISupportInitialize)(this.trackbarFadeInSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

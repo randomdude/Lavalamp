@@ -42,11 +42,13 @@
             this.tblCustom = new System.Windows.Forms.TableLayoutPanel();
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdCancel = new System.Windows.Forms.Button();
+            this.btnSet = new System.Windows.Forms.Button();
             this.authBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // authBox
             // 
+            this.authBox.Controls.Add(this.btnSet);
             this.authBox.Controls.Add(this.label2);
             this.authBox.Controls.Add(this.txtPassword);
             this.authBox.Controls.Add(this.label1);
@@ -118,6 +120,7 @@
             this.cboComputer.Name = "cboComputer";
             this.cboComputer.Size = new System.Drawing.Size(156, 21);
             this.cboComputer.TabIndex = 6;
+            this.cboComputer.SelectedIndexChanged += new System.EventHandler(this.cboComputer_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -164,6 +167,16 @@
             this.cmdCancel.Text = "Cancel";
             this.cmdCancel.UseVisualStyleBackColor = true;
             // 
+            // btnSet
+            // 
+            this.btnSet.Location = new System.Drawing.Point(221, 76);
+            this.btnSet.Name = "btnSet";
+            this.btnSet.Size = new System.Drawing.Size(75, 23);
+            this.btnSet.TabIndex = 5;
+            this.btnSet.Text = "Set";
+            this.btnSet.UseVisualStyleBackColor = true;
+            this.btnSet.Click += new System.EventHandler(this.btnSet_Click);
+            // 
             // frmWMIOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -184,7 +197,8 @@
             this.MinimizeBox = false;
             this.Name = "frmWMIOptions";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "wmiOptions";
+            this.Text = "Options...";
+            this.Load += new System.EventHandler(this.frmWMIOptions_Load);
             this.authBox.ResumeLayout(false);
             this.authBox.PerformLayout();
             this.ResumeLayout(false);
@@ -207,5 +221,6 @@
         private System.Windows.Forms.TableLayoutPanel tblCustom;
         private System.Windows.Forms.Button cmdOK;
         private System.Windows.Forms.Button cmdCancel;
+        private System.Windows.Forms.Button btnSet;
     }
 }

@@ -32,11 +32,8 @@ namespace ruleEngine
             ruleItemBase newRuleItem = (ruleItemBase)constr.Invoke(new object[0] { });
             newRuleItem.initPins();
             ctlRuleItemWidget widget = new ctlRuleItemWidget(newRuleItem, @this => {});
-            Size sz = newRuleItem.preferredSize();
-            widget.SetBounds(0, 0, sz.Width, sz.Height);
-            Bitmap image = new Bitmap(sz.Width,sz.Height);
-          
-            widget.DrawToBitmap(image, widget.ClientRectangle);
+            Bitmap image = new Bitmap(widget.Width, widget.Height);
+            widget.DrawToBitmap(image, new Rectangle(0, 0, widget.Width, widget.Height));
             return image;
         }
     }

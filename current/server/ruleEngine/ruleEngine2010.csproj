@@ -194,17 +194,17 @@
     <Compile Include="ruleItems\ruleItemEmail.cs" />
     <Compile Include="ruleItems\ruleItemRss.cs" />
     <Compile Include="ruleItems\ruleItemScript.cs" />
+    <Compile Include="ruleItems\Wallboard\ruleItemWallboard.cs" />
     <Compile Include="ruleItems\Starts\ctlTimeInterval.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ruleItems\Starts\ctlTimeInterval.Designer.cs">
       <DependentUpon>ctlTimeInterval.cs</DependentUpon>
     </Compile>
+    <Compile Include="ruleItems\imapChecker.cs" />
     <Compile Include="ruleItems\Starts\ruleItem-atTime.cs" />
     <Compile Include="ruleItems\Starts\ruleItem-startRun.cs" />
     <Compile Include="ruleItems\Starts\ruleItem-timeInterval.cs" />
-    <Compile Include="ruleItems\Wallboard\ruleItemWallboard.cs" />
-    <Compile Include="ruleItems\imapChecker.cs" />
     <Compile Include="ruleItems\ToolboxRuleCategoryAttribute.cs" />
     <Compile Include="ruleItems\windows\ctlIsProcRunning.cs">
       <SubType>UserControl</SubType>
@@ -270,6 +270,7 @@
     <Compile Include="ruleItems\windows\WMI\frmWMIOptions.Designer.cs">
       <DependentUpon>frmWMIOptions.cs</DependentUpon>
     </Compile>
+    <Compile Include="stringExtensions.cs" />
     <Compile Include="timeline.cs" />
     <Compile Include="timelineBucket.cs" />
     <Compile Include="timelineEvent.cs" />

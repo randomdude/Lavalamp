@@ -38,6 +38,8 @@ namespace ruleEngine
         /// </summary>
         List<ctlRuleItemWidget> itemWidgets = new List<ctlRuleItemWidget>();
 
+        private Cursor _dragCursorMove;
+
         public ctlRule()
         {
             InitializeComponent();
@@ -656,16 +658,25 @@ namespace ruleEngine
             if (e.Data.GetDataPresent(typeof(ruleItemInfo)))
                 e.Effect = DragDropEffects.Copy;
             else
+            {
                 e.Effect = DragDropEffects.None;
+                return;
+            }
+            ruleItemInfo info = (ruleItemInfo)e.Data.GetData(typeof(ruleItemInfo));
+            if (_dragCursorMove != null)
+            {
+                _dragCursorMove.Dispose();
+                _dragCursorMove = null;
+            }
+            Cursor.Current = _dragCursorMove = CursorUtil.CreateCursor((Bitmap)info.getItemImage(), 0, 0);
         }
 
         private void ctlRule_DragDrop(object sender, DragEventArgs e)
         {
-            frmRuleEdit parent = (frmRuleEdit) ParentForm;
-            DragDropHelper.ImageList_DragLeave(parent.imageList.Handle);
             ruleItemInfo info = (ruleItemInfo) e.Data.GetData(typeof(ruleItemInfo));
             Point actual = PointToClient(new Point(e.X , e.Y));
             addRuleItem(info, actual.X, actual.Y);
         }
+
     }
 }

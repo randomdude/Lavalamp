@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -25,20 +24,15 @@ namespace ruleEngine
         public saveRuleDelegate saveCallback;
         public closeRuleDelegate closeCallback;
 
-        public ImageList imageList { get; private set; }
-
         public frmRuleEdit()
         {
             InitializeComponent();
-            imageList = new ImageList();
-           
         }
 
         public frmRuleEdit(saveRuleDelegate onSaveRule, closeRuleDelegate onCloseRuleEditorDialog)
         {
             saveCallback = onSaveRule;
             closeCallback = onCloseRuleEditorDialog;
-            imageList = new ImageList();
             InitializeComponent();
         }
 
@@ -46,7 +40,15 @@ namespace ruleEngine
         {
             populateToolboxFromAssembly(Assembly.GetExecutingAssembly());
             tvToolbox.Sort();
+            GiveFeedback += OnGiveFeedback;
+
         }
+
+        private void OnGiveFeedback(object sender , GiveFeedbackEventArgs giveFeedbackEventArgs)
+        {
+            giveFeedbackEventArgs.UseDefaultCursors = giveFeedbackEventArgs.Effect != DragDropEffects.Copy;
+        }
+
 
         private void populateToolboxFromPythonFile(string filename)
         {
@@ -365,32 +367,14 @@ namespace ruleEngine
             TreeNode dragNode = (TreeNode)e.Item;
             if (dragNode.Tag == null)
                 return; // this will happen for category headers
-           
+
             ruleItemInfo info = (ruleItemInfo)dragNode.Tag;
             view.SelectedNode = dragNode;
-
-            imageList.Images.Clear();
-            imageList.Images.Add(info.getItemImage());
-            imageList.Images[0].Save("test.bmp");
-            DataObject data = new DataObject(info);
-            Point mousePos = tvToolbox.PointToClient(MousePosition);
-
-            int dx = mousePos.X + tvToolbox.Indent - dragNode.Bounds.Left;
-            int dy = mousePos.Y - dragNode.Bounds.Top;
-
-            if(DragDropHelper.ImageList_BeginDrag(imageList.Handle, 0, dx, dy))
-            {
-                DoDragDrop(data , DragDropEffects.Copy);
-                DragDropHelper.ImageList_EndDrag();
-            }
+            DoDragDrop(new DataObject(info) , DragDropEffects.Copy);
+            
         }
 
-        private void frmRuleEdit_DragOver(object sender, DragEventArgs e)
-        {
-            Point mousePos = PointToClient(new Point(e.X, e.Y));
-            DragDropHelper.ImageList_DragMove(mousePos.X - Left,
-                                          mousePos.Y - Top);
-        }
+
 
     }
 }

@@ -221,7 +221,6 @@
             this.Load += new System.EventHandler(this.frmRuleEdit_Load);
             this.ResizeBegin += new System.EventHandler(this.frmRuleEdit_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.frmRuleEdit_ResizeEnd);
-            this.DragOver += new System.Windows.Forms.DragEventHandler(this.frmRuleEdit_DragOver);
             this.ctxMnuToolbox.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

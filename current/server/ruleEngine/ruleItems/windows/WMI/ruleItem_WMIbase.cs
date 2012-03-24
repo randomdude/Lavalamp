@@ -1,46 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management;
 using System.Security;
-using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace ruleEngine.ruleItems.windows.WMI
 {
     [Serializable]
-    public abstract class WMIOptions
+    public abstract class WMIOptions : ICloneable
     {
         public WMIOptions()
         {
             computer = "localhost";
         }
+        [XmlIgnore]
         public ConnectionOptions conOpts = new ConnectionOptions();
+
+        protected SecureString _password = new SecureString();
+
+
+        [XmlElement]
         public string computer { get; set; }
+        [XmlElement]
         public string username
         {
             get { return conOpts.Username; }
-            set { conOpts.Username = value; }
+            set { conOpts.Username = value == "" ? null : value; }
         }
-
+        [XmlElement]
         public string password
         {
-            set 
-            { 
-               SecureString password = new SecureString();
-                foreach(char p in value)
-                    password.AppendChar(p);
-                conOpts.SecurePassword = password;
-            }
+            set { _password = password.ConvertToSecureString(); }
+            get { return _password.ConvertToUnsecureString(); }
         }
-
         public abstract Control[] getCustomControls();
 
-        public abstract void setCustomControl(Control ctl);
+        public abstract void setCustomValues();
 
         public abstract void clearControls();
 
+        public abstract object Clone();
+      
 
         public delegate void scopeOptionChanged(ConnectionOptions conn);
         public event scopeOptionChanged onScopeOptsChanged;
@@ -58,5 +58,18 @@ namespace ruleEngine.ruleItems.windows.WMI
             return scope;
         }
 
+        public void InvokeScopeOptionsChanged(object sender , EventArgs eventArgs)
+        {
+            try
+            {
+                if (onScopeOptsChanged != null)
+                    onScopeOptsChanged.Invoke(conOpts);
+            }
+            catch (Exception)
+            {
+                //  
+            }
+
+        }
     }
 }

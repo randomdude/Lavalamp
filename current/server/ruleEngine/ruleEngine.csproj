@@ -104,7 +104,8 @@
     <Compile Include="ctlRuleItemWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DragDropHelper.cs" />
+    <Compile Include="CursorUtil.cs" />
+    <Compile Include="stringExtensions.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="ItemMovedArgs.cs" />
     <Compile Include="frmQuestion.cs">

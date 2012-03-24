@@ -18,8 +18,6 @@ namespace ruleEngine.ruleItems
         [XmlIgnore] public List<Control> controls = new List<Control>();
         [XmlIgnore] private Image _backgroundImage;
 
-
-
         /// <summary>
         /// Pin objects on this ruleItem, indexed by pin name
         /// </summary>
@@ -58,7 +56,6 @@ namespace ruleEngine.ruleItems
         /// </summary>
         /// <returns>the options form</returns>
         public virtual Form ruleItemOptions() { return null; }
-
         public virtual void onAfterLoad() { }
 
         public delegate void changeNotifyDelegate();
