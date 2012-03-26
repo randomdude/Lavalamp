@@ -50,7 +50,7 @@ namespace netGui.RuleEngine
                                 name = "pwm_fadeDelay",
                                 description = "pwm fade delay",
                                 direction = pinDirection.input,
-                                valueType = typeof(pinDataInt)
+                                valueType = typeof(pinDataNumber)
                             });
             pinList.Add("triac_brightness",
                         new pin
@@ -58,7 +58,7 @@ namespace netGui.RuleEngine
                                 name = "pwm_brightness",
                                 description = "pwm brightness",
                                 direction = pinDirection.input,
-                                valueType = typeof(pinDataInt)
+                                valueType = typeof(pinDataNumber)
                             });
             return pinList;
         } 

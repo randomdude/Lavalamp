@@ -10,7 +10,7 @@ using System.Linq;
 namespace ruleEngine.ruleItems.windows.WMI
 {
     [ToolboxRule]
-    [ToolboxRuleCategory("Windows tools")]
+    [ToolboxRuleCategory("System Information")]
     public class ruleItem_CPU_usage : ruleItemBase
     {
      
@@ -29,10 +29,10 @@ namespace ruleEngine.ruleItems.windows.WMI
 
         public override Dictionary<string, pin> getPinInfo()
         {
-          
+
             var pins = base.getPinInfo();
-            pins.Add("trigger",new pin(){name = "trigger", description = "poll", direction = pinDirection.input, valueType = typeof(pinDataTypes.pinDataTrigger)});
-            pins.Add("CPUUsage",new pin() {name = "CPUUsage", description = "processor load (%)", valueType = typeof(pinDataTypes.pinDataInt), direction = pinDirection.output});
+            pins.Add("trigger", new pin() { name = "trigger", description = "poll", direction = pinDirection.input, valueType = typeof(pinDataTypes.pinDataTrigger) });
+            pins.Add("CPUUsage", new pin() { name = "CPUUsage", description = "processor load (%)", valueType = typeof(pinDataTypes.pinDataNumber), direction = pinDirection.output });
             return pins;
         }
 
@@ -49,7 +49,7 @@ namespace ruleEngine.ruleItems.windows.WMI
             {
                  toRet = (ushort)processor["LoadPercentage"];
             }
-            onRequestNewTimelineEvent(new timelineEventArgs(new pinDataInt(toRet,this, pinInfo["CPUUsage"])));
+            onRequestNewTimelineEvent(new timelineEventArgs(new pinDataNumber(toRet, this, pinInfo["CPUUsage"])));
         }
 
         public override Form ruleItemOptions()
@@ -78,7 +78,7 @@ namespace ruleEngine.ruleItems.windows.WMI
         [XmlElement]
         public string deviceID;
 
-        private List<ManagementBaseObject> _processorList = new List<ManagementBaseObject>();
+        private List<ManagementBaseObject> _processorList;
 
         private Label manuLabel = new Label();
         private Label descLabel = new Label();
@@ -116,14 +116,16 @@ namespace ruleEngine.ruleItems.windows.WMI
 
         public override Control[] getCustomControls()
         {
-            updateProcessorList(openScope());
+            if (_processorList == null)
+                updateProcessorList(openScope());
             cboProcessorList = new ComboBox()
             {
                 DataSource = _processorList.Select(m => new { Name = m["Name"], ID = m["DeviceID"] }).ToList(),
                                             DisplayMember = "Name", ValueMember = "ID",
-                                            DropDownStyle = ComboBoxStyle.DropDownList };
+                                            DropDownStyle = ComboBoxStyle.DropDownList 
+            };
           
-            cboProcessorList.ParentChanged += processorChanged;
+            cboProcessorList.DisplayMemberChanged += processorChanged;
             return new Control[]
                        {
                            new Label() {Text = "Processor:"} , cboProcessorList ,
@@ -142,8 +144,8 @@ namespace ruleEngine.ruleItems.windows.WMI
         {
             foreach (var processor in _processorList)
             {
-                if (((((ComboBox)sender).SelectedValue != null && (string) processor["DeviceID"] == ((ComboBox)sender).SelectedValue.ToString() )||
-                   (((string) processor["DeviceID"] == deviceID && ((ComboBox)sender).SelectedValue == null))))
+                if (((((ComboBox)sender).SelectedValue != null && (string)processor["DeviceID"] == ((ComboBox)sender).SelectedValue.ToString()) ||
+                   (((string)processor["DeviceID"] == deviceID && ((ComboBox)sender).SelectedValue == null))))
                 {
                     manuLabel.Text = processor["Manufacturer"].ToString();
                     descLabel.Text = processor["Description"].ToString();
@@ -155,7 +157,7 @@ namespace ruleEngine.ruleItems.windows.WMI
                     clockLabel.Text = processor["MaxClockSpeed"].ToString();
                     deviceID = processor["DeviceID"].ToString();
                     break;
-                    
+
                 }
                 
         }

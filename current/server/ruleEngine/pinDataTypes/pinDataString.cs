@@ -57,7 +57,7 @@ namespace ruleEngine.pinDataTypes
                 return null;
             string convertedType = "";
             Type cvtType = value.GetType();
-            if (cvtType == typeof(string) || cvtType == typeof(int))
+            if (cvtType == typeof(string) || cvtType == typeof(Number))
                 convertedType = value.ToString();
             else if (cvtType == typeof(bool))
             {

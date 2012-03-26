@@ -303,14 +303,14 @@ namespace TestProjects
             Assert.IsInstanceOfType(switchRule.pinInfo["output"].value.data, typeof(bool));
             Assert.IsTrue((bool) switchRule.pinInfo["output"].value.data);
             //test int and bool 
-            switchRule.pinInfo["inputFalse"].valueType = typeof(pinDataInt);
+            switchRule.pinInfo["inputFalse"].valueType = typeof(pinDataNumber);
             switchRule.pinInfo["inputFalse"].recreateValue();
             switchRule.pinInfo["inputFalse"].value.data = 255;
             switchRule.pinInfo["switch"].value.data = false;
             switchRule.evaluate();
             targetRule.advanceDelta();
-            Assert.IsInstanceOfType(switchRule.pinInfo["output"].value.data, typeof(int));
-            Assert.AreEqual(switchRule.pinInfo["output"].value.data, 255);
+            Assert.IsInstanceOfType(switchRule.pinInfo["output"].value.data, typeof(Number));
+            Assert.AreEqual(switchRule.pinInfo["output"].value.data, new Number(255));
             switchRule.pinInfo["switch"].value.data = true;
             switchRule.evaluate();
             targetRule.advanceDelta();

@@ -142,7 +142,7 @@
     <Compile Include="guidTypes\pinGuid.cs" />
     <Compile Include="guidTypes\ruleItemGuid.cs" />
     <Compile Include="IpinData.cs" />
-    <Compile Include="pinDataTypes\pinDataInt.cs" />
+    <Compile Include="pinDataTypes\pinDataNumber.cs" />
     <Compile Include="pinDataTypes\pinDataString.cs" />
     <Compile Include="pinDataTypes\pinDataTrigger.cs" />
     <Compile Include="pinDirection.cs" />
