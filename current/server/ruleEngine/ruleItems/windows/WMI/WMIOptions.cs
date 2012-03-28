@@ -17,6 +17,7 @@ namespace ruleEngine.ruleItems.windows.WMI
         public ConnectionOptions conOpts = new ConnectionOptions();
 
         protected SecureString _password = new SecureString();
+        private string _wmiNamespace = "cimv2";
 
 
         [XmlElement]
@@ -42,34 +43,50 @@ namespace ruleEngine.ruleItems.windows.WMI
         public abstract object Clone();
       
 
-        public delegate void scopeOptionChanged(ConnectionOptions conn);
+        public delegate void scopeOptionChanged(ManagementScope conn);
         public event scopeOptionChanged onScopeOptsChanged;
 
         public ManagementScope openScope()
         {
             string wmiPath;
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(computer))
-                wmiPath = @"root\cimv2";
+                wmiPath = @"root\" + _wmiNamespace;
             else
-                wmiPath = string.Format(@"\\{0}\root\cimv2", computer);
+                wmiPath = string.Format(@"\\{0}\root\" + _wmiNamespace, computer);
 
             ManagementScope scope = new ManagementScope(wmiPath, conOpts);
 
             return scope;
         }
 
-        public void InvokeScopeOptionsChanged(object sender , EventArgs eventArgs)
+        protected string WMINamespace { get { return _wmiNamespace; } }
+        public bool changeWMINamespace(string newNameSpace)
         {
+            if (newNameSpace == _wmiNamespace)
+                return true;
+            string oldNamespace = _wmiNamespace;
             try
             {
-                if (onScopeOptsChanged != null)
-                    onScopeOptsChanged.Invoke(conOpts);
+                _wmiNamespace = newNameSpace;
+                ManagementScope scope = openScope();
+           
+                if (scope == null)
+                    return false;
+                scope.Connect();
+                if (!scope.IsConnected)
+                    return false;
+                return true;
             }
             catch (Exception)
             {
-                //  
+                _wmiNamespace = oldNamespace;
+                return false;
             }
-
+        }
+        public void InvokeScopeOptionsChanged(object sender, EventArgs eventArgs)
+        {
+                if (onScopeOptsChanged != null)
+                    onScopeOptsChanged.Invoke(openScope());
         }
     }
 }

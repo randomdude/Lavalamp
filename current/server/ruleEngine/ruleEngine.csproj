@@ -105,7 +105,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="CursorUtil.cs" />
-    <Compile Include="stringExtensions.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="ItemMovedArgs.cs" />
     <Compile Include="frmQuestion.cs">
@@ -143,7 +142,7 @@
     <Compile Include="guidTypes\pinGuid.cs" />
     <Compile Include="guidTypes\ruleItemGuid.cs" />
     <Compile Include="IpinData.cs" />
-    <Compile Include="pinDataTypes\pinDataInt.cs" />
+    <Compile Include="pinDataTypes\pinDataNumber.cs" />
     <Compile Include="pinDataTypes\pinDataString.cs" />
     <Compile Include="pinDataTypes\pinDataTrigger.cs" />
     <Compile Include="pinDirection.cs" />
@@ -263,7 +262,8 @@
     <Compile Include="ruleItems\windows\ruleItem-shutdown.cs" />
     <Compile Include="ruleItems\windows\ruleItem_serialPort.cs" />
     <Compile Include="ruleItems\windows\WMI\ruleItem_CPU_usage.cs" />
-    <Compile Include="ruleItems\windows\WMI\ruleItem_WMIbase.cs" />
+    <Compile Include="ruleItems\windows\WMI\WMIOptions.cs" />
+    <Compile Include="ruleItems\windows\WMI\ruleItem_WMI_DiskSpace.cs" />
     <Compile Include="ruleItems\windows\WMI\ruleItem_WMI_networkThroughput.cs" />
     <Compile Include="ruleItems\windows\WMI\frmWMIOptions.cs">
       <SubType>Form</SubType>
@@ -271,6 +271,8 @@
     <Compile Include="ruleItems\windows\WMI\frmWMIOptions.Designer.cs">
       <DependentUpon>frmWMIOptions.cs</DependentUpon>
     </Compile>
+    <Compile Include="ruleItems\windows\WMI\ruleItem_WMI_Temperature.cs" />
+    <Compile Include="stringExtensions.cs" />
     <Compile Include="timeline.cs" />
     <Compile Include="timelineBucket.cs" />
     <Compile Include="timelineEvent.cs" />

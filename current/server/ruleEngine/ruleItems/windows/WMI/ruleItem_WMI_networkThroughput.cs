@@ -78,9 +78,13 @@ namespace ruleEngine.ruleItems.windows.WMI
         }
     }
 
+
     public class WMINetworkOptions : WMIOptions
     {
-        
+        public WMINetworkOptions()
+        {
+            onScopeOptsChanged += updateNetworkAdapters;
+        }
         private enum NetConnectionStatus : ushort
         {
             Disconnected = 0,
@@ -98,7 +102,7 @@ namespace ruleEngine.ruleItems.windows.WMI
             Credentials_required = 12
         }
 
-        private List<ManagementObject> _networkAdapterList;
+        private List<ManagementObject> _networkAdapterList = new List<ManagementObject>();
 
         public string chosenAdapterName
         {
@@ -108,7 +112,7 @@ namespace ruleEngine.ruleItems.windows.WMI
                 {
                     //initialize network adapter list if needed
                     if (_networkAdapterList == null)
-                        _networkAdapterList = updateNetworkAdapters(openScope());
+                        updateNetworkAdapters(openScope());
                     //and default to first adapter found.
                     _adapterName = (string) _networkAdapterList[0]["Name"];
                 }
@@ -127,7 +131,7 @@ namespace ruleEngine.ruleItems.windows.WMI
         public override Control[] getCustomControls()
         {
             if (_networkAdapterList == null)
-                _networkAdapterList = updateNetworkAdapters(openScope());
+                updateNetworkAdapters(openScope());
             //we only look for network adapters which are user managed.
             var data = _networkAdapterList.Select(
                 x => new {Display = (string)x["NetConnectionID"] , Value = (string)x["Name"]}).ToList();
@@ -172,15 +176,14 @@ namespace ruleEngine.ruleItems.windows.WMI
             };
         }
 
-        private List<ManagementObject> updateNetworkAdapters(ManagementScope scope)
+        private void updateNetworkAdapters(ManagementScope scope)
         {
-
+            _networkAdapterList.Clear();
             SelectQuery query = new SelectQuery("SELECT * FROM Win32_NetworkAdapter WHERE NetConnectionID IS NOT NULL");
             ManagementObjectSearcher searcher = new ManagementObjectSearcher(query) {Scope = scope};
             ManagementObjectCollection col = searcher.Get();
-            List<ManagementObject> networkAdapterList = new List<ManagementObject>(col.Count);
-            networkAdapterList.AddRange(col.Cast<ManagementObject>());
-            return networkAdapterList;
+           
+            _networkAdapterList.AddRange(col.Cast<ManagementObject>());
         }
 
         private void networkAdapterChanged(object sender, EventArgs e)

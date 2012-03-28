@@ -262,7 +262,8 @@
     <Compile Include="ruleItems\windows\ruleItem-shutdown.cs" />
     <Compile Include="ruleItems\windows\ruleItem_serialPort.cs" />
     <Compile Include="ruleItems\windows\WMI\ruleItem_CPU_usage.cs" />
-    <Compile Include="ruleItems\windows\WMI\ruleItem_WMIbase.cs" />
+    <Compile Include="ruleItems\windows\WMI\WMIOptions.cs" />
+    <Compile Include="ruleItems\windows\WMI\ruleItem_WMI_DiskSpace.cs" />
     <Compile Include="ruleItems\windows\WMI\ruleItem_WMI_networkThroughput.cs" />
     <Compile Include="ruleItems\windows\WMI\frmWMIOptions.cs">
       <SubType>Form</SubType>
@@ -270,6 +271,7 @@
     <Compile Include="ruleItems\windows\WMI\frmWMIOptions.Designer.cs">
       <DependentUpon>frmWMIOptions.cs</DependentUpon>
     </Compile>
+    <Compile Include="ruleItems\windows\WMI\ruleItem_WMI_Temperature.cs" />
     <Compile Include="stringExtensions.cs" />
     <Compile Include="timeline.cs" />
     <Compile Include="timelineBucket.cs" />

@@ -20,7 +20,7 @@ namespace ruleEngine.ruleItems.windows.WMI
 
         }
 
-        private void getControls(ConnectionOptions conn)
+        private void getControls(ManagementScope conn)
         {
             tblCustom.Controls.Clear();
             try

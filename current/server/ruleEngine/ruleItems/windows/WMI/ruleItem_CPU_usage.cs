@@ -78,7 +78,7 @@ namespace ruleEngine.ruleItems.windows.WMI
         [XmlElement]
         public string deviceID;
 
-        private List<ManagementBaseObject> _processorList;
+        private List<ManagementBaseObject> _processorList = new List<ManagementBaseObject>();
 
         private Label manuLabel = new Label();
         private Label descLabel = new Label();
@@ -95,13 +95,6 @@ namespace ruleEngine.ruleItems.windows.WMI
             onScopeOptsChanged += updateProcessorList;
 
         }
-
-         void updateProcessorList(ConnectionOptions opts)
-         {
-             ManagementScope scope = openScope();
-             updateProcessorList(scope);
-
-         }
         void updateProcessorList(ManagementScope scope)
         {
             _processorList.Clear();
