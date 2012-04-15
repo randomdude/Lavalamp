@@ -131,12 +131,14 @@ namespace TestProjects
             spliter.pinInfo["input1"].value.data = false;
             spliter.evaluate();
             targetRule.advanceDelta();
+            
             Assert.AreEqual(false, spliter.pinInfo["output1"].value.data);
             Assert.AreEqual(false, spliter.pinInfo["output2"].value.data);
 
             spliter.pinInfo["input1"].value.data = true;
             spliter.evaluate();
             targetRule.advanceDelta();
+            
             Assert.AreEqual(true, spliter.pinInfo["output1"].value.data);
             Assert.AreEqual(true, spliter.pinInfo["output2"].value.data);
 
@@ -305,12 +307,12 @@ namespace TestProjects
             //test int and bool 
             switchRule.pinInfo["inputFalse"].valueType = typeof(pinDataNumber);
             switchRule.pinInfo["inputFalse"].recreateValue();
-            switchRule.pinInfo["inputFalse"].value.data = 255;
+            switchRule.pinInfo["inputFalse"].value.data = new GenericNumber<short>(255);
             switchRule.pinInfo["switch"].value.data = false;
             switchRule.evaluate();
             targetRule.advanceDelta();
-            Assert.IsInstanceOfType(switchRule.pinInfo["output"].value.data, typeof(Number));
-            Assert.AreEqual(switchRule.pinInfo["output"].value.data, new Number(255));
+            Assert.IsInstanceOfType(switchRule.pinInfo["output"].value.data, typeof(INumber));
+            Assert.AreEqual(switchRule.pinInfo["output"].value.data, new GenericNumber<short>(255));
             switchRule.pinInfo["switch"].value.data = true;
             switchRule.evaluate();
             targetRule.advanceDelta();

@@ -111,7 +111,7 @@ namespace ruleEngine.ruleItems.windows.WMI
                 if (string.IsNullOrEmpty(_adapterName))
                 {
                     //initialize network adapter list if needed
-                    if (_networkAdapterList == null)
+                    if (_networkAdapterList == null || _networkAdapterList.Count == 0)
                         updateNetworkAdapters(openScope());
                     //and default to first adapter found.
                     _adapterName = (string) _networkAdapterList[0]["Name"];

@@ -165,6 +165,13 @@ namespace ruleEngine.Properties {
             }
         }
         
+        public static System.Drawing.Bitmap ruleItem_database {
+            get {
+                object obj = ResourceManager.GetObject("ruleItem_database", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         public static System.Drawing.Bitmap ruleItem_HTMLStripper {
             get {
                 object obj = ResourceManager.GetObject("ruleItem_HTMLStripper", resourceCulture);
@@ -203,6 +210,13 @@ namespace ruleEngine.Properties {
         public static System.Drawing.Bitmap ruleItem_splitter {
             get {
                 object obj = ResourceManager.GetObject("ruleItem_splitter", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap ruleItem_text {
+            get {
+                object obj = ResourceManager.GetObject("ruleItem_text", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

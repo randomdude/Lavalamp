@@ -55,29 +55,5 @@ namespace ruleEngine.pinDataTypes
             get { return false; }
         }
 
-        [Pure]
-        protected override bool convertData(object value)
-        {
-            bool convertedData = false;
-            if (value == null)
-                return false;
-            Type tpyToConvert = value.GetType();
-            if (tpyToConvert == typeof(bool))
-                convertedData = (bool)value;
-            else if (tpyToConvert == typeof(string))
-                convertedData = !String.IsNullOrEmpty(value as string);
-            else if (tpyToConvert == typeof(int))
-                convertedData = ((int)value != 0);
-            else if (tpyToConvert == typeof(tristate))
-            {
-                if (((tristate)value) == tristate.yes)
-                    convertedData = true;
-            }
-            else
-                throw new ArgumentTypeException("Invaild pin types - no conversion exists between " + tpyToConvert + " and bool.");
-
-            return convertedData;
-
-        }
     }
 }

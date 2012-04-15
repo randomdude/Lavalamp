@@ -71,31 +71,5 @@ namespace ruleEngine.pinDataTypes
             get { return tristate.noValue; }
         }
 
-        [Pure]
-        protected override tristate convertData(object value)
-        {
-            if (value == null)
-                return tristate.noValue;
-            Type tpyConvert = value.GetType();
-            tristate convertedValue;
-            if (tpyConvert == typeof(tristate))
-                convertedValue = (tristate) value;
-            else if (tpyConvert == typeof(bool))
-            {
-                if ((bool)value)
-                    convertedValue = tristate.yes;
-                else
-                    convertedValue = tristate.no;
-            }
-            else if (tpyConvert == typeof(string))
-            {
-                convertedValue = ((string)value) == "" ? tristate.no : tristate.yes;
-            }
-            else
-                throw new ArgumentTypeException("Invaild Pin types! No conversion exists between " + tpyConvert + " and tristate");
-
-            return convertedValue;
-
-        }
     }
 }

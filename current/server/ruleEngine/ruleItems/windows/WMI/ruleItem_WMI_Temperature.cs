@@ -111,7 +111,7 @@ namespace ruleEngine.ruleItems.windows.WMI
                     LinkLabel link = new LinkLabel()
                                           {
                                               Text =
-                                                  "No Sensors found. Lavalamp supported temperature monitoring software can be downloaded at http://openhardwaremonitor.org"
+                                                  "No Sensors found."
                                           };
                     link.Click += (sender, args) => Process.Start("http://openhardwaremonitor.org");
                     return new Control[] {
@@ -160,7 +160,7 @@ namespace ruleEngine.ruleItems.windows.WMI
         {
             foreach (var temperatureSensor in _sensorList)
             {
-                if ( temperatureSensor.ID == (string) _cboSensors.SelectedValue)
+                if ((SelectedSensor == null) || temperatureSensor.ID == (string) SelectedSensor.ID)
                 {
                     _lblMaximum.Text = temperatureSensor.MaximumVal.ToString();
                     _lblMinimum.Text = temperatureSensor.MinimumVal.ToString();
@@ -176,7 +176,7 @@ namespace ruleEngine.ruleItems.windows.WMI
                 _cboSensors.DataSource = _sensorList.Select(s => new { Display = s.Name, Value = s.ID }).ToArray();
             else
                 _cboSensors.DataSource = _sensorList.Where(s => s.Namespace == (string)_cboNamespaces.SelectedValue).Select(s => new { Display = s.Name, Value = s.ID }).ToArray();
-
+            _cboSensors.ResetBindings();
             _cboSensors_SelectedIndexChanged(_cboSensors, null);
         }
 
@@ -198,7 +198,8 @@ namespace ruleEngine.ruleItems.windows.WMI
                            SelectedSensor = SelectedSensor,
                            password = password,
                            username = username,
-                           computer = computer
+                           computer = computer,
+                           _erroredNamespaces = this._erroredNamespaces
                        };
         }
 
@@ -278,7 +279,8 @@ namespace ruleEngine.ruleItems.windows.WMI
                  }
                  catch (Exception e)
                 {
-                    MessageBox.Show(e.Message + " happened when trying to get Temperature sensors from the sensor object in OpenHardwareMonitor", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    // this needs passing to the gui somehow but we'll suppress it for now :$
+                   // MessageBox.Show(e.Message + " happened when trying to get Temperature sensors from the sensor object in OpenHardwareMonitor", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     _erroredNamespaces.Add("OpenHardwareMonitor");
                  }
             }

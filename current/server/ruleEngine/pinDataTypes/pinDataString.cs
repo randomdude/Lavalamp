@@ -48,46 +48,5 @@ namespace ruleEngine.pinDataTypes
         {
             get { return null; }
         }
-
-        [Pure]
-        protected override string convertData(object value)
-        {
-            
-            if (value == null)
-                return null;
-            string convertedType = "";
-            Type cvtType = value.GetType();
-            if (cvtType == typeof(string) || cvtType == typeof(Number))
-                convertedType = value.ToString();
-            else if (cvtType == typeof(bool))
-            {
-                if ((bool)value)
-                    convertedType = "yes";
-                else
-                    convertedType = "no";
-            }
-            else if (cvtType == typeof(tristate))
-            {
-                switch ((tristate)value)
-                {
-                        case tristate.yes:
-                            convertedType = "yes";
-                            break;
-                        case tristate.no:
-                            convertedType = "no";
-                            break;
-                        case tristate.noValue:
-                            convertedType = "nothing";
-                            break;
-                }
-            }
-            else
-                throw new ArgumentTypeException("Invalid Pin types! No conversion exists between " + cvtType + " and string");
-
-            return convertedType;
-
-
-
-        }
     }
 }

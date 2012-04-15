@@ -1,5 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Diagnostics.Contracts;
 using System.Drawing;
+using Microsoft.Scripting;
 using ruleEngine.ruleItems;
 using ruleEngine.ruleItems.windows;
 
@@ -57,13 +60,23 @@ namespace ruleEngine.pinDataTypes
         /// </summary>
         /// <param name="value">the raw data</param>
         /// <returns>converted data</returns>
-        protected abstract T convertData(object value);
+        [Pure]
+        protected T convertData(object value)
+        {
+            var converter = TypeDescriptor.GetConverter(typeof(T));
+            if (value.GetType() == typeof(T))
+                return (T)value;
+       //     if (!converter.CanConvertFrom(value.GetType()))
+         //       throw new ArgumentTypeException("Invalid Pin types! No conversion exists between " + value.GetType() + " and " + typeof(T));
+
+            return (T)(converter.ConvertTo(value, typeof(T)));
+        }
 
         public void performUpdate()
         {
             _parentPin.value.data = this.data;
         }
-
+        
         public IPinData and(IPinData toCompareTo)
         {
             bool result = asBoolean() && toCompareTo.asBoolean();

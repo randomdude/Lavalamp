@@ -149,11 +149,23 @@
     <Compile Include="ruleItems\Basic logic\ruleItem_switch.cs" />
     <Compile Include="ruleItems\Basic logic\ruleItem_HTMLStripper.cs" />
     <Compile Include="ruleItems\Basic logic\ruleItem_msgDelay.cs" />
+    <Compile Include="ruleItems\frmFileWriteOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ruleItems\frmFileWriteOptions.Designer.cs">
+      <DependentUpon>frmFileWriteOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="ruleItems\frmSerialPortOptions.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ruleItems\frmSerialPortOptions.Designer.cs">
       <DependentUpon>frmSerialPortOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ruleItems\frmWeatherOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ruleItems\frmWeatherOptions.Designer.cs">
+      <DependentUpon>frmWeatherOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="ruleItems\IScriptEngine.cs" />
     <Compile Include="lineChain-xml.cs" />
@@ -192,8 +204,10 @@
     <Compile Include="ruleItems\ruleItemBase.cs">
     </Compile>
     <Compile Include="ruleItems\ruleItemEmail.cs" />
+    <Compile Include="ruleItems\ruleItemFile.cs" />
     <Compile Include="ruleItems\ruleItemRss.cs" />
     <Compile Include="ruleItems\ruleItemScript.cs" />
+    <Compile Include="ruleItems\ruleItemWeather.cs" />
     <Compile Include="ruleItems\Wallboard\ruleItemWallboard.cs" />
     <Compile Include="ruleItems\Starts\ctlTimeInterval.cs">
       <SubType>UserControl</SubType>
@@ -328,8 +342,14 @@
       <DependentUpon>frmCheckEmailOptions.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="ruleItems\frmFileWriteOptions.resx">
+      <DependentUpon>frmFileWriteOptions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ruleItems\frmSerialPortOptions.resx">
       <DependentUpon>frmSerialPortOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ruleItems\frmWeatherOptions.resx">
+      <DependentUpon>frmWeatherOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ruleItems\Starts\ctlTimeInterval.resx">
       <DependentUpon>ctlTimeInterval.cs</DependentUpon>
@@ -455,6 +475,8 @@
   <ItemGroup>
     <Content Include="Resources\basicLogic\switch_false.png" />
     <Content Include="Resources\basicLogic\switch_true.png" />
+    <Content Include="Resources\database.png" />
+    <Content Include="Resources\Text_Document_Icon_32.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

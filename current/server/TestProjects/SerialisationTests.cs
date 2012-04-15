@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using netGui;
@@ -53,12 +55,24 @@ namespace TestProjects
         public void testSerialisationOfRuleWithAnySingleRuleItem()
         {
             int count = 0;
+            List<string> failedTests = new List<string>();
             // the main set of rule items
             foreach (Module myMod in Assembly.GetAssembly(typeof(rule)).GetModules()) 
                 foreach (Type thisType in myMod.GetTypes())
                     if (thisType.IsDefined(typeof(ToolboxRule), false))
                     {
-                        testSerialisationOfRuleWithNamedRuleItem(thisType);
+                        try
+                        {
+                            testSerialisationOfRuleWithNamedRuleItem(thisType);
+                        }
+                        catch (Exception ex)
+                        {
+                            string error = string.Format("Rule item {0} failed to serialise\nException: {1}" , thisType ,
+                                                         ex);
+                            failedTests.Add(error);
+                            Debug.Print(error);
+                        }
+
                         ++count;
                     }
             if (count == 0)
@@ -69,7 +83,17 @@ namespace TestProjects
                 foreach (Type thisType in myMod.GetTypes())
                     if (thisType.IsDefined(typeof(ToolboxRule), false))
                     {
-                        testSerialisationOfRuleWithNamedRuleItem(thisType);
+                        try 
+                        {
+                            testSerialisationOfRuleWithNamedRuleItem(thisType);
+                        }
+                        catch (Exception ex)
+                        {
+                            string error = string.Format("Rule item {0} failed to serialise\nException: {1}" , thisType ,
+                                                         ex);
+                            failedTests.Add(error);
+                            Debug.Print(error);
+                        }
                         ++count;
                     }
             if (count == 0)
@@ -82,11 +106,23 @@ namespace TestProjects
                     if (thisType.IsDefined(typeof(ToolboxRule), false))
                         if (thisType.IsDefined(typeof(ToolboxRule), false))
                         {
-                            testSerialisationOfRuleWithNamedRuleItem(thisType);
+                            try 
+                            {
+                                testSerialisationOfRuleWithNamedRuleItem(thisType);
+                            }
+                            catch (Exception ex)
+                            {
+                                string error = string.Format("Rule item {0} failed to serialise\nException: {1}" ,
+                                                             thisType , ex);
+                                failedTests.Add(error);
+                                Debug.Print(error);
+                            }
                             ++count;
                         }
             if (count == 0)
                 throw new AssertInconclusiveException();
+            if (failedTests.Count > 0)
+                throw new AssertFailedException(string.Join("\n",failedTests.ToArray()));
         }
 
         [TestMethod]

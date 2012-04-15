@@ -10,7 +10,7 @@ namespace ruleEngine.ruleItems
     public class ruleItem_splitter : ruleItemBase
     {
         public override string ruleName() { return "Splitter"; }
-
+        private object _prevValue;
         public override System.Drawing.Image background()
         {
             return Properties.Resources.ruleItem_splitter;
@@ -35,6 +35,9 @@ namespace ruleEngine.ruleItems
         public override void evaluate()
         {
             var input1 = pinInfo["input1"].value.data;
+            if (input1 == _prevValue)
+                return;
+            _prevValue = input1;
             foreach (var pin in pinInfo.Values)
             {
 
