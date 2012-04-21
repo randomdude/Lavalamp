@@ -22,7 +22,7 @@ namespace TestProjects.virtualNetworkTests
             // correct event.
             const int virtualNodeID = 0x01;
 
-            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName, true))
             {
                 virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Sync test node");
 
@@ -52,7 +52,7 @@ namespace TestProjects.virtualNetworkTests
             // packet and verify that the node recovers, successfully firing the correct event.
             const int virtualNodeID = 0x01;
 
-            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName, true))
             {
                 virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Sync test node");
 

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using netGui;
 using transmitterDriver;
 using virtualNodeNetwork;
 
@@ -19,7 +17,7 @@ namespace TestProjects.virtualNetworkTests
             // Create a new virtual network and node. Ping the node and verify that we get a successful response.
             const int virtualNodeID = 0x01;
 
-            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName, true))
             {
                 virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Ping test node");
 
@@ -44,7 +42,7 @@ namespace TestProjects.virtualNetworkTests
             // verify that it has set its state to the initial 'idle', to check that it can recover correctly.
             const int virtualNodeID = 0x01;
 
-            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName, true))
             {
                 virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Ping test node");
                 startNetworkInNewThread(testVirtualNetwork);
@@ -86,7 +84,7 @@ namespace TestProjects.virtualNetworkTests
             // Do this repeatedly with various node names.
             foreach (string testNodeName in new[] { "test node", "", "a", "01234567890abcdef01234567890abcde" })
             {
-                using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+                using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName, true))
                 {
                     virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, testNodeName);
                     startNetworkInNewThread(testVirtualNetwork);
@@ -113,7 +111,7 @@ namespace TestProjects.virtualNetworkTests
             // first node does not process it.
             const int virtualNodeID = 0x01;
 
-            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName, true))
             {
                 virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Ping test node");
                 startNetworkInNewThread(testVirtualNetwork);
@@ -150,7 +148,7 @@ namespace TestProjects.virtualNetworkTests
             // Do this a number of times with different amounts of sensors.
             foreach (int sensorsToAddCount in new[] { 0, 1, 10 })
             {
-                using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+                using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName, true))
                 {
                     // Make a list of sensors to add to our node
                     List<virtualNodeSensor> sensorsToAdd = new List<virtualNodeSensor>();
@@ -184,7 +182,7 @@ namespace TestProjects.virtualNetworkTests
             // Do this a number of times with different amounts of sensors.
             foreach (sensorTypeEnum typeToTest in Enum.GetValues(typeof(sensorTypeEnum)))
             {
-                using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+                using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName,true))
                 {
                     // Add a sensor of the given type to the node
                     List<virtualNodeSensor> sensorsToAdd = new List<virtualNodeSensor>();
@@ -219,7 +217,7 @@ namespace TestProjects.virtualNetworkTests
             // Do this a number of times with different amounts of sensors.
             foreach (sensorTypeEnum typeToTest in Enum.GetValues(typeof(sensorTypeEnum)))
             {
-                using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+                using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName, true))
                 {
                     // Add a dummy sensor, then a sensor of the given type to the node
                     List<virtualNodeSensor> sensorsToAdd = new List<virtualNodeSensor>();
@@ -255,7 +253,7 @@ namespace TestProjects.virtualNetworkTests
             // Verify that the sensor fires the correct events when asked to set the output value.
             const int virtualNodeID = 0x01;
 
-            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName,true))
             {
                 List<virtualNodeSensor> sensorsToAdd = new List<virtualNodeSensor>();
                 sensorsToAdd.Add(virtualNodeSensor.makeSensor(sensorTypeEnum.generic_digital_out, 1));
@@ -268,18 +266,16 @@ namespace TestProjects.virtualNetworkTests
 
                 // apply a callback to signal when the sensor changes state
                 int sensorState = 0;
-                testNode.onChangeSensor = new Action<virtualNodeBase, virtualNodeSensor, int>(
-                    (node, sensor, newVal) =>
-                        {
-                            // Verify that the callback was called with the correct values
-                            Assert.AreEqual(virtualNodeID, node.id, "node state callback provided wrong node");
-                            Assert.AreEqual(1, sensor.id, "node state callback provided wrong sensor");
+                testNode.onChangeSensor = (node, sensor, newVal) =>
+                                              {
+                                                  // Verify that the callback was called with the correct values
+                                                  Assert.AreEqual(virtualNodeID, node.id, "node state callback provided wrong node");
+                                                  Assert.AreEqual(1, sensor.id, "node state callback provided wrong sensor");
 
-                            // Store the new state. Don't bother locking since it is a straight write and
-                            // not a read-modify-write operation.
-                            sensorState = newVal;
-                        }
-                    );
+                                                  // Store the new state. Don't bother locking since it is a straight write and
+                                                  // not a read-modify-write operation.
+                                                  sensorState = newVal;
+                                              };
 
                 // Now set the sensor, and observe the sensorState var get updated by the fired event.
                 // Loop through a few different values, verifying after each.
@@ -304,7 +300,7 @@ namespace TestProjects.virtualNetworkTests
             // Verify that the sensor fires the correct events when asked to set the output value.
             const int virtualNodeID = 0x01;
 
-            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName))
+            using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName, true))
             {
                 List<virtualNodeSensor> sensorsToAdd = new List<virtualNodeSensor>();
                 genericDigitalInSensor sensorIn = new genericDigitalInSensor() {id = 1};

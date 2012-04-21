@@ -17,7 +17,8 @@ namespace TestProjects.virtualNetworkTests
 
         protected void startNetworkInNewThread(virtualNetworkBase testVirtualNetwork)
         {
-            testVirtualNetwork.run();
+            Thread networkThread = new Thread(testVirtualNetwork.run);
+            networkThread.Start();
         }    
     }
 }
