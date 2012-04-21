@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Reflection;
+using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -57,6 +56,18 @@ namespace ruleEngine
                 if (xmlName == parentTag && reader.NodeType == XmlNodeType.EndElement)
                     keepGoing = false;
 
+                if (xmlName == "preferredheight" && reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
+                {
+                    preferredHeight = int.Parse(reader.ReadElementContentAsString());
+                    inhibitNextRead = true;
+                }
+
+                if (xmlName == "preferredwidth" && reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
+                {
+                    preferredWidth = int.Parse(reader.ReadElementContentAsString());
+                    inhibitNextRead = true;
+                }
+
                 if (xmlName == "name" && reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
                 {
                     name = reader.ReadElementContentAsString();
@@ -83,6 +94,15 @@ namespace ruleEngine
                     keepGoing = reader.Read();
                 inhibitNextRead = false;
             }
+            // for backward compatibility with rules with out preferred sizes and sanity checks.
+            if (preferredHeight == 0) // abortary defaults if 0
+                preferredHeight = 334;
+            else if (preferredHeight > SystemInformation.PrimaryMonitorSize.Height)
+                preferredHeight = SystemInformation.PrimaryMonitorSize.Height;
+            if (preferredWidth == 0)
+                preferredWidth = 613;
+            else if (preferredWidth > SystemInformation.PrimaryMonitorSize.Width)
+                preferredWidth = SystemInformation.PrimaryMonitorSize.Width;
             hookPinConnectionsUp(ruleItems.Values);
 
         }
@@ -97,6 +117,8 @@ namespace ruleEngine
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteElementString("name", name);
+            writer.WriteElementString("preferredHeight", preferredHeight.ToString());
+            writer.WriteElementString("preferredWidth", preferredWidth.ToString());
             writer.WriteElementString("state", state.ToString());
             writer.WriteElementRuleItemDictionary("ruleItems", ruleItems);  // this _must_ be before the others! TODO: Is this still the case? Check if it _does_ need to be before the others.
             writer.WriteElementLineChainDictionary("lineChains", lineChains);

@@ -81,6 +81,8 @@ namespace ruleEngine
         /// </summary>
         private void addRuleItemControlsAfterDeserialisation()
         {
+            Parent.Width = _rule.preferredWidth;
+            Parent.Height = _rule.preferredHeight;
             IEnumerable<ruleItemBase> childRuleItems = _rule.getRuleItems();
 
             foreach (ruleItemBase thisRule in childRuleItems)
@@ -106,12 +108,16 @@ namespace ruleEngine
 
         public string serialiseRule()
         {
+            _rule.preferredHeight = Parent.Height;
+            _rule.preferredWidth = Parent.Width;
             return _rule.serialise();
         }
 
         public void deserialiseRule(string serialised)
         {
             _rule = rule.deserialise(serialised);
+            Parent.Width = _rule.preferredWidth;
+            Parent.Height = _rule.preferredHeight;
         }
 
         #endregion

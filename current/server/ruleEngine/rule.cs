@@ -268,6 +268,10 @@ namespace ruleEngine
             get { return state == ruleState.running; }
         }
 
+        public int preferredHeight { get;set;}
+
+        public int preferredWidth { get; set;}
+
         public ruleItemBase addRuleItem(ruleItemInfo info)
         {
             // Make new ruleItem control of this RuleItem type. 

@@ -52,6 +52,8 @@
             // tvToolbox
             // 
             this.tvToolbox.AllowDrop = true;
+            this.tvToolbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.tvToolbox.ContextMenuStrip = this.ctxMnuToolbox;
             this.tvToolbox.Location = new System.Drawing.Point(11, 43);
             this.tvToolbox.Name = "tvToolbox";
@@ -76,6 +78,7 @@
             // 
             // btnStop
             // 
+            this.btnStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStop.Enabled = false;
             this.btnStop.Image = ((System.Drawing.Image)(resources.GetObject("btnStop.Image")));
             this.btnStop.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -90,6 +93,7 @@
             // 
             // btnRun
             // 
+            this.btnRun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRun.Image = ((System.Drawing.Image)(resources.GetObject("btnRun.Image")));
             this.btnRun.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnRun.Location = new System.Drawing.Point(680, 367);
@@ -117,6 +121,7 @@
             // 
             // btnSaveClose
             // 
+            this.btnSaveClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSaveClose.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveClose.Image")));
             this.btnSaveClose.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnSaveClose.Location = new System.Drawing.Point(241, 367);
@@ -130,6 +135,7 @@
             // 
             // btnCancel
             // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Image = ((System.Drawing.Image)(resources.GetObject("btnCancel.Image")));
             this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -144,6 +150,7 @@
             // 
             // btnSave
             // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnSave.Location = new System.Drawing.Point(331, 368);
@@ -191,6 +198,9 @@
             // ctlRuleEditor
             // 
             this.ctlRuleEditor.AllowDrop = true;
+            this.ctlRuleEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ctlRuleEditor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.ctlRuleEditor.Location = new System.Drawing.Point(153, 27);
             this.ctlRuleEditor.Name = "ctlRuleEditor";
@@ -219,8 +229,6 @@
             this.Text = "Rule editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmRuleEdit_FormClosing);
             this.Load += new System.EventHandler(this.frmRuleEdit_Load);
-            this.ResizeBegin += new System.EventHandler(this.frmRuleEdit_ResizeBegin);
-            this.ResizeEnd += new System.EventHandler(this.frmRuleEdit_ResizeEnd);
             this.ctxMnuToolbox.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

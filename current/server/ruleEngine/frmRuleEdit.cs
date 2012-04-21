@@ -188,9 +188,12 @@ namespace ruleEngine
             }
             else
             {
+                rule r = ctlRuleEditor.getRule();
+                r.preferredHeight = Height;
+                r.preferredWidth = Width;
                 //String serialised = ctlRule1.serialiseRule();
                 //Clipboard.SetText(serialised);
-                saveCallback.Invoke(ctlRuleEditor.getRule());
+                saveCallback.Invoke(r);
             }
         }
 
@@ -310,37 +313,6 @@ namespace ruleEngine
             closeRule();
         }
 
-        private void frmRuleEdit_ResizeEnd(object sender, EventArgs e)
-        {
-            ctlRuleEditor.Width = this.Width - ctlRuleEditor.Left - ctlRule1BorderX;
-            ctlRuleEditor.Height = this.Height - ctlRuleEditor.Top - ctlRule1BorderY;
-
-            // We also set the toolbox to end at the same point as the rule control.
-            tvToolbox.Height = (ctlRuleEditor.Top + ctlRuleEditor.Height) - tvToolbox.Top;
-
-            // And the buttons.
-            foreach( Control thisBtn in new Control [] {btnStop, btnRun, btnCancel, btnSave, btnSaveClose } )
-                thisBtn.Top = ctlRuleEditor.Height + ctlRuleEditor.Top + buttonsBorderY;
-
-            // Also, move the two rightmost buttons to align nicely
-            btnRun.Left = (ctlRuleEditor.Width + ctlRuleEditor.Left) - btnStop.Width;
-            btnStop.Left = (ctlRuleEditor.Width + ctlRuleEditor.Left) - (btnRun.Width + btnStop.Width + buttonsBorderX);
-
-            // Don't let buttons foul each other, though.
-            if (btnStop.Left < (btnSave.Left + btnSave.Width + buttonsBorderX))
-            {
-                btnStop.Left = btnSave.Left + btnSave.Width + buttonsBorderX;
-                btnRun.Left = btnStop.Left + btnStop.Width + buttonsBorderX;
-            }
-        }
-
-        private void frmRuleEdit_ResizeBegin(object sender, EventArgs e)
-        {
-            ctlRule1BorderX = this.Width - (ctlRuleEditor.Width + ctlRuleEditor.Left);
-            ctlRule1BorderY = this.Height - (ctlRuleEditor.Height + ctlRuleEditor.Top);
-            buttonsBorderY = btnStop.Top - (ctlRuleEditor.Top + ctlRuleEditor.Height);
-            buttonsBorderX = btnRun.Left - (btnStop.Left + btnStop.Width) ;
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {

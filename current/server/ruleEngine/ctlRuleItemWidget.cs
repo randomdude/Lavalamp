@@ -303,6 +303,17 @@ namespace ruleEngine
                     newPos.X = mousePos.X - mouseDownAt.Value.X;
                     newPos.Y = mousePos.Y - mouseDownAt.Value.Y;
 
+                    //bounds checking 
+                    if ((newPos.X + Width) > Parent.Width)
+                        newPos.X = Parent.Width - Width;
+                    else if (newPos.X < 0)
+                        newPos.X = 0;
+                    if ((newPos.Y + Height) > Parent.Height)
+                        newPos.Y = Parent.Height - Height;
+                    else if (newPos.Y < 0)
+                        newPos.Y = 0;
+
+
                     // snap to grid if necessary
                     if (snapToGrid)
                     {
