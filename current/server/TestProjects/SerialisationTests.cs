@@ -209,8 +209,6 @@ namespace TestProjects
         [TestMethod]
         public void testSerialisationOfRuleWithTwoRuleItemWithPinsConnected()
         {
-            ctlRule ruleControl = new ctlRule();
-
             rule rule = new rule("test");
             lineChain line = new lineChain();
             
@@ -231,8 +229,6 @@ namespace TestProjects
             messageItem.pinInfo["trigger"].connectTo(line.serial,andItem.pinInfo["output1"]);
             andItem.pinInfo["output1"].connectTo(line.serial, messageItem.pinInfo["trigger"]);
             andItem.pinInfo["output1"].parentRuleItem = andGuid;
-            rule.afterNewPinCreated(messageItem.pinInfo["trigger"]);
-            rule.afterNewPinCreated(andItem.pinInfo["output1"]);
             rule.AddLineChainToGlobalPool(line);
 
             String serialised = rule.serialise();
@@ -247,7 +243,7 @@ namespace TestProjects
             Assert.IsInstanceOfType(andItem, typeof(ruleItem_and));
             Assert.IsInstanceOfType(messageItem, typeof(ruleItem_desktopMessage));
             Assert.AreEqual(1, messageItem.pinInfo.Count);
-            Assert.AreEqual(1, andItem.pinInfo.Count);
+            Assert.AreEqual(3, andItem.pinInfo.Count);
             Assert.AreEqual(line.serial.id.ToString(), messageItem.pinInfo["trigger"].parentLineChain.id.ToString());
             Assert.AreEqual(line.serial.id.ToString(), andItem.pinInfo["output1"].parentLineChain.id.ToString());
             Assert.AreEqual(andItem.pinInfo["output1"].serial.id.ToString(), messageItem.pinInfo["trigger"].linkedTo.id.ToString());
