@@ -48,13 +48,10 @@ namespace ruleEngine.pinDataTypes
                 {
                         case tristate.yes:
                             return new GenericNumber<short>(1);
-                            break;
-                        case tristate.no:
+                    case tristate.no:
                             return new GenericNumber<short>(0);
-                            break;
-                        case tristate.noValue:
+                    case tristate.noValue:
                             return null;
-                            break;
                 }   
             }
             throw new InvalidCastException(string.Format("Cannot cast {0} to {1}", sourceType, destinationType));

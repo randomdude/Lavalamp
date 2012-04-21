@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,15 +6,14 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Serialization;
 using ruleEngine.ruleItems;
-using ruleEngine.ruleItems.windows;
 
 namespace ruleEngine
 {
     [Serializable]
     [XmlRootAttribute("rule") ]
-    public partial class rule : IXmlSerializable 
+    public partial class rule : IXmlSerializable
     {
-        public String name { get; protected set; }
+        public String name { get;  set; }
         public bool toolboxPromoted;
         private ruleState _state;
 
@@ -49,11 +47,6 @@ namespace ruleEngine
         /// The 'wires' that connect ruleItems
         /// </summary>
         private Dictionary<String, lineChain> lineChains = new Dictionary<string, lineChain>();
-
-        /// <summary>
-        /// The input or output ports attached to ruleItems
-        /// </summary>
-        private Dictionary<String, pin> pins = new Dictionary<string, pin>();
 
         /// <summary>
         /// This delegate gets called on updates to the rule's status.
@@ -152,11 +145,6 @@ namespace ruleEngine
             ruleItems.Add(addThis.serial.id.ToString(), addThis);            
         }
 
-        public void afterNewPinCreated(pin addThis)
-        {
-            if (!pins.ContainsKey(addThis.serial.id.ToString()))
-                pins.Add(addThis.serial.id.ToString(), addThis);
-        }
 
         public void AddctlRuleItemWidgetToGlobalPool(ctlRuleItemWidget addThis)
         {
@@ -360,11 +348,6 @@ namespace ruleEngine
         public void deleteCtlRuleItem(ctlRuleItemWidget toDelete)
         {
             ctlRuleItems.Remove(toDelete.serial.id.ToString());
-        }
-
-        public IEnumerable<pin> getPins()
-        {
-            return pins.Values;
         }
     
 

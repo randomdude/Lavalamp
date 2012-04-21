@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Schema;
@@ -22,14 +25,23 @@ namespace ruleEngine
             // Pass deserialisation on to ISerializable classes.
             StringWriter myWriter = new StringWriter();
             XmlSerializer mySer = new XmlSerializer(this.GetType());
-            mySer.Serialize(myWriter, this);
+            mySer.Serialize(myWriter , this);
             return myWriter.ToString();
         }
 
         #region IXmlSerializable methods
+
         public XmlSchema GetSchema()
         {
-            throw new NotImplementedException();
+            XmlSchema schema;
+
+            using (
+                StreamReader reader =
+                    new StreamReader(File.Open(@"C:\inetpub\wwwroot\lavalamp\service\rule-schema.xsd" , FileMode.Open)))
+            {
+                schema = XmlSchema.Read(reader , null);
+            }
+            return schema;
         }
 
         public void ReadXml(XmlReader reader)
@@ -52,7 +64,7 @@ namespace ruleEngine
                 }
                 if (xmlName == "state" && reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
                 {
-                    state = (ruleState)Enum.Parse(state.GetType(), reader.ReadElementContentAsString());
+                    state = (ruleState) Enum.Parse(state.GetType() , reader.ReadElementContentAsString());
                     inhibitNextRead = true;
                 }
                 if (xmlName == "linechains" && reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
@@ -60,11 +72,7 @@ namespace ruleEngine
                     readLineChainDictionary(reader);
                     inhibitNextRead = true;
                 }
-                if (xmlName == "pins" && reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
-                {
-                    readPinDictionaryInToRule(reader);
-                    inhibitNextRead = true;
-                }
+
                 if (xmlName == "ruleitems" && reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
                 {
                     readRuleItemDictionary(reader);
@@ -75,15 +83,14 @@ namespace ruleEngine
                     keepGoing = reader.Read();
                 inhibitNextRead = false;
             }
+            hookPinConnectionsUp(ruleItems.Values);
 
-            claimPinsPostDeSer();
         }
-
-        public void claimPinsPostDeSer()
+        private void hookPinConnectionsUp   (IEnumerable<ruleItemBase> itemsToConnect )
         {
-            foreach (ruleItemBase thisRuleItem in ruleItems.Values)
+            foreach (var itemToConnectPins in itemsToConnect)
             {
-                thisRuleItem.claimPinsPostDeSer(pins);
+                itemToConnectPins.hookPinConnectionsUp(itemsToConnect);
             }
         }
 
@@ -91,10 +98,9 @@ namespace ruleEngine
         {
             writer.WriteElementString("name", name);
             writer.WriteElementString("state", state.ToString());
-
             writer.WriteElementRuleItemDictionary("ruleItems", ruleItems);  // this _must_ be before the others! TODO: Is this still the case? Check if it _does_ need to be before the others.
             writer.WriteElementLineChainDictionary("lineChains", lineChains);
-            writer.WriteElementPinDictionary("pins", pins);
+            
         }
 
         #endregion
@@ -179,7 +185,7 @@ namespace ruleEngine
             String thisSerial = null;
             String thisTypeName = null;
             Point location = new Point();
-
+            Dictionary<string , pin> pinInfo = null;
             bool inhibitNextRead = false;
             bool keepGoing = true;
             while (keepGoing)
@@ -205,6 +211,16 @@ namespace ruleEngine
                 if (xmlName == "ruleitem" && reader.NodeType == XmlNodeType.Element)
                 {
                     thisSerial = reader["serial"];
+                }
+
+                if (xmlName == "pins" && reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
+                {
+                    pinInfo = readPinDictionaryInToRule(reader);
+                    foreach (pin p in pinInfo.Values)
+                    {
+                        p.parentRuleItem = new ruleItemGuid(thisSerial);
+                    }
+                    inhibitNextRead = true;
                 }
 
                 if (xmlName == "config" && reader.NodeType == XmlNodeType.Element)
@@ -241,6 +257,7 @@ namespace ruleEngine
                     // Propogate the stuff we've read in to it
                     newRuleItem.serial = new ruleItemGuid(thisSerial);
                     newRuleItem.location = location;
+                    newRuleItem.pinInfo = pinInfo;
                     AddRuleItemToGlobalPool(newRuleItem);
 
                     thisSerial = null;
@@ -254,10 +271,10 @@ namespace ruleEngine
             }
         }
 
-        private void readPinDictionaryInToRule(XmlReader reader)
+        private Dictionary<string,pin> readPinDictionaryInToRule(XmlReader reader)
         {
             String parentTag = reader.Name.ToLower();
-
+            Dictionary<string,pin> pinInfo = new Dictionary<string , pin>();
             pin thisPin = new pin();
 
             bool keepGoing = true;
@@ -285,11 +302,6 @@ namespace ruleEngine
                     thisPin.parentLineChain = new lineChainGuid(reader.ReadElementContentAsString());
                     inhibitNextRead = true;
                 }
-                if (xmlName == "parentruleitem" && reader.NodeType == XmlNodeType.Element)
-                {
-                    thisPin.parentRuleItem = new ruleItemGuid(reader.ReadElementContentAsString());
-                    inhibitNextRead = true;
-                }
                 if (xmlName == "description" && reader.NodeType == XmlNodeType.Element)
                 {
                     thisPin.description = reader.ReadElementContentAsString();
@@ -312,13 +324,14 @@ namespace ruleEngine
                 }
                 if (xmlName == "pin" && reader.NodeType == XmlNodeType.EndElement)
                 {
-                    afterNewPinCreated(thisPin);
+                    pinInfo.Add(thisPin.name,thisPin);
                     thisPin = new pin();
                 }
 
                 if (keepGoing && !inhibitNextRead)
                     keepGoing = reader.Read();
             }
+            return pinInfo;
         }
 
     }

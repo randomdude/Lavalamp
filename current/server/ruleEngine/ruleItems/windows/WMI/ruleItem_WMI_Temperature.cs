@@ -277,7 +277,7 @@ namespace ruleEngine.ruleItems.windows.WMI
                                  new {Display = "Open Hardware Monitor (Recommended)" , Value = "OpenHardwareMonitor"});
                      }
                  }
-                 catch (Exception e)
+                 catch
                 {
                     // this needs passing to the gui somehow but we'll suppress it for now :$
                    // MessageBox.Show(e.Message + " happened when trying to get Temperature sensors from the sensor object in OpenHardwareMonitor", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

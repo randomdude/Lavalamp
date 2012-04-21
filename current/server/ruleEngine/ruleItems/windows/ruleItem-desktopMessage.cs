@@ -52,15 +52,15 @@ namespace ruleEngine.ruleItems
         public override void evaluate()
         {
             IPinData inputData = pinInfo["trigger"].value;
+            
+            if (_lastMessage == inputData.ToString())
+                return;
 
+            _lastMessage = inputData.ToString();
             // Swap out the placeholder with the new message.
-            string messageToShow = myOptions.message.Replace("$message", inputData.ToString());
+            string messageToShow = myOptions.message.Replace("$message", _lastMessage);
 
-            if (messageToShow != _lastMessage)
-            {
-                showIt(messageToShow);
-                _lastMessage = messageToShow;
-            }
+            showIt(messageToShow);
         }
 
         public override ContextMenuStrip addMenus(ContextMenuStrip toAddTo)

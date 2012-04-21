@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Xml;
@@ -7,7 +6,6 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using ruleEngine.pinDataTypes;
 using ruleEngine.ruleItems;
-using ruleEngine.ruleItems.windows;
 
 namespace ruleEngine
 {
@@ -134,7 +132,7 @@ namespace ruleEngine
         #region XML serialisation
         public XmlSchema GetSchema()
         {
-            throw new System.NotImplementedException();
+            return new XmlSchema();
         }
 
         public void ReadXml(XmlReader reader)

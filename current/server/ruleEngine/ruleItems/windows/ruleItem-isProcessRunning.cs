@@ -15,7 +15,6 @@ namespace ruleEngine.ruleItems.windows
     public class ruleItem_isProcessRunning : ruleItemBase
     {
         private readonly ctlIsProcRunning control = new ctlIsProcRunning();
-        private bool lastState;
 
         [XmlElement("processName")]
         public string processName { get { return control.processName; } set { control.processName = value; } }

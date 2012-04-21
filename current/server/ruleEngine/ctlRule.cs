@@ -66,12 +66,6 @@ namespace ruleEngine
             // Create our rule item
             ruleItemBase newRuleItem = _rule.addRuleItem(info);
 
-            // We need to notify the rule that the new pins on our new rule item have beeen created.
-            foreach (pin thisPin in newRuleItem.pinInfo.Values)
-            {
-                _rule.afterNewPinCreated(thisPin);
-            }
-
             // add a visual widget for it, and then add it to the visible controls
             ctlRuleItemWidget newCtl = new ctlRuleItemWidget(newRuleItem, setTsStatus);
             newCtl.Location = new Point(x, y);

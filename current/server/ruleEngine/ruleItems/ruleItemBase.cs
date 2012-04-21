@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using ruleEngine.ruleItems.windows;
@@ -189,30 +190,31 @@ namespace ruleEngine.ruleItems
         }
 
         /// <summary>
-        /// After deserialisation, we have no pins, and they are in the global pins()
-        /// list. This function claims them.
+        /// After deserialisation, the pins aren't connected 
+        /// This function connections them.
         /// </summary>
-        /// <param name="pins">Global dictionary of pins</param>
-        public void claimPinsPostDeSer(Dictionary<string,pin> pins )
+        public void hookPinConnectionsUp(IEnumerable<ruleItemBase> ruleItems)
         {
-            // Since we've just been deserialised, we need to initialise the pins that the ruleItem uses.
-            // We do this by going through each pin, checking if it's one of ours, and if it is, adding
-            // an entry in pinInfo.
-            foreach (pin thisPin in pins.Values)
+            foreach (var pi in pinInfo.Values.Where(x => x.direction == pinDirection.output))
             {
-                if (thisPin.parentRuleItem.ToString() == serial.ToString())
+                bool pinConnected = false;
+                foreach (ruleItemBase d in ruleItems)
                 {
-                    thisPin.createValue(this);
-                    pinInfo.Add(thisPin.name, thisPin);
-
-                    // Wire up the pin to do stuff when activated, if necessary.
-                    if (thisPin.isConnected && thisPin.direction == pinDirection.output)
+                    foreach (var pd in d.pinInfo.Values)
                     {
-                        pin dest = pins[thisPin.linkedTo.id.ToString()];
-                        thisPin.OnPinChange += dest.stateChanged;
+                        if (pi.linkedTo == pd.serial)
+                        {
+                            pi.OnPinChange += pd.stateChanged;
+                            pinConnected = true;
+                            break;
+                        }
                     }
+                    if (pinConnected)
+                        break;
                 }
             }
+            foreach (pin thisPinInfo in pinInfo.Values)
+                thisPinInfo.createValue(this);
         }
     }
 

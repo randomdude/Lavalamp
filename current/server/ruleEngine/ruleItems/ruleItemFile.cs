@@ -24,7 +24,6 @@ namespace ruleEngine.ruleItems
     [ToolboxRuleCategory("Misc")]
     public class ruleItemFile : ruleItemBase
     {
-        private string _caption;
         private string _lastVal;
         private PictureBox _img;
         [XmlElement("Options")]

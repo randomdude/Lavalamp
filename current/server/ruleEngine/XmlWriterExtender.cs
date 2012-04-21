@@ -36,6 +36,7 @@ namespace ruleEngine
                 writer.WriteAttributeString("serial", toSerialise[thisKey].serial.ToString() );
                 writer.WriteElementString("X", toSerialise[thisKey].location.X.ToString());
                 writer.WriteElementString("Y", toSerialise[thisKey].location.Y.ToString());
+                writer.WriteElementPinDictionary("pins", toSerialise[thisKey].pinInfo);
                 writer.WriteStartElement("config");
                 writer.WriteAttributeString("type", toSerialise[thisKey].GetType().ToString());
                 writer.WriteAttributeString("assembly",toSerialise[thisKey].GetType().Assembly.Location);
@@ -65,8 +66,7 @@ namespace ruleEngine
                 writer.WriteElementString("linkedTo", toSerialise[thisKey].linkedTo.id.ToString());
                 writer.WriteElementString("name", toSerialise[thisKey].name);
                 writer.WriteElementString("parentLineChain", toSerialise[thisKey].parentLineChain.id.ToString());
-                writer.WriteElementString("parentRuleItem", toSerialise[thisKey].parentRuleItem.id.ToString());
-                writer.WriteElementString("datatype",toSerialise[thisKey].valueType.FullName);
+                writer.WriteElementString("datatype", toSerialise[thisKey].valueType.FullName);
                 writer.WriteEndElement();
             }
 
