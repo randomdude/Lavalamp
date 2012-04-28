@@ -1,48 +1,66 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using netGui;
-using ruleEngine;
-using ruleEngine.pinDataTypes;
-using ruleEngine.ruleItems;
-using ruleItems_winamp;
-
-namespace TestProjects
+﻿namespace TestProjects
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.Reflection;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using ruleEngine;
+    using ruleEngine.nodes;
+    using ruleEngine.pinDataTypes;
+    using ruleEngine.ruleItems;
+    using ruleItems_winamp;
+
+    using System.Windows.Forms;
+
+    using netGui.RuleEngine;
+
     /// <summary>
-    /// Summary description for SerialisationTests
+    /// Tests the serialization of rules and rule item.
     /// </summary>
     [TestClass]
     public class SerialisationTests
     {
+        /// <summary>
+        /// Tests that an empty rule attributes is serialized.
+        /// Attributes tested:
+        /// - preferredWidth
+        /// - preferredHeight
+        /// - name
+        /// - state 
+        /// </summary>
         [TestMethod]
         public void testSerialisationOfEmptyRule()
         {
-            // Create a rule named 'magicName;
-            ctlRule ruleControl = new ctlRule();
+            Form form = new Form();
+            form.Width = 200;
+            form.Height = 200;
+            // Create a rule named 'magicName's;
+            ctlRule ruleControl = new ctlRule { Parent = form };
 
             rule targetRule = ruleControl.getRule();
             targetRule.changeName("", "magicName");
             targetRule.state = ruleState.running;
 
-            // Serialise it
+            // Serialize it
             string serialised = ruleControl.serialiseRule();
 
-            // verify that serialisation hasn't broken anything
+            // verify that serialization hasn't broken anything
             Assert.IsTrue(targetRule.name == "magicName");
             Assert.IsTrue(targetRule.state == ruleState.running);
+            Assert.IsTrue(targetRule.preferredHeight == 200);
+            Assert.IsTrue(targetRule.preferredWidth == 200);
 
             // deserialise in to a new rule
             ctlRule deSerRuleControl = new ctlRule();
             deSerRuleControl.deserialiseRule(serialised);
-
-            // Verify that deserialised rule has correct setings
-            Assert.IsTrue(deSerRuleControl.getRule().name == "magicName", "Deserialised rule did not have the expected name - got " + deSerRuleControl.getRule().name);
-            Assert.IsTrue(deSerRuleControl.getRule().state == ruleState.running, "Deserialised rule did not have the expected state - got " + deSerRuleControl.getRule().state);
+            targetRule = deSerRuleControl.getRule();
+            // Verify that de-serialised rule has correct settings
+            Assert.IsTrue(targetRule.name == "magicName", "De-serialised rule did not have the expected name - got " + targetRule.name);
+            Assert.IsTrue(targetRule.state == ruleState.running, "De-serialised rule did not have the expected state - got " + targetRule.state);
+            Assert.IsTrue(targetRule.preferredWidth == 200, "De-serialised rule did not have the expected width - got " + targetRule.preferredWidth);
+            Assert.IsTrue(targetRule.preferredHeight == 200, "De-serialised rule did not have the expected height - got " + targetRule.preferredHeight);
         }
         
         [TestMethod]
@@ -128,7 +146,8 @@ namespace TestProjects
         [TestMethod]
         public void testSerialisationOfDeletedLineChain()
         {
-            ctlRule ruleControl = new ctlRule();
+
+            ctlRule ruleControl = new ctlRule(){Parent = new Form()};
 
             lineChain newChain = new lineChain();
             rule targetRule = ruleControl.getRule();
