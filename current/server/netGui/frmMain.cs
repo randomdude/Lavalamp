@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using netGui.nodeEditForms;
@@ -83,7 +82,9 @@ namespace netGui
 
             _mydriver.Dispose();
             _mydriver = null;
+            _nodes.Clear();
             lstNodes.Clear();
+            clearNodeInfoPanel();
             MessageBox.Show("Port closed.");
             generalToolStripMenuItem.Enabled = true;
         }
@@ -202,6 +203,13 @@ namespace netGui
             lblSensorCount.Text = loadThis.sensors.Count.ToString();
         }
 
+        private void clearNodeInfoPanel()
+        {
+            lblNodeId.Text = "";
+            lblNodeName.Text = "";
+            lblSensorCount.Text = 0.ToString();
+        }
+
         private void detailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             lstNodes.View = View.Details;
@@ -235,6 +243,8 @@ namespace netGui
             {
                Node nd = (Node) lstNodes.SelectedItems[0].Tag;
                 _nodes.Remove(nd);
+                lstNodes.Items.Remove(lstNodes.SelectedItems[0]);
+                clearNodeInfoPanel();
             }
         }
 

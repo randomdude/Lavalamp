@@ -93,7 +93,7 @@ namespace netGui
                             reader.Read();
                         break;
                     default:
-                        reader.Read();
+                        if (!reader.Read()) readElement = true;
                         break;
                 }
             }

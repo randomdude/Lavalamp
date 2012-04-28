@@ -143,7 +143,7 @@ BOOL __cdecl initPort(appConfig_t* myconfig)
 {
 	DCB mydcb;
 
-	char* portpath = malloc(strlen(myconfig->portname) + 10);
+	LPSTR portpath = (LPSTR)malloc(strlen(myconfig->portname) + 10);
 	wsprintf(portpath, "\\\\.\\%s", myconfig->portname);
 	myconfig->hnd = CreateFile(portpath, GENERIC_READ|GENERIC_WRITE, (DWORD)NULL, NULL, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, (HANDLE)NULL);
 	free (portpath);

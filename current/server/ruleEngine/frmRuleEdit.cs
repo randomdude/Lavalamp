@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -12,10 +11,6 @@ namespace ruleEngine
 {
     public partial class frmRuleEdit : Form
     {
-        private int ctlRule1BorderX;
-        private int ctlRule1BorderY;
-        private int buttonsBorderX;
-        private int buttonsBorderY;
         private bool isClosing = false;
 
         public delegate void saveRuleDelegate(rule saveThis);
