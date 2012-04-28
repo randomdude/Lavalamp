@@ -6,15 +6,15 @@
     using System.Drawing;
     using System.Reflection;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using netGui;
+
     using ruleEngine;
-    using ruleEngine.nodes;
     using ruleEngine.pinDataTypes;
     using ruleEngine.ruleItems;
     using ruleItems_winamp;
 
     using System.Windows.Forms;
-
-    using netGui.RuleEngine;
 
     /// <summary>
     /// Tests the serialization of rules and rule item.

@@ -237,7 +237,7 @@ namespace ruleEngine.ruleItems.windows.WMI
                 }
                 catch(Exception e)
                 {
-                    MessageBox.Show(e.Message + " happened when trying to get Temperature sensors from the Win32_TemperatureProbe object in cimv2", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+             //       MessageBox.Show(e.Message + " happened when trying to get Temperature sensors from the Win32_TemperatureProbe object in cimv2", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     _erroredNamespaces.Add("cimv2");
                 }
             }
@@ -310,7 +310,7 @@ namespace ruleEngine.ruleItems.windows.WMI
                 } 
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message + " happened when trying to get Temperature sensors from the MSAcpi_ThermalZoneTemperature object in WMI", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //    MessageBox.Show(e.Message + " happened when trying to get Temperature sensors from the MSAcpi_ThermalZoneTemperature object in WMI", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     _erroredNamespaces.Add("WMI");
                 }
             }

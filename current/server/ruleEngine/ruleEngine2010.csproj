@@ -390,9 +390,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\0.bmp" />
-    <None Include="rule-schema.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\1.bmp" />

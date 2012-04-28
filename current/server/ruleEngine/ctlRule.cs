@@ -45,6 +45,8 @@ namespace ruleEngine
             InitializeComponent();
             _rule = new rule();
             currentLine = new lineChain();
+            // a default parent is needed for the unit tests.
+            if (Parent == null) Parent = new Form();
 #if DEBUG
             showDebugInfoToolStripMenuItem.Visible = true;
 #endif
