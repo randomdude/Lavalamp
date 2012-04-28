@@ -74,9 +74,12 @@ namespace netGui
 		{
 			try
 			{	
-				using (SerialPort selectedPort = new SerialPort(cboPort.SelectedText))
+				using (SerialPort selectedPort = new SerialPort(cboPort.Text))
 				{
 					selectedPort.Open();
+                    lblStatus.ForeColor = System.Drawing.Color.Green;
+                    lblStatus.Text = "Free";
+                    selectedPort.Close();
 				}
 			}
 			catch(Exception ex)
@@ -91,11 +94,15 @@ namespace netGui
 					lblStatus.ForeColor = System.Drawing.Color.Red;
 					lblStatus.Text = "Invaild Port";
 				}
-			}
-			lblStatus.ForeColor = System.Drawing.Color.Green;
-			lblStatus.Text = "Free";
-		}
-		
+                else
+				{
+                    lblStatus.ForeColor = System.Drawing.Color.DarkRed;
+                    lblStatus.Text = "Cannot Open Port";
+                }
+            }
+
+        }
+
         private void FrmGeneralOptions_Load(object sender, EventArgs e)
         {
             cboPort.Text = MyOptions.portname;

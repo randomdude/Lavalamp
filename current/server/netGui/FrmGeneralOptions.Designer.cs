@@ -57,7 +57,8 @@ namespace netGui
             this.cboPort.Name = "cboPort";
             this.cboPort.Size = new System.Drawing.Size(132, 21);
             this.cboPort.TabIndex = 1;
-            this.cboPort.SelectedIndexChanged += new System.EventHandler(this.CheckVaildPort);
+            this.cboPort.TextChanged += new System.EventHandler(this.CheckVaildPort);
+            this.cboPort.Leave += new System.EventHandler(this.CheckVaildPort);
             // 
             // cmdOK
             // 
@@ -139,9 +140,9 @@ namespace netGui
             // 
             // lblStatus
             // 
-            this.lblStatus.Location = new System.Drawing.Point(230, 13);
+            this.lblStatus.Location = new System.Drawing.Point(230, 5);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(50, 23);
+            this.lblStatus.Size = new System.Drawing.Size(56, 34);
             this.lblStatus.TabIndex = 9;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
