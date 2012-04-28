@@ -21,14 +21,14 @@ namespace virtualNodeNetwork
         /// </summary>
         private readonly Dictionary<int, simulatedPICNode> _nodes = new Dictionary<int, simulatedPICNode>();
 
-        public simulatedPICNetwork(string newPipeName)
+        public simulatedPICNetwork(string newPipeName,Form frmEventForm)
         {
             _pipename = newPipeName;
 
+            _frmEventForm = frmEventForm;
             _pipe = new NamedPipeServerStream(_pipename, PipeDirection.InOut, 10, PipeTransmissionMode.Byte,
                                               PipeOptions.Asynchronous);
 
-            _frmEventForm = new Form();
             Thread foo = new Thread(eventFormThread);
             foo.Name = "PIC network form";
             foo.Start();

@@ -173,7 +173,7 @@ namespace virtualNodeNetwork
         public simulatedPICNode(int newId, string newName, IEnumerable<virtualNodeSensor> newSensors) 
             : base(newId, newName, newSensors)
         {
-            throw new NotImplementedException();
+           
         }
 
         public simulatedPICNode(int newId, string newName, Form eventForm, string objectFile) :base(newId, newName)

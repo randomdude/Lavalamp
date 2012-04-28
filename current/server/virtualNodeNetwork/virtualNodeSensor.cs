@@ -40,6 +40,10 @@ namespace virtualNodeNetwork
                     return new pwmOutSensor() { id = newID };
                 case sensorTypeEnum.triac_out:
                     return new triacOutSensor() { id = newID };
+                case sensorTypeEnum.barLED:
+                    return new genericDigitalOutSensor(){id = newID};
+                case sensorTypeEnum.mulitplexedLEDs:
+                    return new pwmOutSensor() { id = newID };
                 default:
                     throw new NotImplementedException();
             }
