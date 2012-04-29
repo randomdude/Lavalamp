@@ -4,6 +4,8 @@ using System.IO.Ports;
 
 namespace netGui
 {
+    using System.IO.Pipes;
+
     public partial class FrmGeneralOptions : Form
     {
         public bool cancelled;
@@ -61,8 +63,8 @@ namespace netGui
 			cboPort.Items.AddRange(SerialPort.GetPortNames());
 		}
 		/// <summary>
-		/// Checks the vaild port.
-		/// in future this could use lavalamps methods to detect if a node is on a port 
+		/// Checks the valid port.
+		/// in future this could use lavalamp's methods to detect if a node is on a port 
 		/// </summary>
 		/// <param name='sender'>
 		/// Sender.
@@ -73,14 +75,38 @@ namespace netGui
 		private void CheckVaildPort(object sender, EventArgs e)
 		{
 			try
-			{	
-				using (SerialPort selectedPort = new SerialPort(cboPort.Text))
-				{
-					selectedPort.Open();
+			{
+			    bool success;
+                if (cboPort.Text.Contains("pipe"))
+                {
+                    int pipeNameIndex = cboPort.Text.LastIndexOf(@"\");
+                    using (NamedPipeClientStream pipe = new NamedPipeClientStream(cboPort.Text.Substring(pipeNameIndex, (cboPort.Text.Length - pipeNameIndex))))
+                    {
+                        pipe.Connect(50);
+                        success = pipe.IsConnected;
+                        pipe.Close();
+                    }
+                }
+                else
+                {
+                    using (SerialPort selectedPort = new SerialPort(cboPort.Text))
+                    {
+                        selectedPort.Open();
+                        success = selectedPort.IsOpen;
+                        selectedPort.Close();
+                    }
+                }
+
+                if (success)
+                {
                     lblStatus.ForeColor = System.Drawing.Color.Green;
                     lblStatus.Text = "Free";
-                    selectedPort.Close();
-				}
+                }
+                else
+                {
+                    lblStatus.ForeColor = System.Drawing.Color.DarkRed;
+                    lblStatus.Text = "Cannot Open Port";
+                }
 			}
 			catch(Exception ex)
 			{

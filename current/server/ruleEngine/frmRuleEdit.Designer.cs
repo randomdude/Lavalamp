@@ -60,7 +60,7 @@
             this.tvToolbox.Size = new System.Drawing.Size(135, 318);
             this.tvToolbox.TabIndex = 5;
             this.tvToolbox.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.tvToolbox_ItemDrag);
-            this.tvToolbox.DoubleClick += new System.EventHandler(this.tvToolbox_DoubleClick);
+            this.tvToolbox.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvToolbox_NodeMouseDoubleClick);
             // 
             // ctxMnuToolbox
             // 

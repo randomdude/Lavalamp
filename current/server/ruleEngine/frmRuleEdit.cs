@@ -1,14 +1,16 @@
-﻿using System;
-using System.Globalization;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using ruleEngine.ruleItems;
-
-namespace ruleEngine
+﻿namespace ruleEngine
 {
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using System.Windows.Forms;
+    using System;
+    using System.Globalization;
+    using System.IO;
+    using System.Reflection;
+    using System.Text;
+    using System.Xml.Serialization;
+    using ruleEngine.ruleItems;
+
     public partial class frmRuleEdit : Form
     {
         private bool isClosing = false;
@@ -18,6 +20,8 @@ namespace ruleEngine
 
         public saveRuleDelegate saveCallback;
         public closeRuleDelegate closeCallback;
+
+        private readonly List<string> _loadedModules = new List<string>();
 
         public frmRuleEdit()
         {
@@ -44,9 +48,33 @@ namespace ruleEngine
             giveFeedbackEventArgs.UseDefaultCursors = giveFeedbackEventArgs.Effect != DragDropEffects.Copy;
         }
 
+        /// <summary>
+        /// Checks if a file has already been loaded and informs the user if it has.
+        /// if not it adds the file to the list of loaded files
+        /// </summary>
+        /// <param name="filename">file to check</param>
+        /// <returns>true if already been loaded</returns>
+        [Pure]
+        private bool checkIfAlreadyLoaded(string filename)
+        {
+            Contract.Requires(filename != null);
+            Contract.Requires(_loadedModules != null);
+
+            if (_loadedModules.Contains(filename))
+            {
+                MessageBox.Show(
+                    this, filename + " already loaded", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true;
+            }
+            _loadedModules.Add(filename);
+            return false;
+        }
+
 
         private void populateToolboxFromPythonFile(string filename)
         {
+            Contract.Requires(filename != null);
+            if (this.checkIfAlreadyLoaded(filename)) return;
             try
             {
                 ruleItem_script jake = new ruleItem_script(filename);
@@ -60,6 +88,7 @@ namespace ruleEngine
             }
             catch (Exception e)
             {
+                _loadedModules.Remove(filename);
                 // unable to load this file!
                 MessageBox.Show("Unable to load file '" + filename +"', exception message: '" + e.Message + "'");
             }
@@ -67,22 +96,23 @@ namespace ruleEngine
 
         private void populateToolboxFromAssembly(Assembly loadThis)
         {
+            Contract.Requires(loadThis != null);
+            if (this.checkIfAlreadyLoaded(loadThis.FullName)) return;
             foreach (Module myMod in loadThis.GetModules())                 // pull modules out of myAss
             {
                 foreach (Type thisType in myMod.GetTypes())                 // pull types out of the modules
                 {
-                    if (thisType.IsDefined(typeof (ToolboxRule), false))
+                    if (thisType.IsDefined(typeof(ToolboxRule), false))
                     {
                         try
                         {
-                            // Instantiate a new object just so we can pluck the name from it
+                           // Instantiate a new object just so we can pluck the name from it
                             ConstructorInfo constr = thisType.GetConstructor(new Type[0]);
                             Object newRuleItem = constr.Invoke(new object[0]);
                              ruleItemInfo itemInfo = new ruleItemInfo();
 
                             itemInfo.itemType = ruleItemType.RuleItem;
                             itemInfo.ruleItemBaseType = thisType;
-
                             addRuleItemObjectToToolbox((ruleItemBase) newRuleItem, itemInfo);
                         }
                         catch (Exception e)
@@ -97,8 +127,7 @@ namespace ruleEngine
 
         private void addRuleItemObjectToToolbox(ruleItemBase newRuleItem, ruleItemInfo itemInfo)
         {
-            TreeNode newTreeItem = new TreeNode((newRuleItem).ruleName());
-            newTreeItem.Tag = itemInfo;
+            TreeNode newTreeItem = new TreeNode((newRuleItem).ruleName()) { Tag = itemInfo };
 
             string catName;
             if (itemInfo.itemType == ruleItemType.RuleItem && itemInfo.ruleItemBaseType.IsDefined(typeof(ToolboxRuleCategoryAttribute), false))
@@ -139,14 +168,6 @@ namespace ruleEngine
             }
         }
 
-        private void tvToolbox_DoubleClick(object sender, EventArgs e)
-        {
-            if ( (((TreeView)sender).SelectedNode ==null) || ((TreeView)sender).SelectedNode.Tag == null)
-                return; // this will happen for category headers
-
-            // ask the rule control to add an item
-            ctlRuleEditor.addRuleItem(((ruleItemInfo)((TreeView)sender).SelectedNode.Tag));
-        }
 
         private void btnRun_Click(object sender, EventArgs e)
         {
@@ -181,28 +202,27 @@ namespace ruleEngine
                 MessageBox.Show("Unable to save rule!");
                 return;
             }
-            else
-            {
-                rule r = ctlRuleEditor.getRule();
-                r.preferredHeight = Height;
-                r.preferredWidth = Width;
-                //String serialised = ctlRule1.serialiseRule();
-                //Clipboard.SetText(serialised);
-                saveCallback.Invoke(r);
-            }
+            rule r = this.ctlRuleEditor.getRule();
+            r.preferredHeight = this.Height;
+            r.preferredWidth = this.Width;
+            this.saveCallback.Invoke(r);
         }
+
 
         private void loadFromnetAssemblyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.CheckFileExists = true;
-            dlg.Multiselect = true;
-            dlg.Title = "Locate assembly to import";
-            dlg.Filter = "All loadable files (*.dll, *.py)|*.dll; *.py|DLL files|*.dll|All files|*.*";
+            OpenFileDialog dlg = new OpenFileDialog
+                {
+                    CheckFileExists = true,
+                    Multiselect = true,
+                    Title = "Locate assembly to import",
+                    Filter = "All loadable files (*.dll, *.py)|*.dll; *.py|DLL files|*.dll|All files|*.*"
+                };
             if (DialogResult.OK == dlg.ShowDialog())
             {
                 foreach (String thisFile in dlg.FileNames)
                 {
+                    // checks the file type by ext.
                     if (thisFile.EndsWith("pyc",true,CultureInfo.CurrentCulture) ||
                         thisFile.EndsWith("py",true,CultureInfo.CurrentCulture))
                     {
@@ -231,8 +251,13 @@ namespace ruleEngine
             }
         }
 
+        /// <summary>
+        /// loads the rule from serialized data 
+        /// </summary>
+        /// <param name="serialisedData">the data to load the rule from</param>
         public void loadRule(string serialisedData)
         {
+            Contract.Requires(serialisedData != null);
             string utf8Xml = Encoding.ASCII.GetString(Encoding.UTF8.GetBytes(serialisedData));
             StringReader myReader = new StringReader(utf8Xml);
 
@@ -263,7 +288,7 @@ namespace ruleEngine
         }
 
         /// <summary>
-        /// Close this dialog, after firing the events as neccesary.
+        /// Close this dialog, after firing the events as necessary.
         /// </summary>
         private void closeRule()
         {
@@ -327,7 +352,11 @@ namespace ruleEngine
         }
 
 
-
+        /// <summary>
+        /// Starts dragging of an toolbox item.
+        /// </summary>
+        /// <param name="sender">The toolbox where the item is</param>
+        /// <param name="e">infomation about the item being dragged</param>
         private void tvToolbox_ItemDrag(object sender, ItemDragEventArgs e)
         {
             TreeView view = ((TreeView)sender);
@@ -341,7 +370,13 @@ namespace ruleEngine
             
         }
 
+        private void tvToolbox_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Node.Tag == null)
+                return; // this will happen for category headers
 
-
+            // ask the rule control to add an item
+            ctlRuleEditor.addRuleItem((ruleItemInfo)e.Node.Tag);
+        }
     }
 }
