@@ -81,6 +81,10 @@ namespace ruleEngine.ruleItems
             myEng.evaluateScript();
         }
 
+        public ruleItem_script()
+        {
+        }
+
         public ruleItem_script(string sourceFilename)
         {
             // Create a new engine for our python script

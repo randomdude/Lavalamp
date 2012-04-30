@@ -226,7 +226,7 @@ namespace ruleEngine.ruleItems
             // call the python class itself
             _engine.Operations.InvokeMember(_pythonInstance, magicEval);
 
-            // And suck all our outputs out, propogating them to their relevant output
+            // And suck all our outputs out, propagating them to their relevant output
             // pins.
             propagatePinStatesFromPython();
         }

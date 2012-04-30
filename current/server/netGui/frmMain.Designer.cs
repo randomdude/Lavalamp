@@ -63,7 +63,7 @@ namespace netGui
             this.smallIconsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.detailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imgLstNodes = new System.Windows.Forms.ImageList(this.components);
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gpNodeInfo = new System.Windows.Forms.GroupBox();
             this.lblSensorCount = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lblNodeName = new System.Windows.Forms.Label();
@@ -84,11 +84,11 @@ namespace netGui
             this.newRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.imgLstStates = new System.Windows.Forms.ImageList(this.components);
             this.renameRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imgLstStates = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip1.SuspendLayout();
             this.nodeMenuStrip.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.gpNodeInfo.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.contextMenuStripRules.SuspendLayout();
@@ -202,12 +202,13 @@ namespace netGui
             this.lstNodes.LargeImageList = this.imgLstNodes;
             this.lstNodes.Location = new System.Drawing.Point(16, 20);
             this.lstNodes.Name = "lstNodes";
-            this.lstNodes.Size = new System.Drawing.Size(317, 262);
+            this.lstNodes.Size = new System.Drawing.Size(495, 262);
             this.lstNodes.SmallImageList = this.imgLstNodes;
             this.lstNodes.TabIndex = 1;
             this.lstNodes.UseCompatibleStateImageBehavior = false;
             this.lstNodes.SelectedIndexChanged += new System.EventHandler(this.lstNodes_SelectedIndexChanged);
             this.lstNodes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lstNodes_KeyPress);
+            this.lstNodes.Leave += new System.EventHandler(this.lstNodes_Leave);
             this.lstNodes.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstNodes_MouseDoubleClick);
             // 
             // ColCaption
@@ -352,20 +353,21 @@ namespace netGui
             this.imgLstNodes.TransparentColor = System.Drawing.Color.Transparent;
             this.imgLstNodes.Images.SetKeyName(0, "ram.ico");
             // 
-            // groupBox1
+            // gpNodeInfo
             // 
-            this.groupBox1.Controls.Add(this.lblSensorCount);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.lblNodeName);
-            this.groupBox1.Controls.Add(this.lblNodeId);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(338, 19);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(173, 262);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Node information";
+            this.gpNodeInfo.Controls.Add(this.lblSensorCount);
+            this.gpNodeInfo.Controls.Add(this.label4);
+            this.gpNodeInfo.Controls.Add(this.lblNodeName);
+            this.gpNodeInfo.Controls.Add(this.lblNodeId);
+            this.gpNodeInfo.Controls.Add(this.label2);
+            this.gpNodeInfo.Controls.Add(this.label1);
+            this.gpNodeInfo.Location = new System.Drawing.Point(338, 19);
+            this.gpNodeInfo.Name = "gpNodeInfo";
+            this.gpNodeInfo.Size = new System.Drawing.Size(173, 262);
+            this.gpNodeInfo.TabIndex = 2;
+            this.gpNodeInfo.TabStop = false;
+            this.gpNodeInfo.Text = "Node information";
+            this.gpNodeInfo.Visible = false;
             // 
             // lblSensorCount
             // 
@@ -420,7 +422,7 @@ namespace netGui
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.groupBox1);
+            this.groupBox2.Controls.Add(this.gpNodeInfo);
             this.groupBox2.Controls.Add(this.lstNodes);
             this.groupBox2.Location = new System.Drawing.Point(12, 27);
             this.groupBox2.Name = "groupBox2";
@@ -489,14 +491,14 @@ namespace netGui
             this.editRuleToolStripMenuItem,
             this.renameRuleToolStripMenuItem});
             this.contextMenuStripRules.Name = "contextMenuStrip1";
-            this.contextMenuStripRules.Size = new System.Drawing.Size(153, 164);
+            this.contextMenuStripRules.Size = new System.Drawing.Size(135, 142);
             // 
             // runRuleToolStripMenuItem
             // 
             this.runRuleToolStripMenuItem.Image = global::netGui.Properties.Resources.Run;
             this.runRuleToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.runRuleToolStripMenuItem.Name = "runRuleToolStripMenuItem";
-            this.runRuleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.runRuleToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.runRuleToolStripMenuItem.Text = "&Run rule";
             this.runRuleToolStripMenuItem.Click += new System.EventHandler(this.runRuleToolStripMenuItem_Click);
             // 
@@ -505,35 +507,42 @@ namespace netGui
             this.stopRuleToolStripMenuItem.Image = global::netGui.Properties.Resources.Pause;
             this.stopRuleToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.stopRuleToolStripMenuItem.Name = "stopRuleToolStripMenuItem";
-            this.stopRuleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.stopRuleToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.stopRuleToolStripMenuItem.Text = "&Stop rule";
             this.stopRuleToolStripMenuItem.Click += new System.EventHandler(this.stopRuleToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(131, 6);
             // 
             // newRuleToolStripMenuItem
             // 
             this.newRuleToolStripMenuItem.Name = "newRuleToolStripMenuItem";
-            this.newRuleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newRuleToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.newRuleToolStripMenuItem.Text = "&New rule";
             this.newRuleToolStripMenuItem.Click += new System.EventHandler(this.newRuleToolStripMenuItem_Click);
             // 
             // deleteRuleToolStripMenuItem
             // 
             this.deleteRuleToolStripMenuItem.Name = "deleteRuleToolStripMenuItem";
-            this.deleteRuleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteRuleToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.deleteRuleToolStripMenuItem.Text = "&Delete rule";
             this.deleteRuleToolStripMenuItem.Click += new System.EventHandler(this.deleteRuleToolStripMenuItem_Click);
             // 
             // editRuleToolStripMenuItem
             // 
             this.editRuleToolStripMenuItem.Name = "editRuleToolStripMenuItem";
-            this.editRuleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editRuleToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.editRuleToolStripMenuItem.Text = "&Edit rule";
             this.editRuleToolStripMenuItem.Click += new System.EventHandler(this.editRuleToolStripMenuItem_Click);
+            // 
+            // renameRuleToolStripMenuItem
+            // 
+            this.renameRuleToolStripMenuItem.Name = "renameRuleToolStripMenuItem";
+            this.renameRuleToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.renameRuleToolStripMenuItem.Text = "&Rename rule";
+            this.renameRuleToolStripMenuItem.Click += new System.EventHandler(this.renameRuleToolStripMenuItem_Click);
             // 
             // imgLstStates
             // 
@@ -542,13 +551,6 @@ namespace netGui
             this.imgLstStates.Images.SetKeyName(0, "Pause.bmp");
             this.imgLstStates.Images.SetKeyName(1, "Critical.bmp");
             this.imgLstStates.Images.SetKeyName(2, "Run.bmp");
-            // 
-            // renameRuleToolStripMenuItem
-            // 
-            this.renameRuleToolStripMenuItem.Name = "renameRuleToolStripMenuItem";
-            this.renameRuleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.renameRuleToolStripMenuItem.Text = "&Rename rule";
-            this.renameRuleToolStripMenuItem.Click += new System.EventHandler(this.renameRuleToolStripMenuItem_Click);
             // 
             // FrmMain
             // 
@@ -568,8 +570,8 @@ namespace netGui
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.nodeMenuStrip.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.gpNodeInfo.ResumeLayout(false);
+            this.gpNodeInfo.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.contextMenuStripRules.ResumeLayout(false);
@@ -590,7 +592,7 @@ namespace netGui
         private System.Windows.Forms.ListView lstNodes;
         private System.Windows.Forms.ContextMenuStrip nodeMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem cmnuAddNode;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gpNodeInfo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblNodeName;

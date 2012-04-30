@@ -9,6 +9,8 @@ using transmitterDriver;
 
 namespace netGui
 {
+    using System.Diagnostics.Contracts;
+
     public partial class FrmMain : Form
     {
         private ITransmitter _mydriver = null;
@@ -17,6 +19,7 @@ namespace netGui
         private static readonly List<Node> _nodes = new List<Node>();
         private Timer timelineTimer = new Timer();
 
+        [Pure]
         public  ITransmitter getMyDriver()
         {
             if ( (null == _mydriver) || (!_mydriver.portOpen()) )
@@ -129,6 +132,7 @@ namespace netGui
 
         private void addNewNode(Node newNode)
         {
+            Contract.Requires(newNode != null);
             newNode.OwnerWindow = this;
             // Connect to node and fill fields
             try
@@ -198,6 +202,9 @@ namespace netGui
 
         private void loadNodeInfoPanel(Node loadThis)
         {
+            Contract.Requires(loadThis != null);
+            gpNodeInfo.Visible = true;
+            lstNodes.Width = 317;
             lblNodeId.Text = loadThis.id.ToString();
             lblNodeName.Text = loadThis.name;
             lblSensorCount.Text = loadThis.sensors.Count.ToString();
@@ -207,7 +214,9 @@ namespace netGui
         {
             lblNodeId.Text = "";
             lblNodeName.Text = "";
-            lblSensorCount.Text = 0.ToString();
+            lblSensorCount.Text ="";
+            gpNodeInfo.Visible = false;
+            lstNodes.Width = 495;
         }
 
         private void detailsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -733,6 +742,11 @@ namespace netGui
             }
             lstRules.SelectedItems[0].SubItems[1].Text = toRename.name;
 
+        }
+
+        private void lstNodes_Leave(object sender, EventArgs e)
+        {
+            this.clearNodeInfoPanel();
         }
 
 

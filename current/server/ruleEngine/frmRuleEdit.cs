@@ -270,6 +270,7 @@
 
         private void loadAssemblyForRuleItem(ruleItemBase item)
         {
+            Contract.Requires(item != null);
             if (item.GetType().Assembly.FullName != Assembly.GetExecutingAssembly().FullName)
             {
                 populateToolboxFromAssembly(Assembly.Load(item.GetType().Assembly.FullName));
