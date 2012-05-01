@@ -5,7 +5,6 @@
 placeinmemory macro base
 	local memptr = base
 
-
 (AUTOGEN_BEGIN_REPLICATING_BLOCK)
 
 #ifdef SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PRESENT

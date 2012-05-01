@@ -24,7 +24,7 @@ do_cmd_set_sensor_fade_speed:
 #ifdef SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PRESENT
 	; this sensor?
 	movfw packet7
-	xorlw (AUTOGEN_EVERY_SENSOR_ID)
+	xorlw d'(AUTOGEN_EVERY_SENSOR_ID)'
 	btfss STATUS, Z
 	goto notthissensor_(AUTOGEN_EVERY_SENSOR_ID)
 

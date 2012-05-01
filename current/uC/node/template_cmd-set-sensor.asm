@@ -29,7 +29,7 @@ do_cmd_set_sensor
 (AUTOGEN_BEGIN_REPLICATING_BLOCK)
 #ifdef SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PRESENT
 	movfw packet7		; ID
-	xorlw (AUTOGEN_EVERY_SENSOR_ID)
+	xorlw d'(AUTOGEN_EVERY_SENSOR_ID)'
 	btfsc STATUS,Z
 	goto cmd_set_sensor_(AUTOGEN_EVERY_SENSOR_ID)	; sensor 1 is selected
 #endif
@@ -215,7 +215,7 @@ singlebitDone_(AUTOGEN_EVERY_SENSOR_ID):
 		goto cmd_set_return_ok
 	#endif
 
-	; SENSOR_MULTI_LED
+	; SENSOR_MULTI_LED_MULTIPLEX
 	#if (SENSOR_ID_MULTILED_MULTIPLEX == SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_TYPE)
 		; For this sensor type, we have the following inputs:
 		;  * Five data lines (0-4), wired to each output bank in parallel
@@ -232,23 +232,23 @@ singlebitDone_(AUTOGEN_EVERY_SENSOR_ID):
 		
 		; OK, we're four (or below). 
 		; First, set those control lines.
-		bcf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_MULTILED_CONTROL_2_PORT, SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_MULTILED_CONTROL_2_PIN
-		bsf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_MULTILED_CONTROL_1_PORT, SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_MULTILED_CONTROL_1_PIN
+		bcf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_MULTILED_CTL_2_PORT, SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_MULTILED_CTL_2_PIN
+		bsf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_MULTILED_CTL_1_PORT, SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_MULTILED_CTL_1_PIN
 
 below4_(AUTOGEN_EVERY_SENSOR_ID):
 		; We need to set the n'th bit in our output byte.
 		clrf tmp1
-		incf tmp1
+		incf tmp1, f
 		
 		; If the input was zero, we should just set to 0x01.
-		incf packet6
-		decfsz packet6
+		incf packet6, f
+		decfsz packet6, f
 		goto shift_(AUTOGEN_EVERY_SENSOR_ID); Input was not zero. do some shifts.
 		goto set_(AUTOGEN_EVERY_SENSOR_ID)	; OK, the input was zero. Go set it.
 
 shift_(AUTOGEN_EVERY_SENSOR_ID):
 		bcf STATUS, C		; Rotate is through C, so make sure we shift in zeros
-		rlf tmp1			; Shift!
+		rlf tmp1, f			; Shift!
 
 		decfsz packet6, f
 		goto shift_(AUTOGEN_EVERY_SENSOR_ID)	; Need more bitshifts
@@ -257,8 +257,8 @@ shift_(AUTOGEN_EVERY_SENSOR_ID):
 aboveFour_(AUTOGEN_EVERY_SENSOR_ID):
 
 		; Above four, OK. Lets set the control lines and then subtract five, then just pass to the 'below four' logic.
-		bcf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_MULTILED_CONTROL_1_PORT, SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_MULTILED_CONTROL_1_PIN
-		bsf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_MULTILED_CONTROL_2_PORT, SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_MULTILED_CONTROL_2_PIN
+		bcf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_MULTILED_CTL_1_PORT, SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_MULTILED_CTL_1_PIN
+		bsf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_MULTILED_CTL_2_PORT, SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_MULTILED_CTL_2_PIN
 		
 		movlw 0x05
 		subwf packet6, f
@@ -288,6 +288,53 @@ set_(AUTOGEN_EVERY_SENSOR_ID):
 		btfsc tmp1, 4
 		bcf SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_MULTILED_PORT_5, SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_MULTILED_PIN_5
 		
+		goto cmd_set_return_ok
+	#endif
+
+	; SENSOR_ID_COMPOSITE
+	#if (SENSOR_ID_COMPOSITE == SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_TYPE)
+		; This sensor should take its input and sent it to a number of child sensors.
+		; For example, this sensor coluld take a number between 00 and 99, and send
+		; each digit seperately to a seven segment display.
+		;
+		; First, decode our input in to the values we will present to child sensors.
+		; This is complicted slightly by the fact that our values may not be at powers
+		; if two, and so we can't simply mask/shift.
+		;
+		; We do this really naively. We simply subtract our radix until it is less than
+		; zero; the amount of times we subtracted is the Most Significant Digit, and the
+		; remainder (+ raidx!) is the Least.
+		clrf tmp3	;	Store MSD here
+		clrf tmp2	;	Store LSD here.
+subtractAgain_(AUTOGEN_EVERY_SENSOR_ID):
+		movlw SENSOR_1_RADIX
+		subwf packet6, w
+		btfss STATUS, C
+		goto doneSubtracting_(AUTOGEN_EVERY_SENSOR_ID)
+		movwf packet6		; Propogate our subtracted value to W only if we are not
+							; below zero.
+		incf tmp3, f
+		goto subtractAgain_(AUTOGEN_EVERY_SENSOR_ID)
+
+doneSubtracting_(AUTOGEN_EVERY_SENSOR_ID):
+		movfw packet6
+		movwf tmp2
+		; OK, cool. Now we have our two 'slave' values in tmp3 and tmp2. We should now
+		; propogate them to the sensors themselves, which is easiest done by sending
+		; them a set_sensor command.
+		; TODO: Is there a way to get the proprocessor to do more here? It'd be good to
+		; call the relevant set_sensor func (eg cmd_set_sensor_2) and thus ensure safety
+		; at build time.
+		movwf packet6				; Send tmp2 as the new value
+		movlw SENSOR_1_SENSOR_ID_1	; to the sensor ID we define at build time
+		movwf packet7
+		call do_cmd_set_sensor;
+		movfw tmp3					; Then send tmp3 to the other sensor ID.
+		movwf packet6
+		movlw SENSOR_1_SENSOR_ID_2
+		movwf packet7
+		call do_cmd_set_sensor
+
 		goto cmd_set_return_ok
 	#endif
 

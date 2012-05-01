@@ -82,6 +82,10 @@ bytetosend EQU H'67'
 W_TEMP EQU H'68'
 STATUS_TEMP EQU H'69'
 
+mux_1_1	EQU H'70'
+mux_1_2	EQU H'71'
+mux_1_state	EQU H'72'
+mux_1_delay	EQU H'73'
 
 #define RF_TX_PORT  PORTA
 #define RF_RX_PORT  PORTA
@@ -122,8 +126,8 @@ STATUS_TEMP EQU H'69'
 
 ; Speed of idletimer, if used. 
 #define IDLETIMER_SPEED 0xA0 ; 40usec, good for LEDs
-;#define IDLETIMER_SPEED 0xFF
-;#define IDLETIMER_SPEED 0x00
+;#define IDLETIMER_SPEED 0xF0
+;#define IDLETIMER_SPEED 0x10	; realllly slow
 
 ; These debug #defines are intended to be used in conjunction with
 ; the associated stimulus files. Enable one and attatch said stim.

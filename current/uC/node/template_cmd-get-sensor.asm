@@ -39,7 +39,7 @@ do_cmd_get_sensor
 #ifdef SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PRESENT
 
 	movfw packet7
-	xorlw (AUTOGEN_EVERY_SENSOR_ID)
+	xorlw d'(AUTOGEN_EVERY_SENSOR_ID)'
 	btfss STATUS, Z
 	goto notthissensor_(AUTOGEN_EVERY_SENSOR_ID)
 

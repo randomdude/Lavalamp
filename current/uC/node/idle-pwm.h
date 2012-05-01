@@ -1,2 +1,2 @@
 	EXTERN dopwmsensors
-;	EXTERN dotriacsensors
+	EXTERN domux

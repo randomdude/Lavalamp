@@ -91,28 +91,33 @@ delay
 	; set state to 'waiting for first packet' as opposed to 'waiting for transciever to auth'
 	bcf state, STATUS_BIT_CRYPTOSTATE
 waitfordata
-	; Get a 64bit packet of data.
-	call waitforpacket
-#ifdef lol
+#ifdef INSERT_TEST_PACKET
+	; Set these defines to present a hardcoded packet on boot. This
+	; is only really useful for testing the uC core.
+
 	bsf state, STATUS_BIT_CRYPTOSTATE
-	movlw 0x01
+	movlw TEST_PACKET_BYTE_0
 	movwf packet0
-	movlw 0x01
+	movlw TEST_PACKET_BYTE_1
 	movwf packet1
-	movlw 0x01
+	movlw TEST_PACKET_BYTE_2
 	movwf packet2
-	movlw 0x01
+	movlw TEST_PACKET_BYTE_3
 	movwf packet3
-	movlw 0x01
+	movlw TEST_PACKET_BYTE_4
 	movwf packet4
-	movlw 0x01
+	movlw TEST_PACKET_BYTE_5
 	movwf packet5
-	movlw 0x01
+	movlw TEST_PACKET_BYTE_6
 	movwf packet6
-	movlw 0x01
+	movlw TEST_PACKET_BYTE_7
 	movwf packet7
+#else
+	; Wait for a 64bit packet of data.
+	call waitforpacket
 #endif
-	; decrypt packet
+
+	; decrypt packet, if neccessary
 	movlw 0x40;		; 32 rounds
 	movwf halfroundcount
 	call decrypt
@@ -178,8 +183,8 @@ sendp:
 	goto resync 
 
 processcmd:
-	; Did the base station authenticate properly? is P correct?
-
+#ifndef INSERT_TEST_PACKET
+	; Did the base station authenticate properly? ie, is P correct?
 	movlw 0x01
 	movwf arg4
 	clrf arg3
@@ -209,6 +214,7 @@ processcmd:
 	xorwf packet2, W
 	btfss STATUS, Z
 	goto wrongP
+#endif
 
 	; Yes, it did. save the inc'ed p for use with the next packet,
 	; and write it back to EEPROM, to make sure it's fresh at next

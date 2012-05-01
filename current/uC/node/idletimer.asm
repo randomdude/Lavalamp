@@ -38,9 +38,12 @@ idletimer:
 	goto dopwmsensors
 endpwmsensors:
 	global endpwmsensors
-;	goto dotriacsensors
+;	goto dotriacsensors	
 endtriacsensors:
 	global endtriacsensors
+	goto domux
+endmux:
+	global endmux
 
 	bcf INTCON, T0IF
 	bsf INTCON, T0IE

@@ -33,17 +33,27 @@ do_cmd_get_sensor_type
 	btfss STATUS, C
 	goto sensor_not_found
 
-	; Loop through every sensor, 
+	; Loop through every sensor.
 (AUTOGEN_BEGIN_REPLICATING_BLOCK)
 #ifdef SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_PRESENT
 	movfw packet7
-	xorlw (AUTOGEN_EVERY_SENSOR_ID)
+	xorlw d'(AUTOGEN_EVERY_SENSOR_ID)'
 	btfss STATUS,Z
 	goto notthissensor_(AUTOGEN_EVERY_SENSOR_ID)
+
 	; This sensor is being addressed
-    movlw SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_TYPE
-	; Jump to the end of the autogenned code so we don't have to check every other
-	; sensor, too.
+
+	; If we're a 'fake' sensor then we need to send the emulated
+	; type.
+	#if (SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_TYPE == SENSOR_ID_COMPOSITE)
+		; OK, this sensor is of type 'emulated sensor' and thus we should
+		; fib when we are asked what type it is.
+	    movlw SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_EMULATED_TYPE
+	#else
+		; No, not a fake sensor.
+	    movlw SENSOR_(AUTOGEN_EVERY_SENSOR_ID)_TYPE
+	#endif	
+	; OK, done. .ump to the end of the autogenned code
 	goto returnOK
 
 notthissensor_(AUTOGEN_EVERY_SENSOR_ID):  

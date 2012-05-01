@@ -7,4 +7,5 @@ C:\cygwin\bin\perl regen.pl template_cmd-fade-sensor.asm > cmd-fade-sensor.asm
 C:\cygwin\bin\perl regen.pl template_cmd-get-sensor-type.asm > cmd-get-sensor-type.asm
 C:\cygwin\bin\perl regen.pl template_memoryplacement.h > memoryplacement.h
 C:\cygwin\bin\perl regen.pl template_idle-pwm.asm > idle-pwm.asm
+C:\cygwin\bin\perl regen.pl template_idle-mux.asm > idle-mux.asm
 REM perl regen.pl template_idle-triac.asm > idle-triac.asm
