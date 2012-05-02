@@ -170,16 +170,16 @@ namespace virtualNodeNetwork
     {
         private readonly gpSim _simulator;
 
-        public simulatedPICNode(int newId, string newName, IEnumerable<virtualNodeSensor> newSensors) 
+        public simulatedPICNode(int newId, string newName, IEnumerable<virtualNodeSensor> newSensors, System.ComponentModel.ISynchronizeInvoke eventHandler, string objectFile) 
             : base(newId, newName, newSensors)
         {
-           
+            _simulator = new gpSim(objectFile, eventHandler);
         }
 
-        public simulatedPICNode(int newId, string newName, Form eventForm, string objectFile) :base(newId, newName)
+        public simulatedPICNode(int newId, string newName, System.ComponentModel.ISynchronizeInvoke eventHandler, string objectFile) :base(newId, newName)
         {
             // Make our new simulator..
-            _simulator = new gpSim(objectFile, eventForm );
+            _simulator = new gpSim(objectFile, eventHandler);
 
             // And add breakpoints on things which are important - rs232 IO, and the debug pins.
             lock (_simulator)

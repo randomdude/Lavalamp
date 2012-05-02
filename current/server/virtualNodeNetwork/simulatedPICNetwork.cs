@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 namespace virtualNodeNetwork
 {
+    using System.ComponentModel;
+
     /// <summary>
     /// A network of PIC-level simulated nodes. We use a third-party simulator to simulate operation of the
     /// PIC chip which runs this network.
@@ -14,36 +16,21 @@ namespace virtualNodeNetwork
     {
         private readonly string _pipename;
         private readonly NamedPipeServerStream _pipe;
-        private readonly Form _frmEventForm;
+        private readonly ISynchronizeInvoke _eventHandler;
 
         /// <summary>
         /// Nodes indexed by ID.
         /// </summary>
         private readonly Dictionary<int, simulatedPICNode> _nodes = new Dictionary<int, simulatedPICNode>();
 
-        public simulatedPICNetwork(string newPipeName,Form frmEventForm)
+        public simulatedPICNetwork(string newPipeName, ISynchronizeInvoke eInvoke)
         {
             _pipename = newPipeName;
 
-            _frmEventForm = frmEventForm;
+            _eventHandler = eInvoke;
             _pipe = new NamedPipeServerStream(_pipename, PipeDirection.InOut, 10, PipeTransmissionMode.Byte,
                                               PipeOptions.Asynchronous);
 
-            Thread foo = new Thread(eventFormThread);
-            foo.Name = "PIC network form";
-            foo.Start();
-
-            while (!_frmEventForm.IsHandleCreated)
-            {
-                Thread.Sleep(100);
-            }
-        }
-
-// ReSharper disable MemberCanBeMadeStatic.Local
-        private void eventFormThread(object foo)
-// ReSharper restore MemberCanBeMadeStatic.Local
-        {
-            Application.Run(_frmEventForm);
         }
 
         public override void run()
@@ -108,14 +95,14 @@ namespace virtualNodeNetwork
 
         public override virtualNodeBase createNode(int newId, string newName, IEnumerable<virtualNodeSensor> newSensors)
         {
-            simulatedPICNode newNode = new simulatedPICNode(newId, newName, newSensors);
+            simulatedPICNode newNode = new simulatedPICNode(newId, newName, newSensors, _eventHandler, Properties.Settings.Default.lavalampPICObject);
             addEvents(newNode);
             return newNode;
         }
 
         public override virtualNodeBase createNode(int newId, string newName)
         {
-            simulatedPICNode newNode = new simulatedPICNode(newId, newName, _frmEventForm, Properties.Settings.Default.lavalampPICObject);
+            simulatedPICNode newNode = new simulatedPICNode(newId, newName, _eventHandler, Properties.Settings.Default.lavalampPICObject);
             addEvents(newNode);
             return newNode;
         }

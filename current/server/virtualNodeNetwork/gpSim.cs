@@ -273,6 +273,17 @@ namespace virtualNodeNetwork
             }
         }
 
+        public void addWriteBreakpoint(breakpoint bk)
+        {
+            lock (this)
+            {
+                writeLine("br w " + bk.location + ", \"" + bk.id + "\"");
+                waitForPrompt();
+
+                _breakpoints.Add(bk.id, bk);
+            }
+        }
+
         public void addWriteBreakpoint(string locationSymbol, breakpointHandler onByteWritten)
         {
             lock (this)
