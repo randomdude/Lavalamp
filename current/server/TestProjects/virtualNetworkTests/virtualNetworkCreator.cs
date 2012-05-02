@@ -6,6 +6,8 @@ using virtualNodeNetwork;
 
 namespace TestProjects.virtualNetworkTests
 {
+    using System.ComponentModel;
+
     /// <summary>
     /// This classes sole purpose is to make a single-parameter constructor accessible to a generic.
     /// </summary>
@@ -23,7 +25,7 @@ namespace TestProjects.virtualNetworkTests
             if (typeof(networkTypeToCreate) == typeof(CSharpNetwork))
                 return new CSharpNetwork(pipeName);
             if (typeof(networkTypeToCreate) == typeof(simulatedPICNetwork))
-                return new simulatedPICNetwork(pipeName, new Form());
+                return new simulatedPICNetwork(pipeName, new Form1());
 
             throw new ArgumentException();
         }
@@ -45,10 +47,13 @@ namespace TestProjects.virtualNetworkTests
                 if (noGuiContext)
                 {
                     AttributesToAvoidReplicating.Add(typeof (System.Security.Permissions.UIPermissionAttribute));
-                    
-                    Mock<Form> form = new Mock<Form>();
-                    form.SetupGet(f => f.IsHandleCreated).Returns(true);
-                    return new simulatedPICNetwork(pipeName , form.Object);
+
+                    Mock<ISynchronizeInvoke> eventHandleMock = new Mock<ISynchronizeInvoke>();
+                    eventHandleMock.Setup(s => s.InvokeRequired).Returns(true);
+                    eventHandleMock.Setup(s => s.Invoke(It.IsAny<Delegate>(), It.IsAny<object[]>())).Returns(new object());
+                    eventHandleMock.Setup(s => s.BeginInvoke(It.IsAny<Delegate>(), It.IsAny<object[]>())).Returns(new Mock<IAsyncResult>(MockBehavior.Loose).Object);
+                    eventHandleMock.Setup(s => s.EndInvoke(It.IsAny<IAsyncResult>()));
+                    return new simulatedPICNetwork(pipeName, eventHandleMock.Object);
                 }
                 return new simulatedPICNetwork(pipeName , new Form());
             }
