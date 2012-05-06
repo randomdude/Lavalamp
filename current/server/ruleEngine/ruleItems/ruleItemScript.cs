@@ -45,6 +45,11 @@ namespace ruleEngine.ruleItems
             return null; // todo - make image, possibly returned by python script
         }
 
+        public override IFormOptions setupOptions()
+        {
+            return base.ruleItemOptions();
+        }
+
         public override Dictionary<String, pin> getPinInfo()
         {
             return myEng.getPinInfo();
@@ -59,22 +64,14 @@ namespace ruleEngine.ruleItems
 
             if (myEng.parameters.Count > 0)
             {
-                ToolStripMenuItem newItem = new ToolStripMenuItem("Item options..");
-                newItem.Click += setParameters;
+                ToolStripMenuItem newItem = new ToolStripMenuItem(" ");
+               // newItem.Click += setParameters;
                 toRet.Items.Add(newItem);
             }
 
             return toRet;
         }
 
-        private void setParameters(object sender, EventArgs e)
-        {
-            frmPythonParameters paramForm = new frmPythonParameters(myEng.parameters);
-            paramForm.ShowDialog();
-
-            if (paramForm.newParams != null)
-                myEng.parameters = paramForm.newParams;
-        }
 
         public override void evaluate()
         {

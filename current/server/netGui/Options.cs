@@ -2,6 +2,8 @@ using System;
 
 namespace netGui
 {
+    using ruleEngine.nodes;
+
     public class options
     {
         public bool useEncryption;

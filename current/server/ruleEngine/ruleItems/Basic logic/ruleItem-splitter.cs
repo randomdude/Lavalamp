@@ -21,6 +21,11 @@ namespace ruleEngine.ruleItems
             return "Splitter";
         }
 
+        public override IFormOptions setupOptions()
+        {
+            return null;
+        }
+
         public override Dictionary<String, pin> getPinInfo()
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();

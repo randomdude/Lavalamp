@@ -1,16 +1,13 @@
-﻿using System;
-using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using virtualNodeNetwork;
-
-namespace TestProjects.virtualNetworkTests
+﻿namespace TestProjects.virtualNetworkTests
 {
-        /// <summary>
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using virtualNodeNetwork;
+    /// <summary>
     /// These tests verify correct end-to-end operation from the C#-level transmitter driver all the way
     /// down to simulated PIC code. They are intended to test the PIC code itself (see 
     /// commandTests_virtualNetwork for tests which test only the transmitting driver code).
     /// </summary>
-    // [Ignore]
+     [Ignore]
     [TestClass]
     public class commandTests_gpSimNetwork : commandTests<simulatedPICNetwork>
     {
@@ -89,6 +86,7 @@ namespace TestProjects.virtualNetworkTests
         [TestMethod]
         public override void verifyNodeCanGetGenericDigitalInCorrectly()
         {
+
             base._verifyNodeCanGetGenericDigitalInCorrectly();
         }
     }

@@ -17,6 +17,11 @@ namespace ruleEngine.ruleItems
             return "OR";
         }
 
+        public override IFormOptions setupOptions()
+        {
+            return null;
+        }
+
         public override System.Drawing.Image background()
         {
             return Properties.Resources.ruleItem_or;

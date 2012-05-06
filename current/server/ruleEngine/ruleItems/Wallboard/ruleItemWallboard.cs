@@ -85,18 +85,9 @@ namespace ruleEngine.ruleItems
             
         }
 
-        public override Form ruleItemOptions()
+        public override IFormOptions setupOptions()
         {
-            frmWallboardOptions frm = new frmWallboardOptions(_options);
-            frm.Closed += frm_Closed;
-            return frm;
-        }
-
-        void frm_Closed(object sender, EventArgs e)
-        {
-            frmWallboardOptions frm = (frmWallboardOptions) sender;
-            if (frm.DialogResult == DialogResult.OK)
-                _options = frm.getChosenOptions();
+            return _options;
         }
 
         [Pure]
@@ -228,7 +219,7 @@ namespace ruleEngine.ruleItems
     }
 
     [Serializable]
-    public class wallboardOptions
+    public class wallboardOptions : BaseOptions
     {
         public string port{ get; set; }
 
@@ -241,5 +232,17 @@ namespace ruleEngine.ruleItems
         public position position{ get; set; }
 
         public ruleItemWallboard.wallboardErrorState state { get; set; }
+
+        public override string displayName
+        {
+            get {return "Wallboard Options..."; }
+        }
+
+        public override string typedName
+        {
+            get { return "Wallboard"; }
+        }
+
+
     }
 }

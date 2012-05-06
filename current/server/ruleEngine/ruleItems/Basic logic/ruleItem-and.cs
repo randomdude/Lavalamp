@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using ruleEngine;
 using ruleEngine.pinDataTypes;
-using ruleEngine.ruleItems.windows;
 
 namespace ruleEngine.ruleItems
 {
@@ -15,6 +13,11 @@ namespace ruleEngine.ruleItems
         public override string caption()
         {
             return "AND";
+        }
+
+        public override IFormOptions setupOptions()
+        {
+            return null;
         }
 
         public override System.Drawing.Image background()

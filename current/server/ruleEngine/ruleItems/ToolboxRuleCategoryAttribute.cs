@@ -6,7 +6,7 @@ namespace ruleEngine
 
     public class ToolboxRuleCategoryAttribute : Attribute
     {
-        internal readonly string name;
+        public readonly string name;
         public ToolboxRuleCategoryAttribute(string newName)
         {
             name = newName;

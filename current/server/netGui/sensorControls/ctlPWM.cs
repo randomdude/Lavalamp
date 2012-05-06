@@ -3,6 +3,8 @@ using System.Windows.Forms;
 
 namespace netGui.sensorControls
 {
+    using ruleEngine.nodes;
+
     public partial class ctlPWM : graph 
     {
         public ctlPWM()
@@ -62,25 +64,3 @@ namespace netGui.sensorControls
     }
 }
 
-namespace netGui
-{
-    public class pwm_speed
-    {
-        public Int16 fadespeed;
-
-        public pwm_speed(Int16 newfadespeed)
-        {
-            fadespeed = newfadespeed;
-        }
-    }
-
-    public class pwm_brightness
-    {
-        public Int16 fadeto;
-
-        public pwm_brightness(Int16 newfadeto)
-        {
-            fadeto = newfadeto;
-        }
-    }
-}

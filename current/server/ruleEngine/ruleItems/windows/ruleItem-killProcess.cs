@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using ruleEngine;
 
 namespace ruleEngine.ruleItems.windows
 {
@@ -69,22 +68,44 @@ namespace ruleEngine.ruleItems.windows
             return toRet;
         }
 
-        public override Form ruleItemOptions()
+        public override IFormOptions setupOptions()
         {
-            frmPickProcess picker = new frmPickProcess(name);
-            picker.Closed += pickProcess;
+            PickProcessOptions picker = new PickProcessOptions(name);
             return picker;
         }
 
-        private void pickProcess(object sender, EventArgs e)
-        {
-            frmPickProcess picker = (frmPickProcess) sender;
+        public override Size preferredSize() { return new Size(87, 80); }
+    }
 
-            if (!picker.cancelled)
+    public class PickProcessOptions : BaseOptions
+    {
+        [XmlElement("ProcessName")]
+        public string pName;
+
+        public PickProcessOptions()
+        {
+        }
+
+        public PickProcessOptions(string name)
+        {
+            pName = name;
+        }
+
+        public override string displayName
+        {
+            get
             {
-                name = picker.name;
+                return "Choose a process";
             }
         }
-        public override Size preferredSize() { return new Size(87, 80); }
+
+        public override string typedName
+        {
+            get
+            {
+               return "PickProcess";
+            }
+        }
+
     }
 }

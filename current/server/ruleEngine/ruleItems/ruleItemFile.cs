@@ -73,31 +73,9 @@ namespace ruleEngine.ruleItems
         }
 
 
-        public override Form ruleItemOptions()
+        public override IFormOptions setupOptions()
         {
-            frmFileWriteOptions frm = new frmFileWriteOptions(options);
-            frm.Closed += frm_Closed;
-            return frm;
-        }
-
-        void frm_Closed(object sender, EventArgs e)
-        {
-            frmFileWriteOptions frm = (frmFileWriteOptions) sender;
-            if (frm.DialogResult == DialogResult.OK)
-            {
-                options = frm.SelectedOptions;
-                switch (options.fileFormat)
-                {
-                        case FileFormat.Text:
-                        case FileFormat.Bin:
-                            _img.Image = Resources.ruleItem_text;
-                        break;
-                        case FileFormat.RSS:
-                            _img.Image = Resources.ruleItem_rss;
-                        break;
-                }
-                
-            }
+            return options;
         }
 
         public override void evaluate()
@@ -150,8 +128,9 @@ namespace ruleEngine.ruleItems
         }
     }
     [Serializable]
-    public class FileWriteOptions
+    public class FileWriteOptions : BaseOptions
     {
+
         [XmlIgnore]
         public Uri publishURI { get; set; }
 
@@ -173,6 +152,11 @@ namespace ruleEngine.ruleItems
 
         public string field { get; set;}
         */
+
+        public override string typedName
+        {
+            get { return "FileWrite"; }
+        }
     }
 
     /*public enum DataTransformation
@@ -181,5 +165,4 @@ namespace ruleEngine.ruleItems
         XML,
         JSON
     }*/
-
 }

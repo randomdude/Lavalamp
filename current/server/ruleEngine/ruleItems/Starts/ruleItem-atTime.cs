@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
 using ruleEngine.pinDataTypes;
 using ruleEngine.Properties;
@@ -14,33 +13,37 @@ namespace ruleEngine.ruleItems.Starts
     {
         [XmlIgnore]
         public Timer checkTimer;
-        [XmlElement("hours")]
-        public long _hours;
-        [XmlElement("minutes")]
-        public long _minutes;
-        private bool running = false;
-        private long lastHours;
-        private long lastMinutes;
 
-        private Label lblCaption;
+        [XmlElement("options")]
+        public TimeOptions options = new TimeOptions();
+        private bool _running = false;
+        private long _lastHours;
+        private long _lastMinutes;
 
-        private long hours
+        private string _caption;
+
+        public override string caption()
         {
-            get { return _hours; }
+            return _caption;
+        } 
+
+        private int hours
+        {
+            get { return options.hours; }
             set
             {
-                _hours = value;
-                lblCaption.Text = "at " + _hours + ":" + _minutes;
+                options.hours = value;
+                _caption = "at " + options.hours + ":" + options.minutes;
             }
         }
 
-        private long minutes
+        private int minutes
         {
-            get { return _minutes; }
+            get { return options.minutes; }
             set
             {
-                _minutes = value;
-                lblCaption.Text = "at " + _hours.ToString("00") + ":" + _minutes.ToString("00");
+                options.minutes = value;
+                _caption = "at " + options.hours.ToString("00") + ":" + options.minutes.ToString("00");
             }
         }
 
@@ -48,36 +51,13 @@ namespace ruleEngine.ruleItems.Starts
 
         public ruleItem_atTime()
         {
-            lblCaption = new Label();
-            lblCaption.AutoSize = false;
-            lblCaption.Width = preferredSize().Width;
-            lblCaption.Height = 20;
-            lblCaption.Left = 1;
-            lblCaption.Top = preferredSize().Height - lblCaption.Height;
-            lblCaption.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            lblCaption.Visible = true;
             hours = 20;
             minutes = 01;
-            controls.Add(lblCaption);
-        }
-
-        public override ContextMenuStrip addMenus(ContextMenuStrip strip1)
-        {
-            ContextMenuStrip toRet = new ContextMenuStrip();
-
-            while (strip1.Items.Count > 0)
-                toRet.Items.Add(strip1.Items[0]);
-
-            ToolStripMenuItem newItem = new ToolStripMenuItem("Set &time to fire..");
-            newItem.Click += setTimeDialogClosed;
-            toRet.Items.Add(newItem);
-
-            return toRet;
         }
 
         public override void start()
         {
-            running = false;
+            this._running = false;
             checkTimer = new Timer(checkTime, null, 500, 1000 );
         }
 
@@ -85,18 +65,45 @@ namespace ruleEngine.ruleItems.Starts
         {
             DateTime now = DateTime.Now;
             DateTime targettime = new DateTime(now.Year, now.Month, now.Day, (int)hours, (int)minutes, 00);
-            DateTime lasttime = new DateTime(now.Year, now.Month, now.Day, (int)lastHours, (int)lastMinutes, 00);
+            DateTime lasttime = new DateTime(now.Year, now.Month, now.Day, (int)this._lastHours, (int)this._lastMinutes, 00);
 
-            if (!running)
+            if (!this._running)
             {
                 // This is the first time we have been called. Set the last time and return
-                lastHours = now.Hour;
-                lastMinutes = now.Minute;
-                running = true;
+                this._lastHours = now.Hour;
+                this._lastMinutes = now.Minute;
+                this._running = true;
                 return;
             }
-            bool doit = (targettime > lasttime ) &&       // was time of last check before the target time?
-                        (targettime < now      );
+            bool doit = false;
+            switch (options.when)
+            {
+                    case TimeToRun.Daily:
+                        doit = (targettime > lasttime ) &&       // was time of last check before the target time?
+                                (targettime < now      );
+                        break;
+                    case TimeToRun.Weekly:
+                        doit = (targettime > lasttime) &&       // was time of last check before the target time?
+                                (targettime < now) && 
+                                ((int)now.DayOfWeek) == options.Day;
+                        break;
+                    case TimeToRun.Monthly:
+                        int dayToRun = DateTime.DaysInMonth(now.Year, now.Month);
+                        // if greater than the days in the month use the last day
+                        if (options.Day < dayToRun) dayToRun = options.Day;
+                        doit = (targettime > lasttime) && // was time of last check before the target time?
+                               (targettime < now) && 
+                               now.Day == dayToRun;
+                        break;
+                    case TimeToRun.Yearly:
+                        doit = (targettime > lasttime) && // was time of last check before the target time?
+                               (targettime < now) &&
+                               now.Month == options.Month &&
+                               now.Year == options.Year;
+                        break;
+            }
+  
+             
 
             // Otherwise, see if the specified date has passed since the last call.
 
@@ -114,58 +121,15 @@ namespace ruleEngine.ruleItems.Starts
                 onRequestNewTimelineEventInFuture(cancelArgs, 2);
             }
 
-            lastHours = now.Hour;
-            lastMinutes = now.Minute;
+            this._lastHours = now.Hour;
+            this._lastMinutes = now.Minute;
         }
 
-        public override Form ruleItemOptions()
+        public override IFormOptions setupOptions()
         {
-            frmQuestion askyform = new frmQuestion("New time (HH:MM):", hours + ":" + minutes);   // TODO: format number in a more pretty manner
-            askyform.Closed += setTimeDialogClosed;
-            return askyform;
+            return options;
         }
 
-        private void setTime()
-        {
-            frmQuestion frm = (frmQuestion) ruleItemOptions();
-            frm.ShowDialog();
-        }
-
-        private void setTimeDialogClosed(object sender,EventArgs e)
-        {
-            frmQuestion askyform = (frmQuestion) sender;
-
-            while (askyform.DialogResult == DialogResult.Cancel)
-                return;
-
-            int newhours = 0;
-            int newminutes = 0; 
-            try
-            {
-                String result = askyform.result;
-
-                String[] time = result.Split(':');
-
-                newhours = int.Parse(time[0]);
-                newminutes = int.Parse(time[1]);
-
-                if (newhours < 0 | newhours > 23)
-                    throw new FormatException();
-                if (newminutes < 0 | newminutes > 59)
-                    throw new FormatException();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(
-                    "Please enter the desired time in the form HH:MM, ie, hours, a semicolon, and then minutes.");
-                askyform.ShowDialog();
-                return;
-            }
-
-            hours = newhours;
-            minutes = newminutes;
-            return ;
-        }
 
         public override void stop()
         {
@@ -190,4 +154,48 @@ namespace ruleEngine.ruleItems.Starts
         
         }
     }
+
+    public class TimeOptions :BaseOptions
+    {
+        [XmlElement("hours")]
+        public int hours;
+        [XmlElement("minutes")]
+        public int minutes;
+
+        public int after;
+
+        public TimeToRun when;
+
+        public int Day = 1;
+
+        public int Year;
+
+        public int Month;
+
+        public override string displayName
+        {
+            get
+            {
+                return "Set Time...";
+            }
+        }
+
+        public override string typedName
+        {
+            get
+            {
+                return "Time";
+            }
+        }
+
+    }
+
+    public enum TimeToRun
+    {
+        Daily,
+        Weekly,
+        Monthly,
+        Yearly
+    }
+
 }

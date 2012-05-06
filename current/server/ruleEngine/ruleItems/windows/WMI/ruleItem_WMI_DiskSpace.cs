@@ -22,18 +22,9 @@ namespace ruleEngine.ruleItems.windows.WMI
         {
             return "Disk Space";
         }
-        public override Form ruleItemOptions()
+        public override IFormOptions setupOptions()
         {
-            frmWMIOptions frmOpts = new frmWMIOptions(options);
-            frmOpts.Closed += frmOpts_Closed;
-            return frmOpts;
-        }
-
-        void frmOpts_Closed(object sender, System.EventArgs e)
-        {
-            frmWMIOptions frmOpts = (frmWMIOptions) sender;
-            if (frmOpts.DialogResult == DialogResult.OK)
-                options = (WMIDiskOptions) frmOpts.SelectedOptions();
+            return options;
         }
 
         public override System.Collections.Generic.Dictionary<string, pin> getPinInfo()

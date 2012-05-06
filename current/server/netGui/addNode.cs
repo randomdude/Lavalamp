@@ -1,8 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
-
-namespace netGui
+﻿namespace netGui
 {
+    using System;
+    using System.Windows.Forms;
+    using ruleEngine.nodes;
+
     public partial class FrmAddNode : Form
     {
         public FrmAddNode()
@@ -11,7 +12,7 @@ namespace netGui
         }
 
         public bool cancelled = true;
-        public Node NewNode = null;
+        public Node newNode = null;
 
         private void txtId_TextChanged(object sender, EventArgs e)
         {
@@ -45,7 +46,7 @@ namespace netGui
 
         private void BtnOK_Click(object sender, EventArgs e)
         {
-            NewNode = new Node((Int16)Int32.Parse(txtId.Text));
+            this.newNode = new Node((Int16)Int32.Parse(txtId.Text));
 
             this.cancelled = false;
             this.Close();

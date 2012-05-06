@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using netGui.sensorControls;
+using ruleEngine.nodes;
 using transmitterDriver;
 
 namespace netGui

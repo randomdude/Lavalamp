@@ -79,5 +79,9 @@ namespace ruleItems_winamp
         {
         }
 
+        public override IFormOptions setupOptions()
+        {
+            return null;
+        }
     }
 }

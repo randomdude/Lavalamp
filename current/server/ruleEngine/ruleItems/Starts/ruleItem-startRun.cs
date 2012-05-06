@@ -15,6 +15,11 @@ namespace ruleEngine.ruleItems.Starts
             return "At start of run";
         }
 
+        public override IFormOptions setupOptions()
+        {
+            return null;
+        }
+
         public override void start()
         {
             timelineEventArgs args = new timelineEventArgs();

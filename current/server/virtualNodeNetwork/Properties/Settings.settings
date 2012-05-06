@@ -6,7 +6,7 @@
       <Value Profile="(Default)">C:\c0adz\lavalamp\current\uC\node\lavalamp</Value>
     </Setting>
     <Setting Name="gpSimExecutable" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\c0adz\gpsim\gpsim\Debug\gpsim.exe</Value>
+      <Value Profile="(Default)">C:\Program Files (x86)\gpsim\bin\gpsim.exe</Value>
     </Setting>
   </Settings>
 </SettingsFile>

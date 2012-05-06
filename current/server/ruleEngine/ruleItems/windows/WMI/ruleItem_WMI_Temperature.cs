@@ -23,18 +23,9 @@ namespace ruleEngine.ruleItems.windows.WMI
         {
             return "Temperature Monitor";
         }
-        public override System.Windows.Forms.Form ruleItemOptions()
+        public override IFormOptions setupOptions()
         {
-            frmWMIOptions frmOpts = new frmWMIOptions(options);
-            frmOpts.Closed += frmOpts_Closed;
-            return frmOpts;
-        }
-
-        void frmOpts_Closed(object sender, System.EventArgs e)
-        {
-            frmWMIOptions frmOpts = (frmWMIOptions) sender;
-            if (frmOpts.DialogResult == DialogResult.OK)
-                options = (WMITemperatureOptions) frmOpts.SelectedOptions();
+            return options;
         }
 
         public override System.Collections.Generic.Dictionary<string, pin> getPinInfo()
@@ -70,7 +61,7 @@ namespace ruleEngine.ruleItems.windows.WMI
         }
     }
 
-    public class WMITemperatureOptions : WMIOptions
+    public class WMITemperatureOptions : WMIOptions 
     {
         private const string PREFERED_NAMESPACE = "OpenHardwareMonitor";
         private TemperatureSensor _sensor;
@@ -315,6 +306,16 @@ namespace ruleEngine.ruleItems.windows.WMI
                 }
             }
             return _sensorList.Count > 0;
+        }
+
+        public string displayName
+        {
+            get { return "Temperature Settings"; }
+        }
+
+        public string typedName
+        {
+            get { return "WMI"; }
         }
     }
     [Serializable]

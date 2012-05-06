@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Web;
-using System.Windows.Forms;
 using System.Xml;
 using ruleEngine.pinDataTypes;
 
 namespace ruleEngine.ruleItems
 {
+    using System;
+
     [ToolboxRule]
     [ToolboxRuleCategory("Environment")]
     public class ruleItemWeather :ruleItemBase
@@ -26,19 +24,11 @@ namespace ruleEngine.ruleItems
             return "Weather";
         }
 
-        public override Form ruleItemOptions()
+        public override IFormOptions setupOptions()
         {
-            frmWeatherOptions frm = new frmWeatherOptions(options);
-            frm.Closed += frm_close;
-            return frm;
+            return options;
         }
 
-        private void frm_close(object sender, EventArgs e)
-        {
-            frmWeatherOptions frm = (frmWeatherOptions) sender;
-            if (frm.DialogResult == DialogResult.OK)
-                options = frm.SelectedOption;
-        }
 
         public override Dictionary<string, pin> getPinInfo()
         {
@@ -74,11 +64,9 @@ namespace ruleEngine.ruleItems
         }
     }
 
-    public class WeatherOptions
+    public class WeatherOptions : BaseOptions
     {
         private string _stringRead;
-
-
 
         public string selectRead
         {
@@ -107,6 +95,13 @@ namespace ruleEngine.ruleItems
                 _city = value;
             } 
         }
+
+
+        public override string typedName
+        {
+            get { return "Weather"; }
+        }
+
     }
     
 }

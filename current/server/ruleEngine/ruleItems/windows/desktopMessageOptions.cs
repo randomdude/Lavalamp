@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace ruleEngine.ruleItems
 {
-    public class desktopMessageOptions : IXmlSerializable
+    public class desktopMessageOptions : BaseOptions, IXmlSerializable
     {
         // These are in hundreds of milliseconds
         public int fadeInSpeed = 2;
@@ -35,6 +35,8 @@ namespace ruleEngine.ruleItems
         {
             throw new NotImplementedException();
         }
+
+
 
         public void ReadXml(XmlReader reader)
         {
@@ -144,6 +146,12 @@ namespace ruleEngine.ruleItems
             writer.WriteElementString("background-g", background.G.ToString());
             writer.WriteElementString("background-b", background.B.ToString());
         }
+
+        public override string typedName
+        {
+            get { return "DesktopMessage";  }
+        }
+
     }
 }
 

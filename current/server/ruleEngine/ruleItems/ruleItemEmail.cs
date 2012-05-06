@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
 using System.Xml.Serialization;
 using ruleEngine.pinDataTypes;
 using ruleEngine.ruleItems.Starts;
@@ -13,10 +11,16 @@ namespace ruleEngine.ruleItems
     public class ruleItem_Email : ruleItemBase
     {
         public override string ruleName() { return "email checker"; }
-        private bool lastState = false;
-        ctlCheckEmail widget = new ctlCheckEmail();
+        private bool lastState;
+
         [XmlElement("EmailOptions")]
-        public emailOptions options { get { return widget.options; } set { widget.options = value; } }
+        public emailOptions options = new emailOptions();
+
+        public override string caption()
+        {
+            return "Any new Email?";
+        }
+
         public override Dictionary<String, pin> getPinInfo()
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
@@ -28,19 +32,6 @@ namespace ruleEngine.ruleItems
             return pinList;
         }
 
-        public override System.Windows.Forms.ContextMenuStrip addMenus(System.Windows.Forms.ContextMenuStrip strip1)
-        {
-            ContextMenuStrip menus = base.addMenus(strip1);
-          
-            return widget.addMenus( menus );
-        }
-
-        public ruleItem_Email()
-        {
-            widget.Location = new Point(0,0);
-            widget.Size = this.preferredSize();
-            this.controls.Add(widget);
-        }
 
         public override void evaluate()
         {
@@ -48,7 +39,7 @@ namespace ruleEngine.ruleItems
              
             if ((lastState != thisState ) && (thisState == true))
             {
-                imapChecker mychecker = new imapChecker(widget.options);
+                imapChecker mychecker = new imapChecker(options);
                 if (mychecker.newMail != pinInfo["newEmail"].value.asBoolean())
                 {
                     onRequestNewTimelineEvent(new timelineEventArgs(new pinDataTrigger(mychecker.newMail, this, pinInfo["newEmail"])));
@@ -56,6 +47,41 @@ namespace ruleEngine.ruleItems
                 }
             }
             lastState = thisState;
+        }
+
+        public override IFormOptions setupOptions()
+        {
+            return options;
+        }
+    }
+    [Serializable]
+    public class emailOptions :BaseOptions
+    {
+        [XmlElement]
+        public string serverName = "imap.gmail.com";
+        [XmlElement]
+        public int portNum = 993;
+        [XmlElement]
+        public bool useSSL = true;
+        [XmlElement]
+        public string username = "username";
+        //todo: crypt password
+        public string password = "password";
+
+        public override string displayName
+        {
+            get
+            {
+                return "Email Options";
+            }
+        }
+
+        public override string typedName
+        {
+            get
+            {
+               return "CheckEmail";
+            }
         }
     }
 }

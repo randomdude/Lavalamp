@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace ruleEngine
+﻿namespace ruleEngine.guidTypes
 {
+    using System;
+
     public class ctlRuleItemWidgetGuid
     {
         public Guid id = Guid.Empty;
@@ -40,7 +40,7 @@ namespace ruleEngine
         {
             if (ReferenceEquals(null , other)) return false;
             if (ReferenceEquals(this , other)) return true;
-            return other.id.Equals(id);
+            return other.id.Equals(this.id);
         }
 
         public override bool Equals(object obj)
@@ -48,12 +48,12 @@ namespace ruleEngine
             if (ReferenceEquals(null , obj)) return false;
             if (ReferenceEquals(this , obj)) return true;
             if (obj.GetType() != typeof (ctlRuleItemWidgetGuid)) return false;
-            return Equals((ctlRuleItemWidgetGuid) obj);
+            return this.Equals((ctlRuleItemWidgetGuid) obj);
         }
 
         public override int GetHashCode()
         {
-            return id.GetHashCode();
+            return this.id.GetHashCode();
         }
     }
 }

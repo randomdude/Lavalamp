@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using ruleEngine;
+
 using ruleEngine.pinDataTypes;
 using ruleEngine.ruleItems.windows;
 
@@ -22,6 +22,7 @@ namespace ruleEngine.ruleItems
 
         public desktopMessageOptions myOptions = new desktopMessageOptions();
 
+
         private string _lastMessage = "";
 
         // Every ruleItem requires a parameterless constructor. It is used by the toolbox
@@ -33,6 +34,12 @@ namespace ruleEngine.ruleItems
         public ruleItem_desktopMessage(desktopMessageOptions newOptions)
         {
             myOptions = newOptions;
+        }
+
+        public override void onOptionsChanged(object sender, EventArgs eventArgs)
+        {
+            base.onOptionsChanged(sender, eventArgs);
+            myOptions = sender as desktopMessageOptions;
         }
 
         public override Dictionary<String, pin> getPinInfo()
@@ -68,12 +75,9 @@ namespace ruleEngine.ruleItems
             return base.addMenus(toAddTo);
         }
 
-        public override Form ruleItemOptions()
+        public override IFormOptions setupOptions()
         {
-            FrmDesktopMessageOptions myOptForm = new FrmDesktopMessageOptions(myOptions);
-            myOptForm.Closed += delegate { if (myOptForm.DialogResult == DialogResult.OK)
-                                                myOptions = myOptForm.currentOptions; };
-            return myOptForm;
+            return myOptions;
         }
 
         public void showIt(string messageToShow)
@@ -88,10 +92,10 @@ namespace ruleEngine.ruleItems
         {
             string messageToShow = (string) state;
             // make our form
-            frmDesktopMessage messageForm = new frmDesktopMessage(myOptions, messageToShow);
+           frmDesktopMessage messageForm = new frmDesktopMessage(myOptions, messageToShow);
             messageForm.Visible = false;
 
-            // Kick up a message loop and show the form.
+           // Kick up a message loop and show the form.
             Application.DoEvents();
             Application.Run(messageForm);
         }

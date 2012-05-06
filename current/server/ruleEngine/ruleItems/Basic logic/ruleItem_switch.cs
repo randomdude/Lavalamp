@@ -36,6 +36,11 @@ namespace ruleEngine.basicLogic
             return "Switch";
         }
 
+        public override IFormOptions setupOptions()
+        {
+            return null;
+        }
+
         public override void evaluate()
         {
             //this is tristate because it will start off as having noValue

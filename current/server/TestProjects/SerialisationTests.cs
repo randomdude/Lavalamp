@@ -7,9 +7,10 @@
     using System.Reflection;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using netGui;
+    using netGui.RuleEngine;
 
     using ruleEngine;
+    using ruleEngine.nodes;
     using ruleEngine.pinDataTypes;
     using ruleEngine.ruleItems;
     using ruleItems_winamp;

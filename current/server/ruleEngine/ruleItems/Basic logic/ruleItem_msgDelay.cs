@@ -11,6 +11,9 @@ namespace ruleEngine.ruleItems
     [ToolboxRuleCategory("Misc")]
     public class ruleItem_msgDelay : ruleItemBase
     {
+        [XmlElement("options")]
+        public IntervalOption options = new IntervalOption();
+
         public override string ruleName()
         {
             return "Message delay";
@@ -29,6 +32,11 @@ namespace ruleEngine.ruleItems
         public override string caption()
         {
             return "Message delay";
+        }
+
+        public override IFormOptions setupOptions()
+        {
+            return options;
         }
 
         public override Dictionary<string, pin> getPinInfo()
@@ -86,45 +94,29 @@ namespace ruleEngine.ruleItems
             timeUntilEmpty += delayIntervalSecs * 10;
         }
 
-        public override ContextMenuStrip addMenus(ContextMenuStrip mnuParent)
+
+    }
+
+    public class IntervalOption : BaseOptions
+    {
+        public int hours;
+
+        public int mins;
+
+        public override string displayName
         {
-            ContextMenuStrip toRet = base.addMenus(mnuParent);
-
-            if (toRet.Items.Count > 0)
-                toRet.Items.Add("-");
-
-            ToolStripMenuItem newItem = new ToolStripMenuItem("Set &Interval");
-            newItem.Click += setIntervalToolStripMenuItem_Click;
-            toRet.Items.Add(newItem);
-
-            return toRet;
-        }
-
-        private void setIntervalToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            bool success = false;
-            while (!success)
-                success = promptForNewInterval();
-        }
-
-        public bool promptForNewInterval()
-        {
-            frmQuestion askyform = new frmQuestion("New time interval (seconds):", delayIntervalSecs.ToString());
-
-            if (askyform.ShowDialog() == DialogResult.Cancel)
-                return true;
-
-            String result = askyform.result;
-
-            bool parsedOK = int.TryParse(result, out delayIntervalSecs);
-
-            if (!parsedOK)
+            get
             {
-                MessageBox.Show("Please enter a valid number");
-                return false;
+                return "Select an Interval...";
             }
+        }
 
-            return true;
+        public override string typedName
+        {
+            get
+            {
+                return "Interval";
+            }
         }
     }
 }

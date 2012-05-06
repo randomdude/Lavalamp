@@ -63,8 +63,9 @@ namespace ruleEngine.ruleItems.Starts
             }
         }
 
-        public imapChecker(emailOptions options)
+        public imapChecker(IFormOptions opts)
         {
+            emailOptions options = opts as emailOptions;
             makeImapChecker(options.serverName, options.portNum, options.username, options.password,
                                    options.useSSL);
         }

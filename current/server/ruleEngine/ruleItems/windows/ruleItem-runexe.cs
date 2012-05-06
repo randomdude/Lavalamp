@@ -2,36 +2,44 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using ruleEngine.ruleItems.itemControls;
-using ruleEngine.ruleItems.windows;
 
 namespace ruleEngine.ruleItems
 {
+    using ruleEngine.Properties;
+
     [ToolboxRule]
     [ToolboxRuleCategory("Windows tools")]
     public class ruleItem_runexe : ruleItemBase
     {
         public override string ruleName() { return "Execute program"; }
+        public override string caption()
+        {
+            return "Execute " + options.filename;
+        }
+       
 
-        
         public delegate void executeItNowDelegate();    // this is used by the control, when the user asks to 'test' configuration by running the target
 
         private bool lastState;
 
+        RunExeOptions options = new RunExeOptions();
+
         [XmlElement("FileToRun")]
         public string fileToRun
         {
-            get { return controlwidget.filename; }
-            set { controlwidget.filename = value; }
+            get { return options.filename; }
+            set { options.filename = value; }
         }
-
-        private ctlRunFile controlwidget = new ctlRunFile();
 
         public override System.Drawing.Image background()
         {
-            return null;
+            return Resources.Shortcut.ToBitmap(); ;
+        }
+
+        public override IFormOptions setupOptions()
+        {
+            return options;
         }
 
         public override Dictionary<String, pin> getPinInfo()
@@ -57,43 +65,31 @@ namespace ruleEngine.ruleItems
         {
             try
             {
-                ProcessStartInfo startInfo = new ProcessStartInfo(controlwidget.filename);
-                if (controlwidget.doImpersonate)
+                ProcessStartInfo startInfo = new ProcessStartInfo(options.filename);
+                if (options.doImpersonate)
                 {
                     startInfo.UseShellExecute = false;
 
-                    startInfo.UserName = controlwidget.username;
+                    startInfo.UserName = options.username;
 
                     // todo: is using SecureStrings in my app worth it?
                     startInfo.Password = new SecureString();
-                    foreach (char c in controlwidget.password.ToCharArray())
+                    foreach (char c in this.options.password)
                         startInfo.Password.AppendChar(c);
                 }
                 else
                 {
                     startInfo.UseShellExecute = true;
-                    startInfo.WindowStyle = controlwidget.windowStyle;
+                    startInfo.WindowStyle = options.windowStyle;
                 }
                 Process.Start(startInfo);
             }
             catch (Exception e)
             {
-                throw new Exception("Starting program '" + controlwidget.filename + "' failed, with the error '" + e.Message + "'");
+                throw new Exception("Starting program '" + options.filename + "' failed, with the error '" + e.Message + "'");
             }
         }
 
-        public override ContextMenuStrip addMenus(ContextMenuStrip mnuParent)
-        {
-            ContextMenuStrip toRet = base.addMenus( mnuParent );
-
-            return controlwidget.addMenus(toRet);
-        }
-        
-        public ruleItem_runexe()
-        {
-            controlwidget = new ctlRunFile(new executeItNowDelegate(executeItAsTest));
-            this.controls.Add(controlwidget);
-        }
 
         private void executeItAsTest()
         {
@@ -103,10 +99,42 @@ namespace ruleEngine.ruleItems
             } 
             catch (Exception ex)
             {
-                frmException ohnoes = new frmException(ex);
-                ohnoes.ShowDialog();
+            //    frmException ohnoes = new frmException(ex);
+             //   ohnoes.ShowDialog();
             }
         }
+
+    }
+
+    public class RunExeOptions : BaseOptions
+    {
+        public string filename;
+
+        public ProcessWindowStyle windowStyle;
+
+        public string password;
+
+        public string username;
+
+        public bool doImpersonate;
+
+        public override string displayName
+        {
+            get
+            {
+                return "Choose Executable...";
+            }
+        }
+
+        public override string typedName
+        {
+            get
+            {
+                return "RunExe";
+            }
+        }
+
+
 
     }
 }

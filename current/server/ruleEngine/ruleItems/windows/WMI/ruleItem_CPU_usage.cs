@@ -52,23 +52,15 @@ namespace ruleEngine.ruleItems.windows.WMI
             onRequestNewTimelineEvent(new timelineEventArgs(new pinDataNumber(toRet, this, pinInfo["CPUUsage"])));
         }
 
-        public override Form ruleItemOptions()
+        public override IFormOptions setupOptions()
         {
-            frmWMIOptions frmWmi = new frmWMIOptions(options);
-            frmWmi.Closed += frmWmi_Closed;
-            return frmWmi;
+
+            return options;
         }
 
         public override string ToString()
         {
             return "Options...";
-        }
-
-        void frmWmi_Closed(object sender, EventArgs e)
-        {
-            frmWMIOptions frmWmi = (frmWMIOptions) sender;
-            if (frmWmi.DialogResult == DialogResult.OK)
-                options = (CPUUsageOptions) frmWmi.SelectedOptions();
         }
     }
 

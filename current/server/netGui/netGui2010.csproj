@@ -16,6 +16,8 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -28,7 +30,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -43,6 +44,31 @@
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>True</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>DoNotBuild</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -68,6 +94,8 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -79,8 +107,58 @@
     <Compile Include="addNode.Designer.cs">
       <DependentUpon>addNode.cs</DependentUpon>
     </Compile>
-    <Compile Include="ITransmitter.cs" />
-    <Compile Include="key.cs" />
+    <Compile Include="helpers\inputTime.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="helpers\inputTime.Designer.cs">
+      <DependentUpon>inputTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="helpers\NumberExts.cs" />
+    <Compile Include="RuleEngine\ctlPythonSetting.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\ctlPythonSetting.Designer.cs">
+      <DependentUpon>ctlPythonSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\ctlRule.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\ctlRule.Designer.cs">
+      <DependentUpon>ctlRule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\ctlRuleItemWidget.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\frmDebug.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\frmDebug.Designer.cs">
+      <DependentUpon>frmDebug.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\frmException.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\frmException.Designer.cs">
+      <DependentUpon>frmException.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPythonParameters.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPythonParameters.Designer.cs">
+      <DependentUpon>frmPythonParameters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmQuestion.Designer.cs">
+      <DependentUpon>frmQuestion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmRuleEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRuleEdit.Designer.cs">
+      <DependentUpon>frmRuleEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="nodeEditForms\FrmChangeP.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,16 +177,86 @@
     <Compile Include="nodeEditForms\FrmChangeId.Designer.cs">
       <DependentUpon>FrmChangeId.cs</DependentUpon>
     </Compile>
-    <Compile Include="RuleEngine\frmSensorOptions.cs">
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmIntervalOptions.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RuleEngine\frmSensorOptions.designer.cs">
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmIntervalOptions.Designer.cs">
+      <DependentUpon>frmIntervalOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmSensorOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmSensorOptions.designer.cs">
       <DependentUpon>frmSensorOptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="RuleEngine\ruleItemDigitalIn.cs" />
-    <Compile Include="RuleEngine\ruleItemDigitalOut.cs" />
-    <Compile Include="RuleEngine\ruleItemPWM.cs" />
-    <Compile Include="RuleEngine\ruleItemTriac.cs" />
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmCheckEmailOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmCheckEmailOptions.Designer.cs">
+      <DependentUpon>frmCheckEmailOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\FrmDesktopMessageOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\FrmDesktopMessageOptions.Designer.cs">
+      <DependentUpon>FrmDesktopMessageOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmFileWriteOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmFileWriteOptions.Designer.cs">
+      <DependentUpon>frmFileWriteOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmPickProcess.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmPickProcess.Designer.cs">
+      <DependentUpon>frmPickProcess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmRuleRssOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmRuleRssOptions.Designer.cs">
+      <DependentUpon>frmRuleRssOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmRunExeOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmRunExeOptions.Designer.cs">
+      <DependentUpon>frmRunExeOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmSerialPortOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmSerialPortOptions.Designer.cs">
+      <DependentUpon>frmSerialPortOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmTimeOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmTimeOptions.Designer.cs">
+      <DependentUpon>frmTimeOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmWallboardOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmWallboardOptions.Designer.cs">
+      <DependentUpon>frmWallboardOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmWeatherOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmWeatherOptions.Designer.cs">
+      <DependentUpon>frmWeatherOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmWMIOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmWMIOptions.Designer.cs">
+      <DependentUpon>frmWMIOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\IOptionForm.cs" />
+    <Compile Include="ruleItemOptionsFormFactory.cs" />
     <Compile Include="sensorControls\ctlOnOff.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -163,12 +311,46 @@
     <Compile Include="frmWait.Designer.cs">
       <DependentUpon>frmWait.cs</DependentUpon>
     </Compile>
-    <Compile Include="Node.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="addNode.resx">
       <DependentUpon>addNode.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="helpers\inputTime.resx">
+      <DependentUpon>inputTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\ctlPythonSetting.resx">
+      <DependentUpon>ctlPythonSetting.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\ctlRule.resx">
+      <DependentUpon>ctlRule.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\ctlRuleItemWidget.resx">
+      <DependentUpon>ctlRuleItemWidget.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\frmDebug.resx">
+      <DependentUpon>frmDebug.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\frmException.resx">
+      <DependentUpon>frmException.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPythonParameters.resx">
+      <DependentUpon>frmPythonParameters.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmQuestion.resx">
+      <DependentUpon>frmQuestion.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRuleEdit.resx">
+      <DependentUpon>frmRuleEdit.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="nodeEditForms\FrmChangeP.resx">
@@ -183,8 +365,49 @@
       <DependentUpon>FrmChangeId.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="RuleEngine\frmSensorOptions.resx">
+    <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmIntervalOptions.resx">
+      <DependentUpon>frmIntervalOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmSensorOptions.resx">
       <DependentUpon>frmSensorOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmCheckEmailOptions.resx">
+      <DependentUpon>frmCheckEmailOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\FrmDesktopMessageOptions.resx">
+      <DependentUpon>FrmDesktopMessageOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmFileWriteOptions.resx">
+      <DependentUpon>frmFileWriteOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmPickProcess.resx">
+      <DependentUpon>frmPickProcess.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmRuleRssOptions.resx">
+      <DependentUpon>frmRuleRssOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmRunExeOptions.resx">
+      <DependentUpon>frmRunExeOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmSerialPortOptions.resx">
+      <DependentUpon>frmSerialPortOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmTimeOptions.resx">
+      <DependentUpon>frmTimeOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmWallboardOptions.resx">
+      <DependentUpon>frmWallboardOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmWeatherOptions.resx">
+      <DependentUpon>frmWeatherOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmWMIOptions.resx">
+      <DependentUpon>frmWMIOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="sensorControls\ctlOnOff.resx">
       <DependentUpon>ctlOnOff.cs</DependentUpon>
@@ -242,7 +465,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="sensor.cs" />
     <Compile Include="sensorControls\sensoFrm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -250,9 +472,13 @@
       <DependentUpon>sensoFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="_transmitter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
@@ -268,15 +494,21 @@
       <ProductName>.NET Framework 3.5</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Run.bmp" />
     <None Include="Resources\Pause.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ruleEngine\ruleEngine.csproj">
+    <ProjectReference Include="..\ruleEngine\ruleEngine2010.csproj">
       <Project>{04834DB5-4E91-48EA-9107-FD2246087122}</Project>
-      <Name>ruleEngine</Name>
+      <Name>ruleEngine2010</Name>
+      <Aliases>global, ruleEngine2010</Aliases>
     </ProjectReference>
     <ProjectReference Include="..\transmitterDriver\transmitterDriver.csproj">
       <Project>{00AAF76B-138C-4E79-960B-4540924D43C4}</Project>

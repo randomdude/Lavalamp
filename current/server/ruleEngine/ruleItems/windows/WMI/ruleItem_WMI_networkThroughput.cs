@@ -28,19 +28,12 @@ namespace ruleEngine.ruleItems.windows.WMI
             return "Network Throughput";
         }
 
-        public override Form ruleItemOptions()
+        public override IFormOptions setupOptions()
         {
-            frmWMIOptions wmiOptions = new frmWMIOptions(options);
-            wmiOptions.Closed += new EventHandler(wmiOptions_Closed);
-            return wmiOptions;
+            return options;
         }
 
-        void wmiOptions_Closed(object sender, EventArgs e)
-        {
-            frmWMIOptions wmiOptions = (frmWMIOptions) sender;
-            if (wmiOptions.DialogResult == DialogResult.OK)
-                options = (WMINetworkOptions) wmiOptions.SelectedOptions();
-        }
+    
 
         public override Dictionary<string, pin> getPinInfo()
         {

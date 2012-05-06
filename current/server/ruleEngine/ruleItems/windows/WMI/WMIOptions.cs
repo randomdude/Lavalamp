@@ -7,8 +7,9 @@ using System.Xml.Serialization;
 namespace ruleEngine.ruleItems.windows.WMI
 {
     [Serializable]
-    public abstract class WMIOptions : ICloneable
+    public abstract class WMIOptions : BaseOptions, ICloneable
     {
+
         public WMIOptions()
         {
             computer = "localhost";
@@ -88,5 +89,14 @@ namespace ruleEngine.ruleItems.windows.WMI
                 if (onScopeOptsChanged != null)
                     onScopeOptsChanged.Invoke(openScope());
         }
+
+        public override string typedName
+        {
+            get
+            {
+                return "WMI";
+            }
+        }
+
     }
 }

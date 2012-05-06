@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO.Ports;
 using System.Text;
 using System.Threading;
-using System.Windows.Forms;
 using System.Xml.Serialization;
 using ruleEngine.pinDataTypes;
-using ruleEngine.ruleItems.windows;
 
 namespace ruleEngine.ruleItems
 {
@@ -17,7 +14,7 @@ namespace ruleEngine.ruleItems
     {
         public override string ruleName() { return "Serial port"; }
 
-        public override string caption() { return "Serial port"; }
+        public override string caption() { return "Serial port " + opts.portName; }
         [XmlElement]
         public serialPortOptions opts = new serialPortOptions();
 
@@ -70,19 +67,13 @@ namespace ruleEngine.ruleItems
             }            
         }
 
-        public override Form ruleItemOptions()
+        public override IFormOptions setupOptions()
         {
-            frmSerialPortOptions myOptForm = new frmSerialPortOptions(opts);
-            myOptForm.Closed += delegate
-            {
-                if (myOptForm.DialogResult == DialogResult.OK)
-                    opts = myOptForm.opts;
-            };
-            return myOptForm;
+            return opts;
         }
     }
     [Serializable]
-    public class serialPortOptions
+    public class serialPortOptions : BaseOptions
     {
         public string portName = "com2";
         public int baudRate = 2400;
@@ -93,5 +84,11 @@ namespace ruleEngine.ruleItems
 
         public string preSend = "";
         public string postSend = "";
+
+        public override string typedName
+        {
+            get { return "SerialPort"; }
+        }
+
     }
 }

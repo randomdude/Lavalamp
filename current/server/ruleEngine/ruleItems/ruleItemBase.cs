@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using ruleEngine.ruleItems.windows;
 
 namespace ruleEngine.ruleItems
 {
@@ -56,8 +55,36 @@ namespace ruleEngine.ruleItems
         /// The default options for the rule which will be displayed when the ruleItemCtl is double clicked
         /// </summary>
         /// <returns>the options form</returns>
-        public virtual Form ruleItemOptions() { return null; }
+        public IFormOptions ruleItemOptions()
+        {
+            IFormOptions options = this.setupOptions();
+            if (options != null)
+                options.optionsChanged += onOptionsChanged;
+            return options;
+        }
+
+        public abstract IFormOptions setupOptions();
+
         public virtual void onAfterLoad() { }
+
+        public virtual void onOptionsChanged(object sender, EventArgs eventArgs)
+        {
+            _lblCaption.Text = this.caption() ?? "";
+            this._lblCaption.Visible = this._lblCaption.Text != "";
+            if (_backgroundImage != null)
+            {
+                _backgroundBox.Image = _backgroundImage;
+                _backgroundBox.Visible = true;
+                _backgroundBox.Left = (preferredSize().Width / 2) - (_backgroundImage.Width / 2);
+                _backgroundBox.Invalidate();
+            }
+            else 
+            {
+                _backgroundBox.Visible = false;
+            }
+            _lblCaption.Invalidate();
+            
+        }
 
         public delegate void changeNotifyDelegate();
         public delegate void evaluateDelegate() ;
@@ -66,9 +93,11 @@ namespace ruleEngine.ruleItems
         [XmlIgnore] public bool isDeleted = false;
         private PictureBox _backgroundBox;
 
+        private Label _lblCaption;
+
         protected ruleItemBase()
         {
-            // Control stuff 
+            // Control stuff TODO this needs movinvg to the rulectlwidget
             Size currentPreferredSize = preferredSize();
 
             _errorIcon.Image = Properties.Resources.error.ToBitmap();
@@ -77,7 +106,7 @@ namespace ruleEngine.ruleItems
             _errorIcon.Left = currentPreferredSize.Width - _errorIcon.Width;
             _errorIcon.Top = currentPreferredSize.Height - _errorIcon.Height;
             _errorIcon.Cursor = Cursors.Help;
-            _errorIcon.Click += new EventHandler(errorIcon_Click);
+            _errorIcon.Click += this.errorIcon_Click;
 
             controls.Add(_errorIcon);
 
@@ -85,39 +114,43 @@ namespace ruleEngine.ruleItems
             // we can position it - we want it slightly above the center of the image, so that it does not
             // foul the ruleItem's caption.
             Image bg = background();
+
+            _backgroundBox = new PictureBox();
+            // We keep the background image the size of the bitmap passed in, just so that the ruleItem
+            // can keep control of it that way.
+            // We position the image at the middle-top. We leave a 3px border at the top so it looks a
+            // bit nicer.
             if (bg != null)
             {
-                _backgroundBox = new PictureBox();
-                // We keep the background image the size of the bitmap passed in, just so that the ruleItem
-                // can keep control of it that way.
-                // We position the image at the middle-top. We leave a 3px border at the top so it looks a
-                // bit nicer.
                 _backgroundBox.Image = bg;
-                _backgroundBox.SizeMode = PictureBoxSizeMode.AutoSize;
                 _backgroundBox.Left = (preferredSize().Width / 2) - (bg.Width / 2);
-                _backgroundBox.Top = 3;
                 _backgroundBox.Visible = true;
-                _backgroundBox.BackColor = Color.Transparent;
-                controls.Add(_backgroundBox);
             }
+            else 
+                _backgroundBox.Visible = false;
+            
+            _backgroundBox.SizeMode = PictureBoxSizeMode.AutoSize;
+            
+            
+            _backgroundBox.Top = 3;
+
+            _backgroundBox.BackColor = Color.Transparent;
+            controls.Add(_backgroundBox);
 
 
-            // caption label
-            String currentCaption = this.caption();
-            Label lblCaption = null;
-            if (currentCaption != null)
-            {
-                lblCaption = new Label();
-                lblCaption.Text = currentCaption;
-                lblCaption.Visible = true;
-                lblCaption.Location = new Point(0, 0);
-                lblCaption.Width = currentPreferredSize.Width;
-                lblCaption.Height = currentPreferredSize.Height - 15;
-                lblCaption.TextAlign = ContentAlignment.BottomCenter;
-                lblCaption.BackColor = Color.Transparent;
-
-                controls.Add(lblCaption);
-            }
+            // caption label even if not set it maybe set by a rule item lators
+            String currentCaption = this.caption() ?? "";
+            _lblCaption = new Label
+                {
+                    Text = currentCaption,
+                    Visible = currentCaption != "",
+                    Location = new Point(0, 0),
+                    Width = currentPreferredSize.Width,
+                    Height = currentPreferredSize.Height - 15,
+                    TextAlign = ContentAlignment.BottomCenter,
+                    BackColor = Color.Transparent
+                };
+            controls.Add(_lblCaption);
         }
 
         protected ruleItemBase(Image backgroundImage)
@@ -129,13 +162,13 @@ namespace ruleEngine.ruleItems
         {
             if (whyIsErrored != null)
             {
-                frmException exceptionWindow = new frmException(whyIsErrored);
-
-                exceptionWindow.ShowDialog();
+                //frmException exceptionWindow = new frmException(whyIsErrored);
+                 
+              //  exceptionWindow.ShowDialog();
             }
             else
             {
-                MessageBox.Show("This control is not in an error state. No error has occurred since the last run.");
+              //  MessageBox.Show("This control is not in an error state. No error has occurred since the last run.");
             }
         }
 

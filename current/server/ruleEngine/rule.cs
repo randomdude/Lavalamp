@@ -39,11 +39,6 @@ namespace ruleEngine
         public Dictionary<String, ruleItemBase> ruleItems = new Dictionary<string, ruleItemBase>();
 
         /// <summary>
-        /// Each ruleItem has a control which represents it in the UI.
-        /// </summary>
-        private Dictionary<String, ctlRuleItemWidget> ctlRuleItems = new Dictionary<string, ctlRuleItemWidget>();
-
-        /// <summary>
         /// The 'wires' that connect ruleItems
         /// </summary>
         private Dictionary<String, lineChain> lineChains = new Dictionary<string, lineChain>();
@@ -143,12 +138,6 @@ namespace ruleEngine
             addThis.newTimelineEvent += serviceNewTimelineEvent;
             addThis.newTimelineEventInFuture += serviceNewTimelineEventInFuture;
             ruleItems.Add(addThis.serial.id.ToString(), addThis);            
-        }
-
-
-        public void AddctlRuleItemWidgetToGlobalPool(ctlRuleItemWidget addThis)
-        {
-            ctlRuleItems.Add(addThis.serial.id.ToString() , addThis);
         }
 
         public lineChain GetLineChainFromGuid(lineChainGuid connection)
@@ -349,11 +338,7 @@ namespace ruleEngine
             ruleItems.Remove(toDelete.serial.ToString());
         }
 
-        public void deleteCtlRuleItem(ctlRuleItemWidget toDelete)
-        {
-            ctlRuleItems.Remove(toDelete.serial.id.ToString());
-        }
-    
+
 
     }
 }

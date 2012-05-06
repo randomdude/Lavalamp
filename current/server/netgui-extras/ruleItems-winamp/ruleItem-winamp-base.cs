@@ -76,6 +76,10 @@ namespace ruleItems_winamp
         public override void stop()
         {
         }
- 
+
+        public override IFormOptions setupOptions()
+        {
+            return null;
+        }
     }
 }

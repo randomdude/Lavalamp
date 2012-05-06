@@ -12,7 +12,6 @@ using System.Xml;
 using System.Xml.Serialization;
 using ruleEngine.Properties;
 using ruleEngine.pinDataTypes;
-using ruleEngine.ruleItems.windows;
 
 namespace ruleEngine.ruleItems
 {
@@ -54,26 +53,19 @@ namespace ruleEngine.ruleItems
             return "RSS reader";
         }
 
-        public override Form ruleItemOptions()
+        public override IFormOptions setupOptions()
         {
-            frmRuleRssOptions options = new frmRuleRssOptions(_options);
-            options.Closed += options_Closed;
-            return options;
+            return _options;
         }
+          public override void onOptionsChanged(object sender, EventArgs eventArgs)
+          {
+              base.onOptionsChanged(sender,eventArgs);
+              _options = sender as rssOptions; 
+          }
 
         public override Size preferredSize()
         {
             return new Size(150, 105);
-        }
-
-        void options_Closed(object sender, EventArgs e)
-        {
-            frmRuleRssOptions options = (frmRuleRssOptions) sender;
-
-            if (options.DialogResult == DialogResult.OK)
-            {
-                loadRuleItemDetails(_options);
-            }
         }
 
         public void resetReader()
@@ -255,15 +247,27 @@ namespace ruleEngine.ruleItems
     }
 
     [Serializable]
-    public class rssOptions
+    public class rssOptions : BaseOptions
     {
         [XmlElement]
         public string imageUrl;
+
         [XmlElement]
         public string url { get; set; }
+
         [XmlElement]
-        public string title { get; set;}
+        public string title { get; set; }
+
         [XmlElement]
         public string website { get; set; }
+
+
+        public override string typedName
+        {
+            get
+            {
+                return "RuleRss";
+            }
+        }
     }
 }

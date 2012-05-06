@@ -89,84 +89,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="crossThreads.cs" />
-    <Compile Include="ctlPythonSetting.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ctlPythonSetting.Designer.cs">
-      <DependentUpon>ctlPythonSetting.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ctlRule.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ctlRule.Designer.cs">
-      <DependentUpon>ctlRule.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ctlRuleItemWidget.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="CursorUtil.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="ItemMovedArgs.cs" />
-    <Compile Include="frmQuestion.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmQuestion.Designer.cs">
-      <DependentUpon>frmQuestion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmDebug.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmDebug.Designer.cs">
-      <DependentUpon>frmDebug.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmException.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmException.Designer.cs">
-      <DependentUpon>frmException.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmPythonParameters.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmPythonParameters.Designer.cs">
-      <DependentUpon>frmPythonParameters.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmRuleEdit.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmRuleEdit.Designer.cs">
-      <DependentUpon>frmRuleEdit.cs</DependentUpon>
-    </Compile>
     <Compile Include="guidTypes\ctlRuleItemWidgetGuid.cs" />
     <Compile Include="guidTypes\lineChainGuid.cs" />
     <Compile Include="guidTypes\pinGuid.cs" />
     <Compile Include="guidTypes\ruleItemGuid.cs" />
     <Compile Include="IpinData.cs" />
+    <Compile Include="nodes\key.cs" />
+    <Compile Include="nodes\Node.cs" />
+    <Compile Include="nodes\sensor.cs" />
+    <Compile Include="nodes\sensorOpts.cs" />
+    <Compile Include="nodes\_transmitter.cs" />
     <Compile Include="pinDataTypes\pinDataNumber.cs" />
     <Compile Include="pinDataTypes\pinDataString.cs" />
     <Compile Include="pinDataTypes\pinDataTrigger.cs" />
     <Compile Include="pinDirection.cs" />
+    <Compile Include="ruleItems\BaseOptions.cs" />
     <Compile Include="ruleItems\Basic logic\ruleItem_switch.cs" />
     <Compile Include="ruleItems\Basic logic\ruleItem_HTMLStripper.cs" />
     <Compile Include="ruleItems\Basic logic\ruleItem_msgDelay.cs" />
-    <Compile Include="ruleItems\frmFileWriteOptions.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ruleItems\frmFileWriteOptions.Designer.cs">
-      <DependentUpon>frmFileWriteOptions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ruleItems\frmSerialPortOptions.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ruleItems\frmSerialPortOptions.Designer.cs">
-      <DependentUpon>frmSerialPortOptions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ruleItems\frmWeatherOptions.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ruleItems\frmWeatherOptions.Designer.cs">
-      <DependentUpon>frmWeatherOptions.cs</DependentUpon>
-    </Compile>
+    <Compile Include="ruleItems\IFormOptions.cs" />
     <Compile Include="ruleItems\IScriptEngine.cs" />
     <Compile Include="lineChain-xml.cs" />
     <Compile Include="lineChain.cs" />
@@ -189,18 +133,6 @@
     <Compile Include="ruleItems\Basic logic\ruleItem-not.cs" />
     <Compile Include="ruleItems\Basic logic\ruleItem-or.cs" />
     <Compile Include="ruleItems\Basic logic\ruleItem-splitter.cs" />
-    <Compile Include="ruleItems\ctlCheckEmail.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ruleItems\ctlCheckEmail.Designer.cs">
-      <DependentUpon>ctlCheckEmail.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ruleItems\frmCheckEmailOptions.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ruleItems\frmCheckEmailOptions.Designer.cs">
-      <DependentUpon>frmCheckEmailOptions.cs</DependentUpon>
-    </Compile>
     <Compile Include="ruleItems\ruleItemBase.cs">
     </Compile>
     <Compile Include="ruleItems\ruleItemEmail.cs" />
@@ -208,66 +140,23 @@
     <Compile Include="ruleItems\ruleItemRss.cs" />
     <Compile Include="ruleItems\ruleItemScript.cs" />
     <Compile Include="ruleItems\ruleItemWeather.cs" />
+    <Compile Include="ruleItems\Sensors\ruleItemDigitalIn.cs" />
+    <Compile Include="ruleItems\Sensors\ruleItemDigitalOut.cs" />
+    <Compile Include="ruleItems\Sensors\ruleItemPWM.cs" />
+    <Compile Include="ruleItems\Sensors\ruleItemSensor.cs" />
+    <Compile Include="ruleItems\Sensors\ruleItemTriac.cs" />
     <Compile Include="ruleItems\Wallboard\ruleItemWallboard.cs" />
-    <Compile Include="ruleItems\Starts\ctlTimeInterval.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ruleItems\Starts\ctlTimeInterval.Designer.cs">
-      <DependentUpon>ctlTimeInterval.cs</DependentUpon>
-    </Compile>
     <Compile Include="ruleItems\imapChecker.cs" />
     <Compile Include="ruleItems\Starts\ruleItem-atTime.cs" />
     <Compile Include="ruleItems\Starts\ruleItem-startRun.cs" />
     <Compile Include="ruleItems\Starts\ruleItem-timeInterval.cs" />
     <Compile Include="ruleItems\ToolboxRuleCategoryAttribute.cs" />
-    <Compile Include="ruleItems\windows\ctlIsProcRunning.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ruleItems\windows\ctlIsProcRunning.Designer.cs">
-      <DependentUpon>ctlIsProcRunning.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ruleItems\windows\ctlRunFile.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ruleItems\windows\ctlRunFile.Designer.cs">
-      <DependentUpon>ctlRunFile.cs</DependentUpon>
-    </Compile>
     <Compile Include="ruleItems\windows\desktopMessageOptions.cs" />
     <Compile Include="ruleItems\windows\frmDesktopMessage.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ruleItems\windows\frmDesktopMessage.Designer.cs">
       <DependentUpon>frmDesktopMessage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ruleItems\windows\FrmDesktopMessageOptions.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ruleItems\windows\FrmDesktopMessageOptions.Designer.cs">
-      <DependentUpon>FrmDesktopMessageOptions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ruleItems\windows\frmPickProcess.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ruleItems\windows\frmPickProcess.Designer.cs">
-      <DependentUpon>frmPickProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ruleItems\frmRuleRssOptions.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ruleItems\frmRuleRssOptions.Designer.cs">
-      <DependentUpon>frmRuleRssOptions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ruleItems\windows\frmRunExeOptions.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ruleItems\windows\frmRunExeOptions.Designer.cs">
-      <DependentUpon>frmRunExeOptions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ruleItems\Wallboard\frmWallboardOptions.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ruleItems\Wallboard\frmWallboardOptions.Designer.cs">
-      <DependentUpon>frmWallboardOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="ruleItems\windows\ruleItem-desktopMessage.cs" />
     <Compile Include="ruleItems\windows\ruleItem-isProcessRunning.cs" />
@@ -279,12 +168,6 @@
     <Compile Include="ruleItems\windows\WMI\WMIOptions.cs" />
     <Compile Include="ruleItems\windows\WMI\ruleItem_WMI_DiskSpace.cs" />
     <Compile Include="ruleItems\windows\WMI\ruleItem_WMI_networkThroughput.cs" />
-    <Compile Include="ruleItems\windows\WMI\frmWMIOptions.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ruleItems\windows\WMI\frmWMIOptions.Designer.cs">
-      <DependentUpon>frmWMIOptions.cs</DependentUpon>
-    </Compile>
     <Compile Include="ruleItems\windows\WMI\ruleItem_WMI_Temperature.cs" />
     <Compile Include="stringExtensions.cs" />
     <Compile Include="timeline.cs" />
@@ -297,96 +180,14 @@
     <Compile Include="XmlWriterExtender.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ctlPythonSetting.resx">
-      <DependentUpon>ctlPythonSetting.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ctlRule.resx">
-      <DependentUpon>ctlRule.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ctlRuleItemWidget.resx">
-      <DependentUpon>ctlRuleItemWidget.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmQuestion.resx">
-      <DependentUpon>frmQuestion.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmDebug.resx">
-      <DependentUpon>frmDebug.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmException.resx">
-      <DependentUpon>frmException.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmPythonParameters.resx">
-      <DependentUpon>frmPythonParameters.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmRuleEdit.resx">
-      <DependentUpon>frmRuleEdit.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="ruleItems\ctlCheckEmail.resx">
-      <DependentUpon>ctlCheckEmail.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ruleItems\frmCheckEmailOptions.resx">
-      <DependentUpon>frmCheckEmailOptions.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ruleItems\frmFileWriteOptions.resx">
-      <DependentUpon>frmFileWriteOptions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ruleItems\frmSerialPortOptions.resx">
-      <DependentUpon>frmSerialPortOptions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ruleItems\frmWeatherOptions.resx">
-      <DependentUpon>frmWeatherOptions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ruleItems\Starts\ctlTimeInterval.resx">
-      <DependentUpon>ctlTimeInterval.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ruleItems\windows\ctlIsProcRunning.resx">
-      <DependentUpon>ctlIsProcRunning.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ruleItems\windows\ctlRunFile.resx">
-      <DependentUpon>ctlRunFile.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="ruleItems\windows\frmDesktopMessage.resx">
       <DependentUpon>frmDesktopMessage.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ruleItems\windows\FrmDesktopMessageOptions.resx">
-      <DependentUpon>FrmDesktopMessageOptions.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ruleItems\windows\frmPickProcess.resx">
-      <DependentUpon>frmPickProcess.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ruleItems\frmRuleRssOptions.resx">
-      <DependentUpon>frmRuleRssOptions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ruleItems\windows\frmRunExeOptions.resx">
-      <DependentUpon>frmRunExeOptions.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ruleItems\Wallboard\frmWallboardOptions.resx">
-      <DependentUpon>frmWallboardOptions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ruleItems\windows\WMI\frmWMIOptions.resx">
-      <DependentUpon>frmWMIOptions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -478,7 +279,12 @@
     <Content Include="Resources\database.png" />
     <Content Include="Resources\Text_Document_Icon_32.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\transmitterDriver\transmitterDriver2010.csproj">
+      <Project>{00AAF76B-138C-4E79-960B-4540924D43C4}</Project>
+      <Name>transmitterDriver2010</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

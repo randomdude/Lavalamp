@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using netGui.nodeEditForms;
 using ruleEngine;
+using ruleEngine.nodes;
 using transmitterDriver;
 
 namespace netGui
@@ -18,6 +19,7 @@ namespace netGui
         private readonly Dictionary<string, IntPtr> _openRuleWindows = new Dictionary<string, IntPtr>();
         private static readonly List<Node> _nodes = new List<Node>();
         private Timer timelineTimer = new Timer();
+        private frmWait _waitForm;
 
         [Pure]
         public  ITransmitter getMyDriver()
@@ -124,7 +126,7 @@ namespace netGui
             AddNodeForm.ShowDialog(this);
             if (!AddNodeForm.cancelled)
             {
-                addNewNode(AddNodeForm.NewNode);
+                addNewNode(AddNodeForm.newNode);
             }
 
             AddNodeForm.Dispose();
@@ -133,7 +135,9 @@ namespace netGui
         private void addNewNode(Node newNode)
         {
             Contract.Requires(newNode != null);
-            newNode.OwnerWindow = this;
+
+            newNode.addRequiredWaitWhen(nodeActivityStarted,nodeActivityFinished);
+           
             // Connect to node and fill fields
             try
             {
@@ -177,6 +181,19 @@ namespace netGui
             listItem.Tag = newNode;
             lstNodes.Items.Add(listItem);
             _nodes.Add(newNode);
+        }
+
+        private void nodeActivityFinished(object sender)
+        {
+            _waitForm.Close();
+        }
+
+        private void nodeActivityStarted(object sender)
+        {
+            _waitForm = new frmWait();
+            _waitForm.Show(this);
+            _waitForm.center();
+            
         }
 
         private void mnuItemGeneralOpts(object sender, EventArgs e)
@@ -337,7 +354,7 @@ namespace netGui
 
         private void showRuleEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ruleEngine.frmRuleEdit editor = new ruleEngine.frmRuleEdit(onSaveRule, onCloseRuleEditorDialog);
+            frmRuleEdit editor = new frmRuleEdit(onSaveRule, onCloseRuleEditorDialog);
             editor.Show();
         }
 

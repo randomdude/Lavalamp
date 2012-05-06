@@ -21,6 +21,11 @@ namespace ruleEngine.ruleItems
             return "HTML stripper";
         }
 
+        public override IFormOptions setupOptions()
+        {
+            return null;
+        }
+
         public override Dictionary<string, pin> getPinInfo()
         {
             Dictionary<string, pin> pinList = new Dictionary<string, pin>();

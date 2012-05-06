@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using ruleEngine;
 using ruleEngine.pinDataTypes;
 using Timer = System.Threading.Timer;
 
@@ -14,7 +12,7 @@ namespace ruleEngine.ruleItems.Starts
     {
         private Timer _intervalCountdown;
         private Object _intervalCountdownLock = new object();
-        itemControls.ctlTimeInterval _timer = new itemControls.ctlTimeInterval();
+        public TimeOptions options = new TimeOptions();
 
         [XmlElement("timer")] public int intervalSec = 5;
 
@@ -25,20 +23,22 @@ namespace ruleEngine.ruleItems.Starts
 
         public override string ruleName() { return "Interval timer"; }
 
+        public override string caption()
+        {
+            return  "Fires every " + intervalSec + " sec";
+        }
+
         public ruleItem_timeInterval()
         {
-            _timer.Visible = true;
-            _timer.getInterval = new getIntervalDelegate(handleGetTimerInterval);
-            _timer.setInterval = new setIntervalDelegate(handleSetTimerInterval);
-
-            controls.Add(_timer);
+            options.minutes = 5;
         }
 
-        public override void onAfterLoad()
+        public override IFormOptions setupOptions()
         {
-            // Set this here since we need to have finished loading the object - we need the timerLow
-            _timer.setTimeCaption(intervalSec);
+            return options;
         }
+
+
 
         private int handleGetTimerInterval()
         {
@@ -50,25 +50,13 @@ namespace ruleEngine.ruleItems.Starts
             intervalSec = newLow;
         }
 
-        public override ContextMenuStrip addMenus(ContextMenuStrip mnuParent)
-        {
-            ContextMenuStrip menus = base.addMenus(mnuParent);
-            return _timer.addMenus(menus);
-        }
-
-        public override void onResize(Control parent)
-        {
-            _timer.Left = (parent.Width / 2) - (_timer.Width / 2);
-            _timer.Top  = (parent.Height/ 2) - (_timer.Height / 2);
-        }
-
         public override void start()
         {
             lock (_intervalCountdownLock)
             {
                 _intervalCountdown = new Timer(timerCallbackSet, null, intervalSec * 1000, intervalSec * 1000);
             }
-            _timer.setTo(false);
+            //_timer.setTo(false);
         }
         
         private void timerCallbackSet(object state)
@@ -81,7 +69,7 @@ namespace ruleEngine.ruleItems.Starts
             cancelArgs.newValue = new pinDataBool(false, this, pinInfo["IntervalIsNow"]);
             onRequestNewTimelineEventInFuture(cancelArgs, 2);
 
-            _timer.setTo(false);
+        //    _timer.setTo(false);
         }
 
         public override void stop()
@@ -91,7 +79,7 @@ namespace ruleEngine.ruleItems.Starts
                 if (_intervalCountdown != null)
                     _intervalCountdown.Dispose();
             }
-            _timer.setTo(false);
+          //  _timer.setTo(false);
         }
 
         public override System.Drawing.Image background()
@@ -101,7 +89,7 @@ namespace ruleEngine.ruleItems.Starts
 
         public override Dictionary<String, pin> getPinInfo()
         {
-            _timer.setTimeCaption(intervalSec);
+            //_timer.setTimeCaption(intervalSec);
 
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
             pinList.Add("IntervalIsNow", new pin { name = "IntervalIsNow", description = "Time has elapsed", direction = pinDirection.output });

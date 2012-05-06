@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
-using System.Windows.Forms;
 using System.Xml.Serialization;
 using ruleEngine.pinDataTypes;
 using ruleEngine.Properties;
-using ruleEngine;
 
 namespace ruleEngine.ruleItems.windows
 {
@@ -14,19 +11,15 @@ namespace ruleEngine.ruleItems.windows
     [ToolboxRuleCategory("Windows tools")]
     public class ruleItem_isProcessRunning : ruleItemBase
     {
-        private readonly ctlIsProcRunning control = new ctlIsProcRunning();
 
-        [XmlElement("processName")]
-        public string processName { get { return control.processName; } set { control.processName = value; } }
+        [XmlElement("options")]
+        public PickProcessOptions options = new PickProcessOptions();
 
-        public override System.Drawing.Size preferredSize()
+        public string processName { get { return options.pName; } set { options.pName = value; } }
+
+        public override string caption()
         {
-            return new Size ( control.Width, control.Height);
-        }
-
-        public ruleItem_isProcessRunning()
-        {
-            this.controls.Add(control);
+            return "Is " + processName + " Running?";
         }
 
         public override string ruleName() { return "Is process running?"; }
@@ -34,6 +27,11 @@ namespace ruleEngine.ruleItems.windows
         public override System.Drawing.Image background()
         {
             return Resources.Gear; 
+        }
+
+        public override IFormOptions setupOptions()
+        {
+            return options;
         }
 
         public override Dictionary<String, pin> getPinInfo()
@@ -46,16 +44,10 @@ namespace ruleEngine.ruleItems.windows
             return pinList;
         }
 
-        public override ContextMenuStrip addMenus(ContextMenuStrip mnuParent)
-        {
-            ContextMenuStrip toRet = base.addMenus(mnuParent);
-
-            return control.addMenus(toRet);
-        }
 
         public override void evaluate()
         {
-            bool trigger = (bool)pinInfo["trigger"].value.asBoolean();
+            bool trigger = this.pinInfo["trigger"].value.asBoolean();
 
             if (!trigger)
             {
@@ -65,7 +57,7 @@ namespace ruleEngine.ruleItems.windows
             tristate newState = tristate.no;
             foreach (Process runningProcess in Process.GetProcesses())
             {
-                if (runningProcess.ProcessName.ToUpper().Trim() == control.processName.ToUpper().Trim())
+                if (runningProcess.ProcessName.ToUpper().Trim() == processName.ToUpper().Trim())
                 {
                     newState = tristate.yes;
                     break;
