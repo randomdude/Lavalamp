@@ -7,11 +7,14 @@ using virtualNodeNetwork;
 
 namespace TestProjects.virtualNetworkTests
 {
+    using System.Diagnostics;
 
     public abstract class commandTests<networkTypeToTest> : networkTest
         where networkTypeToTest : virtualNetworkBase
     {
         public abstract void verifyNodeIsPingable();
+
+        readonly AutoResetEvent waitTillNodeIdleEvent = new AutoResetEvent(false);
         protected void _verifyNodeIsPingable()
         {
             // Create a new virtual network and node. Ping the node and verify that we get a successful response.
@@ -20,13 +23,13 @@ namespace TestProjects.virtualNetworkTests
             using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName, true))
             {
                 virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Ping test node");
-
+                testNode.onStateChange += this.OnStateChange;
                 startNetworkInNewThread(testVirtualNetwork);
 
                 // Connect to this network with a new driver class
                 transmitterDriver.transmitter driver = new transmitterDriver.transmitter(testVirtualNetwork.getDriverConnectionPointName(), false, null);
                 driver.doPing(virtualNodeID);
-                Thread.Sleep(1000);
+                waitTillNodeIdleEvent.WaitOne(500);
 
                 if (testNode.state != nodeState.idle)
                     Assert.Fail("Node did not return to idle state after a successful ping");
@@ -45,6 +48,7 @@ namespace TestProjects.virtualNetworkTests
             using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName, true))
             {
                 virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Ping test node");
+                testNode.onStateChange += this.OnStateChange;
                 startNetworkInNewThread(testVirtualNetwork);
 
                 // Connect to this network with a new driver class
@@ -58,7 +62,7 @@ namespace TestProjects.virtualNetworkTests
                 try
                 {
                     driver.doPing(virtualNodeID);
-                    Thread.Sleep(1000);
+                    waitTillNodeIdleEvent.WaitOne(1000);
                 }
                 catch (commsTimeoutException)
                 {
@@ -86,15 +90,17 @@ namespace TestProjects.virtualNetworkTests
             {
                 using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName, true))
                 {
+                    
                     virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, testNodeName);
+                    Debug.WriteLine("Name: " + testNodeName);
                     startNetworkInNewThread(testVirtualNetwork);
 
                     // Connect to this network with a new driver class
                     transmitterDriver.transmitter driver = new transmitterDriver.transmitter(testVirtualNetwork.getDriverConnectionPointName(),
                                                                      false, null);
-
+                    testNode.onStateChange += this.OnStateChange;
                     string recievedName = driver.doIdentify(virtualNodeID);
-                    Thread.Sleep(1000);
+                    waitTillNodeIdleEvent.WaitOne(1500);
 
                     Assert.AreEqual(testNode.name, recievedName, "Node identified itself with an incorrect name");
 
@@ -114,6 +120,7 @@ namespace TestProjects.virtualNetworkTests
             using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName, true))
             {
                 virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Ping test node");
+                testNode.onStateChange += this.OnStateChange;
                 startNetworkInNewThread(testVirtualNetwork);
 
                 // Connect to this network with a new driver class
@@ -124,7 +131,7 @@ namespace TestProjects.virtualNetworkTests
                 try
                 {
                     driver.doPing(virtualNodeID + 1);
-                    Thread.Sleep(1000);
+                    waitTillNodeIdleEvent.WaitOne(1000);
                 }
                 catch (commsTimeoutException)
                 {
@@ -157,13 +164,14 @@ namespace TestProjects.virtualNetworkTests
 
                     // make our node
                     virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Sensor count node", sensorsToAdd);
+                    testNode.onStateChange += this.OnStateChange;
                     startNetworkInNewThread(testVirtualNetwork);
 
                     // Connect to this network with a new driver class
                     transmitterDriver.transmitter driver = new transmitterDriver.transmitter(testVirtualNetwork.getDriverConnectionPointName(), false, null);
 
                     int recievedCount = driver.doGetSensorCount(virtualNodeID);
-                    Thread.Sleep(1000);
+                    waitTillNodeIdleEvent.WaitOne(1000);
 
                     Assert.AreEqual(sensorsToAddCount, recievedCount, "Node reported wrong sensor count");
 
@@ -180,6 +188,7 @@ namespace TestProjects.virtualNetworkTests
             const int virtualNodeID = 0x01;
 
             // Do this a number of times with different amounts of sensors.
+            
             foreach (sensorTypeEnum typeToTest in Enum.GetValues(typeof(sensorTypeEnum)))
             {
                 using (virtualNetworkBase testVirtualNetwork = virtualNetworkCreator.makeNew<networkTypeToTest>(pipeName,true))
@@ -190,16 +199,16 @@ namespace TestProjects.virtualNetworkTests
 
                     // make our node
                     virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Sensor type node", sensorsToAdd);
+                    
                     startNetworkInNewThread(testVirtualNetwork);
-
                     // Connect to this network with a new driver class
                     transmitterDriver.transmitter driver = new transmitterDriver.transmitter(testVirtualNetwork.getDriverConnectionPointName(), false, null);
-
+                    testNode.onStateChange += OnStateChange;
                     // Ask it for the type of the first sensor
                     sensorType recievedType = driver.doGetSensorType(virtualNodeID, 1);
-                    Thread.Sleep(1000);
+                    this.waitTillNodeIdleEvent.WaitOne(1500);
 
-                    // Verify that the correct sensor type is recieved
+                    // Verify that the correct sensor type is received
                     Assert.AreEqual(typeToTest, recievedType.enumeratedType, "Node reported incorrect sensor type");
 
                     Assert.AreEqual(nodeState.idle, testNode.state, "Node did not return to idle state after doIdentify");
@@ -230,20 +239,27 @@ namespace TestProjects.virtualNetworkTests
 
                     // Connect to this network with a new driver class
                     transmitterDriver.transmitter driver = new transmitterDriver.transmitter(testVirtualNetwork.getDriverConnectionPointName(), false, null);
-
+                    testNode.onStateChange += OnStateChange;
                     // Ask it for the type of the first 'dummy' sensor, which is always generic_digital_in
                     sensorType recievedType = driver.doGetSensorType(virtualNodeID, 1);
-                    Thread.Sleep(1000);
+                    this.waitTillNodeIdleEvent.WaitOne(1500);
                     Assert.AreEqual(sensorTypeEnum.generic_digital_in, recievedType.enumeratedType, "Node reported incorrect sensor type");
 
                     // And now check the type of the second sensor.
                     recievedType = driver.doGetSensorType(virtualNodeID, 2);
-                    Thread.Sleep(1000);
+                    this.waitTillNodeIdleEvent.WaitOne(1500);
                     Assert.AreEqual(typeToTest, recievedType.enumeratedType, "Node reported incorrect sensor type");
 
                     Assert.AreEqual(nodeState.idle, testNode.state, "Node did not return to idle state after doIdentify");
                 }
             }
+        }
+
+        private void OnStateChange(virtualNodeBase nodeBase, nodeState state)
+        {
+            //signal node is idle
+            if (state == nodeState.idle)
+                this.waitTillNodeIdleEvent.Set();
         }
 
         public abstract void verifyNodeCanSetGenericDigitalOutCorrectly();
@@ -259,6 +275,7 @@ namespace TestProjects.virtualNetworkTests
                 sensorsToAdd.Add(virtualNodeSensor.makeSensor(sensorTypeEnum.generic_digital_out, 1));
 
                 virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Digital output test node", sensorsToAdd);
+                testNode.onStateChange += this.OnStateChange;
                 startNetworkInNewThread(testVirtualNetwork);
 
                 // Connect to this network with a new driver class
@@ -282,7 +299,7 @@ namespace TestProjects.virtualNetworkTests
                 foreach (int stateToSetTo in new[] { 0, 1, 1, 0, 0, 1 })
                 {
                     driver.doSetGenericOut(virtualNodeID, (short) stateToSetTo, 1);
-                    Thread.Sleep(500);
+                    waitTillNodeIdleEvent.WaitOne(500);
 
                     Assert.AreEqual(stateToSetTo, sensorState, "Node did not set sensor output value to be correct");
 
@@ -307,6 +324,7 @@ namespace TestProjects.virtualNetworkTests
                 sensorsToAdd.Add(sensorIn);
 
                 virtualNodeBase testNode = testVirtualNetwork.createNode(virtualNodeID, "Digital input test node", sensorsToAdd);
+                testNode.onStateChange += this.OnStateChange;
                 startNetworkInNewThread(testVirtualNetwork);
 
                 // Connect to this network with a new driver class

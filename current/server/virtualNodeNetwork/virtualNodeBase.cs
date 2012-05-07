@@ -104,10 +104,11 @@ namespace virtualNodeNetwork
         /// <param name="newState"></param>
         protected void stateChange(nodeState newState)
         {
+            state = newState;
             if (onStateChange != null)
                 onStateChange.Invoke(this, newState);
 
-            state = newState;
+           
         }
 
         /// <summary>
