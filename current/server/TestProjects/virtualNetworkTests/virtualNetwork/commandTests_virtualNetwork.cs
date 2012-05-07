@@ -6,7 +6,7 @@ namespace TestProjects.virtualNetworkTests
 {
     /// <summary>
     /// These tests are an implementation of commandTests which test the operation of a virtual network.
-    /// This verifies end-to-end operation using the c# driver code, independantly of any PIC configuration.
+    /// This verifies end-to-end operation using the c# driver code, independently of any PIC configuration.
     /// </summary>
     [TestClass]
     public class commandTests_virtualNetwork : commandTests<CSharpNetwork>

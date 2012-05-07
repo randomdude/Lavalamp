@@ -12,7 +12,7 @@ namespace virtualNodeNetwork
     {
         // This simulated network runs via a named pipe. This is its name and the pipe itself.
         private readonly string _pipename;
-
+        readonly AutoResetEvent blockTillExiting = new AutoResetEvent(false);
         /// <summary>
         /// The named pipe we use for comms
         /// </summary>
@@ -65,6 +65,7 @@ namespace virtualNodeNetwork
         {
             log("Virtual network awaiting connection");
             _pipe.BeginWaitForConnection(handleConnection, null);
+            blockTillExiting.WaitOne();
         }
 
         private void handleConnection(IAsyncResult ar)
@@ -72,8 +73,11 @@ namespace virtualNodeNetwork
             _handleConnection(ar);
             try
             {
-                _pipe.Disconnect();
-                _pipe.Dispose();
+                if (!_pipe.SafePipeHandle.IsClosed)
+                {
+                    _pipe.Disconnect();
+                    _pipe.Dispose();
+                }
             }
             catch (ObjectDisposedException)
             {
@@ -83,6 +87,10 @@ namespace virtualNodeNetwork
             {
                 _pipe = new NamedPipeServerStream(_pipename, PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
                 _pipe.BeginWaitForConnection(handleConnection, null);
+            }
+            else
+            {
+                blockTillExiting.Set();
             }
         }
 
