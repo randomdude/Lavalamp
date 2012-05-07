@@ -14,55 +14,119 @@ namespace TestProjects.virtualNetworkTests
         [TestMethod]
         public override void verifyNodeIsPingable()
         {
-            base._verifyNodeIsPingable();
+            try
+            {
+                base._verifyNodeIsPingable();
+            }catch(Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
         }
 
         [TestMethod]
         public override void verifyNodeNotPingableWithIncorrectAuthResponse()
         {
-            base._verifyNodeNotPingableWithIncorrectAuthResponse();
+            try
+            {
+                base._verifyNodeNotPingableWithIncorrectAuthResponse();
+            }
+            catch(Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
         }
+            
 
         [TestMethod]
         public override void verifyNodeIgnoresPacketsAddressedToOthers()
         {
-            base._verifyNodeIgnoresPacketsAddressedToOthers();
+            try
+            {
+                base._verifyNodeIgnoresPacketsAddressedToOthers();
+            }
+            catch(Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
         }
 
         [TestMethod]
         public override void verifyNodeReturnsCorrectSensorCount()
         {
-            base._verifyNodeReturnsCorrectSensorCount();
+            try
+            {
+                base._verifyNodeReturnsCorrectSensorCount();
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
         }
 
         [TestMethod]
         public override void verifyNodeReturnsCorrectSensorTypes()
         {
-            base._verifyNodeReturnsCorrectSensorTypes();
+            try
+            {
+                base._verifyNodeReturnsCorrectSensorTypes();
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
         }
 
         [TestMethod]
         public override void verifyNodeReturnsCorrectSensorTypesForSecondSensor()
         {
-            base._verifyNodeReturnsCorrectSensorTypesForSecondSensor();
+            try
+            {
+                base._verifyNodeReturnsCorrectSensorTypesForSecondSensor();
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
         }
 
         [TestMethod]
         public override void verifyNodeRespondsCorrectlyToDoIdentify()
         {
-            base._verifyNodeRespondsCorrectlyToDoIdentify();
+            try
+            {
+                base._verifyNodeRespondsCorrectlyToDoIdentify();
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
         }
 
         [TestMethod]
         public override void verifyNodeCanSetGenericDigitalOutCorrectly()
         {
-            base._verifyNodeCanSetGenericDigitalOutCorrectly();
+            try
+            {
+                base._verifyNodeCanSetGenericDigitalOutCorrectly();
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
+            
         }
 
         [TestMethod]
         public override void verifyNodeCanGetGenericDigitalInCorrectly()
         {
-            base._verifyNodeCanGetGenericDigitalInCorrectly();
+            try
+            {
+                base._verifyNodeCanGetGenericDigitalInCorrectly();
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
         }
     }
 }
