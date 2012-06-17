@@ -146,7 +146,7 @@ void sendWallMessage(HANDLE hndport, const char* sayit, char pos, char style,  c
 		' ',' ',			// ignored
 		0x04				// "End of Transmission" character
 	};
-	bool s = WriteFile(hndport, textFileLenPacket, textFileLenPacketLen, &done, NULL);
+	BOOL s = WriteFile(hndport, textFileLenPacket, textFileLenPacketLen, &done, NULL);
 	if (!s || done != textFileLenPacketLen)
 	{
 		// No error handling here.. oops.

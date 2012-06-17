@@ -52,8 +52,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webGui08", "webGui\webGui08
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lavalampService08", "lavalampService\lavalampService08.csproj", "{F6C3F847-D7FB-407A-9F42-639A29CF641A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webGui", "webGui\webGui.csproj", "{26E15F3E-E5A6-4D38-8FA3-BD0E1C4A820C}"
-EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -269,21 +267,6 @@ Global
 		{F6C3F847-D7FB-407A-9F42-639A29CF641A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F6C3F847-D7FB-407A-9F42-639A29CF641A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F6C3F847-D7FB-407A-9F42-639A29CF641A}.Release|Win32.ActiveCfg = Release|Any CPU
-		{26E15F3E-E5A6-4D38-8FA3-BD0E1C4A820C}.clr|Any CPU.ActiveCfg = Release|Any CPU
-		{26E15F3E-E5A6-4D38-8FA3-BD0E1C4A820C}.clr|Any CPU.Build.0 = Release|Any CPU
-		{26E15F3E-E5A6-4D38-8FA3-BD0E1C4A820C}.clr|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{26E15F3E-E5A6-4D38-8FA3-BD0E1C4A820C}.clr|Mixed Platforms.Build.0 = Release|Any CPU
-		{26E15F3E-E5A6-4D38-8FA3-BD0E1C4A820C}.clr|Win32.ActiveCfg = Release|Any CPU
-		{26E15F3E-E5A6-4D38-8FA3-BD0E1C4A820C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26E15F3E-E5A6-4D38-8FA3-BD0E1C4A820C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26E15F3E-E5A6-4D38-8FA3-BD0E1C4A820C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{26E15F3E-E5A6-4D38-8FA3-BD0E1C4A820C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{26E15F3E-E5A6-4D38-8FA3-BD0E1C4A820C}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{26E15F3E-E5A6-4D38-8FA3-BD0E1C4A820C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26E15F3E-E5A6-4D38-8FA3-BD0E1C4A820C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26E15F3E-E5A6-4D38-8FA3-BD0E1C4A820C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{26E15F3E-E5A6-4D38-8FA3-BD0E1C4A820C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{26E15F3E-E5A6-4D38-8FA3-BD0E1C4A820C}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
