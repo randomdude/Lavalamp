@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using virtualNodeNetwork;
+using System.IO;
 
 namespace TestProjects.virtualNetworkTests
 {
@@ -12,6 +13,7 @@ namespace TestProjects.virtualNetworkTests
     public class commandTests_virtualNetwork : commandTests<CSharpNetwork>
     {
         [TestMethod]
+        [DeploymentItem(@"lavalampdll.dll")]
         public override void verifyNodeIsPingable()
         {
             try
@@ -24,6 +26,7 @@ namespace TestProjects.virtualNetworkTests
         }
 
         [TestMethod]
+        [DeploymentItem(@"lavalampdll.dll")]
         public override void verifyNodeNotPingableWithIncorrectAuthResponse()
         {
             try
@@ -38,6 +41,7 @@ namespace TestProjects.virtualNetworkTests
             
 
         [TestMethod]
+        [DeploymentItem(@"lavalampdll.dll")]
         public override void verifyNodeIgnoresPacketsAddressedToOthers()
         {
             try
@@ -51,6 +55,7 @@ namespace TestProjects.virtualNetworkTests
         }
 
         [TestMethod]
+        [DeploymentItem(@"lavalampdll.dll")]
         public override void verifyNodeReturnsCorrectSensorCount()
         {
             try
@@ -64,6 +69,7 @@ namespace TestProjects.virtualNetworkTests
         }
 
         [TestMethod]
+        [DeploymentItem(@"lavalampdll.dll")]
         public override void verifyNodeReturnsCorrectSensorTypes()
         {
             try
@@ -77,6 +83,7 @@ namespace TestProjects.virtualNetworkTests
         }
 
         [TestMethod]
+        [DeploymentItem(@"lavalampdll.dll")]
         public override void verifyNodeReturnsCorrectSensorTypesForSecondSensor()
         {
             try
@@ -90,6 +97,7 @@ namespace TestProjects.virtualNetworkTests
         }
 
         [TestMethod]
+        [DeploymentItem(@"lavalampdll.dll")]
         public override void verifyNodeRespondsCorrectlyToDoIdentify()
         {
             try
@@ -103,6 +111,7 @@ namespace TestProjects.virtualNetworkTests
         }
 
         [TestMethod]
+        [DeploymentItem(@"lavalampdll.dll")]
         public override void verifyNodeCanSetGenericDigitalOutCorrectly()
         {
             try
@@ -117,6 +126,7 @@ namespace TestProjects.virtualNetworkTests
         }
 
         [TestMethod]
+        [DeploymentItem(@"lavalampdll.dll")]
         public override void verifyNodeCanGetGenericDigitalInCorrectly()
         {
             try

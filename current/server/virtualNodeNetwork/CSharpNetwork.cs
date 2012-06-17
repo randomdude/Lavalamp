@@ -75,13 +75,18 @@ namespace virtualNodeNetwork
             {
                 if (!_pipe.SafePipeHandle.IsClosed)
                 {
-                    _pipe.Disconnect();
-                    _pipe.Dispose();
+                    lock(_pipe)
+                    {
+                        _pipe.Disconnect();
+                        _pipe.Dispose();
+                    }
                 }
             }
-            catch (ObjectDisposedException)
+            catch (Exception ex)
             {
-                // swallow it.
+                if (!disposing && !(ex is ObjectDisposedException))
+                    throw;
+                //else swallow it.
             }
             if (!disposing)
             {
@@ -97,12 +102,18 @@ namespace virtualNodeNetwork
         private void _handleConnection(IAsyncResult ar)
         {
             log("Client connected.");
-
-            lock (_pipe)
+            try
             {
-                _pipe.EndWaitForConnection(ar);
+                lock (_pipe)
+                {
+                    _pipe.EndWaitForConnection(ar);
+                }
             }
+            catch (ObjectDisposedException)
+            {
 
+                return;
+            }
             // Loop around, taking data sent to the network and broadcasting it to the nodes.
             // Return only on object distruction.
             while (true)
@@ -120,12 +131,18 @@ namespace virtualNodeNetwork
                 int bytesReadThisRead = 0;
                 try
                 {
-                    bytesReadThisRead = _pipe.Read(recievedBytes, bytesReadThisPacket, 1);
+                    lock (_pipe)
+                    {
+                        //this hopefully will stop an exception being thrown.. if the pipe has been 
+                        // disposed but it might not depending.
+                        if (_pipe.SafePipeHandle.IsClosed)
+                            return;
+                        bytesReadThisRead = _pipe.Read(recievedBytes, bytesReadThisPacket, 1);
+                    }
                 }
                 catch (ObjectDisposedException)
                 {
-                    // I hate needing to catch this exception when the pipe is disposed during
-                    // a blocking read, but I think it's the only way.
+                    
                     return;
                 }
 
@@ -176,10 +193,12 @@ namespace virtualNodeNetwork
 
         public override void Dispose()
         {
-            if (_pipe.IsConnected)
-                _pipe.Disconnect(); // racey!
+            if (_pipe.IsConnected) 
+                _pipe.Disconnect();
             _pipe.Close();
+
             disposing = true;
+         
         }
     }
 }

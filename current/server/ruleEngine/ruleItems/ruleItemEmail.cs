@@ -36,8 +36,8 @@ namespace ruleEngine.ruleItems
         public override void evaluate()
         {
             bool thisState = pinInfo["checkNow"].value.asBoolean();
-             
-            if ((lastState != thisState ) && (thisState == true))
+
+            if ((lastState != thisState) && (thisState == true))
             {
                 imapChecker mychecker = new imapChecker(options);
                 if (mychecker.newMail != pinInfo["newEmail"].value.asBoolean())

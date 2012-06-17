@@ -2,8 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Drawing;
     using System.Drawing.Drawing2D;
+    using System.Drawing.Imaging;
     using System.Windows.Forms;
     using System.Linq;
 
@@ -184,6 +186,7 @@
                 dest = (pin)this.currentlyConnecting.Tag;
                 source = (pin)endTarget.Tag;
             }
+            Contract.Assume(source != null && dest != null);
 
             this.currentlyConnecting.BackColor = this.normalPinColour;  // erase highlight
 
@@ -275,6 +278,7 @@
         /// <returns></returns>
         private bool isHandleUnderPoint(Point checkThis, Point cursor)
         {
+
             int offX = Math.Abs(checkThis.X - cursor.X);
             int offY = Math.Abs(checkThis.Y - cursor.Y);
 
@@ -457,7 +461,7 @@
             }
             else
             {
-                if (this.currentlyDraggingPoint != -1 && e.Button == System.Windows.Forms.MouseButtons.Left)
+                if (this.currentlyDraggingPoint > 0 && e.Button == MouseButtons.Left && this.currentlyDraggingPoint < currentlyDraggingLine.midPoints.Count)
                 {
                     // User is attempting to drag a wire corner handle
                     this.setTsStatus("");
@@ -496,7 +500,7 @@
         {
             Point prevPoint;
             Point nextPoint;
-            if (this.currentlyConextedPoint == 0)
+            if (this.currentlyConextedPoint == 0 && currentlyConextedPoint < currentlyConextedLine.midPoints.Count)
             {
                 prevPoint = this.currentlyConextedLine.start;
                 nextPoint = this.currentlyConextedLine.midPoints[this.currentlyConextedPoint];
@@ -507,7 +511,8 @@
                 prevPoint = this.currentlyConextedLine.start;
                 nextPoint = this.currentlyConextedLine.end;
             }
-            else if (this.currentlyConextedLine.midPoints.Count > this.currentlyConextedPoint +1)
+            else if (this.currentlyConextedLine.midPoints.Count > this.currentlyConextedPoint + 1 && 
+                        this.currentlyConextedPoint >= 0)
             {
                 prevPoint = this.currentlyConextedLine.midPoints[this.currentlyConextedPoint];
                 nextPoint = this.currentlyConextedLine.midPoints[this.currentlyConextedPoint + 1];

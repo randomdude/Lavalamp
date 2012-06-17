@@ -1,6 +1,7 @@
 ﻿namespace netGui
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Windows.Forms;
     using ruleEngine.nodes;
 
@@ -16,6 +17,7 @@
 
         private void txtId_TextChanged(object sender, EventArgs e)
         {
+            Contract.Requires(txtId.Text != null);
             Int16? parsedNodeId = null;
 
             try
@@ -46,6 +48,7 @@
 
         private void BtnOK_Click(object sender, EventArgs e)
         {
+            Contract.Requires(txtId.Text != null);
             this.newNode = new Node((Int16)Int32.Parse(txtId.Text));
 
             this.cancelled = false;

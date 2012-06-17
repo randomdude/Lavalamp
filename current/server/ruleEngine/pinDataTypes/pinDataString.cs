@@ -26,7 +26,7 @@ namespace ruleEngine.pinDataTypes
 
         public override Color getColour()
         {
-            return Color.Transparent;
+            return hasChanged ? Color.Green : Color.Transparent;
         }
 
         public override bool asBoolean()

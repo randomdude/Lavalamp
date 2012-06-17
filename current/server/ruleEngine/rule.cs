@@ -11,22 +11,39 @@ namespace ruleEngine
 {
     [Serializable]
     [XmlRootAttribute("rule") ]
-    public partial class rule : IXmlSerializable
+    public partial class rule : IXmlSerializable, IRule
     {
         public String name { get;  set; }
+
+        public string details
+        {
+            get
+            {
+                return String.Join("\n", this._errorList.Select(s => s.Message).ToArray());
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public bool toolboxPromoted;
         private ruleState _state;
 
         /// <summary>
         /// The state of our rule - running, stopped, etc. 
         /// </summary>
-        public ruleState state
+        public ruleState? state
         {
             get { return _state; }
             set
             {
-                _state = value;
-
+                if (value.HasValue)
+                    _state = value.Value;
+                else
+                {
+                    _state = ruleState.stopped;
+                }
                 // If there's a delegate hander, notify it that the status has changed
                 if (onStatusUpdate != null)
                     onStatusUpdate.Invoke(this);
@@ -50,6 +67,16 @@ namespace ruleEngine
         public delegate void onStatusUpdateDelegate(rule updating);
 
         private timeline _timeline = new timeline();
+
+        private List<Exception> _errorList = new List<Exception>();
+
+        public bool isErrored
+        { 
+            get
+            {
+                return _errorList.Any();
+            } 
+        }
 
         public int lineChainCount { get { return lineChains.Count; } }
         public int ruleItemCount { get { return ruleItems.Count; } }
@@ -162,6 +189,12 @@ namespace ruleEngine
             {
                 outputFile.Write(this.serialise());
             }
+        }
+
+        public void changeName(string newName)
+        {
+            //TODO Repository change to save the new name to disk
+            throw new NotImplementedException();
         }
 
         public void changeName(string path, string newName)
@@ -338,7 +371,14 @@ namespace ruleEngine
             ruleItems.Remove(toDelete.serial.ToString());
         }
 
+        public void addError(Exception s)
+        {
+            _errorList.Add(s);
+        }
 
-
+        public Exception getError()
+        {
+            return this.isErrored ? this._errorList[0] : null;
+        }
     }
 }

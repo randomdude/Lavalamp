@@ -10,6 +10,7 @@ using transmitterDriver;
 
 namespace netGui
 {
+    using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
     public partial class FrmMain : Form
@@ -18,7 +19,7 @@ namespace netGui
         private options _myOptions = new options();
         private readonly Dictionary<string, IntPtr> _openRuleWindows = new Dictionary<string, IntPtr>();
         private static readonly List<Node> _nodes = new List<Node>();
-        private Timer timelineTimer = new Timer();
+        private readonly Timer _timelineTimer = new Timer();
         private frmWait _waitForm;
 
         [Pure]
@@ -42,8 +43,8 @@ namespace netGui
         public FrmMain()
         {
             InitializeComponent();
-            timelineTimer.Interval = 100;
-            timelineTimer.Enabled = true;
+            this._timelineTimer.Interval = 100;
+            this._timelineTimer.Enabled = true;
         }
 		
         #region node interaction
@@ -404,6 +405,8 @@ namespace netGui
                 toAdd.onStatusUpdate += updateRuleIcon;
                 newItem.SubItems.Add(toAdd.name);
                 newItem.SubItems.Add(false.ToString());
+                if (toAdd.isErrored)
+                    newItem.SubItems.Add(toAdd.getError().Message);
                 newItem.Tag = toAdd;
 
                 lstRules.Items.Add(newItem);
@@ -442,8 +445,21 @@ namespace netGui
                 return;
             }
             rule rule = (rule)ruleItem.Tag;
+            if (rule.isErrored && rule.getError().GetType() == typeof(fileReadError))
+            {
+                 if(MessageBox.Show(
+                    "Sorry " + rule.getError().Message + " do you want to edit it in a text editor instead?",
+                    "Unable to load",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) == DialogResult.Yes)
+                 {
+                     Process.Start(_myOptions.rulesPath + @"\" + rule.name + ".rule");
+                 }
+                 return;
+
+            }
             frmRuleEdit newForm = new frmRuleEdit(onSaveRule, onCloseRuleEditorDialog);
-            // We serialise the rule before we pass it to the rule edit form. This is to ease the transition
+            // We serialise the rule before we pass it to the rule edi  form. This is to ease the transition
             // to a client-server style rule engine / rule editor kind of situations later on
             newForm.loadRule(rule.serialise());
             newForm.ctlRuleEditor.getRule().onStatusUpdate += updateRuleIcon;
@@ -575,36 +591,12 @@ namespace netGui
 
         private void loadAllRules()
         {
-            DirectoryInfo rulesDir;
-            FileInfo[] fileList;
-            try
+           ruleRepository repo = new ruleRepository(_myOptions.rulesPath);
+           List<rule> rules = repo.getAllRules(false);
+            foreach (var rule in rules)
             {
-                
-                rulesDir = new DirectoryInfo(_myOptions.rulesPath);
-                fileList = rulesDir.GetFiles();
-            } catch {
-                MessageBox.Show("Unable to read rule files from " + _myOptions.rulesPath);
-                return;
+                this.addNewRule(rule);
             }
-
-            lstRules.Items.Clear();
-            foreach (FileInfo thisFile in fileList)
-            {
-                try
-                {
-                    StreamReader thisFileReader;
-                    XmlSerializer mySer = new XmlSerializer(typeof(rule));
-                    using (thisFileReader = new StreamReader(thisFile.FullName))
-                    {
-                        // Add our  rule name to our listView, with a .tag() set to the rule object itself.
-                         addNewRule((rule)mySer.Deserialize(thisFileReader));
-                    }
-                }
-                catch {
-                    MessageBox.Show("Unable to read rule file '" + thisFile.FullName + "'" );
-                }
-            }
-
         }
         #endregion
 
@@ -623,7 +615,7 @@ namespace netGui
                 else
                 {
                     thisRuleToStart.start();
-                    timelineTimer.Tick += thisRuleToStart.advanceDelta;
+                    this._timelineTimer.Tick += thisRuleToStart.advanceDelta;
                     updateRuleIcon(thisRuleToStart);
                 }
             }
@@ -644,7 +636,7 @@ namespace netGui
                 else
                 {
                     thisRuleToStop.stop();
-                    timelineTimer.Tick -= thisRuleToStop.advanceDelta;
+                    this._timelineTimer.Tick -= thisRuleToStop.advanceDelta;
                     updateRuleIcon(thisRuleToStop);
                 }
             }

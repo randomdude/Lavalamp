@@ -11,7 +11,7 @@ namespace ruleEngine.pinDataTypes
 {
 
     [TypeConverter(typeof(GenericNumberConverter))]
-    public interface INumber
+    public interface INumber : IEquatable<INumber>, IComparable
     {
         Type actualType { get; }
         TX getAs<TX>();
@@ -115,6 +115,11 @@ namespace ruleEngine.pinDataTypes
             return !(n == n2);
         }
 
+        public bool Equals(INumber other)
+        {
+            return Equals((GenericNumber<T>)other);
+        }
+
         public override string ToString()
         {
             return _value.ToString();
@@ -141,6 +146,16 @@ namespace ruleEngine.pinDataTypes
                 return result;
             }
         }
+
+        public int CompareTo(object obj)
+        {
+            INumber comparison = obj as INumber;
+            if (comparison == null) 
+                return -1;
+            IComparable c = comparison.getAs<T>();
+            return c.CompareTo(_value);
+        }
+
     }
     public class pinDataNumber : pinDataBase<INumber>
     {
@@ -170,7 +185,7 @@ namespace ruleEngine.pinDataTypes
 
         public override Color getColour()
         {
-            return Color.Transparent;
+            return hasChanged ? Color.Green : Color.Transparent;
         }
 
         public override bool asBoolean()

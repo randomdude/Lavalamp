@@ -2,13 +2,12 @@
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Drawing;
-using Microsoft.Scripting;
+
 using ruleEngine.ruleItems;
-using ruleEngine.ruleItems.windows;
 
 namespace ruleEngine.pinDataTypes
 {
-    public abstract class pinDataBase<T> : IPinData
+    public abstract class pinDataBase<T> : IPinData where T : IComparable
     {
         protected T _data;
         protected readonly ruleItemBase _parentRuleItem;
@@ -33,6 +32,9 @@ namespace ruleEngine.pinDataTypes
         public abstract Color getColour();
         public abstract bool asBoolean();
 
+        public bool hasChanged
+        {
+            get; private set; }
         public abstract IPinData not();
         /// <summary>
         /// Gets the underlining data type, the type parameter to the class
@@ -49,7 +51,9 @@ namespace ruleEngine.pinDataTypes
             }
             set
             {
-                _data = convertData(value);
+                T newVal = convertData(value);
+                hasChanged = newVal.CompareTo(_data) != 0;
+                _data = newVal;
                 reevaluate();
             }
         }
@@ -61,7 +65,7 @@ namespace ruleEngine.pinDataTypes
         /// <param name="value">the raw data</param>
         /// <returns>converted data</returns>
         [Pure]
-        protected T convertData(object value)
+        protected T convertData(object value) 
         {
             var converter = TypeDescriptor.GetConverter(typeof(T));
             if (value.GetType() == typeof(T))

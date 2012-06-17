@@ -2,7 +2,18 @@
 
 namespace ruleEngine
 {
-    public class ToolboxRule : Attribute { }
+    public class ToolboxRule : Attribute
+    {
+        public readonly string Name;
+        public ToolboxRule()
+        {
+            
+        }
+        public ToolboxRule(string newName)
+        {
+            this.Name = newName;
+        }
+    }
 
     public class ToolboxRuleCategoryAttribute : Attribute
     {

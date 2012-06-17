@@ -250,24 +250,19 @@ namespace ruleEngine
                     string thisAssemblyName = reader["assembly"];
                     thisTypeName = reader["type"];
                     // Find the type of our new RuleItem
-                    Assembly thisAss = thisAssemblyName == null ? Assembly.GetExecutingAssembly() : Assembly.LoadFile(thisAssemblyName);
+                    // prefer our assembly and check it for the type first to avoid conflict with the asp.net referenced assembly.
+                    // else check the assembly included (hopefully) in the file
+                    Type thisType = Assembly.GetExecutingAssembly().GetType(thisTypeName, false)
+                                    ?? Assembly.LoadFile(thisAssemblyName).GetType(thisTypeName,false);
 
-                    Type thisType;
-                    try
-                    {
-                        // Pull type out of Ass
-                        thisType = thisAss.GetType(thisTypeName);
-                    }
-                    catch (Exception)
-                    {
+                    if (thisType == null )
                         throw new ruleLoadException("unable to create ruleItem of type " + thisTypeName);
-                    }
-
+      
                     // Instantiate the requested type, and load the config for this particular item.
                     XmlSerializer mySer = new XmlSerializer(thisType);
                     reader.Read();
-                    ruleItemBase newRuleItem  = mySer.Deserialize(reader) as ruleItemBase;
-
+                    var ruleItemObj = mySer.Deserialize(reader);
+                    ruleItemBase newRuleItem = (ruleItemBase)ruleItemObj;
                     // todo: support python load/saving!
                     // will the following few lines be useful when we do?
 //                    ruleItemInfo myInfo = new ruleItemInfo();

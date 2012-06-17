@@ -91,6 +91,9 @@
     <Compile Include="crossThreads.cs" />
     <Compile Include="CursorUtil.cs" />
     <Compile Include="Exceptions.cs" />
+    <Compile Include="FileReadError.cs" />
+    <Compile Include="IRule.cs" />
+    <Compile Include="IRuleItem.cs" />
     <Compile Include="ItemMovedArgs.cs" />
     <Compile Include="guidTypes\ctlRuleItemWidgetGuid.cs" />
     <Compile Include="guidTypes\lineChainGuid.cs" />
@@ -106,6 +109,7 @@
     <Compile Include="pinDataTypes\pinDataString.cs" />
     <Compile Include="pinDataTypes\pinDataTrigger.cs" />
     <Compile Include="pinDirection.cs" />
+    <Compile Include="RuleItemRepository.cs" />
     <Compile Include="ruleItems\BaseOptions.cs" />
     <Compile Include="ruleItems\Basic logic\ruleItem_switch.cs" />
     <Compile Include="ruleItems\Basic logic\ruleItem_HTMLStripper.cs" />
@@ -137,6 +141,7 @@
     </Compile>
     <Compile Include="ruleItems\ruleItemEmail.cs" />
     <Compile Include="ruleItems\ruleItemFile.cs" />
+    <Compile Include="ruleItems\ruleItemPing.cs" />
     <Compile Include="ruleItems\ruleItemRss.cs" />
     <Compile Include="ruleItems\ruleItemScript.cs" />
     <Compile Include="ruleItems\ruleItemWeather.cs" />
@@ -169,6 +174,7 @@
     <Compile Include="ruleItems\windows\WMI\ruleItem_WMI_DiskSpace.cs" />
     <Compile Include="ruleItems\windows\WMI\ruleItem_WMI_networkThroughput.cs" />
     <Compile Include="ruleItems\windows\WMI\ruleItem_WMI_Temperature.cs" />
+    <Compile Include="RuleRepository .cs" />
     <Compile Include="stringExtensions.cs" />
     <Compile Include="timeline.cs" />
     <Compile Include="timelineBucket.cs" />

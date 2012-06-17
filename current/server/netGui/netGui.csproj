@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{560BFC3D-3D57-46B5-B1C5-A3E01A88963C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -28,7 +28,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>    <UseApplicationTrust>false</UseApplicationTrust>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -293,6 +294,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="helpers\inputTime.resx">
       <DependentUpon>inputTime.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="RuleEngine\ctlPythonSetting.resx">
       <DependentUpon>ctlPythonSetting.cs</DependentUpon>
@@ -340,9 +342,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmIntervalOptions.resx">
       <DependentUpon>frmIntervalOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmSensorOptions.resx">
       <DependentUpon>frmSensorOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmCheckEmailOptions.resx">
       <DependentUpon>frmCheckEmailOptions.cs</DependentUpon>
@@ -354,6 +358,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmFileWriteOptions.resx">
       <DependentUpon>frmFileWriteOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmPickProcess.resx">
       <DependentUpon>frmPickProcess.cs</DependentUpon>
@@ -361,6 +366,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmRuleRssOptions.resx">
       <DependentUpon>frmRuleRssOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmRunExeOptions.resx">
       <DependentUpon>frmRunExeOptions.cs</DependentUpon>
@@ -368,6 +374,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmSerialPortOptions.resx">
       <DependentUpon>frmSerialPortOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmTimeOptions.resx">
       <DependentUpon>frmTimeOptions.cs</DependentUpon>
@@ -375,12 +382,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmWallboardOptions.resx">
       <DependentUpon>frmWallboardOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmWeatherOptions.resx">
       <DependentUpon>frmWeatherOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmWMIOptions.resx">
       <DependentUpon>frmWMIOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="sensorControls\ctlOnOff.resx">
       <DependentUpon>ctlOnOff.cs</DependentUpon>

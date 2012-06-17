@@ -88,6 +88,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Contracts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL" />
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\..\Third Party\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\Third Party\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -182,6 +188,12 @@
     </Compile>
     <Compile Include="RuleEngine\RuleItemOptionForms\frmIntervalOptions.Designer.cs">
       <DependentUpon>frmIntervalOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmPingOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleEngine\RuleItemOptionForms\frmPingOptions.Designer.cs">
+      <DependentUpon>frmPingOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="RuleEngine\RuleItemOptionForms\frmSensorOptions.cs">
       <SubType>Form</SubType>
@@ -368,6 +380,9 @@
     <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmIntervalOptions.resx">
       <DependentUpon>frmIntervalOptions.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmPingOptions.resx">
+      <DependentUpon>frmPingOptions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="RuleEngine\RuleItemOptionForms\frmSensorOptions.resx">
       <DependentUpon>frmSensorOptions.cs</DependentUpon>
     </EmbeddedResource>
@@ -505,6 +520,10 @@
     <None Include="Resources\Pause.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\lavalampService\lavalampService.csproj">
+      <Project>{817D61C6-37AA-43D0-957F-2477ADBA0012}</Project>
+      <Name>lavalampService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ruleEngine\ruleEngine2010.csproj">
       <Project>{04834DB5-4E91-48EA-9107-FD2246087122}</Project>
       <Name>ruleEngine2010</Name>

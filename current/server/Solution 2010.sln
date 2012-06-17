@@ -48,6 +48,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webGui", "webGui\webGui.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webGui.Tests", "webGui.Tests\webGui.Tests.csproj", "{DB8A0094-C636-4239-BDA5-E10DA79116F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lavalampService", "lavalampService\lavalampService.csproj", "{817D61C6-37AA-43D0-957F-2477ADBA0012}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -278,6 +280,21 @@ Global
 		{DB8A0094-C636-4239-BDA5-E10DA79116F6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{DB8A0094-C636-4239-BDA5-E10DA79116F6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{DB8A0094-C636-4239-BDA5-E10DA79116F6}.Release|Win32.ActiveCfg = Release|Any CPU
+		{817D61C6-37AA-43D0-957F-2477ADBA0012}.clr|Any CPU.ActiveCfg = Release|Any CPU
+		{817D61C6-37AA-43D0-957F-2477ADBA0012}.clr|Any CPU.Build.0 = Release|Any CPU
+		{817D61C6-37AA-43D0-957F-2477ADBA0012}.clr|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{817D61C6-37AA-43D0-957F-2477ADBA0012}.clr|Mixed Platforms.Build.0 = Release|Any CPU
+		{817D61C6-37AA-43D0-957F-2477ADBA0012}.clr|Win32.ActiveCfg = Release|Any CPU
+		{817D61C6-37AA-43D0-957F-2477ADBA0012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{817D61C6-37AA-43D0-957F-2477ADBA0012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{817D61C6-37AA-43D0-957F-2477ADBA0012}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{817D61C6-37AA-43D0-957F-2477ADBA0012}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{817D61C6-37AA-43D0-957F-2477ADBA0012}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{817D61C6-37AA-43D0-957F-2477ADBA0012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{817D61C6-37AA-43D0-957F-2477ADBA0012}.Release|Any CPU.Build.0 = Release|Any CPU
+		{817D61C6-37AA-43D0-957F-2477ADBA0012}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{817D61C6-37AA-43D0-957F-2477ADBA0012}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{817D61C6-37AA-43D0-957F-2477ADBA0012}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

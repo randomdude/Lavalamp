@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 namespace ruleEngine.ruleItems
 {
     [XmlRoot("config" )]
-    public abstract class ruleItemBase : ruleItemEvents
+    public abstract class ruleItemBase : ruleItemEvents, IRuleItem
     {
         [XmlIgnore] public ruleItemGuid serial = new ruleItemGuid() { id = Guid.NewGuid() };
         [XmlIgnore] private PictureBox _errorIcon = new PictureBox();
