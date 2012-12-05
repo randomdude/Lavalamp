@@ -3,40 +3,43 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <% var controller = this.ViewContext.Controller.ValueProvider.GetValue("controller").RawValue.ToString(); %>
-    <% var action = this.ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString(); %>
-    <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
-    <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="/Scripts/Shared/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="/Scripts/Shared/jquery-ui-1.8.20.custom.min.js"></script>
-    <% foreach (var script in Directory.GetFiles(Server.MapPath(string.Format("~//Scripts//{0}",controller)) ).Where(f => f.EndsWith("js")))
-       {
-    %> <script type="text/javascript" src="<%=Url.Content(string.Format(@"~/Scripts/{0}/{1}",controller,script.Substring(script.LastIndexOf(@"\",StringComparison.InvariantCulture) + 1,script.Length - script.LastIndexOf(@"\",StringComparison.InvariantCulture) - 1))) %>"></script>
-    <%   } %>
-</head>
+    <head runat="server">
+        <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+        <link href="../../Content/lavalamp.css" rel="stylesheet" type="text/css" />
+        <link href="../../Content/treeview-theme-ltr/style.css" rel="stylesheet" type="text/css" />
+        <link href="../../Content/jquery.contextMenu.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="/Scripts/Shared/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="/Scripts/Shared/jquery.ui.position.js"></script>
+        <script type="text/javascript" src="/Scripts/Shared/jquery-ui-1.8.20.custom.min.js"></script>
+        <script type="text/javascript" src="/Scripts/Shared/jquery.jstree.js"></script>
+        <script type="text/javascript" src="/Scripts/Shared/jquery.contextMenu.js"></script>
+        <script type="text/javascript" src="/Scripts/Shared/jquery.dform-1.0.0.min.js"></script>
 
-<body>
-    <div class="page">
+        <% foreach (var script in Directory.GetFiles(Server.MapPath(string.Format("~//Scripts//{0}", ViewData["controller"])) ).Where(f => f.EndsWith("js")))
+           {
+        %> <script type="text/javascript" src="<%=Url.Content(string.Format(@"~/Scripts/{0}/{1}", ViewData["controller"], script.Substring(script.LastIndexOf(@"\",StringComparison.InvariantCulture) + 1,script.Length - script.LastIndexOf(@"\",StringComparison.InvariantCulture) - 1))) %>"></script>
+        <%   } %>
+        <asp:ContentPlaceHolder ID="ScriptContent" runat="server"/>
+    </head>
 
-        <div id="header">
-            <div id="title">
-                <img src="../../Content/Images/logo.png" alt="lavalamp logo"/><h1>Lavalamp</h1>
+    <body>
+        <div id="page">
+            <div id="header">
+                <div id="title">
+                    <img src="../../Content/Images/logo.png" alt="lavalamp logo"/><h1>Lavalamp</h1>
+                </div>
+                <div id="logindisplay">
+                    <% Html.RenderPartial("LogOnUserControl"); %>
+                </div> 
             </div>
-              
-            <div id="logindisplay">
-                <% Html.RenderPartial("LogOnUserControl"); %>
-            </div> 
-        </div>
-        <div id="navi">
-            <% Html.RenderPartial("navi"); %>
-        </div>
-        <div id="main">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
-
-            <div id="footer">
+            <div id="navi">
+                <% Html.RenderPartial("navi"); %>
+            </div>
+            <div id="main">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+                <div id="footer">
+                </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>

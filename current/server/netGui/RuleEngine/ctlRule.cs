@@ -88,7 +88,7 @@
         {
             this.Parent.Width = this._rule.preferredWidth;
             this.Parent.Height = this._rule.preferredHeight;
-            IEnumerable<ruleItemBase> childRuleItems = this._rule.getRuleItems();
+            IEnumerable<IRuleItem> childRuleItems = this._rule.getRuleItems();
 
             foreach (ruleItemBase thisRule in childRuleItems)
             {

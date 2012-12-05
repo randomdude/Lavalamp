@@ -4,13 +4,13 @@ namespace transmitterDriver
 {
     public class sensorType
     {
-        public String FriendlyType;
-        public sensorTypeEnum enumeratedType;
+        public readonly String friendlyType;
+        public readonly sensorTypeEnum enumeratedType;
 
         public sensorType(sensorTypeEnum type)
         {
             enumeratedType = type;
-            FriendlyType = Enum.GetName(typeof (sensorTypeEnum), enumeratedType);
+            this.friendlyType = Enum.GetName(typeof (sensorTypeEnum), enumeratedType);
         }
 
         // Operator overloading stuff taken from MSDN. See "Guidelines for Overloading Equals() 
@@ -19,17 +19,19 @@ namespace transmitterDriver
 
         public override bool Equals(object obj)
         {
-            // If parameter is null return false.
-            if (obj == null)
+            if (ReferenceEquals(null, obj))
+            {
                 return false;
-
-            // If parameter cannot be cast to Point return false.
-            sensorType p = obj as sensorType;
-            if (p == null)
+            }
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+            if (obj.GetType() != typeof(sensorType))
+            {
                 return false;
-
-            // Return true if the fields match:
-            return (this.enumeratedType == p.enumeratedType);
+            }
+            return Equals((sensorType)obj);
         }
 
         public static bool operator ==(sensorType a, sensorType b)
@@ -53,6 +55,27 @@ namespace transmitterDriver
         public static bool operator !=(sensorType a, sensorType b)
         {
             return !(a == b);
+        }
+
+        public bool Equals(sensorType other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+            return Equals(other.friendlyType, this.friendlyType) && Equals(other.enumeratedType, this.enumeratedType);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((this.friendlyType != null ? this.friendlyType.GetHashCode() : 0) * 397) ^ this.enumeratedType.GetHashCode();
+            }
         }
     }
 }

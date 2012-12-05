@@ -7,14 +7,16 @@
 
 namespace ruleEngine.ruleItems
 {
-    using System.Globalization;
     using System.Net.NetworkInformation;
     using System.Net;
     using ruleEngine.pinDataTypes;
+    using dform.NET;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
+    [ToolboxRule]
+    [ToolboxRuleCategory("Internet")]
     public class ruleItemPing : ruleItemBase
     {
         public pingOptions options = new pingOptions();
@@ -36,8 +38,8 @@ namespace ruleEngine.ruleItems
             var pins =  base.getPinInfo();
 
             pins.Add("trigger", new pin {direction = pinDirection.input, name = "trigger", valueType = typeof(pinDataTrigger)});
-            pins.Add("pingSuccessful", new pin { direction = pinDirection.output, name = "pingSuccessful", valueType = typeof(pinDataBool) });
-            pins.Add("pingInfomation", new pin { direction = pinDirection.output, name = "pingInfomation", valueType = typeof(pinDataString) });
+            pins.Add("pingSuccessful", new pin { direction = pinDirection.output, name = "pingSuccessful", valueType = typeof(pinDataBool),description = "Succeeded"});
+            pins.Add("pingInfomation", new pin { direction = pinDirection.output, name = "pingInfomation", valueType = typeof(pinDataObject),description = "Ping Infomation"});
 
             return pins;
         }
@@ -56,44 +58,19 @@ namespace ruleEngine.ruleItems
                 Ping check = new Ping();
                 
                 PingReply reply = check.Send(this.options.addressToPing);
-                if(reply == null || reply.Status != IPStatus.Success)
-                {
-                    this.onRequestNewTimelineEvent(new timelineEventArgs(new pinDataBool(false,this, pinInfo["pingSuccessful"])));
-                    this.onRequestNewTimelineEvent(new timelineEventArgs(new pinDataString(reply == null ? string.Empty : this.options.addressToPing + " failed: " + reply.Status.ToString(), this, pinInfo["pingInfomation"])));
-                    
-                }
-                else
-                {
-                    this.onRequestNewTimelineEvent(new timelineEventArgs(new pinDataBool(true, this, pinInfo["pingSuccessful"])));
-                    string info = "";
-                    switch (this.options.pingInfo)
+
+                this.onRequestNewTimelineEvent(new timelineEventArgs(new pinDataBool(reply.Status == IPStatus.Success, this, pinInfo["pingSuccessful"])));
+                string info = "";
+
+                PingDataType data = new PingDataType()
                     {
-                        case pingOptions.PingInfomation.Full:
-                            info = Dns.GetHostEntry(reply.Address).HostName + " " + reply.Address + " time=" +
-                                   reply.RoundtripTime;
-                            break;
-                        case pingOptions.PingInfomation.IPOnly:
-                            info = reply.Address.ToString();
-                        break;
-                        case pingOptions.PingInfomation.ResolvedNameOnly:
-                            info = Dns.GetHostEntry(reply.Address).HostName;
-                        break;
-                        case pingOptions.PingInfomation.ResolvedNameAndTime:
-                            info = Dns.GetHostEntry(reply.Address).HostName + " time=" + reply.RoundtripTime;
-                            break;
-                        case pingOptions.PingInfomation.TimeOnly:
-                            info = reply.RoundtripTime.ToString(CultureInfo.CurrentUICulture);
-                        break;
-                        case pingOptions.PingInfomation.IPAndResolvedName:
-                            info = Dns.GetHostEntry(reply.Address).HostName + " " + reply.Address;
-                        break;
-                        case pingOptions.PingInfomation.IPAndTime:
-                            info = reply.Address + " time=" + reply.RoundtripTime;
-                        break;
-                            
-                    }
-                    this.onRequestNewTimelineEvent(new timelineEventArgs(new pinDataString(info, this, pinInfo["pingInfomation"])));
-                }
+                        IPAddress = reply.Address.ToString(),
+                        DomainName = Dns.GetHostEntry(reply.Address).HostName,
+                        PingRecived = reply.Status == IPStatus.Success,
+                        TimeTaken = reply.RoundtripTime
+                    };
+
+                this.onRequestNewTimelineEvent(new timelineEventArgs(new pinDataObject(data, this, pinInfo["pingInfomation"])));
             }
             _lastVal = thisState;
         }
@@ -111,9 +88,23 @@ namespace ruleEngine.ruleItems
             IPAndTime,
             IPAndResolvedName
         }
-        public string addressToPing { get; set; }
 
+        public pingOptions()
+        {
+            addressToPing = "localhost";
+        }
+
+        [DFormInput(name = "Address",caption = "Address")]
+        public string addressToPing { get; set; }
+        [DFormSelection(name = "Infomation",caption = "Information")]
         public PingInfomation pingInfo { get; set; }
+        public override string typedName
+        {
+            get
+            {
+                return "Ping";
+            }
+        }
     }
 
 }

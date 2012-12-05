@@ -16,7 +16,7 @@ namespace ruleEngine.ruleItems
         public Color background = Color.DarkViolet;
         public Color foreground = Color.White;
 
-        public desktopMessageLocation location = desktopMessageLocation.BottomRight;
+        public desktopMessageLocation dsklocation = desktopMessageLocation.BottomRight;
 
         public desktopMessageOptions(desktopMessageOptions newOptions)
         {
@@ -24,7 +24,7 @@ namespace ruleEngine.ruleItems
             holdSpeed = newOptions.holdSpeed;
             fadeOutSpeed = newOptions.fadeOutSpeed;
             message = newOptions.message;
-            location = newOptions.location;
+            dsklocation = newOptions.dsklocation;
             background = newOptions.background;
             foreground = newOptions.foreground;
         }
@@ -116,7 +116,7 @@ namespace ruleEngine.ruleItems
 
                 if (xmlName == "location" && reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
                 {
-                    location = (desktopMessageLocation) Enum.Parse(typeof (desktopMessageLocation), reader.ReadElementContentAsString());
+                    dsklocation = (desktopMessageLocation) Enum.Parse(typeof (desktopMessageLocation), reader.ReadElementContentAsString());
                     inhibitNextRead = true;
                 }
                 
@@ -136,7 +136,7 @@ namespace ruleEngine.ruleItems
             writer.WriteElementString("fadeOutSpeed", fadeOutSpeed.ToString());
             writer.WriteElementString("message", message);
 
-            writer.WriteElementString("location", Enum.GetName(typeof(desktopMessageLocation), this.location) );
+            writer.WriteElementString("location", Enum.GetName(typeof(desktopMessageLocation), this.dsklocation) );
 
             // todo: writeElementColor
             writer.WriteElementString("foreground-r", foreground.R.ToString());

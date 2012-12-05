@@ -13,7 +13,9 @@ namespace netGui
 
         public options()
         {
-            useEncryption = bool.Parse(Properties.Settings.Default["useEncryption"] as string);
+
+            if (!bool.TryParse(Properties.Settings.Default["useEncryption"] as string, out useEncryption))
+                useEncryption = false;
             portname = Properties.Settings.Default["portName"] as string;
             try
             {

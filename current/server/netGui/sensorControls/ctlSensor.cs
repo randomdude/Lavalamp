@@ -98,7 +98,7 @@ namespace netGui
             _sensor = newSensor;
 
             lblTitle.Text = _sensor.name;
-            lblType.Text = _sensor.type.FriendlyType;
+            lblType.Text = _sensor.type.friendlyType;
 
             sharedInit();
         }

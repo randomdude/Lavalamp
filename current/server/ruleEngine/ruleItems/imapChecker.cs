@@ -49,20 +49,22 @@ namespace ruleEngine.ruleItems.Starts
                     if (fetchParts[1] == "BAD")
                         throw new Exception("Server failed to parse SEARCH command");
                 }
-                if (fetchResponse.StartsWith("From:"))
+                if (fetchResponse.Length > 6 && fetchResponse.StartsWith("From:"))
                 {
                     mailFrom = fetchResponse.Substring(6);
                     continue;
                 }
-                if (fetchResponse.StartsWith("Subject:"))
+                if (fetchResponse.Length > 9 && fetchResponse.StartsWith("Subject:"))
                 {
                     mailSubject = fetchResponse.Substring(9);
-                    continue;
                 }
                 
             }
         }
-
+        public void send(string to, string subject, string contents)
+        {
+            
+        }
         public imapChecker(IFormOptions opts)
         {
             emailOptions options = opts as emailOptions;

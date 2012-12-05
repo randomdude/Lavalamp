@@ -4,7 +4,9 @@ using ruleEngine.ruleItems;
 using System.Reflection;
 namespace netGui
 {
+    using System.Diagnostics;
     using System.Diagnostics.Contracts;
+    using System.Linq;
 
     using netGui.RuleItemOptionForms;
 
@@ -32,9 +34,9 @@ namespace netGui
             }
 
             //if not look through ALL the types (slow and bad :|)
-            foreach (var formInAssembly in Assembly.GetExecutingAssembly().GetTypes())
+            foreach (var formInAssembly in Assembly.GetExecutingAssembly().GetTypes().Where(t => t.BaseType != null && t.BaseType == typeof(Form)))
             {
-                if (formInAssembly.BaseType == typeof(Form) && formInAssembly.Name.Contains(options.typedName))
+                if (formInAssembly.Name.Contains(options.typedName))
                 {
                     ConstructorInfo constructorInfo = formInAssembly.GetConstructor(new[] { typeof(IFormOptions) });
                     //if we can't get the constructor presume we have the wrong type.

@@ -119,7 +119,7 @@ namespace lavalamp
 
         public override object OnGet(lavalampRuleInfo request)
         {
-            if(_rules == null) 
+            //if(_rules == null) 
                 _rules = this.loadRules();
             if (!string.IsNullOrEmpty(request.name))
             { 

@@ -30,7 +30,7 @@
             this.cmbLocation.Items.Clear();
             foreach (string positionName in Enum.GetNames(typeof(desktopMessageLocation)))
                 this.cmbLocation.Items.Add(positionName);
-            this.cmbLocation.Text = this.currentOptions.location.ToString();
+            this.cmbLocation.Text = this.currentOptions.dsklocation.ToString();
 
             this.txtMessage.Text = this.currentOptions.message;
             this.txtMessage.BackColor = this.currentOptions.background;
@@ -60,7 +60,7 @@
 
         private void cmbLocation_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.currentOptions.location = (desktopMessageLocation) Enum.Parse(typeof (desktopMessageLocation), this.cmbLocation.Text);
+            this.currentOptions.dsklocation = (desktopMessageLocation) Enum.Parse(typeof (desktopMessageLocation), this.cmbLocation.Text);
         }
 
         private void txtMessage_TextChanged(object sender, EventArgs e)

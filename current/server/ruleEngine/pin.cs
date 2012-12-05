@@ -11,13 +11,16 @@ namespace ruleEngine
 {
     public class pin : IXmlSerializable
     {
-        public pinDirection direction;
-        public String name;
-        public PictureBox imageBox;
-        public String description = "(unknown)";
+        public pinDirection direction { get; set; }
 
-        public pinGuid serial = new pinGuid() { id = Guid.NewGuid() };
-        public pinGuid linkedTo = new pinGuid();
+        public String name { get; set; }
+        public PictureBox imageBox;
+
+        public String description { get; set; }
+
+        public pinGuid serial { get; set; }
+
+        public pinGuid linkedTo { get; set; }
         public lineChainGuid parentLineChain = new lineChainGuid() ;
         public ruleItemGuid parentRuleItem = new ruleItemGuid() ;
         public bool dynamic;
@@ -31,7 +34,7 @@ namespace ruleEngine
         /// </summary>
         public IPinData value;
 
-        public static readonly Type[] allDataTypes = { typeof(pinDataBool), typeof(pinDataString), typeof(pinDataTrigger), typeof(pinDataTristate), typeof(pinDataNumber) };
+        public static readonly Type[] allDataTypes = { typeof(pinDataBool), typeof(pinDataString), typeof(pinDataTrigger), typeof(pinDataTristate), typeof(pinDataNumber), typeof(pinDataObject) };
 
         public Type[] possibleTypes = allDataTypes;
 
@@ -42,6 +45,13 @@ namespace ruleEngine
         /// </summary>
         public event pinChanged OnPinChange; 
 
+
+        public pin()
+        {
+            serial = new pinGuid() { id = Guid.NewGuid() };
+            linkedTo = new pinGuid();
+            description = "(unknown)";
+        }
 
         public void recreateValue()
         {

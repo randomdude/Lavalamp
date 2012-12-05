@@ -122,7 +122,7 @@ namespace ruleEngine
         {
             foreach (ruleItemBase thisRuleItem in ruleItems.Values)
             {
-                thisRuleItem.evaluate();
+                thisRuleItem.evaluate(false);
             }
         }
 
@@ -324,9 +324,9 @@ namespace ruleEngine
             return newRuleItem;
         }
 
-        public IEnumerable<ruleItemBase> getRuleItems()
+        public IEnumerable<IRuleItem> getRuleItems()
         {
-            return ruleItems.Values;
+            return ruleItems.Values.Select(r => r as IRuleItem);
         }
 
         /// <summary>

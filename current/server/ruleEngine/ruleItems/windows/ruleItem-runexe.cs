@@ -93,19 +93,11 @@ namespace ruleEngine.ruleItems
 
         private void executeItAsTest()
         {
-            try
-            {
-                executeIt();
-            } 
-            catch (Exception ex)
-            {
-            //    frmException ohnoes = new frmException(ex);
-             //   ohnoes.ShowDialog();
-            }
+               executeIt();
         }
 
     }
-
+    
     public class RunExeOptions : BaseOptions
     {
         public string filename;

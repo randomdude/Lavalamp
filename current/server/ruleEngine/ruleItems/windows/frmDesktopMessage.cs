@@ -96,26 +96,26 @@ namespace ruleEngine.ruleItems.windows
             // Position us 
             Rectangle screenSize = Screen.PrimaryScreen.WorkingArea;
 
-            if (myOptions.location == desktopMessageLocation.BottomLeft ||
-                myOptions.location == desktopMessageLocation.BottomMiddle ||
-                myOptions.location == desktopMessageLocation.BottomRight)
+            if (myOptions.dsklocation == desktopMessageLocation.BottomLeft ||
+                myOptions.dsklocation == desktopMessageLocation.BottomMiddle ||
+                myOptions.dsklocation == desktopMessageLocation.BottomRight)
                 this.Top = screenSize.Height - this.Height;
 
-            if (myOptions.location == desktopMessageLocation.TopLeft ||
-                myOptions.location == desktopMessageLocation.TopMiddle ||
-                myOptions.location == desktopMessageLocation.TopRight)
+            if (myOptions.dsklocation == desktopMessageLocation.TopLeft ||
+                myOptions.dsklocation == desktopMessageLocation.TopMiddle ||
+                myOptions.dsklocation == desktopMessageLocation.TopRight)
                 this.Top = 0;
 
-            if (myOptions.location == desktopMessageLocation.BottomLeft ||
-                myOptions.location == desktopMessageLocation.TopLeft)
+            if (myOptions.dsklocation == desktopMessageLocation.BottomLeft ||
+                myOptions.dsklocation == desktopMessageLocation.TopLeft)
                 this.Left = 0;
 
-            if (myOptions.location == desktopMessageLocation.BottomMiddle ||
-                myOptions.location == desktopMessageLocation.TopMiddle)
+            if (myOptions.dsklocation == desktopMessageLocation.BottomMiddle ||
+                myOptions.dsklocation == desktopMessageLocation.TopMiddle)
                 this.Left = (screenSize.Width / 2) - (this.Width / 2);
 
-            if (myOptions.location == desktopMessageLocation.BottomRight ||
-                myOptions.location == desktopMessageLocation.TopRight)
+            if (myOptions.dsklocation == desktopMessageLocation.BottomRight ||
+                myOptions.dsklocation == desktopMessageLocation.TopRight)
                 this.Left = screenSize.Width - this.Width;
 
             lblMessage.ForeColor = myOptions.foreground;

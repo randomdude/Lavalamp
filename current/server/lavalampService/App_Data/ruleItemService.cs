@@ -19,10 +19,15 @@ namespace lavalampService
         public override object OnGet(lavalampRuleItemInfo request)
         {
             IRuleItemRepository repo = this.GetAppHost().TryResolve<IRuleItemRepository>();
-            List<IRuleItem> allSysRuleItems = repo.getAllRuleItems();
-            
+            if (string.IsNullOrEmpty(request.name))
+            {
+                
+                List<IRuleItem> allSysRuleItems = repo.getAllRuleItems();
 
-            return allSysRuleItems.Select(r => AutoMapper.Mapper.Map<ruleItemBase,lavalampRuleInfo>(r as ruleItemBase));
+                return allSysRuleItems.Select(r => AutoMapper.Mapper.Map<ruleItemBase, lavalampRuleItemInfo>(r as ruleItemBase)).ToList();
+            }
+            return repo.getRuleItem(r => r.ruleName() == request.name);
+
         }
     }
 }

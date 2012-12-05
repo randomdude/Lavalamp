@@ -46,7 +46,7 @@ namespace ruleEngine.ruleItems
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();
 
-            pinList.Add("trigger", new pin { name = "trigger", description = "trigger to show notifier", direction = pinDirection.input, valueType = typeof(pinDataString) });
+            pinList.Add("trigger", new pin { name = "trigger", description = "trigger to show notifier", direction = pinDirection.input, dynamic = true});
 
             return pinList;
         }

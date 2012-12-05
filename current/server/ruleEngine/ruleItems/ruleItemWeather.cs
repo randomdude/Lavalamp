@@ -42,22 +42,36 @@ namespace ruleEngine.ruleItems
         {
             if (!pinInfo["trigger"].value.asBoolean())
                 return;
-
-            HttpWebRequest weatherRequest = (HttpWebRequest) WebRequest.Create(@"http://www.google.com/ig/api?weather=" + options.city);
-            HttpWebResponse response = (HttpWebResponse) weatherRequest.GetResponse();
-            if (response.StatusCode != HttpStatusCode.OK)
-                errorHandler(new HttpException((int)response.StatusCode,"Could not connect to web service"));
             string toRet = "";
-            using(XmlTextReader reader = new XmlTextReader(response.GetResponseStream()))
+            try
             {
-                while(reader.Read())
+                HttpWebRequest weatherRequest = (HttpWebRequest)WebRequest.Create(@"http://www.google.com/ig/api?weather=" + options.city);
+                HttpWebResponse response = (HttpWebResponse)weatherRequest.GetResponse();
+
+                if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    if (reader.Name == options.selectRead)
+                    errorHandler(new HttpException((int)response.StatusCode, "Could not connect to web service"));
+                    return;
+                }
+                
+
+
+                using (XmlTextReader reader = new XmlTextReader(response.GetResponseStream()))
+                {
+                    while (reader.Read())
                     {
-                        toRet = reader.GetAttribute(0);
-                        break;
+                        if (reader.Name == options.selectRead)
+                        {
+                            toRet = reader.GetAttribute(0);
+                            break;
+                        }
                     }
-                } 
+                }
+            }
+            catch (Exception ex)
+            {
+                errorHandler(ex);
+                return;
             }
             onRequestNewTimelineEvent(new timelineEventArgs(new pinDataString(toRet, this, pinInfo["weather"])));
 

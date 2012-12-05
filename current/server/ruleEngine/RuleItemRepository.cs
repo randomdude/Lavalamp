@@ -14,6 +14,12 @@ namespace ruleEngine
 
     public class ruleItemRepository : IRuleItemRepository
     {
+        private List<IRuleItem> _localList;
+        public ruleItemRepository()
+        {
+            searchDirectories = new List<DirectoryInfo>();
+        }
+
         public List<DirectoryInfo> searchDirectories { get; set; }
 
         /// <summary>
@@ -28,7 +34,7 @@ namespace ruleEngine
             {
                 asmsToLookin.AddRange(directory.GetFiles("*.dll").Select(f => Assembly.Load(f.FullName)).Where(a => a.FullName == GetType().Assembly.FullName));
             }
-            List<IRuleItem> toRet = new List<IRuleItem>(asmsToLookin.Count);
+            _localList = new List<IRuleItem>(asmsToLookin.Count);
             foreach (var assembly in asmsToLookin)
             {
                 foreach (var module in assembly.GetModules())
@@ -39,20 +45,42 @@ namespace ruleEngine
                         if (constr != null)
                         {
                             Object newRuleItem = constr.Invoke(new object[0]);
-                            toRet.Add(newRuleItem as IRuleItem);
+                            _localList.Add(newRuleItem as IRuleItem);
                         }
                     }
                 }
             }
-            return toRet;
+            return _localList;
         }
+
+
+
+        #region IRuleItemRepository Members
+
+
+        public List<IRuleItem> getAllRuleItems(Func<IRuleItem, bool> condition)
+        {
+            if (_localList == null)
+                _localList = getAllRuleItems();
+            return _localList.Where(condition).ToList();
+        }
+
+        public IRuleItem getRuleItem(Func<IRuleItem, bool> condition)
+        {
+            if (_localList == null)
+                _localList = getAllRuleItems();
+            return _localList.FirstOrDefault(condition);
+        }
+
+        #endregion
     }
 
     public interface IRuleItemRepository
     {
 
         List<IRuleItem> getAllRuleItems();
-
+        List<IRuleItem> getAllRuleItems(Func<IRuleItem, bool> condition);
+        IRuleItem getRuleItem(Func<IRuleItem, bool> condition);
 
     }
 }

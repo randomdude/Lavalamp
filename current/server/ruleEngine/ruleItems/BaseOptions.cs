@@ -19,7 +19,8 @@ namespace ruleEngine.ruleItems
                 return "Base";
             } 
         }
-        
+
+        public string location { get; set; }
 
         public void setChanged()
         {

@@ -6,6 +6,7 @@ namespace lavalampService
     using System.Linq;
     using System.Threading;
 
+    using ServiceStack.Text;
     using ServiceStack.WebHost.Endpoints;
     
     using lavalamp;
@@ -20,6 +21,12 @@ namespace lavalampService
         {
         }
 
+        private static T DeserializeAnonymousType<T>(T template, string json) where T : class
+        {
+            TypeConfig<T>.EnableAnonymousFieldSetters = true;
+            return JsonSerializer.DeserializeFromString(json, template.GetType()) as T;
+        }
+
         public override void Configure(Funq.Container container)
         {
             IDictionary<rule, Timer> runningRules = new Dictionary<rule, Timer>();
@@ -28,8 +35,34 @@ namespace lavalampService
             this.Register(ruleRepo);
             this.Register(ruleItemRepo);
             this.Register(runningRules);
+            this.Config.UseBclJsonSerializers = true;
+            JsConfig.Reset();
+            JsConfig<pin>.SerializeFn = p => string.Format("{{\"direction\":\"{0}\",\"name\":\"{1}\",\"linkedto\":\"{2}\",\"description\":\"{3}\" }}",
+                                                            p.direction,p.name, p.linkedTo.id.ToString(), p.description);
+            JsConfig<pin>.DeSerializeFn = s =>
+                {
+                   var anomData = DeserializeAnonymousType(
+                        new
+                            {
+                                direction = default(string),
+                                name = default(string),
+                                linkedto = default(string),
+                                description = default(string)
+                            },
+                        s); return new pin() 
+                                {
+                                    direction = (pinDirection)Enum.Parse(typeof(pinDirection),anomData.direction),
+                                    description = anomData.description,
+                                    linkedTo = new pinGuid(anomData.linkedto),
+                                    name =  anomData.name
+                                }; 
+                };
+            JsConfig<pinGuid>.SerializeFn = guid => guid.id.ToString();
+            JsConfig<pinGuid>.DeSerializeFn = s => new pinGuid(s);
             Routes.Add<lavalampRuleInfo>("/rule");
+            Routes.Add<lavalampRuleInfo>("/rule/{name}");
             Routes.Add<lavalampRuleItemInfo>("/ruleItem");
+            Routes.Add<lavalampRuleItemInfo>("/ruleItem/{name}");
 
             /*     RequestFilters.Add((httpReq,httpRes,requestDto) =>
                      {
@@ -86,10 +119,9 @@ namespace lavalampService
                     dest => dest.guid, opt => opt.MapFrom(source => source.serial.ToString())).ForMember(
                     dest => dest.caption, opt => opt.MapFrom(source => source.caption())).ForMember(
                     dest => dest.background, opt => opt.Ignore()).ForMember(
-                    dest => dest.category, opt => opt.MapFrom(source => source.GetType().IsDefined(typeof(ToolboxRuleCategoryAttribute),false) ?
-                                                             ((ToolboxRuleCategoryAttribute)source.GetType()
-                                                             .GetCustomAttributes(typeof(ToolboxRuleCategoryAttribute),false).First()).name : null)
-                   );
+                    dest => dest._category, opt => opt.MapFrom(source => source.category())).ForMember(
+                    dest => dest.location, opt => opt.MapFrom(source => source.location)).ForMember(
+                    dest => dest.pinInfo, opt=> opt.MapFrom(source => source.pinInfo)) ;
 
             AutoMapper.Mapper.CreateMap<rule, lavalampRuleInfo>().ForMember(
                     dest => dest.name, opt => opt.MapFrom(source => source.name)).ForMember(

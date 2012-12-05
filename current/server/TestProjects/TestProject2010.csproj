@@ -42,7 +42,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -59,6 +59,18 @@
     <Reference Include="Moq">
       <HintPath>..\..\Third Party\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack, Version=3.7.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Third Party\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common, Version=3.7.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Third Party\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=3.6.9.2502, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Third Party\ServiceStack.Text.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -72,6 +84,7 @@
     <Compile Include="GPSimTests\gpSimTests.cs" />
     <Compile Include="interopTests.cs" />
     <Compile Include="loadSaveRuleTests.cs" />
+    <Compile Include="pinObjectDataTypeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -82,6 +95,7 @@
     <Compile Include="ruleTests.cs" />
     <Compile Include="SerialisationTests.cs" />
     <Compile Include="pythonRuleItemTests.cs" />
+    <Compile Include="serviceTests.cs" />
     <Compile Include="virtualNetworkTests\basicTests.cs" />
     <Compile Include="virtualNetworkTests\virtualNetwork\basicTests_virtualNetwork.cs" />
     <Compile Include="virtualNetworkTests\commandTests.cs" />

@@ -226,7 +226,7 @@ namespace ruleEngine.ruleItems.windows.WMI
                     if (sensorsHere && !_cboNamespaces.Items.Contains(new { Display = "WMI Root (Not Recommended)", Value = "cimv2" }))
                         _cboNamespaces.Items.Add(new {Display = "WMI Root (Not Recommended)" , Value = "cimv2"});
                 }
-                catch(Exception e)
+                catch
                 {
              //       MessageBox.Show(e.Message + " happened when trying to get Temperature sensors from the Win32_TemperatureProbe object in cimv2", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     _erroredNamespaces.Add("cimv2");
@@ -299,7 +299,7 @@ namespace ruleEngine.ruleItems.windows.WMI
                     if (sensorsHere && !_cboNamespaces.Items.Contains(new { Display = "WMI", Value = "WMI" }))
                         _cboNamespaces.Items.Add(new { Display = "WMI", Value = "WMI" });
                 } 
-                catch (Exception e)
+                catch
                 {
                 //    MessageBox.Show(e.Message + " happened when trying to get Temperature sensors from the MSAcpi_ThermalZoneTemperature object in WMI", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     _erroredNamespaces.Add("WMI");
@@ -308,12 +308,12 @@ namespace ruleEngine.ruleItems.windows.WMI
             return _sensorList.Count > 0;
         }
 
-        public string displayName
+        public override string displayName
         {
             get { return "Temperature Settings"; }
         }
 
-        public string typedName
+        public override string typedName
         {
             get { return "WMI"; }
         }
@@ -345,8 +345,7 @@ namespace ruleEngine.ruleItems.windows.WMI
             {
                 if (string.IsNullOrEmpty(NameProperty))
                     return "";
-                else 
-                    return (string) _sensor[NameProperty];
+                return (string) this._sensor[this.NameProperty];
             }
         }
 

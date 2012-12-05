@@ -221,7 +221,7 @@ namespace TestProjects
             isRunning.evaluate();
             targetRule.advanceDelta();
             bool running = isRunning.pinInfo["output1"].value.asBoolean(); 
-            for(int i = 0; i < 10 && !running;i++ )
+            for(int i = 0; i < 20 && !running;i++ )
             {
                 isRunning.evaluate();
                 targetRule.advanceDelta();
@@ -330,6 +330,7 @@ namespace TestProjects
             targetRule.stop();
 
         }
+
 
     }
 }

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using System.Diagnostics.Contracts;
 
 namespace ruleEngine.ruleItems
 {
@@ -14,14 +15,16 @@ namespace ruleEngine.ruleItems
         [XmlIgnore] private PictureBox _errorIcon = new PictureBox();
         [XmlIgnore] public bool isErrored = false;
         [XmlIgnore] public Exception whyIsErrored;
-        [XmlIgnore] public Point location = new Point(0, 0);
+
         [XmlIgnore] public List<Control> controls = new List<Control>();
         [XmlIgnore] private Image _backgroundImage;
+
 
         /// <summary>
         /// Pin objects on this ruleItem, indexed by pin name
         /// </summary>
-        [XmlIgnore] public Dictionary<string, pin> pinInfo = new Dictionary<string, pin>();
+        [XmlIgnore]
+        public Dictionary<string, pin> pinInfo { get; set; }
 
         /// <summary>
         /// Is this ruleItem currently permitted to evaluate()?
@@ -39,6 +42,25 @@ namespace ruleEngine.ruleItems
         public abstract string ruleName();
         public virtual Dictionary<String, pin> getPinInfo() { return new Dictionary<String,pin>(); }
         public abstract void evaluate();
+
+        /// <summary>
+        /// catches any errors caused be evalate (and todo runs rule in sandbox?)
+        /// </summary>
+        /// <param name="throwErrors">if the method rethrows errors</param>
+        public void evaluate(bool throwErrors)
+        {
+            try
+            {
+                evaluate();
+            }
+            catch (Exception ex)
+            {
+                errorHandler(ex);
+                if (throwErrors)
+                    throw ex;
+            }
+
+        }
         public virtual Image background() { return _backgroundImage; }
         public virtual void setBackground(Image image)
         {
@@ -49,7 +71,18 @@ namespace ruleEngine.ruleItems
         public virtual void start() { }
         public virtual void stop() { }
         public virtual void onResize(Control parent) { }
-        public virtual string caption() { return null; }
+        public virtual string caption() { return string.Empty; }
+        
+        public string category()
+        {
+            Type tpy = this.GetType();
+            if (tpy.IsDefined(typeof(ToolboxRuleCategoryAttribute), true))
+            {
+                ToolboxRuleCategoryAttribute toolbox = (ToolboxRuleCategoryAttribute)tpy.GetCustomAttributes(typeof(ToolboxRuleCategoryAttribute), true)[0];
+                return toolbox.name;
+            }
+            return string.Empty;
+        }
 
         /// <summary>
         /// The default options for the rule which will be displayed when the ruleItemCtl is double clicked
@@ -64,6 +97,8 @@ namespace ruleEngine.ruleItems
         }
 
         public abstract IFormOptions setupOptions();
+        [XmlIgnore]
+        public Point location{get; set; }
 
         public virtual void onAfterLoad() { }
 
@@ -99,7 +134,7 @@ namespace ruleEngine.ruleItems
         {
             // Control stuff TODO this needs movinvg to the rulectlwidget
             Size currentPreferredSize = preferredSize();
-
+            location = new Point(0,0);
             _errorIcon.Image = Properties.Resources.error.ToBitmap();
             _errorIcon.Size = _errorIcon.Image.Size;
             _errorIcon.Visible = false;
@@ -109,6 +144,8 @@ namespace ruleEngine.ruleItems
             _errorIcon.Click += this.errorIcon_Click;
 
             controls.Add(_errorIcon);
+
+            pinInfo = new Dictionary<string, pin>();
 
             // Load up background. We put this in a PictureBox instead of the control background so that
             // we can position it - we want it slightly above the center of the image, so that it does not
@@ -194,6 +231,7 @@ namespace ruleEngine.ruleItems
             {
                 // Oh crap! We've got no window - we're probably running a unit test?
                 // todo/fixme: what happens when we run rules without a UI?
+                // we need to log them to the server if there is one and to the eventviewer
                 throw ex;
             }
 

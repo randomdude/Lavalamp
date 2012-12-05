@@ -7,19 +7,22 @@
     using ruleEngine;
     using System.Configuration;
 
+    using webGui.Models;
+
     [HandleError]
-    public class HomeController : Controller
+    public class HomeController : baseController
     {
         private readonly ruleClient client = new ruleClient(); 
         public HomeController()
         {
             client.SetBaseUri(ConfigurationManager.AppSettings["ServerURL"]);
+            
         }
 
         public ActionResult Index()
         {
-            var r = client.Get<List<lavalampRuleInfo>>("rule");
-            return View(r);
+            ruleOverviewModel overview = new ruleOverviewModel(client.Get<List<lavalampRuleInfo>>("rule"));
+            return View(overview);
         }
 
         public ActionResult About()
@@ -30,9 +33,9 @@
         public ActionResult changeRuleState(lavalampRuleInfo item)
         {
             item.state = item.state.Value == ruleState.stopped ? ruleState.running : ruleState.stopped;
-            var r = client.Put<List<lavalampRuleInfo>>("rule", item);
-             
-            return View("Index",r);
+           ruleOverviewModel overview = new ruleOverviewModel(client.Put<List<lavalampRuleInfo>>("rule", item));
+
+           return View("Index", overview);
         }
 
 

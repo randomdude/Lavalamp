@@ -39,6 +39,17 @@
                 this.lblDebugInfo.Text += "ID is null!" + Environment.NewLine;
             else
                 this.lblDebugInfo.Text += "ID = " + debugThis.serial.ToString() + Environment.NewLine;
+
+            lblDebugInfo.Text += "pins: " + Environment.NewLine;
+            int i = 1; 
+            foreach (var entry in debugThis.pinInfo)
+            {
+                var pin = entry.Value;
+                lblDebugInfo.Text += string.Format("{0} {5}: {1},{4}{6}description, {2}{4}{6}data-type, {3}{4}{6}current value, {7}{4}", 
+                    pin.direction, entry.Key, pin.description, pin.valueType, Environment.NewLine,i++,"       ",pin.value.data);
+            }
+            
+
         }
     }
 }

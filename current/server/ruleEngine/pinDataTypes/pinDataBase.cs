@@ -43,7 +43,7 @@ namespace ruleEngine.pinDataTypes
         public abstract Type getDataType();
         public abstract object noValue { get; }
 
-        public object data
+        public virtual object data
         {
             get 
             { 

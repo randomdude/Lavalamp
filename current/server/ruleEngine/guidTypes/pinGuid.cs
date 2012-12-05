@@ -4,9 +4,9 @@ namespace ruleEngine
 {
     public class pinGuid
     {
-        public Guid id = Guid.Empty;
+        public Guid id { get; set; } 
 
-        public pinGuid() {}
+        public pinGuid() { id= Guid.Empty;}
 
         public pinGuid(string newGuid)
         {

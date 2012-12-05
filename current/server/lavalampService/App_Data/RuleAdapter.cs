@@ -5,6 +5,9 @@ using ruleEngine.ruleItems;
 
 namespace lavalamp
 {
+    using System.Drawing;
+    using System.Linq;
+
     using ServiceStack.ServiceClient.Web;
     using ServiceStack.ServiceHost;
 
@@ -28,6 +31,7 @@ namespace lavalamp
         /// <summary>
         /// if fetchRuleItems is true this list will be or has been filled.
         /// </summary>
+        
         public List<lavalampRuleItemInfo> ruleItems { get; set; }
 
         public void start()
@@ -51,9 +55,11 @@ namespace lavalamp
             client.Post<lavalampRuleInfo>("/rule", this);
         }
 
-        public IEnumerable<ruleItemBase> getRuleItems()
+        public IEnumerable<IRuleItem> getRuleItems()
         {
-            throw new System.NotImplementedException();
+            if(this.ruleItems == null)
+                this.ruleItems = new List<lavalampRuleItemInfo>();
+            return this.ruleItems.Select(r => r as IRuleItem);
         }
 
         public void changeName(string name)
@@ -81,9 +87,13 @@ namespace lavalamp
 
     public class lavalampRuleItemInfo : ILavalampInfoBase, IRuleItem
     {
+        public lavalampRuleItemInfo()
+        {
+            position = new int[2];
+        }
         public ruleState? state { get; set; }
         public string name { get; set; }
-        public string category { get; set; }
+        public string _category { get; set; }
         public string caption { get; set; }
 
         public string background { get; set; }
@@ -91,6 +101,11 @@ namespace lavalamp
         public IFormOptions opts { get; set; }
         public int[] position { get; set; } 
         public string guid { get; set; }
+
+        public string category()
+        {
+            return _category;
+        }
 
         public string ruleName()
         {
@@ -106,5 +121,26 @@ namespace lavalamp
         {
             return opts;
         }
+
+        public Point location
+        {
+            get
+            {
+                return new Point(position[0],position[1]);
+            }
+            set
+            {
+                position = new int[2];
+                position[0] = value.X;
+                position[1] = value.Y;
+            }
+        }
+
+        public Dictionary<string, pin> pinInfo
+        {
+            get; set; 
+        }
     }
+
+
 }

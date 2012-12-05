@@ -68,8 +68,8 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\Models\AccountModels.cs" />
-    <Compile Include="Controllers\Models\ruleEditor.cs" />
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\ruleEditor.cs" />
     <Compile Include="Controllers\RuleEditorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -95,21 +95,21 @@
   <ItemGroup>
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\jquery-ui-1.8.20.custom.css" />
-    <Content Include="Content\ui-bg_diagonals-small_50_262626_40x40.png" />
-    <Content Include="Content\ui-bg_flat_0_303030_40x100.png" />
-    <Content Include="Content\ui-bg_flat_0_4c4c4c_40x100.png" />
-    <Content Include="Content\ui-bg_glass_40_0a0a0a_1x400.png" />
-    <Content Include="Content\ui-bg_glass_55_f1fbe5_1x400.png" />
-    <Content Include="Content\ui-bg_glass_60_000000_1x400.png" />
-    <Content Include="Content\ui-bg_gloss-wave_55_000000_500x100.png" />
-    <Content Include="Content\ui-bg_gloss-wave_85_9fda58_500x100.png" />
-    <Content Include="Content\ui-bg_gloss-wave_95_f6ecd5_500x100.png" />
-    <Content Include="Content\ui-icons_000000_256x240.png" />
-    <Content Include="Content\ui-icons_1f1f1f_256x240.png" />
-    <Content Include="Content\ui-icons_9fda58_256x240.png" />
-    <Content Include="Content\ui-icons_b8ec79_256x240.png" />
-    <Content Include="Content\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Content\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\Images\ui-bg_diagonals-small_50_262626_40x40.png" />
+    <Content Include="Content\Images\ui-bg_flat_0_303030_40x100.png" />
+    <Content Include="Content\Images\ui-bg_flat_0_4c4c4c_40x100.png" />
+    <Content Include="Content\Images\ui-bg_glass_40_0a0a0a_1x400.png" />
+    <Content Include="Content\Images\ui-bg_glass_55_f1fbe5_1x400.png" />
+    <Content Include="Content\Images\ui-bg_glass_60_000000_1x400.png" />
+    <Content Include="Content\Images\ui-bg_gloss-wave_55_000000_500x100.png" />
+    <Content Include="Content\Images\ui-bg_gloss-wave_85_9fda58_500x100.png" />
+    <Content Include="Content\Images\ui-bg_gloss-wave_95_f6ecd5_500x100.png" />
+    <Content Include="Content\Images\ui-icons_000000_256x240.png" />
+    <Content Include="Content\Images\ui-icons_1f1f1f_256x240.png" />
+    <Content Include="Content\Images\ui-icons_9fda58_256x240.png" />
+    <Content Include="Content\Images\ui-icons_b8ec79_256x240.png" />
+    <Content Include="Content\Images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\Images\ui-icons_ffffff_256x240.png" />
     <Content Include="Scripts\Home\RuleList.js" />
     <Content Include="Scripts\RuleEditor\RuleEditor.js">
       <DependentUpon>RuleEditor.coffee</DependentUpon>
@@ -142,6 +142,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\RuleEditor\RuleEditor.coffee" />
+    <Content Include="Content\jquery.contextMenu.css" />
+    <Content Include="Content\jquery.treeview.css" />
+    <Content Include="Content\treeview-theme-ltr\d.gif" />
+    <Content Include="Content\treeview-theme-ltr\d.png" />
+    <Content Include="Content\treeview-theme-ltr\style.css" />
+    <Content Include="Content\treeview-theme-ltr\throbber.gif" />
+    <Content Include="Content\treeview-theme-rtl\d.gif" />
+    <Content Include="Content\treeview-theme-rtl\d.png" />
+    <Content Include="Content\treeview-theme-rtl\dots.gif" />
+    <Content Include="Content\treeview-theme-rtl\style.css" />
+    <Content Include="Content\treeview-theme-rtl\throbber.gif" />
+    <Content Include="Scripts\Shared\jquery.contextMenu.js" />
+    <Content Include="Scripts\Shared\jquery.cookie.js" />
+    <Content Include="Scripts\Shared\jquery.hotkeys.js" />
+    <Content Include="Scripts\Shared\jquery.jstree.js" />
     <Content Include="Views\Shared\Site.Master" />
   </ItemGroup>
   <ItemGroup>
@@ -153,9 +168,6 @@
       <Project>{04834DB5-4E91-48EA-9107-FD2246087122}</Project>
       <Name>ruleEngine</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />

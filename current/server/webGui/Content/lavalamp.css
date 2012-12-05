@@ -1,0 +1,171 @@
+body {
+  background-color: #000000;
+  font-size: .75em;
+  font-family: Verdana, Helvetica, Sans-Serif;
+  margin: 0;
+  padding: 0;
+  color: #696969; }
+
+#page {
+  width: 90%;
+  margin-left: 50px;
+  margin-right: 50px; }
+
+#main {
+  width: 80%;
+  height: 85%;
+  top: 15%;
+  position: absolute;
+  padding: 30px 30px 15px 30px;
+  background-color: #fff;
+  margin-bottom: 30px;
+  margin-left: 70px;
+  _height: 1px;
+  /* only IE6 applies CSS properties starting with an underscore */ }
+
+#footer {
+  color: #999;
+  padding: 10px 0;
+  text-align: center;
+  line-height: normal;
+  margin: 0;
+  font-size: .9em; }
+
+#header {
+  margin-bottom: 30px;
+  color: #000;
+  padding: 0; }
+  #header h1 {
+    position: relative;
+    display: inline;
+    font-weight: bold;
+    padding: 5px 0;
+    margin-left: 40px;
+    bottom: 20px;
+    color: #fff;
+    border: none;
+    line-height: 2em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 32px !important; }
+  #header#title {
+    display: block;
+    float: left;
+    text-align: left; }
+  #header div {
+    display: inline;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: top; }
+
+a:hover {
+  color: #1d60ff;
+  text-decoration: none; }
+a:active {
+  color: #12eb87; }
+a:link {
+  color: #034af3;
+  text-decoration: underline; }
+a:visited {
+  color: #505abc; }
+
+table {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #e8eef4;
+  border-collapse: collapse;
+  text-transform: capitalize;
+  text-indent: 10%; }
+  table td {
+    padding: 5px;
+    min-width: 150px;
+    border-right-style: dashed;
+    border-left-style: dashed;
+    border-color: #d0d0e0;
+    border-width: 2px; }
+  table th {
+    padding: 6px 5px;
+    text-align: left;
+    background-color: #e8eef4; }
+
+input[type="text"], input[type="password"] {
+  width: 200px;
+  border: 1px solid #CCC; }
+
+div#navi ul {
+  top: 20%;
+  position: absolute;
+  left: -3%;
+  z-index: 1; }
+  div#navi ul li {
+    background-color: rgba(100, 0, 0, 0.4);
+    text-align: center;
+    list-style: none;
+    display: block;
+    margin-bottom: 5px;
+    border: red medium solid;
+    padding: 6px 25px 6px 25px;
+    border-radius: 3px; }
+    div#navi ul li:hover {
+      background-color: rgba(202, 0, 0, 0.4); }
+
+p, ul {
+  margin-bottom: 20px;
+  line-height: 1.6em; }
+
+#rule-editor {
+  background: lavender;
+  width: 90%;
+  height: 85%;
+  float: left;
+  position: relative; }
+
+#draw-area {
+  width: 90%;
+  height: 85%;
+  float: left; }
+
+div.rule-item {
+  padding: 10px 10px 10px 10px;
+  border: dimgrey thin solid;
+  border-radius: 5px;
+  width: 70px;
+  height: 70px;
+  background-color: magenta;
+  opacity: 0.6;
+  position: absolute; }
+  div.rule-item span {
+    opacity: 1;
+    color: lime; }
+  div.rule-item .pin {
+    border: 1px solid black;
+    height: 4px;
+    width: 4px;
+    position: relative;
+    background-color: Green;
+    margin: 10px; }
+    div.rule-item .pin.input {
+      left: -30%;
+      top: 10%; }
+    div.rule-item .pin.output {
+      left: 95%;
+      top: 10%; }
+
+.rule-item-list {
+  width: 100px;
+  float: right;
+  height: 90%; }
+  .rule-item-list li {
+    list-style: none; }
+
+.error {
+  color: Red; }
+
+.ok {
+  color: Green; }
+
+.uncertain {
+  color: Olive; }
+
+.centre {
+  margin: auto; }
+

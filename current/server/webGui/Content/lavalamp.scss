@@ -1,0 +1,259 @@
+﻿//variables
+$ruleItemColor:Fuchsia;
+$pagesize:90%;
+
+
+body 
+{
+	 background-color: #000000;
+     font-size: .75em;
+     font-family: Verdana, Helvetica, Sans-Serif;
+     margin: 0;
+     padding: 0;
+     color: #696969;
+}
+
+#page
+{
+    width: $pagesize;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+#main
+{
+    width: 80%;
+    height: 85%;
+    top: 15%;
+    position: absolute;
+    padding: 30px 30px 15px 30px;
+    background-color: #fff;
+    margin-bottom: 30px;
+    margin-left: 70px;
+    _height: 1px; /* only IE6 applies CSS properties starting with an underscore */
+}
+
+#footer
+{
+    color: #999;
+    padding: 10px 0;
+    text-align: center;
+    line-height: normal;
+    margin: 0;
+    font-size: .9em;
+}
+
+#header
+{
+    margin-bottom: 30px;
+    color: #000;
+    padding: 0;
+    
+	h1
+	{
+		position: relative;
+		display: inline;
+		font-weight: bold;
+		padding: 5px 0;
+		margin-left: 40px;
+		bottom: 20px;
+		color: #fff;
+		border: none;
+		line-height: 2em;
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 32px !important;
+	}
+
+	&#title
+	{
+		display:block;
+		float:left;
+		text-align:left;
+	}
+	div
+	{
+		display:inline;
+		overflow: hidden;
+		white-space: nowrap;
+		vertical-align:top;
+	}
+}
+
+a
+{
+	&:hover
+	{
+		color: #1d60ff;
+		text-decoration: none;
+	}
+	&:active
+	{
+		 color: #12eb87;
+	}
+	&:link
+	{
+		color: #034af3;
+		text-decoration: underline;
+	}
+	&:visited
+	{
+		color: #505abc;
+	}
+}
+
+table 
+{
+  border: { 
+	style: solid; 
+	width: 1px;
+	color: #e8eef4;
+	collapse: collapse;
+  }
+  text: 
+  {
+	transform:capitalize;
+	indent:10%;
+  }
+  td 
+  {
+	  padding: 5px;
+	  min-width:150px;
+	  border: 
+	  {
+			right-style: dashed;
+			left-style: dashed;
+			color: #d0d0e0;
+			width:2px;
+	  }   
+  }
+  th
+  {
+	padding: 6px 5px;
+	text-align: left;
+	background-color: #e8eef4;  
+  }
+}
+
+input 
+{
+	&[type="text"], &[type="password"] {
+		width: 200px;
+		border: 1px solid #CCC;
+	}
+}
+
+$naviColour:rgba(100,0,0,0.4);
+
+div#navi 
+{
+    ul 
+	{
+		top: 20%;
+		position: absolute;
+		left: -3%;
+		z-index: 1;
+		li 
+		{
+			background-color:$naviColour;
+			text-align: center;
+			list-style: none;
+			display: block;
+			margin-bottom: 5px;
+			border: red medium solid; 
+			padding: 6px 25px 6px 25px;
+			border-radius: 3px; 
+			&:hover 
+			{
+				background-color:lighten($naviColour,20%)
+			}
+		}
+	}
+}
+
+p, ul
+{
+    margin-bottom: 20px;
+    line-height: 1.6em;
+}
+
+#rule-editor {
+    background: lavender;
+    width: $pagesize;
+    height: 85%;
+    float:left;
+	position: relative;
+}
+#draw-area {
+	width: $pagesize;
+    height: 85%;
+    float:left;
+}
+
+$ruleItemWidth:70px;
+$ruleItemHeight:70px;
+
+div.rule-item 
+{
+    padding: 10px 10px 10px 10px;
+    border: dimgrey thin solid;
+    border-radius: 5px;
+    width: $ruleItemWidth;
+    height: $ruleItemHeight;
+    background-color:$ruleItemColor;
+    opacity:0.6;
+    position:absolute;
+	span
+	{
+		opacity:1;
+		color: complement($ruleItemColor);
+	}
+
+	.pin 
+	{
+		border:1px solid black;
+		height: 4px;
+		width: 4px;
+		position: relative;
+		background-color: Green;
+		margin:10px;
+		&.input{
+			left: -30%;
+			top: 10%;
+		}
+		&.output{
+			left: 95%;
+			top: 10%;
+		}
+	}
+}
+
+.rule-item-list 
+{
+	width:100px;
+	float:right;
+	height:$pagesize;
+	li
+	{
+		list-style: none;
+	}
+}
+
+.error 
+{
+	color: Red;
+}
+
+.ok
+{
+	color: Green;
+}
+
+.uncertain
+{
+	color: Olive;
+}
+
+.centre
+{
+	margin:auto;
+}
