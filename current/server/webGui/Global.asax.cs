@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
-
-namespace webGui
+﻿namespace webGui
 {
+    using System.Configuration;
+    using System.Web.Mvc;
+    using System.Web.Routing;
+    using Ninject;
+    using lavalamp;
+    using ruleEngine;
+
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        public static void RegisterRoutes(RouteCollection routes)
+        public static IKernel Kernal { get; private set; }
+        public static void registerRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
@@ -28,12 +29,19 @@ namespace webGui
             );
 
         }
-
+        public void initDependencyInjection()
+        {
+            Kernal = new StandardKernel();
+            Kernal.Bind<IRuleRepository>().To<serviceRuleRepository>()
+                                          .InSingletonScope()
+                                          .WithConstructorArgument("path", ConfigurationManager.AppSettings["ServerURL"]);
+        }
         protected void Application_Start()
         {
            // AreaRegistration.RegisterAllAreas();
 
-            RegisterRoutes(RouteTable.Routes);
+            registerRoutes(RouteTable.Routes);
+            initDependencyInjection();
         }
     }
 }

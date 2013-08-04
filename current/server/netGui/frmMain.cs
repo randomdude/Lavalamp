@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using System.Xml.Serialization;
+
 using netGui.nodeEditForms;
 using ruleEngine;
 using ruleEngine.nodes;
@@ -12,6 +12,7 @@ namespace netGui
 {
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
+    using System.Linq;
 
     public partial class FrmMain : Form
     {
@@ -424,7 +425,7 @@ namespace netGui
             rule r = (rule) toRemove.Tag;
             DialogResult sureness = MessageBox.Show("Are you sure you want to delete rule '" + r.name + "'?", "Confirm delete", MessageBoxButtons.YesNo);
 
-            if (sureness == System.Windows.Forms.DialogResult.Yes)
+            if (sureness == DialogResult.Yes)
                 lstRules.Items.Remove(toRemove);
             if(File.Exists(_myOptions.rulesPath + @"\" + r.name + ".rule"))
                 File.Delete(_myOptions.rulesPath + @"\" + r.name + ".rule");
@@ -588,15 +589,17 @@ namespace netGui
         {
             loadAllRules();
         }
-
         private void loadAllRules()
         {
-           ruleRepository repo = new ruleRepository(_myOptions.rulesPath);
-           List<rule> rules = repo.getAllRules(false);
+
+            var repo = _myOptions.RuleRepository;
+ 
+            var rules = repo.getAllRules(false).Cast<rule>();
             foreach (var rule in rules)
             {
                 this.addNewRule(rule);
             }
+            
         }
         #endregion
 
@@ -607,7 +610,7 @@ namespace netGui
 
             foreach (ListViewItem thisItemToStart in lstRules.SelectedItems)
             {
-                rule thisRuleToStart = (rule) ((ListViewItem)thisItemToStart).Tag;
+                rule thisRuleToStart = (rule) thisItemToStart.Tag;
                 if (thisItemToStart.SubItems[2].Text == true.ToString())
                 {
                     MessageBox.Show("Cannot start rule '" + thisRuleToStart.name + "' - rule is open in editor.");

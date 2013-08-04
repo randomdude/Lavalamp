@@ -2,14 +2,20 @@
 
 namespace ruleEngine
 {
+    using System.Diagnostics.Contracts;
+
     public class lineChainGuid
     {
         public Guid id = Guid.NewGuid();
 
-        public lineChainGuid() { }
+        public lineChainGuid()
+        {
+            id = Guid.Empty;
+        }
 
         public lineChainGuid(string newGuid)
         {
+            Contract.Requires(newGuid != null);
             id = new Guid(newGuid);
         }
 

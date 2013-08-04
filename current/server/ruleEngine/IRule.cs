@@ -82,7 +82,7 @@ namespace ruleEngine
             throw new System.NotImplementedException();
         }
 
-        [ContractInvariantMethod]
+        [Pure]
         public IEnumerable<IRuleItem> getRuleItems()
         {
             Contract.Requires(Contract.Result<IEnumerable<IRuleItem>>() != null);

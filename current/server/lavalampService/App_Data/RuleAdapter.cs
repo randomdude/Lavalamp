@@ -104,17 +104,17 @@ namespace lavalamp
 
         public string category()
         {
-            return _category;
+            return this._category ?? "";
         }
 
         public string ruleName()
         {
-            return name;
+            return name ?? "(unknown rule)";
         }
 
         string IRuleItem.caption()
         {
-            return caption;
+            return caption ?? this.ruleName();
         }
 
         public IFormOptions setupOptions()

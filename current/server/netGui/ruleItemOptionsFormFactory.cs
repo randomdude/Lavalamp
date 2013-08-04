@@ -1,10 +1,10 @@
-﻿using System;
-using System.Windows.Forms;
-using ruleEngine.ruleItems;
-using System.Reflection;
+﻿
 namespace netGui
 {
-    using System.Diagnostics;
+    using System;
+    using System.Windows.Forms;
+    using ruleEngine.ruleItems;
+    using System.Reflection;
     using System.Diagnostics.Contracts;
     using System.Linq;
 

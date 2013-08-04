@@ -2,6 +2,8 @@
 
 namespace ruleEngine
 {
+    using System.Diagnostics.Contracts;
+
     public class pinGuid
     {
         public Guid id { get; set; } 
@@ -10,6 +12,7 @@ namespace ruleEngine
 
         public pinGuid(string newGuid)
         {
+            Contract.Requires(newGuid != null);
             this.id = new Guid(newGuid);
         }
 

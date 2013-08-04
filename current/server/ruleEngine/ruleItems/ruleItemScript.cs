@@ -37,7 +37,7 @@ namespace ruleEngine.ruleItems
 
         public override string ruleName()
         {
-            return myEng.getDescription();
+            return myEng.getDescription() ?? "unknown python rule";
         }
 
         public override System.Drawing.Image background()

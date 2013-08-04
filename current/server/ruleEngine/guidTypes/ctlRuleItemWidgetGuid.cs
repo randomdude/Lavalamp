@@ -1,15 +1,20 @@
 ﻿namespace ruleEngine.guidTypes
 {
     using System;
+    using System.Diagnostics.Contracts;
 
     public class ctlRuleItemWidgetGuid
     {
         public Guid id = Guid.Empty;
 
-        public ctlRuleItemWidgetGuid() {}
+        public ctlRuleItemWidgetGuid()
+        {
+            id = Guid.Empty;
+        }
 
         public ctlRuleItemWidgetGuid(string newGuid)
         {
+            Contract.Requires(newGuid != null);
             this.id = new Guid(newGuid);
         }
 

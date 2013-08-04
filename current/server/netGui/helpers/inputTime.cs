@@ -3,6 +3,7 @@ namespace netGui.helpers
 {
     using System;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.Windows.Forms;
     using System.Diagnostics.Contracts;
     using System.Globalization;
@@ -183,18 +184,25 @@ namespace netGui.helpers
         {
             get
             {
-                return int.Parse(txtTimeBox.Text.Substring(0, this.txtTimeBox.Text.IndexOf(DateTimeFormatInfo.CurrentInfo.TimeSeparator, System.StringComparison.CurrentCultureIgnoreCase)));
+                Contract.Assume(DateTimeFormatInfo.CurrentInfo.TimeSeparator != null);
+                var indexTime = this.txtTimeBox.Text.IndexOf(DateTimeFormatInfo.CurrentInfo.TimeSeparator,
+                                                            StringComparison.CurrentCultureIgnoreCase);
+               return indexTime == -1 ? 0 : int.Parse(this.txtTimeBox.Text.Substring(0, indexTime ));
             }
             set
             {
+                Contract.Assume(DateTimeFormatInfo.CurrentInfo.TimeSeparator != null);
                 if (value > MaxHourVal || value < 0)
                     throw new InvalidDataException("Hours out of range");
-                string hours = txtTimeBox.Text.Substring(0, this.txtTimeBox.Text.IndexOf(DateTimeFormatInfo.CurrentInfo.TimeSeparator, System.StringComparison.CurrentCultureIgnoreCase));
-                string mins = txtTimeBox.Text.Substring((this.txtTimeBox.Text.IndexOf(DateTimeFormatInfo.CurrentInfo.TimeSeparator, System.StringComparison.CurrentCultureIgnoreCase) + 1),
-                                                        (txtTimeBox.Text.LastIndexOfAny(NumberFormatInfo.CurrentInfo.NativeDigits.toCharArray()) - 2));
-                hours = value.ToString("00");
+                var indexTime = txtTimeBox.Text.IndexOf(DateTimeFormatInfo.CurrentInfo.TimeSeparator,
+                                                        StringComparison.CurrentCultureIgnoreCase);
 
-                txtTimeBox.Text = hours + DateTimeFormatInfo.CurrentInfo.TimeSeparator + mins + suffix;
+                var lastDigit = txtTimeBox.Text.LastIndexOfAny(NumberFormatInfo.CurrentInfo.NativeDigits.toCharArray());
+                string mins = NumberFormatInfo.CurrentInfo.NativeDigits[0] + NumberFormatInfo.CurrentInfo.NativeDigits[0];
+                if (indexTime != -1 && lastDigit != -1 && indexTime < lastDigit)
+                    mins = txtTimeBox.Text.Substring(indexTime + 1, lastDigit);
+
+                txtTimeBox.Text = value.ToString("00") + DateTimeFormatInfo.CurrentInfo.TimeSeparator + mins + suffix;
             }
         }
 

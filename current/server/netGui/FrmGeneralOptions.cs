@@ -140,5 +140,11 @@ namespace netGui
         {
             this.txtKey.Enabled = chkUseEncryption.Checked;
         }
+
+        private void btnOpenDlg_Click(object sender, EventArgs e)
+        {
+            dlgRulePath.ShowDialog(this);
+        }
+
     }
 }

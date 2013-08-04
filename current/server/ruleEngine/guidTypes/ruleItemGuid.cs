@@ -2,14 +2,20 @@
 
 namespace ruleEngine
 {
+    using System.Diagnostics.Contracts;
+
     public class ruleItemGuid 
     {
         public Guid id = Guid.Empty;
 
-        public ruleItemGuid() {}
+        public ruleItemGuid()
+        {
+            id = Guid.Empty;
+        }
 
         public ruleItemGuid(string newGuid)
         {
+            Contract.Requires(newGuid != null);
             this.id = new Guid(newGuid);
         }
 

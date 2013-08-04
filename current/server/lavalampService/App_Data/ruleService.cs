@@ -10,8 +10,6 @@ namespace lavalamp
     using ruleEngine;
     using ServiceStack.ServiceInterface;
 
-    using ruleEngine.ruleItems;
-
     public class ruleService : RestServiceBase<lavalampRuleInfo>, IPushService
     {
         private static List<lavalampRuleInfo> _rules;
@@ -34,59 +32,66 @@ namespace lavalamp
             if (_rules == null)
                 _rules = loadRules();
 
+            if (save == null || string.IsNullOrEmpty(save.name))
+                return _rules;
+
             lavalampRuleInfo serverRule = _rules.Find(i => i.name == save.name);
             IRuleRepository repo = this.GetAppHost().TryResolve<IRuleRepository>();
+            var ruleToPut = repo.getRule(save.name);
+
+            if (ruleToPut == null)
+                return _rules;
 
             if (!string.IsNullOrEmpty(save.newName))
             {
-                repo.changeRuleName(repo.getRule(save.name),save.newName);
+                repo.changeRuleName(ruleToPut, save.newName);
                 serverRule.name = save.newName;
             }
 
             if (save.state != serverRule.state)
             {
-                
-                IDictionary<rule, Timer> runningRules = this.GetAppHost().TryResolve<IDictionary<rule, Timer>>();
-                rule r = repo.getRule(save.name);
+                IDictionary<IRule, Timer> runningRules = this.GetAppHost().TryResolve<IDictionary<IRule, Timer>>();
                 switch (save.state)
                 {
                     case ruleState.running:
                         {
-                            r.start();
-                            Timer ruling = new Timer(this.startRule, r, 0, 100);
-                            runningRules.Add(r,ruling);
+                            ruleToPut.start();
+                            Timer ruling = new Timer(this.startRule, ruleToPut, 0, 100);
+                            runningRules.Add(ruleToPut, ruling);
                     
                         }
                         break;
                     case ruleState.stopped:
                         {
-                            r.stop();
-                            Timer timer =  runningRules[r];
+                            ruleToPut.stop();
+                            Timer timer = runningRules[ruleToPut];
                             timer.Dispose();
-                            runningRules.Remove(r);
+                            runningRules.Remove(ruleToPut);
                         }
                         break;
                     default:
-                        r.state = ruleState.errored;
+                        ruleToPut.state = ruleState.errored;
                         break;
                 }
-                serverRule.state = r.state;
+                serverRule.state = ruleToPut.state;
             }
             return _rules;
         }
         
         public override object OnDelete(lavalampRuleInfo toDelRule)
         {
-            int indexToDel;
             if (_rules == null)
                 _rules = loadRules();
-            if ((indexToDel =  _rules.FindIndex(r => r.name == toDelRule.name)) < 0)
-                throw new ruleDoesNotExist(toDelRule.name);
-                // throw new FaultException<ruleDoesNotExist>(new ruleDoesNotExist(toDelRule.name));
+            if (toDelRule == null || string.IsNullOrEmpty(toDelRule.name))
+                throw new ruleDoesNotExist("no name specified");
+
             IRuleRepository repo = this.GetAppHost().TryResolve<IRuleRepository>();
-            rule actualToDel = repo.getRule(toDelRule.name);
+            IRule actualToDel = repo.getRule(toDelRule.name);
+
+            if (actualToDel == null)
+                throw new ruleDoesNotExist("no name specified");
+
             repo.deleteRule(actualToDel);
-            _rules.RemoveAt(indexToDel);
 
             InformOtherClients(toDelRule);
             return _rules;
@@ -99,7 +104,10 @@ namespace lavalamp
             IRuleRepository repo = this.GetAppHost().TryResolve<IRuleRepository>();
             foreach (var rule in rules)
             {
-                rule currentlySaved = repo.getRule(rule.name);
+                if (string.IsNullOrEmpty(rule.name))
+                    continue;
+
+                IRule currentlySaved = repo.getRule(rule.name);
                 if (currentlySaved == null)
                 {
                     currentlySaved = new rule(rule.name);
@@ -136,15 +144,10 @@ namespace lavalamp
             //if (!Directory.Exists((string)Default["RulePath"])) Directory.CreateDirectory(ConfigurationManager.AppSettings["RulePath"]);
 
             IRuleRepository repo = this.GetAppHost().TryResolve<IRuleRepository>();
-            
-            List<rule> rules = repo.getAllRules(false);
-            
 
-            List<lavalampRuleInfo> ruleAdapted = new List<lavalampRuleInfo>(rules.Count);
+            var rules = repo.getAllRules(false).Cast<rule>();
 
-
-            ruleAdapted.AddRange(rules.Select(r => AutoMapper.Mapper.Map<rule,lavalampRuleInfo>(r)));
-            return ruleAdapted;
+            return AutoMapper.Mapper.Map<IEnumerable<rule>, List<lavalampRuleInfo>>(rules);
         }
 
         public void InformOtherClients(object obj)

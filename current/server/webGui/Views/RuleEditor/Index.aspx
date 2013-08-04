@@ -29,8 +29,10 @@
         <menuitem type="command" label="Options" id="context-options">Options</menuitem>
     </menu>
     <div id="rule-editor" style='<%= Model.newRule ? "display='none'" : "" %>' >
-    <canvas id="draw-area">
-    </canvas>
+        <canvas id="draw-area">
+        </canvas>
+        <div id="rule-item-area">
+        </div>
     </div>
    
     <% if (!Model.newRule)

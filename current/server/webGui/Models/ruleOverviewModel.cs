@@ -8,17 +8,17 @@ namespace webGui.Models
 
     using ruleEngine;
 
-    public class ruleOverviewModel : IEnumerable<lavalampRuleInfo>
+    public class ruleOverviewModel : IEnumerable<IRule>
     {
-        private readonly List<lavalampRuleInfo> _list;
+        private readonly List<IRule> _list;
 
-        public ruleOverviewModel(List<lavalampRuleInfo> ruleList)
+        public ruleOverviewModel(List<IRule> ruleList)
         {
             Contract.Requires(ruleList != null);
             this._list = ruleList;
         }
-       
-        public IEnumerator<lavalampRuleInfo> GetEnumerator()
+
+        public IEnumerator<IRule> GetEnumerator()
         {
             return this._list.GetEnumerator();
         }
@@ -29,7 +29,7 @@ namespace webGui.Models
         }
 
         [ContractInvariantMethod]
-        public string getStateClass(lavalampRuleInfo info)
+        public string getStateClass(IRule info)
         {
             Contract.Requires(info != null);
             if (!info.state.HasValue)

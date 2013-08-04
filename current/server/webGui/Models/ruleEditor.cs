@@ -25,7 +25,7 @@ namespace webGui.Controllers.Models
         /// <summary>
         /// All the rule Items available to add to the rule
         /// </summary>
-        public List<lavalampRuleItemInfo> ruleItems { get; set; }
+        public List<IRuleItem> ruleItems { get; set; }
 
         public string ruleItemTree()
         {

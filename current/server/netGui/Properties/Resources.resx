@@ -130,4 +130,28 @@
   <data name="_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\_1.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Options_SelectRuleSever" xml:space="preserve">
+    <value>Rule Server:</value>
+  </data>
+  <data name="Cannot_Open_Port" xml:space="preserve">
+    <value>Cannot Open Port</value>
+  </data>
+  <data name="Invaild_Port" xml:space="preserve">
+    <value>Invaild Port</value>
+  </data>
+  <data name="Already_Open" xml:space="preserve">
+    <value>Already Open</value>
+  </data>
+  <data name="SelectRulePath" xml:space="preserve">
+    <value>Rule path:</value>
+  </data>
+  <data name="Options_SelectRulePath" xml:space="preserve">
+    <value>Rule path:</value>
+  </data>
+  <data name="Port_Available" xml:space="preserve">
+    <value>Free</value>
+  </data>
+  <data name="Node_NetworkKeySpecification" xml:space="preserve">
+    <value>Your network key must be a 32-character value, containing values from zero through nine, and 'A' through 'F'.</value>
+  </data>
 </root>

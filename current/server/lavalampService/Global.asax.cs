@@ -127,10 +127,17 @@ namespace lavalampService
                     dest => dest.name, opt => opt.MapFrom(source => source.name)).ForMember(
                         dest => dest.state, opt => opt.MapFrom(source => source.state)).ForMember(
                         dest => dest.details, opt => opt.MapFrom(source => source.details)).ForMember(
-                        dest => dest.ruleItems, opt => opt.MapFrom(source => source.ruleItems.Values.ToList())).ForMember(
+                        dest => dest.ruleItems, opt => opt.MapFrom(source => source.ruleItems.Select(r => r.Value))).ForMember(
                         dest => dest.preferredHeight, opt => opt.MapFrom(source => source.preferredHeight)).ForMember(
                         dest => dest.preferredWidth, opt => opt.MapFrom(source => source.preferredWidth));
 
+            AutoMapper.Mapper.CreateMap<lavalampRuleInfo,rule >().ForMember(
+                    dest => dest.name, opt => opt.MapFrom(source => source.name)).ForMember(
+                        dest => dest.state, opt => opt.MapFrom(source => source.state)).ForMember(
+                        dest => dest.details, opt => opt.MapFrom(source => source.details)).ForMember(
+                        dest => dest.ruleItems, opt => opt.MapFrom(source => source.getRuleItems())).ForMember(
+                        dest => dest.preferredHeight, opt => opt.MapFrom(source => source.preferredHeight)).ForMember(
+                        dest => dest.preferredWidth, opt => opt.MapFrom(source => source.preferredWidth));
                 new lavalampHost().Init();
         }
 

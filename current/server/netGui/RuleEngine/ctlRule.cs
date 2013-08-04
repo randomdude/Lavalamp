@@ -156,10 +156,13 @@
 
             this.currentlyConnecting = from;
             this.currentlyConnecting.BackColor = this.connectingPinColour;
-            this.currentLine = new lineChain();
-            this.currentLine.start = this.PointToClient(Control.MousePosition);
+            this.currentLine = new lineChain
+                {
+                    serial = new lineChainGuid(){id = Guid.NewGuid()},
+                    start = this.PointToClient(Control.MousePosition),
+                    end = this.PointToClient(Control.MousePosition)
+                };
             // set temporarily, so the line doesn't stretch to the origin until the first mouseMove
-            this.currentLine.end = this.PointToClient(Control.MousePosition);             
         }
 
         public void finishLine(PictureBox endTarget)

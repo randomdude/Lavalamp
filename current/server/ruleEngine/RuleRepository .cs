@@ -19,7 +19,7 @@ namespace ruleEngine
     /// </summary>
     public class ruleRepository : IRuleRepository
     {
-        private List<rule> _ruleList;
+        private List<IRule> _ruleList;
         private readonly object _ruleLock = new object();
         private readonly string _rulesPath;
 
@@ -39,21 +39,19 @@ namespace ruleEngine
             {
                 return _rulesPath;
             }
-        } 
+        }
 
-        public rule getRule(string name)
+        public IRule getRule(string name)
         {
 
             if (_ruleList == null)
                 _ruleList = this.getAllRules(false);
 
-            return this._ruleList.Exists(r => r.name == name) ? 
-                   this._ruleList.First(r => r.name == name) : null;
-            
-        
+            return this._ruleList.FirstOrDefault(r => r.name == name);
+
         }
 
-        public List<rule> getAllRules(bool forceReload)
+        public List<IRule> getAllRules(bool forceReload)
         {
             if (_ruleList != null && !forceReload)
                 return _ruleList;
@@ -68,7 +66,7 @@ namespace ruleEngine
             {
                 throw new IOException("Unable to read rule files from " + _rulesPath, ex);
             }
-            List<rule> newList = new List<rule>(fileList.Length);
+           var newList = new List<IRule>(fileList.Length);
 
             foreach (FileInfo thisFile in fileList)
             {
@@ -98,18 +96,18 @@ namespace ruleEngine
             return _ruleList;
         }
 
-        public void saveRule(rule save)
+        public void saveRule(IRule save)
         {
             save.saveToDisk(_rulesPath);
             lock (_ruleLock)
             {
                 if (_ruleList == null)
-                    _ruleList = new List<rule>(1);
+                    _ruleList = new List<IRule>(1);
                 _ruleList.Add(save);
             }
         }
 
-        public void changeRuleName(rule save, string newName)
+        public void changeRuleName(IRule save, string newName)
         {
             string newRulePath = _rulesPath + newName + RULE_EXT;
             
@@ -140,7 +138,7 @@ namespace ruleEngine
             }
         }
 
-        public void deleteRule(rule toDelRule)
+        public void deleteRule(IRule toDelRule)
         {
             string fileToDel = _rulesPath + toDelRule.name + RULE_EXT;
             lock (_ruleLock)
@@ -166,29 +164,29 @@ namespace ruleEngine
         /// </summary>
         /// <param name="name">the rule item</param>
         /// <returns>The rule item with the matching name or null if it wasn't found</returns>
-        rule getRule(string name);
+        IRule getRule(string name);
 
         /// <summary>
         /// returns all the rules in the system
         /// </summary>
         /// <param name="forceReload">this flushes any cached rules</param>
         /// <returns>a list containing all the rules in the system</returns>
-        List<rule> getAllRules(bool forceReload);
+        List<IRule> getAllRules(bool forceReload);
         
         /// <summary>
         /// Updates or saves a rule. 
         /// </summary>
         /// <param name="save">rule to save</param>
-        void saveRule(rule save);
+        void saveRule(IRule save);
 
         /// <summary>
         /// Updates a rules name both on the disk and on the rule itself
         /// </summary>
-        void changeRuleName(rule save,string newName);
+        void changeRuleName(IRule save, string newName);
 
 
 
-        void deleteRule(rule toDelRule);
+        void deleteRule(IRule toDelRule);
     }
 
     [ContractClassFor(typeof(IRuleRepository))]
@@ -204,7 +202,7 @@ namespace ruleEngine
         }
 
         [Pure]
-        public rule getRule(string name)
+        public IRule getRule(string name)
         {
             Contract.Requires(!string.IsNullOrEmpty(name));
 
@@ -212,21 +210,21 @@ namespace ruleEngine
         }
 
         [Pure]
-        public List<rule> getAllRules(bool forceReload)
+        public List<IRule> getAllRules(bool forceReload)
         {
             Contract.Ensures(Contract.Result<List<rule>>() != null && Contract.Result<List<rule>>().All(r => r != null));
 
             throw new NotImplementedException();
         }
 
-        public void saveRule(rule save)
+        public void saveRule(IRule save)
         {
             Contract.Requires(save != null);
 
             throw new NotImplementedException();
         }
 
-        public void changeRuleName(rule toChange, string newName)
+        public void changeRuleName(IRule toChange, string newName)
         {
             Contract.Requires(!String.IsNullOrEmpty(newName) && toChange != null);
             Contract.Ensures(toChange.name == newName);
@@ -236,7 +234,7 @@ namespace ruleEngine
             throw new NotImplementedException();
         }
 
-        public void deleteRule(rule toDelRule)
+        public void deleteRule(IRule toDelRule)
         {
             Contract.Requires(toDelRule != null);
             throw new NotImplementedException();

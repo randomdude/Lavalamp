@@ -71,8 +71,8 @@
         _results = [];
         for (_i = 0, _len = ruleItems.length; _i < _len; _i++) {
           ruleItem = ruleItems[_i];
-          ruleItem.position.x *= ratioX;
-          ruleItem.position.y *= ratioY;
+          ruleItem.position.x = Math.abs(ruleItem.position.x / ruleEditor.width()) * ruleEditor.width();
+          ruleItem.position.y = Math.abs(ruleItem.position.y / ruleEditor.height()) * ruleEditor.height();
           _results.push(createRuleItem(ruleItem, ruleItem.position.x, ruleItem.position.y));
         }
         return _results;
@@ -137,7 +137,7 @@
       pin = p.pin;
       htmlItem.append($("<div id='" + p.pinid + "' class='pin " + pin.direction + "' title='" + pin.description + "'>"));
     }
-    $("#rule-editor").append(htmlItem);
+    $("#rule-item-area").append(htmlItem);
     return htmlItem;
   };
 
@@ -145,14 +145,15 @@
     var context, x, y;
     context = $('#draw-area')[0].getContext('2d');
     context.beginPath();
-    x = from.offset().left;
-    y = from.offset().top;
+    x = from.parent().position().left;
+    y = from.parent().position().top + from.position().top;
     context.moveTo(x, y);
-    x = to.offset().left * ratioX;
-    y = to.offset().top * ratioY;
+    x = to.parent().position().left + to.parent().width();
+    y = to.parent().position().top + to.position().top;
     context.lineTo(x, y);
     context.lineWidth = 1;
     context.strokeStyle = "#ff0000";
+    context.closePath();
     return context.stroke();
   };
 

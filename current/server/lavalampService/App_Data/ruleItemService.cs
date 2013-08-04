@@ -22,9 +22,9 @@ namespace lavalampService
             if (string.IsNullOrEmpty(request.name))
             {
                 
-                List<IRuleItem> allSysRuleItems = repo.getAllRuleItems();
+                var allSysRuleItems = repo.getAllRuleItems();
 
-                return allSysRuleItems.Select(r => AutoMapper.Mapper.Map<ruleItemBase, lavalampRuleItemInfo>(r as ruleItemBase)).ToList();
+                return allSysRuleItems.Select(r => AutoMapper.Mapper.Map<ruleItemBase, lavalampRuleItemInfo>((ruleItemBase)r)).ToList();
             }
             return repo.getRuleItem(r => r.ruleName() == request.name);
 
