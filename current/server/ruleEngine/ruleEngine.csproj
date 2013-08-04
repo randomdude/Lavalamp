@@ -37,6 +37,10 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="dform.NET, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Third Party\dform.NET.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Third Party\HtmlAgilityPack.dll</HintPath>
@@ -105,10 +109,13 @@
     <Compile Include="nodes\sensor.cs" />
     <Compile Include="nodes\sensorOpts.cs" />
     <Compile Include="nodes\_transmitter.cs" />
+    <Compile Include="pinDataTypes\IObjectDataType.cs" />
     <Compile Include="pinDataTypes\pinDataNumber.cs" />
+    <Compile Include="pinDataTypes\pinDataObject.cs" />
     <Compile Include="pinDataTypes\pinDataString.cs" />
     <Compile Include="pinDataTypes\pinDataTrigger.cs" />
     <Compile Include="pinDirection.cs" />
+    <Compile Include="ruleItemPingDataType.cs" />
     <Compile Include="RuleItemRepository.cs" />
     <Compile Include="ruleItems\BaseOptions.cs" />
     <Compile Include="ruleItems\Basic logic\ruleItem_switch.cs" />
