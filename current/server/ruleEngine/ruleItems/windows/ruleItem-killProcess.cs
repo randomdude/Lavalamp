@@ -16,10 +16,16 @@ namespace ruleEngine.ruleItems.windows
         private bool _lastInput;
 
         public override string ruleName() { return "Close a process"; }
-
+        public override string typedName
+        {
+            get
+            {
+                return "killProcess";
+            }
+        }
         public override System.Drawing.Image background()
         {
-            System.Drawing.Bitmap img = Properties.Resources.delete;
+            System.Drawing.Bitmap img = null;// Properties.Resources.delete;
         
             return img;
         }

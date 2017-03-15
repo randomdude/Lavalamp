@@ -249,7 +249,7 @@ void encipher(unsigned int num_rounds, unsigned long* v, unsigned long* k, int v
 		if (vebosity>4) printf("cycle %d v0 = 0x%lx ", i, v0);
 		sum += delta;
 		v1 += (((v0 << 4) ^ (v0 >> 5)) + v0) ^ (sum + k[(sum>>11) & 3]);
-		if (vebosity>4) printf(" v1 = 0x%lx new sum 0x%lx\n", i, v1, sum);
+		if (vebosity>4) printf(" v1 = 0x%lx new sum 0x%lx\n", v1, sum);
 	}
 	v[0]=v0; v[1]=v1;
 
@@ -272,7 +272,7 @@ void decipher(unsigned int num_rounds, unsigned long* v, unsigned long* k, int v
 		if (vebosity>4) printf("cycle %d v0 = 0x%lx ", i, v0);
 		sum -= delta;
 		v0 -= (((v1 << 4) ^ (v1 >> 5)) + v1) ^ (sum + k[sum & 3]);
-		if (vebosity>4) printf(" v1 = 0x%lx new sum 0x%lx\n", i, v1, sum);
+		if (vebosity>4) printf(" v1 = 0x%lx new sum 0x%lx\n", v1, sum);
 	}
 	v[0]=v0; v[1]=v1; 
 

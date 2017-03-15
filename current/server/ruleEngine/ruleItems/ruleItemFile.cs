@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
-using ruleEngine.Properties;
 using ruleEngine.pinDataTypes;
 
 namespace ruleEngine.ruleItems
@@ -25,24 +24,17 @@ namespace ruleEngine.ruleItems
     public class ruleItemFile : ruleItemBase
     {
         private string _lastVal;
-        private PictureBox _img;
         [XmlElement("Options")]
         public FileWriteOptions options = new FileWriteOptions{fileFormat = FileFormat.Text};
 
-
-        public ruleItemFile()
+        public override string typedName
         {
-            _img = new PictureBox
+            get
             {
-                SizeMode = PictureBoxSizeMode.StretchImage,
-                Size = new Size(39, 33),
-                Location = new Point((preferredSize().Width / 2) - (39 / 2),
-                    (preferredSize().Height / 3) - (33 / 2)),
-                Margin = new Padding(3, 3, 3, 3)
-            };
-            _img.Image = Resources.ruleItem_text;
-            controls.Add(_img);
+                return "File";
+            }
         }
+
 
         public override void start()
         {
@@ -52,7 +44,7 @@ namespace ruleEngine.ruleItems
 
         public override Image background()
         {
-            return _img == null ? null : _img.Image;
+            return null;
         }
 
         public override string ruleName()

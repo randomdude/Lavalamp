@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using ruleEngine.Properties;
 using ruleEngine;
 
 namespace ruleEngine.ruleItems.Starts
@@ -11,8 +10,15 @@ namespace ruleEngine.ruleItems.Starts
     [ToolboxRuleCategory("unfinished stuff")]
     public class ruleItem_shutdown : ruleItemBase
     {
-        private Label lblCaption;
         private bool lastInput;
+
+        public override string typedName
+        {
+            get
+            {
+               return "Shutdown";
+            }
+        }
 
         // This'll only work under win32.
 
@@ -27,7 +33,7 @@ namespace ruleEngine.ruleItems.Starts
 
             //foreach (String pinName in pinInfo.Keys)
             //    this.pinStates.Add(pinName, false);
-
+            /*
             lblCaption = new Label();
             lblCaption.AutoSize = false;
             lblCaption.Width = preferredSize().Width;
@@ -37,7 +43,7 @@ namespace ruleEngine.ruleItems.Starts
             lblCaption.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             lblCaption.Visible = true;
             lblCaption.Text = "Shut down the system";
-            controls.Add(lblCaption);
+            controls.Add(lblCaption);*/
 
         }
 
@@ -58,7 +64,7 @@ namespace ruleEngine.ruleItems.Starts
 
         public override System.Drawing.Image background()
         {
-            return Resources.Keys;
+            return null;// Resources.Keys;
         }
 
         public override IFormOptions setupOptions()

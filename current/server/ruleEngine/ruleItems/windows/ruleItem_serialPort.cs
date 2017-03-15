@@ -21,6 +21,14 @@ namespace ruleEngine.ruleItems
         private SerialPort commport = null;
         private string lastInput = "";
 
+        public override string typedName
+        {
+            get
+            {
+                return "SerialPort";
+            }
+        }
+
         public override Dictionary<string, pin> getPinInfo()
         {
             Dictionary<String, pin> pinList = new Dictionary<string, pin>();

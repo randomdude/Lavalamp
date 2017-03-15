@@ -18,6 +18,14 @@
         public sensor selectedSensor;
         private object _prevVal;
 
+        public override string typedName
+        {
+            get
+            {
+                return "DigitalOut";
+            }
+        }
+
         public override string ruleName()
         {
             return "Digital out";

@@ -11,9 +11,18 @@ namespace ruleEngine.ruleItems
     {
         public override string ruleName() { return "Splitter"; }
         private object _prevValue;
+
+        public override string typedName
+        {
+            get
+            {
+                return "splitter";
+            }
+        }
+
         public override System.Drawing.Image background()
         {
-            return Properties.Resources.ruleItem_splitter;
+            return null;// Properties.Resources.ruleItem_splitter;
         }
 
         public override string caption()

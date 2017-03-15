@@ -15,7 +15,15 @@
     {
         public sensor selectedSensor;
 
-        private short[] _previousValues = new short[2]; 
+        private short[] _previousValues = new short[2];
+
+        public override string typedName
+        {
+            get
+            {
+                return "PWM";
+            }
+        }
 
         public override string ruleName()
         {

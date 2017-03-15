@@ -10,7 +10,6 @@ using System.Web;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
-using ruleEngine.Properties;
 using ruleEngine.pinDataTypes;
 
 namespace ruleEngine.ruleItems
@@ -21,10 +20,22 @@ namespace ruleEngine.ruleItems
     {
         [XmlElement("rssOptions")]
         public rssOptions _options = new rssOptions();
-
-        private Label _lblFeedTitle;
+        
         private PictureBox _imgFeed;
         private Dictionary<string, bool> _readFeedItems = new Dictionary<string, bool>();
+        private string _caption = "";
+        public override string typedName
+        {
+            get
+            {
+                return "RSS";
+            }
+        }
+
+        public override string caption()
+        {
+            return _caption;
+        }
 
         public ruleItemRss()
         {
@@ -36,15 +47,7 @@ namespace ruleEngine.ruleItems
                                    (preferredSize().Height / 3) - (33 / 2)),
                                Margin = new Padding(3, 3, 3, 3)
                            };
-            controls.Add(_imgFeed); 
-            _lblFeedTitle = new Label()
-            {
-                Size = new Size( preferredSize().Width, preferredSize().Height - 15),
-                Location = new Point(0, 0),
-                BackColor = Color.Transparent,
-                TextAlign = ContentAlignment.BottomCenter
-            };
-            controls.Add(_lblFeedTitle);
+
             loadRuleItemDetails(_options);
         }
 
@@ -76,9 +79,9 @@ namespace ruleEngine.ruleItems
         private void loadRuleItemDetails(rssOptions options)
         {
             string feedText = String.IsNullOrEmpty(_options.title) ? "RSS reader" : "RSS: " + _options.title;
-            if (_lblFeedTitle.Text == feedText)
+            if (_caption == feedText)
                 return;
-            _lblFeedTitle.Text = feedText;
+            _caption = feedText;
 
             if (!String.IsNullOrEmpty(_options.imageUrl))
             {
@@ -102,7 +105,7 @@ namespace ruleEngine.ruleItems
             }
             else
             {
-                _imgFeed.Image = Resources.ruleItem_rss;
+                _imgFeed.Image = null; // Resources.ruleItem_rss;
             }
         }
 

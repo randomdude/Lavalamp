@@ -1,0 +1,19 @@
+﻿<Properties StartupItem="netgui-extras\lavalamp-winamp\gen_tray.vcxproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="netgui-extras\ruleItems-winamp\ruleItem-winamp-next.cs">
+    <Files>
+      <File FileName="d:\Programming\LavalampDev\current\server\lavalampService\Global.asax.cs" Line="122" Column="77" />
+      <File FileName="netgui-extras\ruleItems-winamp\ruleItem-winamp-next.cs" Line="2" Column="7" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <DisabledProjects>
+    <String>lavalampdll\lavalampdll.vcxproj</String>
+    <String>TestProjects\TestProject2010.csproj</String>
+    <String>webGui.Tests\webGui.Tests.csproj</String>
+    <String>win32cmdline\win32cmdline.vcxproj</String>
+  </DisabledProjects>
+</Properties>

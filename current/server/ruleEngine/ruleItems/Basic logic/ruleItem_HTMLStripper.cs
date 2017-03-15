@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using HtmlAgilityPack;
@@ -13,7 +14,7 @@ namespace ruleEngine.ruleItems
 
         public override System.Drawing.Image background()
         {
-            return Properties.Resources.ruleItem_HTMLStripper;
+            return null;// Properties.Resources.ruleItem_HTMLStripper;
         }
 
         public override string caption()
@@ -37,6 +38,14 @@ namespace ruleEngine.ruleItems
         }
 
         private string lastData = "";
+
+        public override string typedName
+        {
+            get
+            {
+                return "HTMLStripper";
+            }
+        }
 
         public override void evaluate()
         {

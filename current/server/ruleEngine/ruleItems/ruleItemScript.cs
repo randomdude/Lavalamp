@@ -25,6 +25,14 @@ namespace ruleEngine.ruleItems
             }
         }
 
+        public override string typedName
+        {
+            get
+            {
+                return "Script";
+            }
+        }
+
         /// <summary>
         /// the UI toolbox Category of this item.
         /// </summary>
@@ -90,15 +98,6 @@ namespace ruleEngine.ruleItems
             // Initialise the Pins on the control. This will generate a new guid for each pin.
             base.initPins();
 
-            // Create our label
-            Label caption = new Label();
-            caption.Text = this.ruleName();
-            caption.AutoSize = false;
-            caption.Size = this.preferredSize();
-            caption.Location = new Point(0, 0);
-            caption.TextAlign = ContentAlignment.BottomCenter;
-            caption.Visible = true;
-            controls.Add(caption);
         }
     }
 }

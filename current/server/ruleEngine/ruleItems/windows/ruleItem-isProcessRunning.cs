@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml.Serialization;
 using ruleEngine.pinDataTypes;
-using ruleEngine.Properties;
 
 namespace ruleEngine.ruleItems.windows
 {
@@ -17,6 +16,14 @@ namespace ruleEngine.ruleItems.windows
 
         public string processName { get { return options.pName; } set { options.pName = value; } }
 
+        public override string typedName
+        {
+            get
+            {
+                return "IsProcess";
+            }
+        }
+
         public override string caption()
         {
             return "Is " + processName + " Running?";
@@ -26,7 +33,7 @@ namespace ruleEngine.ruleItems.windows
 
         public override System.Drawing.Image background()
         {
-            return Resources.Gear; 
+            return null;// Resources.Gear; 
         }
 
         public override IFormOptions setupOptions()

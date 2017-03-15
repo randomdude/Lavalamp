@@ -6,7 +6,6 @@ using System.Xml.Serialization;
 
 namespace ruleEngine.ruleItems
 {
-    using ruleEngine.Properties;
 
     [ToolboxRule]
     [ToolboxRuleCategory("Windows tools")]
@@ -32,9 +31,17 @@ namespace ruleEngine.ruleItems
             set { options.filename = value; }
         }
 
+        public override string typedName
+        {
+            get
+            {
+                return "runexe";
+            }
+        }
+
         public override System.Drawing.Image background()
         {
-            return Resources.Shortcut.ToBitmap(); ;
+            return null;// Resources.Shortcut.ToBitmap(); ;
         }
 
         public override IFormOptions setupOptions()

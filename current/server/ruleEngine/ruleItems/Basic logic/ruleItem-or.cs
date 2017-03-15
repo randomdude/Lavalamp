@@ -10,6 +10,14 @@ namespace ruleEngine.ruleItems
     [ToolboxRuleCategory("Basic logic")]
     public class ruleItem_or : ruleItemBase
     {
+        public override string typedName
+        {
+            get
+            {
+                return "OR";
+            }
+        }
+
         public override string ruleName() { return "OR function"; }
 
         public override string caption()
@@ -24,7 +32,7 @@ namespace ruleEngine.ruleItems
 
         public override System.Drawing.Image background()
         {
-            return Properties.Resources.ruleItem_or;
+            return null; // Properties.Resources.ruleItem_or;
         }
 
         public override Dictionary<String, pin> getPinInfo()

@@ -14,6 +14,14 @@ namespace ruleEngine.ruleItems
     {
         public WeatherOptions options = new WeatherOptions();
 
+        public override string typedName
+        {
+            get
+            {
+                return "Weather";
+            }
+        }
+
         public override string ruleName()
         {
             return "Weather";
@@ -26,16 +34,10 @@ namespace ruleEngine.ruleItems
 
         public override IFormOptions setupOptions()
         {
-            return options;
-        }
-
-
-        public override Dictionary<string, pin> getPinInfo()
-        {
             var pins = base.getPinInfo();
             pins.Add("trigger",new pin{name = "trigger", description = "poll", direction = pinDirection.input});
             pins.Add("weather", new pin {name = "weather", description = "", direction = pinDirection.output,valueType = typeof(pinDataString) });
-            return pins;
+            return null;
         }
 
         public override void evaluate()

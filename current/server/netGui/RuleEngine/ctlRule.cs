@@ -70,9 +70,11 @@
         {
             // Create our rule item
             ruleItemBase newRuleItem = this._rule.addRuleItem(info);
-
+            // todo inject this
+            ruleItemControlFactory ctrlFac = new ruleItemControlFactory();
             // add a visual widget for it, and then add it to the visible controls
-            ctlRuleItemWidget newCtl = new ctlRuleItemWidget(newRuleItem, this.setTsStatus);
+            ctlRuleItemWidget newCtl = ctrlFac.createForm(newRuleItem) as ctlRuleItemWidget;
+            newCtl.OnSetToolBarText = this.setTsStatus;
             newCtl.Location = new Point(x, y);
        //     this._rule.AddctlRuleItemWidgetToGlobalPool(newCtl);
             newCtl.snapToGrid = this.snapWidgetsToGrid;
@@ -89,10 +91,12 @@
             this.Parent.Width = this._rule.preferredWidth;
             this.Parent.Height = this._rule.preferredHeight;
             IEnumerable<IRuleItem> childRuleItems = this._rule.getRuleItems();
-
+            ruleItemControlFactory ruleItemCreationFactory = new netGui.ruleItemControlFactory();
             foreach (ruleItemBase thisRule in childRuleItems)
             {
-                ctlRuleItemWidget newCtl = new ctlRuleItemWidget(thisRule, this.setTsStatus);
+
+                ctlRuleItemWidget newCtl = ruleItemCreationFactory.createForm(thisRule) as ctlRuleItemWidget;
+                newCtl.OnSetToolBarText = this.setTsStatus;
 
                 //hook up line events for deserialized control.
                 foreach (var pin in newCtl.conPins.Keys.Where(p => p.isConnected))

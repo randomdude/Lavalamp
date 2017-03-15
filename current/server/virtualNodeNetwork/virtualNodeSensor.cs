@@ -1,5 +1,4 @@
 ﻿using System;
-using netGui;
 using transmitterDriver;
 
 namespace virtualNodeNetwork

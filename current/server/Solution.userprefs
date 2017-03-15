@@ -1,38 +1,35 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|Mixed Platforms" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="netGui/frmMain.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="netGui\frmMain.cs">
     <Files>
-      <File FileName="ruleEngine/rule.cs" Line="14" Column="36" />
-      <File FileName="ruleEngine/app.config" Line="1" Column="1" />
-      <File FileName="netGui/frmMain.cs" Line="43" Column="1" />
-      <File FileName="TestProjects/interopTests.cs" Line="8" Column="23" />
-      <File FileName="netGui/app.config" Line="1" Column="1" />
-      <File FileName="netGui/FrmGeneralOptions.cs" Line="1" Column="1" />
-      <File FileName="netGui/FrmGeneralOptions.Designer.cs" Line="1" Column="1" />
-      <File FileName="TestProjects/pythonRuleItemTests.cs" Line="14" Column="33" />
-      <File FileName="TestProjects/SerialisationTests.cs" Line="23" Column="42" />
-      <File FileName="netGui/Options.cs" Line="44" Column="1" />
-      <File FileName="netGui/nodeEditForms/FrmChangeKey.Designer.cs" Line="1" Column="1" />
-      <File FileName="netGui/nodeEditForms/FrmChangeId.cs" Line="8" Column="31" />
-      <File FileName="netGui/sensorControls/ctlSensor.cs" Line="302" Column="1" />
-      <File FileName="netGui/nodeEditForms/FrmChangeP.cs" Line="12" Column="35" />
-      <File FileName="netGui/nodeEditForms/FrmChangeKey.cs" Line="26" Column="21" />
-      <File FileName="netGui/sensorControls/ctlOnOff.cs" Line="41" Column="33" />
-      <File FileName="netGui/sensorControls/ctlOnOff.Designer.cs" Line="56" Column="16" />
-      <File FileName="netGui/sensorControls/ctlOnOff.resx" Line="1" Column="1" />
-      <File FileName="netGui/sensorControls/ctlRGB.cs" Line="1" Column="1" />
-      <File FileName="netGui/sensorControls/ctlReadout.cs" Line="8" Column="2" />
-      <File FileName="netGui/sensorControls/ctlPWM.cs" Line="56" Column="10" />
-      <File FileName="netGui/sensorControls/sensoFrm.cs" Line="19" Column="47" />
-      <File FileName="netGui/sensorControls/ctlSensor.Designer.cs" Line="25" Column="18" />
+      <File FileName="ruleEngine\rule.cs" Line="14" Column="36" />
+      <File FileName="ruleEngine\app.config" Line="1" Column="1" />
+      <File FileName="netGui\frmMain.cs" Line="10" Column="1" />
+      <File FileName="TestProjects\interopTests.cs" Line="8" Column="1" />
+      <File FileName="netGui\app.config" Line="1" Column="1" />
+      <File FileName="netGui\FrmGeneralOptions.cs" Line="1" Column="1" />
+      <File FileName="netGui\FrmGeneralOptions.Designer.cs" Line="1" Column="1" />
+      <File FileName="TestProjects\pythonRuleItemTests.cs" Line="14" Column="33" />
+      <File FileName="TestProjects\SerialisationTests.cs" Line="23" Column="16" />
+      <File FileName="netGui\Options.cs" Line="44" Column="1" />
+      <File FileName="netGui\nodeEditForms\FrmChangeKey.Designer.cs" Line="1" Column="1" />
+      <File FileName="netGui\nodeEditForms\FrmChangeId.cs" Line="8" Column="6" />
+      <File FileName="netGui\sensorControls\ctlSensor.cs" Line="302" Column="1" />
+      <File FileName="netGui\nodeEditForms\FrmChangeP.cs" Line="12" Column="10" />
+      <File FileName="netGui\nodeEditForms\FrmChangeKey.cs" Line="26" Column="14" />
+      <File FileName="netGui\sensorControls\ctlOnOff.cs" Line="41" Column="33" />
+      <File FileName="netGui\sensorControls\ctlOnOff.Designer.cs" Line="56" Column="16" />
+      <File FileName="netGui\sensorControls\ctlOnOff.resx" Line="1" Column="1" />
+      <File FileName="netGui\sensorControls\ctlRGB.cs" Line="1" Column="1" />
+      <File FileName="netGui\sensorControls\ctlReadout.cs" Line="8" Column="2" />
+      <File FileName="netGui\sensorControls\ctlPWM.cs" Line="56" Column="10" />
+      <File FileName="netGui\sensorControls\sensoFrm.cs" Line="19" Column="47" />
+      <File FileName="netGui\sensorControls\ctlSensor.Designer.cs" Line="25" Column="18" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="netGui" expanded="True">
-            <Node name="nodeEditForms" expanded="True" selected="True" />
-          </Node>
-          <Node name="ruleEngine" expanded="True" />
+          <Node name="Solution Items" selected="True" />
         </State>
       </Pad>
     </Pads>

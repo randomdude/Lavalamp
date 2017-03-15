@@ -54,9 +54,17 @@ namespace ruleEngine.ruleItems
                                                                     state = wallboardErrorState.Unknown
                                                                 };
 
+        public override string typedName
+        {
+            get
+            {
+                return "Wallboard";
+            }
+        }
+
         public ruleItemWallboard()
         {
-            controls.Add(new Label() { Text = "Wallboard", Size = new Size(73, 37), Location = new Point(3, 39), TextAlign = ContentAlignment.MiddleCenter });
+         //   controls.Add(new Label() { Text = "Wallboard", Size = new Size(73, 37), Location = new Point(3, 39), TextAlign = ContentAlignment.MiddleCenter });
         }
 
         public override string ruleName()

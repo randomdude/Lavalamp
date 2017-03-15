@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using ruleEngine.pinDataTypes;
-using ruleEngine.Properties;
 using Timer = System.Threading.Timer;
 
 namespace ruleEngine.ruleItems.Starts
@@ -44,6 +43,14 @@ namespace ruleEngine.ruleItems.Starts
             {
                 options.minutes = value;
                 _caption = "at " + options.hours.ToString("00") + ":" + options.minutes.ToString("00");
+            }
+        }
+
+        public override string typedName
+        {
+            get
+            {
+                throw new NotImplementedException();
             }
         }
 
@@ -138,7 +145,7 @@ namespace ruleEngine.ruleItems.Starts
 
         public override System.Drawing.Image background()
         {
-            return Resources.clock21;
+            return null;// Resources.clock21;
         }
 
         public override Dictionary<String, pin> getPinInfo()

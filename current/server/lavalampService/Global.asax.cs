@@ -8,9 +8,9 @@ namespace lavalampService
 
     using ServiceStack.Text;
     using ServiceStack.WebHost.Endpoints;
-    
+    using ServiceStack.Redis;
     using lavalamp;
-
+    using ServiceStack.ServiceClient;
     using ruleEngine;
     using ruleEngine.ruleItems;
 
@@ -35,6 +35,7 @@ namespace lavalampService
             this.Register(ruleRepo);
             this.Register(ruleItemRepo);
             this.Register(runningRules);
+           // this.Plugins.Add(new ServerEventsFeature());
             this.Config.UseBclJsonSerializers = true;
             JsConfig.Reset();
             JsConfig<pin>.SerializeFn = p => string.Format("{{\"direction\":\"{0}\",\"name\":\"{1}\",\"linkedto\":\"{2}\",\"description\":\"{3}\" }}",

@@ -17,6 +17,14 @@
         public sensor connectedSensor;
         private bool _inVal;
 
+        public override string typedName
+        {
+            get
+            {
+                return "DigitalIn";
+            }
+        }
+
         public override string ruleName()
         {
             return "Digital in";

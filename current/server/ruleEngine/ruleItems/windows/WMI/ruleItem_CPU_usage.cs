@@ -17,6 +17,14 @@ namespace ruleEngine.ruleItems.windows.WMI
         [XmlElement]
         public CPUUsageOptions options = new CPUUsageOptions();
 
+        public override string typedName
+        {
+            get
+            {
+               return "WMICPU";
+            }
+        }
+
         public override string ruleName()
         {
             return "CPU Usage";

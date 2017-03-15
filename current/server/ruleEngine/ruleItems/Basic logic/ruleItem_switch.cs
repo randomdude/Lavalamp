@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using ruleEngine.Properties;
+﻿using System;
+using System.Collections.Generic;
 using ruleEngine.ruleItems;
 using ruleEngine.ruleItems.windows;
 
@@ -11,6 +11,14 @@ namespace ruleEngine.basicLogic
     {
         private tristate _lastState = tristate.noValue;
 
+        public override string typedName
+        {
+            get
+            {
+                return "Switch";
+            }
+        }
+
         public override string ruleName()
         {
             return "Switch";
@@ -18,7 +26,7 @@ namespace ruleEngine.basicLogic
 
         public override System.Drawing.Image background()
         {
-            return Resources.switch_false;
+            return null; /*Resources.switch_false;*/
         }
 
         public override Dictionary<string, pin> getPinInfo()
@@ -55,12 +63,12 @@ namespace ruleEngine.basicLogic
             if (state == tristate.yes)
             {
                 switchedPin = pinInfo["inputTrue"];
-                setBackground(Resources.switch_true);
+                setBackground(null /* Resources.switch_true */);
             }
             else
             {
                 switchedPin = pinInfo["inputFalse"];
-                setBackground(Resources.switch_false);
+                setBackground(null/*Resources.switch_false*/);
             }
             if (switchedPin.valueType != pinInfo["output"].valueType)
                

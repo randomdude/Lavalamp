@@ -56,12 +56,12 @@ namespace netGui.sensorControls
             // Since we've been passed a boolean, colour it accordingly
             if ((Boolean)toThis)
             {
-                setIcon(Properties.Resources._1);
+                //setIcon(new Icon(Properties.Resources._1));
                 newcol = Color.Green;
             }
             else
             {
-                setIcon(Properties.Resources._0);
+                //setIcon(Properties.Resources._0);
                 newcol = Color.Red;
             }
 

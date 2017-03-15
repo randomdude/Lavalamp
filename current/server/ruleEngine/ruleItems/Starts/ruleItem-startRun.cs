@@ -8,6 +8,14 @@ namespace ruleEngine.ruleItems.Starts
     [ToolboxRuleCategory("Start items")]
     public class ruleItem_startRun : ruleItemBase
     {
+        public override string typedName
+        {
+            get
+            {
+                return "StartRun";
+            }
+        }
+
         public override string ruleName() { return "At start of run"; }
 
         public override string caption()
@@ -35,7 +43,7 @@ namespace ruleEngine.ruleItems.Starts
 
         public override System.Drawing.Image background()
         {
-            return Properties.Resources.New.ToBitmap();
+            return null; // Properties.Resources.New.ToBitmap();
         }
 
         public override Dictionary<String, pin> getPinInfo()

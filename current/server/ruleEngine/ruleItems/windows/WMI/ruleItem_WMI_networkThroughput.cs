@@ -18,6 +18,14 @@ namespace ruleEngine.ruleItems.windows.WMI
         [XmlElement]
         public WMINetworkOptions options = new WMINetworkOptions();
 
+        public override string typedName
+        {
+            get
+            {
+                return "WMINetworkThoughput";
+            }
+        }
+
         public override string ruleName()
         {
             return "Network Throughput";

@@ -22,6 +22,14 @@ namespace ruleItems_winamp
             get { return new char[] { (char)0x06 }; }
         }
 
+        public override string typedName
+        {
+            get
+            {
+                return "winampCurrentSong";
+            }
+        }
+
         public override string ruleName() { return "Get Current song"; }
 
         public override Image background()

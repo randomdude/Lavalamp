@@ -16,7 +16,15 @@
         public sensor selectedSensor;
         private short _pwmBrightnessLast;
         private short _pwmFadeDelayLast;
-        
+
+        public override string typedName
+        {
+            get
+            {
+                return "Triac";
+            }
+        }
+
         public override string ruleName()
         {
             return "Triac sensor";

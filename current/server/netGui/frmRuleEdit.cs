@@ -1,4 +1,4 @@
-﻿extern alias ruleEngine2010;
+﻿
 namespace netGui
 {
     using System;
@@ -8,7 +8,6 @@ namespace netGui
     using System.Text;
     using System.Windows.Forms;
     using System.Xml.Serialization;
-    using ToolboxAttri = ruleEngine2010.ruleEngine.ToolboxRule;
     using ruleEngine;
     using ruleEngine.ruleItems;
 
@@ -76,7 +75,7 @@ namespace netGui
             {
                 foreach (Type thisType in myMod.GetTypes())                 // pull types out of the modules
                 {
-                    if (thisType.IsDefined(typeof(ToolboxAttri),false))
+                    if (thisType.IsDefined(typeof(ToolboxRule),false))
                     {
                         try
                         {

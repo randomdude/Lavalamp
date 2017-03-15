@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,14 @@ namespace ruleEngine.ruleItems.windows.WMI
     public class ruleItem_WMI_DiskSpace : ruleItemBase
     {
         public WMIDiskOptions options = new WMIDiskOptions();
+
+        public override string typedName
+        {
+            get
+            {
+                return "WMIDiskSpace";
+            }
+        }
 
         public override string ruleName()
         {

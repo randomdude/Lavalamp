@@ -26,7 +26,7 @@ namespace ruleEngine.ruleItems
 
         public override Image background()
         {
-            return Properties.Resources.ruleItem_msgDelay;
+            return null; // Properties.Resources.ruleItem_msgDelay;
         }
 
         public override string caption()
@@ -67,6 +67,14 @@ namespace ruleEngine.ruleItems
         private string lastInput = "";
         [XmlElement("delay")]
         public int delayIntervalSecs = 10;
+
+        public override string typedName
+        {
+            get
+            {
+                return "Delay";
+            }
+        }
 
         public override void evaluate()
         {

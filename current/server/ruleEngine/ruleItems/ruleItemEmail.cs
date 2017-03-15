@@ -16,6 +16,14 @@ namespace ruleEngine.ruleItems
         [XmlElement("EmailOptions")]
         public emailOptions options = new emailOptions();
 
+        public override string typedName
+        {
+            get
+            {
+                return "Email";
+            }
+        }
+
         public override string caption()
         {
             return "Any new Email?";

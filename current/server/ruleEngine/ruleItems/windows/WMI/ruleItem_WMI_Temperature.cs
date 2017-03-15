@@ -15,6 +15,15 @@ namespace ruleEngine.ruleItems.windows.WMI
     public class ruleItem_WMI_Temperature : ruleItemBase
     {
         WMITemperatureOptions options = new WMITemperatureOptions();
+
+        public override string typedName
+        {
+            get
+            {
+                return "WMITemperature";
+            }
+        }
+
         public override string ruleName()
         {
             return "Temperature Monitor";

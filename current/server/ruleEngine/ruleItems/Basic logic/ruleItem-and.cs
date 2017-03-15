@@ -8,6 +8,14 @@ namespace ruleEngine.ruleItems
     [ToolboxRuleCategory("Basic logic")]
     public class ruleItem_and : ruleItemBase
     {
+        public override string typedName
+        {
+            get
+            {
+                return "And";
+            }
+        }
+
         public override string ruleName() { return "AND function"; }
 
         public override string caption()
@@ -22,7 +30,7 @@ namespace ruleEngine.ruleItems
 
         public override System.Drawing.Image background()
         {
-            return Properties.Resources.ruleItem_and;
+            return null;  // Properties.Resources.ruleItem_and;
         }
 
         public override Dictionary<String, pin> getPinInfo()

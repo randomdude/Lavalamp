@@ -7,10 +7,11 @@ using System.Text;
 
 namespace ruleEngine.ruleItems.Starts
 {
+    using System.Diagnostics;
+
     public class imapChecker
     {
         private int cmdNum;
-        private NetworkStream tcpStream;
         private StreamWriter myWriter;
         private StreamReader myReader;
         public bool newMail;
@@ -19,9 +20,9 @@ namespace ruleEngine.ruleItems.Starts
 
         public void makeImapChecker(string server, int port, string username, string password, bool useSSL)
         {
-            imapConnect(server, port, useSSL);
+           
             cmdNum = 1;
-            using (tcpStream)
+            using (imapConnect(server, port, useSSL))
             {
                 imapLogin(username, password);
                 imapSelect("inbox");
@@ -155,21 +156,44 @@ namespace ruleEngine.ruleItems.Starts
         {
             // todo: check for LOGINDISABLED capability  
             sendCmd("LOGIN \"" + username + "\" \"" + password + "\"");
-            String loginResponse = myReader.ReadLine();
+            string loginResponse = myReader.ReadLine();
+            bool notLoggedIn = true;
+            while (notLoggedIn)
+            {
+                if (!string.IsNullOrEmpty(loginResponse))
+                {
+                    string[] answerChunks = loginResponse.Split(' ');
+                    if (answerChunks.Length > 1)
+                    {
+                        switch (answerChunks[1].ToUpper())
+                        {
+                            case "NO":
 
-            String[] answerChunks = loginResponse.Split(' ');
-            if (answerChunks[1].ToUpper() == "NO")
-                throw new Exception("bad login. Check username / password and retry. (server line '" + loginResponse + "')");
-            if (answerChunks[1].ToUpper() == "BAD")
-                throw new Exception("Failure sending username/password. Check login, hope it isn't a bug (server line '" + loginResponse + "')");
-            // newer versions of gmail broadcast their capability on a successful login first, so we ignore 
-            // this message.
-            if (answerChunks[1].ToUpper() == "CAPABILITY")
-                answerChunks = myReader.ReadLine().Split(' ');
-            if (answerChunks[1].ToUpper() != "OK")
-                throw new Exception("Server response to login not recognized (as OK, NO, or BAD) (server line '" + loginResponse + "')");
+                                throw new Exception(
+                                    "bad login. Check username / password and retry. (server line '" + loginResponse
+                                    + "')");
+                            case "BAD":
+                                throw new Exception(
+                                    "Failure sending username/password. Check login, hope it isn't a bug (server line '"
+                                    + loginResponse + "')");
+                            case "CAPABILITY":
+                                // newer versions of gmail broadcast their capability on a successful login first, so we ignore 
+                                // this message.
+                                loginResponse = myReader.ReadLine();
+                                break;
+                            case "OK":
+                                notLoggedIn = false;
+                                break;
+                            default:
+                                throw new Exception(
+                                    "Server response to login not recognized (as OK, NO, or BAD) (server line '"
+                                    + loginResponse + "')");
+                        }
+                    }
+                }
+            }
         }
-
+         
         private void sendCmd(string command)
         {
             cmdNum++;
@@ -181,39 +205,50 @@ namespace ruleEngine.ruleItems.Starts
             myWriter.WriteLine(toSend);
         }
 
-        private void imapConnect(string server, int port, bool useSSL)
+        private TcpClient imapConnect(string server, int port, bool useSSL)
         {
-            TcpClient myClient = new TcpClient(server, port);
-            tcpStream = myClient.GetStream();
+            TcpClient toRet = new TcpClient(server, port);
 
-            if (useSSL)
+            try
             {
-                SslStream mySSLStream = new SslStream(tcpStream, false, new RemoteCertificateValidationCallback(foo));
-                mySSLStream.AuthenticateAsClient(server);
-                myWriter = new StreamWriter(mySSLStream);
-                myWriter.AutoFlush = true;
-                myReader = new StreamReader(mySSLStream);
+                NetworkStream tcpStream = toRet.GetStream();
+
+                if (useSSL)
+                {
+                    SslStream mySSLStream = new SslStream(tcpStream, false, this.foo);
+                    mySSLStream.AuthenticateAsClient(server);
+                    myWriter = new StreamWriter(mySSLStream) { AutoFlush = true };
+                    myReader = new StreamReader(mySSLStream);
+                }
+                else
+                {
+                    myWriter = new StreamWriter(tcpStream) { AutoFlush = true };
+                    myReader = new StreamReader(tcpStream);
+                }
+
+                string lineIn = myReader.ReadLine();
+                Debug.Write(lineIn);
+                // todo: support for PREAUTH
+                if (lineIn.StartsWith("* BYE"))
+                    throw new Exception("Mail server didn't want us to connect, asked us to disconnect");
+                if (!lineIn.StartsWith("* OK"))
+                    throw new Exception("Mail server didn't give the required connection banner");
+
             }
-            else
+            catch
             {
-                myWriter = new StreamWriter(tcpStream);
-                myWriter.AutoFlush = true;
-                myReader = new StreamReader(tcpStream);                
+                toRet.Close();
+                throw;
             }
-
-            string lineIn = myReader.ReadLine();
-
-            // todo: support for PREAUTH
-            if (lineIn.StartsWith("* BYE"))
-                throw new Exception("Mail server didn't want us to connect, asked us to disconnect");
-            if (!lineIn.StartsWith("* OK"))
-                throw new Exception("Mail server didn't give the required connection banner");
+            return toRet;
         }
 
         // todo: !!!!
         private bool foo(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
-            return true;    // ULTRAHAX
+             if (sslPolicyErrors == SslPolicyErrors.None)
+                return true;
+            return false;
         }
     }
 }

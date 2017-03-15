@@ -25,9 +25,17 @@ namespace ruleEngine.ruleItems
 
         private string _lastMessage = "";
 
+        public override string typedName
+        {
+            get
+            {
+                return "DesktopMessage";
+            }
+        }
+
         // Every ruleItem requires a parameterless constructor. It is used by the toolbox
         // routines via reflection.
-// ReSharper disable UnusedMember.Global
+        // ReSharper disable UnusedMember.Global
         public ruleItem_desktopMessage() { }
 // ReSharper restore UnusedMember.Global
 
@@ -68,11 +76,6 @@ namespace ruleEngine.ruleItems
             string messageToShow = myOptions.message.Replace("$message", _lastMessage);
 
             showIt(messageToShow);
-        }
-
-        public override ContextMenuStrip addMenus(ContextMenuStrip toAddTo)
-        {
-            return base.addMenus(toAddTo);
         }
 
         public override IFormOptions setupOptions()

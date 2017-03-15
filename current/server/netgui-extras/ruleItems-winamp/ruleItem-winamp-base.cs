@@ -19,6 +19,14 @@ namespace ruleItems_winamp
             get { return new char[] { (char)0x01 };}
         }
 
+        public override string typedName
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public override string ruleName() { return "Stop current song"; }
 
         public override Image background()

@@ -9,9 +9,19 @@ namespace ruleEngine.ruleItems
     [ToolboxRuleCategory("Basic logic")]
     public class ruleItem_not : ruleItemBase
     {
+        public override string typedName
+        {
+            get
+            {
+                return "not";
+            }
+        }
+
         public override string ruleName() { return "NOT function"; }
 
-        public override System.Drawing.Image background() { return Properties.Resources.ruleItem_not; }
+        public override System.Drawing.Image background()
+        {
+            return null; /*Properties.Resources.ruleItem_not;*/ }
 
         public override string caption()
         {

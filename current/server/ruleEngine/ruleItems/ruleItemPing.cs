@@ -11,9 +11,10 @@ namespace ruleEngine.ruleItems
     using System.Net;
     using ruleEngine.pinDataTypes;
     using dform.NET;
+    using System;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// 
     /// </summary>
     [ToolboxRule]
     [ToolboxRuleCategory("Internet")]
@@ -22,6 +23,14 @@ namespace ruleEngine.ruleItems
         public pingOptions options = new pingOptions();
 
         private bool _lastVal;
+
+        public override string typedName
+        {
+            get
+            {
+                return "Ping";
+            }
+        }
 
         public override string ruleName()
         {

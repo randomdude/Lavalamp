@@ -16,6 +16,14 @@ namespace ruleEngine.ruleItems.Starts
 
         [XmlElement("timer")] public int intervalSec = 5;
 
+        public override string typedName
+        {
+            get
+            {
+                return "StartInterval";
+            }
+        }
+
         // This delegate type should be used to set the interval which the timer fires at.
         public delegate void setIntervalDelegate(int low);
         // And this to get it.

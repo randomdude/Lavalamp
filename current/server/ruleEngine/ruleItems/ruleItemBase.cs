@@ -9,14 +9,14 @@ using System.Diagnostics.Contracts;
 namespace ruleEngine.ruleItems
 {
     [XmlRoot("config" )]
-    public abstract class ruleItemBase : ruleItemEvents, IRuleItem
+    public abstract class ruleItemBase : ruleItemEvents, IRuleItem, IFormOptions
     {
         [XmlIgnore] public ruleItemGuid serial = new ruleItemGuid() { id = Guid.NewGuid() };
-        [XmlIgnore] private PictureBox _errorIcon = new PictureBox();
+      //  [XmlIgnore] private PictureBox _errorIcon = new PictureBox();
         [XmlIgnore] public bool isErrored = false;
         [XmlIgnore] public Exception whyIsErrored;
 
-        [XmlIgnore] public List<Control> controls = new List<Control>();
+    //    [XmlIgnore] public List<Control> controls = new List<Control>();
         [XmlIgnore] private Image _backgroundImage;
 
 
@@ -44,6 +44,15 @@ namespace ruleEngine.ruleItems
         public abstract void evaluate();
 
         /// <summary>
+        /// Called when the tool box item is registered
+        /// use to check requirements of the rule
+        /// </summary>
+        public virtual void onRegister()
+        {
+
+        }
+
+        /// <summary>
         /// catches any errors caused be evalate (and todo runs rule in sandbox?)
         /// </summary>
         /// <param name="throwErrors">if the method rethrows errors</param>
@@ -64,8 +73,8 @@ namespace ruleEngine.ruleItems
         public virtual Image background() { return _backgroundImage; }
         public virtual void setBackground(Image image)
         {
-            _backgroundBox.Image = image;
-            _backgroundBox.Refresh();
+         //   _backgroundBox.Image = image;
+         //   _backgroundBox.Refresh();
            
         }
         public virtual void start() { }
@@ -100,25 +109,27 @@ namespace ruleEngine.ruleItems
         [XmlIgnore]
         public Point location{get; set; }
 
+        public string displayName
+        {
+            get
+            {
+                return ruleName();
+            }
+        }
+
+        public abstract string typedName
+        {
+            get;
+        }
+
         public virtual void onAfterLoad() { }
 
         public virtual void onOptionsChanged(object sender, EventArgs eventArgs)
         {
-            _lblCaption.Text = this.caption() ?? "";
-            this._lblCaption.Visible = this._lblCaption.Text != "";
-            if (_backgroundImage != null)
-            {
-                _backgroundBox.Image = _backgroundImage;
-                _backgroundBox.Visible = true;
-                _backgroundBox.Left = (preferredSize().Width / 2) - (_backgroundImage.Width / 2);
-                _backgroundBox.Invalidate();
-            }
-            else 
-            {
-                _backgroundBox.Visible = false;
-            }
-            _lblCaption.Invalidate();
-            
+            if (optionsChanged != null)
+                optionsChanged(sender, eventArgs);
+
+
         }
 
         public delegate void changeNotifyDelegate();
@@ -126,87 +137,16 @@ namespace ruleEngine.ruleItems
         public delegate void errorDelegate(Exception ex);
 
         [XmlIgnore] public bool isDeleted = false;
-        private PictureBox _backgroundBox;
 
-        private Label _lblCaption;
+        public event EventHandler optionsChanged;
 
-        protected ruleItemBase()
-        {
-            // Control stuff TODO this needs movinvg to the rulectlwidget
-            Size currentPreferredSize = preferredSize();
-            location = new Point(0,0);
-            _errorIcon.Image = Properties.Resources.error.ToBitmap();
-            _errorIcon.Size = _errorIcon.Image.Size;
-            _errorIcon.Visible = false;
-            _errorIcon.Left = currentPreferredSize.Width - _errorIcon.Width;
-            _errorIcon.Top = currentPreferredSize.Height - _errorIcon.Height;
-            _errorIcon.Cursor = Cursors.Help;
-            _errorIcon.Click += this.errorIcon_Click;
-
-            controls.Add(_errorIcon);
-
+        protected ruleItemBase() { 
             pinInfo = new Dictionary<string, pin>();
-
-            // Load up background. We put this in a PictureBox instead of the control background so that
-            // we can position it - we want it slightly above the center of the image, so that it does not
-            // foul the ruleItem's caption.
-            Image bg = background();
-
-            _backgroundBox = new PictureBox();
-            // We keep the background image the size of the bitmap passed in, just so that the ruleItem
-            // can keep control of it that way.
-            // We position the image at the middle-top. We leave a 3px border at the top so it looks a
-            // bit nicer.
-            if (bg != null)
-            {
-                _backgroundBox.Image = bg;
-                _backgroundBox.Left = (preferredSize().Width / 2) - (bg.Width / 2);
-                _backgroundBox.Visible = true;
-            }
-            else 
-                _backgroundBox.Visible = false;
-            
-            _backgroundBox.SizeMode = PictureBoxSizeMode.AutoSize;
-            
-            
-            _backgroundBox.Top = 3;
-
-            _backgroundBox.BackColor = Color.Transparent;
-            controls.Add(_backgroundBox);
-
-
-            // caption label even if not set it maybe set by a rule item lators
-            String currentCaption = this.caption() ?? "";
-            _lblCaption = new Label
-                {
-                    Text = currentCaption,
-                    Visible = currentCaption != "",
-                    Location = new Point(0, 0),
-                    Width = currentPreferredSize.Width,
-                    Height = currentPreferredSize.Height - 15,
-                    TextAlign = ContentAlignment.BottomCenter,
-                    BackColor = Color.Transparent
-                };
-            controls.Add(_lblCaption);
         }
 
         protected ruleItemBase(Image backgroundImage)
         {
             _backgroundImage = backgroundImage;
-        }
-
-        public void errorIcon_Click(object sender, EventArgs e)
-        {
-            if (whyIsErrored != null)
-            {
-                //frmException exceptionWindow = new frmException(whyIsErrored);
-                 
-              //  exceptionWindow.ShowDialog();
-            }
-            else
-            {
-              //  MessageBox.Show("This control is not in an error state. No error has occurred since the last run.");
-            }
         }
 
         /// <summary>
@@ -227,16 +167,6 @@ namespace ruleEngine.ruleItems
             this.whyIsErrored = ex;
             this.isEnabled = false;
 
-            if (_errorIcon.Parent == null)
-            {
-                // Oh crap! We've got no window - we're probably running a unit test?
-                // todo/fixme: what happens when we run rules without a UI?
-                // we need to log them to the server if there is one and to the eventviewer
-                throw ex;
-            }
-
-            _errorIcon.Invoke( () => _errorIcon.BringToFront());
-            _errorIcon.Invoke( () => _errorIcon.Visible = true );
         }
 
         public virtual ContextMenuStrip addMenus(ContextMenuStrip strip1)
@@ -247,7 +177,7 @@ namespace ruleEngine.ruleItems
                 toRet.Items.Add(strip1.Items[0]);
 
             ToolStripMenuItem newItem = new ToolStripMenuItem("Show error detail..");
-            newItem.Click += new EventHandler(errorIcon_Click);
+         //   newItem.Click += new EventHandler(errorIcon_Click);
             toRet.Items.Add(newItem);
 
             return toRet;
@@ -257,7 +187,6 @@ namespace ruleEngine.ruleItems
         {
             isErrored = false;
             isEnabled = true;
-            _errorIcon.Visible = false;
         }
 
         /// <summary>
@@ -286,6 +215,11 @@ namespace ruleEngine.ruleItems
             }
             foreach (pin thisPinInfo in pinInfo.Values)
                 thisPinInfo.createValue(this);
+        }
+
+        public void setChanged()
+        {
+            throw new NotImplementedException();
         }
     }
 
