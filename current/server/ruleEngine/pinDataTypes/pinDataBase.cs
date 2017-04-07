@@ -70,8 +70,6 @@ namespace ruleEngine.pinDataTypes
             var converter = TypeDescriptor.GetConverter(typeof(T));
             if (value.GetType() == typeof(T))
                 return (T)value;
-       //     if (!converter.CanConvertFrom(value.GetType()))
-         //       throw new ArgumentTypeException("Invalid Pin types! No conversion exists between " + value.GetType() + " and " + typeof(T));
 
             return (T)(converter.ConvertTo(value, typeof(T)));
         }
@@ -81,18 +79,21 @@ namespace ruleEngine.pinDataTypes
             _parentPin.value.data = this.data;
         }
         
+        [Pure]
         public IPinData and(IPinData toCompareTo)
         {
             bool result = asBoolean() && toCompareTo.asBoolean();
             return new pinDataBool(result, _parentRuleItem, _parentPin);
         }
 
+        [Pure]
         public IPinData or(IPinData toCompareTo)
         {
             bool result = asBoolean() || toCompareTo.asBoolean();
             return new pinDataBool(result, _parentRuleItem, _parentPin);
         }
 
+        [Pure]
         public IPinData xor(IPinData toCompareTo)
         {
             bool result = asBoolean() ^ toCompareTo.asBoolean();

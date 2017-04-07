@@ -1,15 +1,15 @@
-body {
+﻿body {
   background-color: #000000;
   font-size: .75em;
   font-family: Verdana, Helvetica, Sans-Serif;
   margin: 0;
   padding: 0;
   color: #696969; }
-
-#page {
-  width: 90%;
-  margin-left: 50px;
-  margin-right: 50px; }
+  @media (min-width: 500px) {
+    body {
+      width: 90%;
+      margin-left: 50px;
+      margin-right: 50px; } }
 
 #main {
   width: 80%;
@@ -31,11 +31,11 @@ body {
   margin: 0;
   font-size: .9em; }
 
-#header {
+header {
   margin-bottom: 30px;
   color: #000;
   padding: 0; }
-  #header h1 {
+  header h1 {
     position: relative;
     display: inline;
     font-weight: bold;
@@ -47,11 +47,11 @@ body {
     line-height: 2em;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 32px !important; }
-  #header#title {
+  header#title {
     display: block;
     float: left;
     text-align: left; }
-  #header div {
+  header div {
     display: inline;
     overflow: hidden;
     white-space: nowrap;
@@ -60,11 +60,14 @@ body {
 a:hover {
   color: #1d60ff;
   text-decoration: none; }
+
 a:active {
   color: #12eb87; }
+
 a:link {
   color: #034af3;
   text-decoration: underline; }
+
 a:visited {
   color: #505abc; }
 
@@ -91,12 +94,12 @@ input[type="text"], input[type="password"] {
   width: 200px;
   border: 1px solid #CCC; }
 
-div#navi ul {
+nav ul {
   top: 20%;
   position: absolute;
   left: -3%;
   z-index: 1; }
-  div#navi ul li {
+  nav ul li {
     background-color: rgba(100, 0, 0, 0.4);
     text-align: center;
     list-style: none;
@@ -105,7 +108,7 @@ div#navi ul {
     border: red medium solid;
     padding: 6px 25px 6px 25px;
     border-radius: 3px; }
-    div#navi ul li:hover {
+    nav ul li:hover {
       background-color: rgba(202, 0, 0, 0.4); }
 
 p, ul {
@@ -131,12 +134,12 @@ div.rule-item {
   border-radius: 5px;
   width: 70px;
   height: 70px;
-  background-color: magenta;
+  background-color: #e7a0ff;
   opacity: 0.6;
   position: absolute; }
   div.rule-item span {
     opacity: 1;
-    color: lime; }
+    color: #b8ffa0; }
   div.rule-item .pin {
     border: 1px solid black;
     height: 4px;

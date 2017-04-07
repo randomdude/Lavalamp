@@ -11,6 +11,7 @@ namespace webGui.Controllers
     using webGui.Controllers.Models;
 
     using System.Web.Mvc;
+    using System.Text;
 
     public class RuleEditorController : baseController
     {
@@ -44,12 +45,14 @@ namespace webGui.Controllers
         }
 
         [HttpGet]
-        public ContentResult getRuleItems(string selectedRule)
+        public ContentResult GetRuleItems(string selectedRule)
         {
             var ruleReposistory = MvcApplication.Kernal.Get<IRuleRepository>();
             var rule = ruleReposistory.getRule(selectedRule);
-           
-            var data =
+            var ruleItems =  rule.getRuleItems();
+           var data= ruleItems.Select(r => Newtonsoft.Json.JsonConvert.SerializeObject(r)).Aggregate((x, y) => x + "," + y);
+          /*
+            var data = ;
                 rule.getRuleItems().Select(
                     i =>
                     "{ \"name\" : \"" + i.ruleName() + "\", \"caption\": \"" + i.caption()
@@ -59,7 +62,7 @@ namespace webGui.Controllers
                         "\", \"pin\":{ \"direction\":\"" + p.Value.direction + "\", \"description\":\"" + p.Value.description + "\", \"connected\":\"" + p.Value.linkedTo.id.ToString() + "\"} }")
                         .Aggregate((x,y) => x + "," + y) + 
                     "] } ").Aggregate((i,n) => i + "," + n);
-
+                    */
             return new ContentResult
             {
                 Content = "[" + data + "]",
@@ -68,7 +71,7 @@ namespace webGui.Controllers
         }
 
         [HttpPost]
-        public ActionResult saveRule(ruleEditorModel model)
+        public ActionResult SaveRule(ruleEditorModel model)
         {
             if (this.ModelState.IsValid)
             {

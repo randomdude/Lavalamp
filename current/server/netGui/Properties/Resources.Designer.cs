@@ -83,6 +83,16 @@ namespace netGui.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap And_image {
+            get {
+                object obj = ResourceManager.GetObject("And_image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ArrowLeft {
             get {
                 object obj = ResourceManager.GetObject("ArrowLeft", resourceCulture);
@@ -103,9 +113,9 @@ namespace netGui.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap clock21 {
+        internal static System.Drawing.Bitmap atTime_image {
             get {
-                object obj = ResourceManager.GetObject("clock21", resourceCulture);
+                object obj = ResourceManager.GetObject("atTime_image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,9 +183,29 @@ namespace netGui.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap HTMLStripper_image {
+            get {
+                object obj = ResourceManager.GetObject("HTMLStripper_image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Keys {
             get {
                 object obj = ResourceManager.GetObject("Keys", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap msgDelay_image {
+            get {
+                object obj = ResourceManager.GetObject("msgDelay_image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -187,6 +217,26 @@ namespace netGui.Properties {
             get {
                 object obj = ResourceManager.GetObject("New", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap not_image {
+            get {
+                object obj = ResourceManager.GetObject("not_image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap OR_image {
+            get {
+                object obj = ResourceManager.GetObject("OR_image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -213,9 +263,9 @@ namespace netGui.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ruleItem_and {
+        internal static System.Drawing.Bitmap RSS_image {
             get {
-                object obj = ResourceManager.GetObject("ruleItem_and", resourceCulture);
+                object obj = ResourceManager.GetObject("RSS_image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -226,56 +276,6 @@ namespace netGui.Properties {
         internal static System.Drawing.Bitmap ruleItem_database {
             get {
                 object obj = ResourceManager.GetObject("ruleItem_database", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ruleItem_HTMLStripper {
-            get {
-                object obj = ResourceManager.GetObject("ruleItem_HTMLStripper", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ruleItem_msgDelay {
-            get {
-                object obj = ResourceManager.GetObject("ruleItem_msgDelay", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ruleItem_not {
-            get {
-                object obj = ResourceManager.GetObject("ruleItem_not", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ruleItem_or {
-            get {
-                object obj = ResourceManager.GetObject("ruleItem_or", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ruleItem_rss {
-            get {
-                object obj = ResourceManager.GetObject("ruleItem_rss", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

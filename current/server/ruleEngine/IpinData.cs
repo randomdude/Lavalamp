@@ -5,6 +5,7 @@ namespace ruleEngine
 {
     public interface IPinData
     {
+
         void setToDefault();
         /// <summary>
         /// Require an implementation of To String to return the default value of the xml object

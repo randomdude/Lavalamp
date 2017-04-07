@@ -12,7 +12,6 @@
     using netGui.RuleItemOptionForms;
 
     using ruleEngine;
-    using ruleEngine.Properties;
     using ruleEngine.guidTypes;
     using ruleEngine.ruleItems;
 
@@ -27,12 +26,16 @@
         private ContextMenuStrip contextMenuStrip1;
         private System.ComponentModel.IContainer components;
         private ToolStripMenuItem deleteToolStripMenuItem1;
-        private readonly ctlRule.setTsStatusDlg setToolbarText;
+        private ctlRule.setTsStatusDlg setToolbarText;
 
         private Point? mouseDownAt = null;
         public readonly ctlRuleItemWidgetGuid serial = new ctlRuleItemWidgetGuid() { id = Guid.NewGuid() };
         private ToolStripMenuItem showDebugInfoToolStripMenuItem;
+        protected PictureBox backgroundImg;
+        private Label lblCaption;
         public bool snapToGrid;
+
+        public ctlRule.setTsStatusDlg OnSetToolBarText { get { return setToolbarText; } internal set { setToolbarText = value; } }
 
         /// <summary>
         /// fired when the item is moved
@@ -40,10 +43,8 @@
         public event ruleItemMoved OnRuleItemMoved;
         public delegate void ruleItemMoved(object sender, ItemMovedArgs args);
 
-        public ctlRuleItemWidget(ruleItemBase newRuleItemBase, ctlRule.setTsStatusDlg newSetToolbarText)
+        public ctlRuleItemWidget(ruleItemBase newRuleItemBase)
         {
-            this.setToolbarText = newSetToolbarText;
-
             this.commonConstructorStuff();
             this.loadRuleItem(newRuleItemBase);
             try
@@ -146,34 +147,20 @@
                 // Note down pin as belonging to this ruleItem.
                 thisPin.parentRuleItem = this.targetRuleItem.serial;
             }
-
+            this.lblCaption.Text = newRuleItem.caption();
             this.Location = newRuleItem.location;
             this.Size = newRuleItem.preferredSize();
-
+            Image img =  Properties.Resources.ResourceManager.GetObject(newRuleItem.typedName + "_image") as Image;
+            if (img != null)
+                this.backgroundImg.Image = img;
             // wire up events
             foreach (PictureBox thisCtl in this.conPins.Values)
                 thisCtl.Click += new EventHandler(this.onPinClick);
-            
-            this.addEvents(newRuleItem.controls);
 
-            // Load any controls that the item wants
-            foreach (Control thisCtl in newRuleItem.controls)
-            {
-                if (thisCtl.GetType() == typeof(ContextMenuStrip))
-                {
-                    while (((ContextMenuStrip)thisCtl).Items.Count > 0 )
-                        this.contextMenuStrip1.Items.Add(((ContextMenuStrip)thisCtl).Items[0]);
-                }
-                else
-                {
-                    this.Controls.Add(thisCtl);
-                }
-            }
-           
             newRuleItem.onResize(this);
             this.ruleItemBaseForm_Resize(new object(), new EventArgs());
         }
-
+         
         private void addEvents(IEnumerable<Control> items)
         {
             foreach (Control thisCtl in items)
@@ -211,7 +198,8 @@
             IFormOptions opts = this.targetRuleItem.ruleItemOptions();
             if (opts != null)
             {
-                IOptionForm optionsForm =  ruleItemOptionsFormFactory.createForm(opts);
+                ruleItemOptionsFormFactory fac = new ruleItemOptionsFormFactory();
+                IOptionForm optionsForm =  fac.createForm(opts);
                 opts.optionsChanged += OptsOnOptionsChanged;
                 optionsForm.ShowDialog(this);
             }
@@ -225,7 +213,7 @@
         private void addIcon(pin pin)
         {
             PictureBox thisPinBox = new PictureBox();
-            thisPinBox.Image = Resources.ArrowRight;
+            thisPinBox.Image = Properties.Resources.ArrowRight;
             thisPinBox.Size = thisPinBox.Image.Size;
             thisPinBox.Cursor = Cursors.Hand;
             thisPinBox.BackColor = Color.Transparent;
@@ -357,7 +345,10 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.showDebugInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblCaption = new System.Windows.Forms.Label();
+            this.backgroundImg = new System.Windows.Forms.PictureBox();
             this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.backgroundImg)).BeginInit();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -366,7 +357,7 @@
             this.deleteToolStripMenuItem1,
             this.showDebugInfoToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(156, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(156, 48);
             // 
             // deleteToolStripMenuItem1
             // 
@@ -383,17 +374,38 @@
             this.showDebugInfoToolStripMenuItem.Visible = false;
             this.showDebugInfoToolStripMenuItem.Click += new System.EventHandler(this.showDebugInfoToolStripMenuItem_Click);
             // 
+            // lblCaption
+            // 
+            this.lblCaption.AutoSize = true;
+            this.lblCaption.Location = new System.Drawing.Point(6, 62);
+            this.lblCaption.Name = "lblCaption";
+            this.lblCaption.Size = new System.Drawing.Size(52, 13);
+            this.lblCaption.TabIndex = 2;
+            this.lblCaption.Text = "Rule Item";
+            // 
+            // backgroundImg
+            // 
+            this.backgroundImg.Location = new System.Drawing.Point(9, 3);
+            this.backgroundImg.Name = "backgroundImg";
+            this.backgroundImg.Size = new System.Drawing.Size(49, 56);
+            this.backgroundImg.TabIndex = 1;
+            this.backgroundImg.TabStop = false;
+            // 
             // ctlRuleItemWidget
             // 
             this.BackColor = System.Drawing.Color.Silver;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ContextMenuStrip = this.contextMenuStrip1;
+            this.Controls.Add(this.lblCaption);
+            this.Controls.Add(this.backgroundImg);
             this.Name = "ctlRuleItemWidget";
             this.Size = new System.Drawing.Size(75, 75);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ctlRuleItemWidget_MouseMove);
             this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.backgroundImg)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -451,7 +463,7 @@
             ConstructorInfo constr = ruleItem.GetConstructor(new Type[0]);
             ruleItemBase newRuleItem = (ruleItemBase)constr.Invoke(new object[0] { });
             newRuleItem.initPins();
-            ctlRuleItemWidget widget = new ctlRuleItemWidget(newRuleItem, @this => { });
+            ctlRuleItemWidget widget = new ctlRuleItemWidget(newRuleItem);
             Bitmap image = new Bitmap(widget.Width, widget.Height);
             widget.DrawToBitmap(image, new Rectangle(0, 0, widget.Width, widget.Height));
             return image;

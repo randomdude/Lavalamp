@@ -34,3 +34,7 @@
 /current/server/WindowsSpecificRuleItems/bin/Debug
 /current/server/WindowsSpecificRuleItems/obj/Debug
 /current/server/.vs
+/current/server/lavalampData/bin/Debug
+/current/server/lavalampData/obj/Debug
+/current/boards/swManchester/transciever/allegro_free_viewer.jrl
+/current/server/UpgradeLog.htm

@@ -50,7 +50,7 @@ namespace ruleEngine.ruleItems.Starts
         {
             get
             {
-                throw new NotImplementedException();
+                return "atTime";
             }
         }
 

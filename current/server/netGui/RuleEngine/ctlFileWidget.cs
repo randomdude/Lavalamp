@@ -9,6 +9,7 @@ namespace netGui.RuleEngine
 {
     public class ctlFileWidget : ctlRuleItemWidget
     {
+        
         public ctlFileWidget(ruleItemBase newRuleItemBase) : base(newRuleItemBase)
         {
             backgroundImg.Image = Resources.ruleItem_text;

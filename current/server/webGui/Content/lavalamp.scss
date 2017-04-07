@@ -1,7 +1,7 @@
 ﻿//variables
-$ruleItemColor:Fuchsia;
+$ruleItemColor:#e7a0ff;
 $pagesize:90%;
-
+$xs-small:500px;
 
 body 
 {
@@ -11,13 +11,12 @@ body
      margin: 0;
      padding: 0;
      color: #696969;
-}
+    @media (min-width:$xs-small) {
+        width: $pagesize;
+        margin-left: 50px;
+        margin-right: 50px;
+    }
 
-#page
-{
-    width: $pagesize;
-    margin-left: 50px;
-    margin-right: 50px;
 }
 
 #main
@@ -43,7 +42,7 @@ body
     font-size: .9em;
 }
 
-#header
+header
 {
     margin-bottom: 30px;
     color: #000;
@@ -144,7 +143,7 @@ input
 
 $naviColour:rgba(100,0,0,0.4);
 
-div#navi 
+nav
 {
     ul 
 	{
